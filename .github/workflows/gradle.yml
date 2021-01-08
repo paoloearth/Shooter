@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Cambio Java
+    - name: Set the correct JDK(15.0.1)
       uses: actions/setup-java@v1
       with:
         java-version: 15.0.1
