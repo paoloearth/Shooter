@@ -2,10 +2,9 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
- * Scopo della classe
+ * This class is the main class
  */
-public class MyScene {
-
+public class App {
 
     /**
      * A simple function that check wheter an integer is
@@ -21,7 +20,7 @@ public class MyScene {
     public static void main(String[] args)
     {
         // Instanciate the class
-        MyScene C = new MyScene();
+        App C = new App();
 
         // I functionally create:
         // A Stream of consecutive numbers from 1 to 100

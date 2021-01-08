@@ -13,7 +13,7 @@ public class Function_To_Test {
     @ValueSource(ints = {4,6,24})
     void Test_1(int number)
     {
-        MyScene F = new MyScene();
+        App F = new App();
         assertEquals("Pari", F.function_to_test(number));
     }
 
