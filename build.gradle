@@ -24,7 +24,7 @@ test {
 // Change here
 application
         {
-            mainClassName = 'Cipolla'
+            mainClassName = 'MyScene'
         }
 
 
