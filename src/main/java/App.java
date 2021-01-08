@@ -62,7 +62,7 @@ public class App extends Application {
 
         BorderPane root = getBorderPane();
 
-        Scene scene = new Scene(root,1920, 1080);
+        Scene scene = new Scene(root,600, 800);
 
 
         String styleSheet = getClass().getResource("/style.css").toExternalForm();
