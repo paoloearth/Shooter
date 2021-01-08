@@ -27,16 +27,8 @@ javafx {
 }
 
 
-// Change here
-application
-        {
-            mainClassName = 'App'
-        }
+mainClassName = 'App'
 
-
-test {
-    useJUnitPlatform()
-}
 
 
 
