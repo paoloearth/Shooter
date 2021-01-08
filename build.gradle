@@ -28,7 +28,6 @@ javafx {
 
 
 // Change here
-// probando
 application
         {
             mainClassName = 'App'
