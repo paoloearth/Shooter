@@ -1,12 +1,13 @@
 package units.shooter_developers;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Shape;
 import javafx.util.Pair;
 
 public class Map_object {
     private Pair<Integer, Integer> _coordinates;
-    private Image _sprite;
+    private ImageView _sprite;
     private Shape _hitbox;
     private int _width;
     private int _height;
@@ -50,8 +51,8 @@ public class Map_object {
         return _coordinates.getValue();
     }
 
-    void setHitbox(Shape _hitbox){
-        return;
+    void setHitbox(Shape hitbox){
+        this._hitbox = hitbox;
     }
 
     public Shape getHitbox(){
@@ -59,14 +60,22 @@ public class Map_object {
     }
 
     public void setSprite(String path){
-        this._sprite = new Image(path);
+        Image image = new Image(path);
+        this._sprite = new ImageView(image);
     }
 
     public void setSprite(String path, double sprite_width_ratio, double sprite_height_ratio){
-        this._sprite = new Image(path);
+        Image image = new Image(path);
+        this._sprite = new ImageView(image);
+        this.resizeSprite(sprite_width_ratio, sprite_height_ratio);
     }
 
-    public void resizeSprite(double sprite_shape_ratio, double sprite_height_ratio){
+    public void resizeSprite(double sprite_width_ratio, double sprite_height_ratio){
+        _sprite.resize(sprite_width_ratio*_width, sprite_height_ratio*_height);
         return;
+    }
+
+    public ImageView getSprite(){
+        return this._sprite;
     }
 }
