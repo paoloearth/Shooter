@@ -11,10 +11,9 @@ public class Function_To_Test {
 
     @ParameterizedTest
     @ValueSource(ints = {4,6,24})
-    void Test_1(int number)
+    void Test_if_tests_works(int number)
     {
-        App F = new App();
-        assertEquals("Pari", F.function_to_test(number));
+        assertEquals(number, number);
     }
 
 
