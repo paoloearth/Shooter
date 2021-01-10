@@ -5,6 +5,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.shape.Shape;
 import javafx.util.Pair;
 
+interface Map_object_renderizable{
+    void render();
+}
+
 public class Map_object {
     private Pair<Integer, Integer> _coordinates;
     private ImageView _sprite;
