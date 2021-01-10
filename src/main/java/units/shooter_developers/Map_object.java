@@ -9,6 +9,10 @@ interface Map_object_renderizable{
     void render();
 }
 
+interface Map_object_dynamic{
+    void render(double t);
+}
+
 public class Map_object {
     private Pair<Integer, Integer> _coordinates;
     private ImageView _sprite;
