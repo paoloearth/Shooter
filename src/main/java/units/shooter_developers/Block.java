@@ -70,11 +70,11 @@ public class Block extends Map_object implements Map_object_renderizable{
     }
 
     public int getBlockWidth(){
-        return _block_dimensions.getKey();
+        return getBlockDimensions().getKey();
     }
 
     public int getBlockHeight(){
-        return _block_dimensions.getValue();
+        return getBlockDimensions().getValue();
     }
 
     public Pair<Integer, Integer> getBlockDimensions() {
