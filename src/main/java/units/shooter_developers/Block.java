@@ -38,6 +38,13 @@ public class Block extends Map_object implements Map_object_renderizable{
 
         double block_width_ratio = block_dimensions_ratio.getKey();
         double block_height_ratio = block_dimensions_ratio.getValue();
+
+        if((block_width_ratio > 1) || (block_width_ratio < 0)){
+            throw new IllegalArgumentException("ERROR: Width ratio provided ("+ block_width_ratio +") must be between 0 and 1.");
+        } else if((block_height_ratio > 1) || (block_height_ratio < 0)){
+            throw new IllegalArgumentException("ERROR: Height ratio provided ("+ block_height_ratio +") must be between 0 and 1.");
+        }
+
         Pair<Integer, Integer> block_dimensions= new Pair<Integer, Integer>(
                 (int)(block_width_ratio*this.getWidth()),
                 (int)(block_height_ratio*this.getHeight()));
