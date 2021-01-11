@@ -1,13 +1,7 @@
 package units.shooter_developers;
 
 
-import javafx.scene.SnapshotParameters;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -35,5 +29,22 @@ public class Function_To_Test {
             String error_name = e.getClass().getSimpleName();
             assertEquals(error_name, exception);
         }
+    }
+
+    @Test
+    void Block_dimensions_ratio_setting_and_getting_works(){
+        Block testing_block = new Block(1920, 1080, 0.5, 0.5);
+        testing_block.setBlockDimensionsRatio(0.3, 0.2);
+
+        boolean width_equal = testing_block.getBlockWidthRatio() == 0.3;
+        boolean height_equal = testing_block.getBlockHeightRatio() == 0.2;
+        assertEquals(true, width_equal && height_equal);
+    }
+
+    @Test
+    void Block_dimensions_getting_works(){
+        Block testing_block = new Block(500, 400, 0.5, 0.5);
+
+        assertEquals(true, (testing_block.getBlockWidth() == 250) && (testing_block.getBlockHeight() == 200));
     }
 }
