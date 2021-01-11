@@ -83,6 +83,14 @@ public class Map_object {
         return;
     }
 
+    public int getWidth(){
+        return _width;
+    }
+
+    public int getHeight(){
+        return _height;
+    }
+
     public ImageView getSprite(){
         return this._sprite;
     }

@@ -1,13 +1,8 @@
 package units.shooter_developers;
 
 
-import javafx.scene.SnapshotParameters;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
-import org.junit.Test;
+import javafx.util.Pair;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -30,6 +25,42 @@ public class Function_To_Test {
         Map_object example = new Map_object(1920, 1080);
         try {
             example.setCoordinates(coordX, coordY);
+            fail("exception not thrown");
+        } catch(Exception e) {
+            String error_name = e.getClass().getSimpleName();
+            assertEquals(error_name, exception);
+        }
+    }
+
+    @Test
+    void Block_dimensions_ratio_setting_and_getting_works(){
+        Block testing_block = new Block(1920, 1080, 0.5, 0.5);
+        testing_block.setBlockDimensionsRatio(0.3, 0.2);
+        double widthratio = testing_block.getBlockWidthRatio();
+        double heightratio = testing_block.getBlockHeightRatio();
+        boolean width_equal = testing_block.getBlockWidthRatio() == 0.3;
+        boolean height_equal = testing_block.getBlockHeightRatio() == 0.2;
+        assertEquals(true, width_equal && height_equal);
+    }
+
+    @Test
+    void Block_dimensions_getting_works(){
+        Block testing_block = new Block(500, 400, 0.5, 0.5);
+
+        assertEquals(true, (testing_block.getBlockWidth() == 250) && (testing_block.getBlockHeight() == 200));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"-1,0,IllegalArgumentException",
+            "0,-1,IllegalArgumentException",
+            "1.3,0,IllegalArgumentException",
+            "1.1, -0.3, IllegalArgumentException"})
+    void Block_explodes_with_wrong_size_values(double width_block_ratio, double height_block_ratio, String exception){
+        Block testing_block = new Block(500, 400, 0.5, 0.5);
+        Pair<Double, Double> block_dimensions_ratio = new Pair<>(width_block_ratio, height_block_ratio);
+
+        try {
+            testing_block.setBlockDimensionsRatio(block_dimensions_ratio);
             fail("exception not thrown");
         } catch(Exception e) {
             String error_name = e.getClass().getSimpleName();
