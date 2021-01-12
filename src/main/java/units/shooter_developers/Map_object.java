@@ -10,7 +10,7 @@ interface Map_object_renderizable{
 }
 
 interface Map_object_dynamic{
-    void render(double t);
+    void update(double t);
 }
 
 public class Map_object {
