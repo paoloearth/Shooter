@@ -1,11 +1,15 @@
 package units.shooter_developers;
 
 
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -66,5 +70,88 @@ public class Function_To_Test {
             String error_name = e.getClass().getSimpleName();
             assertEquals(error_name, exception);
         }
+    }
+
+    @Test
+    void BlocksAddEntities(){
+        Entity test_entity1 = new Entity(1920, 1080);
+        Entity test_entity2 = new Entity(1920, 1080);
+        Entity test_entity3 = new Entity(1920, 1080);
+        Block test_block = new Block(1920, 1080, 0.1, 0.1);
+
+        test_block.addDynamicObject(test_entity1);
+        test_block.addDynamicObject(test_entity2);
+        test_block.addDynamicObject(test_entity3);
+        ArrayList<Map_object_dynamic> entities_list = test_block.getDynamicObjectList();
+        assertEquals(3,entities_list.size());
+    }
+
+    @Test
+    void BlocksRemoveEntities(){
+        Entity test_entity1 = new Entity(1920, 1080);
+        Entity test_entity2 = new Entity(1920, 1080);
+        Entity test_entity3 = new Entity(1920, 1080);
+        Block test_block = new Block(1920, 1080, 0.1, 0.1);
+
+        test_block.addDynamicObject(test_entity1);
+        test_block.addDynamicObject(test_entity2);
+        test_block.addDynamicObject(test_entity3);
+        test_block.removeDynamicObject(test_entity1);
+        test_block.removeDynamicObject(test_entity2);
+        test_block.removeDynamicObject(test_entity3);
+        ArrayList<Map_object_dynamic> entities_list = test_block.getDynamicObjectList();
+        assertEquals(0,entities_list.size());
+    }
+
+    @Test
+    void ErrorWhenRemovingNonexistentEntity(){
+        Entity test_entity1 = new Entity(1920, 1080);
+        Block test_block = new Block(1920, 1080, 0.1, 0.1);
+        String exception = "MissingResourceException";
+        try {
+            test_block.removeDynamicObject(test_entity1);
+            fail("exception not thrown");
+        } catch(Exception e) {
+            String error_name = e.getClass().getSimpleName();
+            assertEquals(error_name, exception);
+        }
+    }
+
+    @Test
+    void testCollisionEntityBlockX(){
+        Room room = new Room(100, 100, 10);
+        Entity test_entity1 = new Entity(100, 100, room);
+        test_entity1.setCoordinates(5, 5);
+        test_entity1.setHitbox(new Rectangle(2, 2));
+        test_entity1.setVelocity(1, 0);
+        room.getBlock(0, 1).setPassable(false);
+        room.getBlock(0, 0).addDynamicObject(test_entity1);
+
+        for(int t=1; t<=50; t++){
+            test_entity1.update(t);
+        }
+
+        boolean entity_not_crossed_block = test_entity1.getX() < room.getBlock(0, 1).getX();
+        assertEquals(true, entity_not_crossed_block);
+    }
+
+    @Test
+    void testMovementWorksInPositiveDirections(){
+        Room room = new Room(100, 100, 10);
+        Entity test_entity1 = new Entity(100, 100, room);
+        test_entity1.setCoordinates(5, 5);
+        test_entity1.setHitbox(new Rectangle(2, 2));
+        test_entity1.setVelocity(1, 1);
+        room.getBlock(0, 0).addDynamicObject(test_entity1);
+        for(int t=1; t<=10; t++){
+            test_entity1.move(t);
+        }
+
+        Shape hola = new Rectangle(1, 1, 1, 1);
+        Shape adios = new Rectangle(5, 5, 1, 1);
+        var inter = Shape.intersect(hola, adios);
+
+        boolean entity_not_throwed_block = (test_entity1.getX()==15) && (test_entity1.getY()==15);
+        assertEquals(true, entity_not_throwed_block);
     }
 }

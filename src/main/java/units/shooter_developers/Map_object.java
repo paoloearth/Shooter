@@ -2,6 +2,7 @@ package units.shooter_developers;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.util.Pair;
 
@@ -13,21 +14,27 @@ interface Map_object_dynamic{
     void update(double t);
 }
 
-public class Map_object {
+public class Map_object{
     private Pair<Integer, Integer> _coordinates;
     private ImageView _sprite;
-    private Shape _hitbox;
+    private Rectangle _hitbox;
     private int _width;
     private int _height;
-    private double _sprite_width_ratio;
-    private double _sprite_height_ratio;
 
     public Map_object(int width, int height) {
         this._width = width;
         this._height = height;
         this.setCoordinates(0, 0);
         this._sprite = null;
-        this.setHitbox(null);
+        this._hitbox = null;
+    }
+
+    public Map_object(Map_object map_object){
+        _coordinates = map_object._coordinates;
+        _sprite = map_object._sprite;
+        _hitbox = map_object._hitbox;
+        _width = map_object._width;
+        _height = map_object._height;
     }
 
     public void setCoordinates(int x, int y) throws IllegalArgumentException {
@@ -45,9 +52,13 @@ public class Map_object {
         }
 
         this._coordinates = coordinates;
+        if(this.getHitbox() != null) {
+            this._hitbox.setX(this.getX());
+            this._hitbox.setY(this.getY());
+        }
     }
 
-    public Pair<Integer, Integer> get_coordinates(){
+    public Pair<Integer, Integer> getCoordinates(){
         return new Pair<Integer, Integer>(0,  0);
     }
 
@@ -59,7 +70,9 @@ public class Map_object {
         return _coordinates.getValue();
     }
 
-    void setHitbox(Shape hitbox){
+    void setHitbox(Rectangle hitbox){
+        hitbox.setX(this.getX());
+        hitbox.setY(this.getY());
         this._hitbox = hitbox;
     }
 
