@@ -1,11 +1,10 @@
 package units.shooter_developers;
 
-import com.sun.javafx.geom.Area;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.shape.Shape;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.MissingResourceException;
 
 import static java.lang.Math.floor;
 
@@ -15,11 +14,20 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
     private Pair<Integer, Integer> _velocity;
     private double _t;
 
+    /********************************************************************************/
+    /* CONSTRUCTORS                                                                 */
+    /********************************************************************************/
+
+    Entity(){
+        this(800, 60);
+    }
+
     Entity(int width, int height){
         super(width, height);
         _block_dimensions = null;
         _room = null;
         _t = 0;
+        this.setCoordinates(0, 0);
     }
 
     Entity(int width, int height, Pair<Integer, Integer> block_dimensions){
@@ -43,10 +51,32 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
         _room = object._room;
         _t = object._t;
         _velocity = object._velocity;
+
+        this.getRoom().addEntity(this);
     }
 
-    public void render(){
-        return;
+    /********************************************************************************/
+    /* PHYSICS AND MOVEMENT                                                         */
+    /********************************************************************************/
+
+    @Override
+    public void setCoordinates(Pair<Integer, Integer> coordinates){
+        if(this.getRoom() != null){
+            if(this.getBlock() != null) {
+                this.getBlock().removeEntity(this);
+            }
+        }
+        super.setCoordinates(coordinates);
+        if(this.getRoom() != null){
+            if(this.getBlock() != null) {
+                this.getBlock().addEntity(this);
+            }
+        }
+    }
+
+    @Override
+    public void setCoordinates(int x, int y){
+        this.setCoordinates(new Pair<Integer, Integer>(x, y));
     }
 
     public void update(double t){
@@ -74,21 +104,25 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
                 }
 
             } else {
-                var dynamic_objects_list = block.getDynamicObjectList();
-                for(var dynamic_object : dynamic_objects_list){
-                    if((legal_movement_X || legal_movement_Y) && !this.equals(dynamic_object)){
+                var entity_list = block.getEntityList();
+                var entity_iterator = entity_list.iterator();
+                while(entity_iterator.hasNext()){
+                    var entity = entity_iterator.next();
+                    if((legal_movement_X || legal_movement_Y) && !this.equals(entity)){
                         copy.setCoordinates(new_X, old_Y);
-                        if(copy.checkCollision(dynamic_object)){
+                        if(copy.checkCollision(entity)){
                             legal_movement_X = false;
                         }
                         copy.setCoordinates(old_X, new_Y);
-                        if(copy.checkCollision(dynamic_object)){
+                        if(copy.checkCollision(entity)){
                             legal_movement_Y = false;
                         }
                     }
                 }
             }
         }
+
+        this.getRoom().removeEntity(copy);
 
         if(!legal_movement_X) new_X = old_X;
         if(!legal_movement_Y) new_Y = old_Y;
@@ -113,48 +147,6 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
         return _velocity.getValue();
     }
 
-    public Pair<Integer, Integer> getVelocity(){
-        return _velocity;
-    }
-
-    public void setRoom(Room room){
-        _room = room;
-    }
-
-    public Room getRoom(){
-        return _room;
-    }
-
-    public Pair<Integer, Integer> getRoomCoordinates(){
-        int coord_x = (int) floor(this.getX()/this.getRoom().getBlockWidth());
-        int coord_y = (int) floor(this.getY()/this.getRoom().getBlockHeight());
-
-        var coordinates = new Pair<Integer, Integer>(coord_x, coord_y);
-        return coordinates;
-    }
-
-    public ArrayList<Block> getSurroundingBlocks(){
-        ArrayList<Block> surrounding_blocks= new ArrayList<Block>();
-
-        var my_coordinates = this.getRoomCoordinates();
-        int my_x = my_coordinates.getKey();
-        int my_y = my_coordinates.getValue();
-
-        for(int i=-1; i<=1; i++){
-            for(int j=-1; j<=1; j++){
-                int neighbor_x = my_x+i;
-                int neighbor_y = my_y+j;
-                if(neighbor_x >= 0 && neighbor_x < this.getRoom().getNumberOfRows()){
-                    if(neighbor_y >= 0 && neighbor_y < this.getRoom().getNumberOfColumns()){
-                        surrounding_blocks.add(this.getRoom().getBlock(neighbor_x, neighbor_y));
-                    }
-                }
-            }
-        }
-
-        return surrounding_blocks;
-    }
-
     public void move(double t){
         int coord_X = this.getX();
         int coord_Y = this.getY();
@@ -175,4 +167,65 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
     public boolean checkCollision(Map_object_dynamic target){
         return false;
     }
+
+    public Pair<Integer, Integer> getVelocity(){
+        return _velocity;
+    }
+
+    /********************************************************************************/
+    /* OTHER                                                                        */
+    /********************************************************************************/
+
+    public void render(){
+        return;
+    }
+
+    public void setRoom(Room room){
+        room.addEntity(this);
+        _room = room;
+    }
+
+    public Room getRoom(){
+        return _room;
+    }
+
+    public Pair<Integer, Integer> computeRoomCoordinates(){
+        int col = (int) floor(this.getX()/this.getRoom().getBlockWidth());
+        int row = (int) floor(this.getY()/this.getRoom().getBlockHeight());
+
+        var coordinates = new Pair<Integer, Integer>(row, col);
+        return coordinates;
+    }
+
+    public ArrayList<Block> getSurroundingBlocks(){
+        ArrayList<Block> surrounding_blocks= new ArrayList<Block>();
+
+        var my_coordinates = this.computeRoomCoordinates();
+        int my_x = my_coordinates.getKey();
+        int my_y = my_coordinates.getValue();
+
+        for(int i=-1; i<=1; i++){
+            for(int j=-1; j<=1; j++){
+                int neighbor_x = my_x+i;
+                int neighbor_y = my_y+j;
+                if(neighbor_x >= 0 && neighbor_x < this.getRoom().getNumberOfRows()){
+                    if(neighbor_y >= 0 && neighbor_y < this.getRoom().getNumberOfColumns()){
+                        surrounding_blocks.add(this.getRoom().getBlock(neighbor_x, neighbor_y));
+                    }
+                }
+            }
+        }
+
+        return surrounding_blocks;
+    }
+
+    public Block getBlock(){
+        if(_room == null){
+            throw new MissingResourceException("Room is not defined!.", "Entity", "");
+        }
+
+        var room_coordinates = this.computeRoomCoordinates();
+        return this.getRoom().getBlock(room_coordinates);
+    }
+
 }

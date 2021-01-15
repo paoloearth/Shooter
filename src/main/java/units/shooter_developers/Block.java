@@ -11,34 +11,41 @@ public class Block extends Map_object implements Map_object_renderizable{
     private boolean _passable;
     private boolean _affects_player;
     private Pair<Integer, Integer> _block_dimensions;
-    private ArrayList<Map_object_dynamic> _dynamic_objects_list;
+    private ArrayList<Entity> _entity_list;
 
-    public Block(int width, int height, Pair<Double, Double> block_dimensions_ratio){
-        super(width, height);
+    /********************************************************************************/
+    /* CONSTRUCTORS                                                                 */
+    /********************************************************************************/
+
+    public Block(){
+        super();
         this.setPassable(true);
         this.setAffectsPlayer(false);
+        _block_dimensions = new Pair<Integer, Integer>(this.getWidth(), this.getHeight());
+    }
 
+    public Block(int width, int height){
+        super(width, height);
+        _block_dimensions = new Pair<Integer, Integer>(width, height);
+        Rectangle hitbox = new Rectangle(this.getX(),  this.getY(), this.getBlockWidth(), this.getBlockHeight());
+    }
+
+    public Block(int width, int height, Pair<Double, Double> block_dimensions_ratio){
+        this(width, height);
         this.setBlockDimensionsRatio(block_dimensions_ratio);
         Rectangle hitbox = new Rectangle(this.getX(),  this.getY(), this.getBlockWidth(), this.getBlockHeight());
         this.setHitbox(hitbox);
 
-        this._dynamic_objects_list = new ArrayList<>();
+        this._entity_list = new ArrayList<Entity>();
     }
 
     public Block(int width, int height, double block_width_ratio, double block_height_ratio){
         this(width, height, new Pair<Double, Double>(block_width_ratio, block_height_ratio));
     }
 
-    @Override
-    public void render() {
-        // -> not implement the rendering up to having a class for sprites!!
-        return;
-    }
-
-    public void affect_player(Map_object player){
-        // -> Here it should be modified the features of the player (velocity, damage, collision damage, etc.)
-        // -> The signature of this function will change. It probably will have as argument a sort of Player-type object.
-    }
+    /********************************************************************************/
+    /* SET/GET ATTRIBUTES                                                           */
+    /********************************************************************************/
 
     public void setBlockDimensionsRatio(Pair<Double, Double> block_dimensions_ratio){
 
@@ -87,14 +94,6 @@ public class Block extends Map_object implements Map_object_renderizable{
         return _block_dimensions;
     }
 
-    public void setAffectsPlayer(boolean affects_player){
-        _affects_player = affects_player;
-    }
-
-    public boolean affectsPlayer(){
-        return _affects_player;
-    }
-
     public void setPassable(boolean passable){
         _passable = passable;
     }
@@ -103,16 +102,43 @@ public class Block extends Map_object implements Map_object_renderizable{
         return _passable;
     }
 
-    public ArrayList<Map_object_dynamic> getDynamicObjectList(){
-        return _dynamic_objects_list;
+    /********************************************************************************/
+    /* OTHER                                                                        */
+    /********************************************************************************/
+
+    @Override
+    public void render() {
+        // -> not implement the rendering up to having a class for sprites!!
+        return;
     }
 
-    public void addDynamicObject(Map_object_dynamic object){
-        _dynamic_objects_list.add(object);
+    public void affect_player(Map_object player){
+        // -> Here it should be modified the features of the player (velocity, damage, collision damage, etc.)
+        // -> The signature of this function will change. It probably will have as argument a sort of Player-type object.
     }
 
-    public void removeDynamicObject(Map_object_dynamic object) throws MissingResourceException{
-        if(!_dynamic_objects_list.contains(object)) throw new MissingResourceException("Missing object in this block.", "Map_object_dynamic", "");
-        _dynamic_objects_list.remove(object);
+    public void setAffectsPlayer(boolean affects_player){
+        _affects_player = affects_player;
+    }
+
+    public boolean affectsPlayer(){
+        return _affects_player;
+    }
+
+    public void addEntity(Entity object){
+        _entity_list.add(object);
+    }
+
+    public void removeEntity(Entity object) throws MissingResourceException{
+        if(!_entity_list.contains(object)) throw new MissingResourceException("Missing object in this block.", "Block", "");
+        _entity_list.remove(object);
+    }
+
+    public ArrayList<Entity> getEntityList(){
+        return _entity_list;
+    }
+
+    public boolean contains(Entity entity){
+        return this.getEntityList().contains(entity);
     }
 }

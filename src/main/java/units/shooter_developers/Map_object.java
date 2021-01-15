@@ -12,6 +12,8 @@ interface Map_object_renderizable{
 
 interface Map_object_dynamic{
     void update(double t);
+    public void setCoordinates(Pair<Integer, Integer> coordinates);
+    public Pair<Integer, Integer> getCoordinates();
 }
 
 public class Map_object{
@@ -21,12 +23,18 @@ public class Map_object{
     private int _width;
     private int _height;
 
-    public Map_object(int width, int height) {
-        this._width = width;
-        this._height = height;
+    public Map_object(){
         this.setCoordinates(0, 0);
         this._sprite = null;
         this._hitbox = null;
+        this._width = 800;
+        this._width = 600;
+    }
+
+    public Map_object(int width, int height) {
+        this();
+        this._width = width;
+        this._height = height;
     }
 
     public Map_object(Map_object map_object){
@@ -41,15 +49,9 @@ public class Map_object{
         this.setCoordinates(new Pair<Integer, Integer>(x, y));
     }
 
-    public void setCoordinates(Pair<Integer, Integer> coordinates) throws IllegalArgumentException{
+    public void setCoordinates(Pair<Integer, Integer> coordinates){
         int x = coordinates.getKey();
         int y = coordinates.getValue();
-
-        if(x<0 || x>=_width){
-            throw new IllegalArgumentException("X coordinate (" + Integer.toString(x) + ") must be positive and lower than width (" + Integer.toString(_width) + ")");
-        } else if (y<0 || y>=_height){
-            throw new IllegalArgumentException("Y coordinate (" + Integer.toString(y) + ") must be positive and lower than height (" + Integer.toString(_height) + ")");
-        }
 
         this._coordinates = coordinates;
         if(this.getHitbox() != null) {
