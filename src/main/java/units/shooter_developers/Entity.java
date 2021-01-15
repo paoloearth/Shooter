@@ -19,16 +19,15 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
     /********************************************************************************/
 
     Entity(){
-        super();
-        _block_dimensions = null;
-        _room = null;
-        _t = 0;
-
+        this(800, 60);
     }
 
     Entity(int width, int height){
-        this();
-        this.setCoordinates(width, height);
+        super(width, height);
+        _block_dimensions = null;
+        _room = null;
+        _t = 0;
+        this.setCoordinates(0, 0);
     }
 
     Entity(int width, int height, Pair<Integer, Integer> block_dimensions){

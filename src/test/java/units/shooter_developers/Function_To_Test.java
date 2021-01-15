@@ -215,4 +215,28 @@ public class Function_To_Test {
         boolean entity_moved = room.getBlock(0, 1).getEntityList().contains(test_entity1);
         assertEquals(true, entity_moved);
     }
+
+    /*
+    @Test
+    void testCollisionEntityEntityY(){
+        Room room = new Room(100, 100, 10);
+        Entity dynamic_entity = new Entity(100, 100, room);
+        Entity fixed_entity = new Entity(100, 100, room);
+        dynamic_entity.setCoordinates(5, 5);
+        fixed_entity.setCoordinates(5, 15);
+        dynamic_entity.setHitbox(new Rectangle(2, 2));
+        fixed_entity.setHitbox(new Rectangle(2, 2));
+        dynamic_entity.setVelocity(0, 1);
+        fixed_entity.setVelocity(0, 0);
+        room.getBlock(0, 0).addEntity(dynamic_entity);
+
+        for(int t=1; t<=50; t++){
+            dynamic_entity.update(t);
+            fixed_entity.update(t);
+        }
+
+        boolean entity_not_crossed_through = dynamic_entity.getY() < fixed_entity.getY();
+        assertEquals(true, entity_not_crossed_through);
+    }
+    */
 }
