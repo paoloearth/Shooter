@@ -23,12 +23,18 @@ public class Map_object{
     private int _width;
     private int _height;
 
-    public Map_object(int width, int height) {
-        this._width = width;
-        this._height = height;
+    public Map_object(){
         this.setCoordinates(0, 0);
         this._sprite = null;
         this._hitbox = null;
+        this._width = 800;
+        this._width = 600;
+    }
+
+    public Map_object(int width, int height) {
+        this();
+        this._width = width;
+        this._height = height;
     }
 
     public Map_object(Map_object map_object){

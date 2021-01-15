@@ -19,8 +19,22 @@ public class Room implements Map_object_renderizable {
     /* CONSTRUCTORS                                                                 */
     /********************************************************************************/
 
+    Room(){
+        this.setWidth(800);
+        this.setHeight(600);
+        this._nrows = 0;
+        this._ncols = 0;
+        this._entity_list = new ArrayList<Entity>();
+    }
+
+    Room(int width, int height){
+        this();
+        _width = width;
+        _height = height;
+    }
+
     Room(int width, int height, int nrows){
-        this(width, height, 0, 0);
+        this(width, height);
         _nrows = nrows;
 
         //_nrows is set to get blocks with square dimensions
@@ -33,11 +47,9 @@ public class Room implements Map_object_renderizable {
     }
 
     Room(int width, int height, int nrows, int ncols){
-        _width = width;
-        _height = height;
+        this(width, height);
         _nrows = nrows;
         _ncols = ncols; //square condition could break
-        _entity_list = new ArrayList<Entity>();
 
         this.generateBlockMatrix();
         this.initializeBlocks();
@@ -132,6 +144,14 @@ public class Room implements Map_object_renderizable {
 
     public int getNumberOfColumns(){
         return _ncols;
+    }
+
+    public void setWidth(int width){
+        this._width = width;
+    }
+
+    public void setHeight(int height){
+        this._height = height;
     }
 
     public int getWidth(){
