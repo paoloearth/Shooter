@@ -11,7 +11,7 @@ public class Block extends Map_object implements Map_object_renderizable{
     private boolean _passable;
     private boolean _affects_player;
     private Pair<Integer, Integer> _block_dimensions;
-    private ArrayList<Map_object_dynamic> _dynamic_objects_list;
+    private ArrayList<Entity> _entity_list;
 
     public Block(int width, int height, Pair<Double, Double> block_dimensions_ratio){
         super(width, height);
@@ -22,7 +22,7 @@ public class Block extends Map_object implements Map_object_renderizable{
         Rectangle hitbox = new Rectangle(this.getX(),  this.getY(), this.getBlockWidth(), this.getBlockHeight());
         this.setHitbox(hitbox);
 
-        this._dynamic_objects_list = new ArrayList<>();
+        this._entity_list = new ArrayList<Entity>();
     }
 
     public Block(int width, int height, double block_width_ratio, double block_height_ratio){
@@ -103,16 +103,20 @@ public class Block extends Map_object implements Map_object_renderizable{
         return _passable;
     }
 
-    public ArrayList<Map_object_dynamic> getDynamicObjectList(){
-        return _dynamic_objects_list;
+    public ArrayList<Entity> getEntityList(){
+        return _entity_list;
     }
 
-    public void addDynamicObject(Map_object_dynamic object){
-        _dynamic_objects_list.add(object);
+    public void addEntity(Entity object){
+        _entity_list.add(object);
     }
 
-    public void removeDynamicObject(Map_object_dynamic object) throws MissingResourceException{
-        if(!_dynamic_objects_list.contains(object)) throw new MissingResourceException("Missing object in this block.", "Map_object_dynamic", "");
-        _dynamic_objects_list.remove(object);
+    public void removeEntity(Entity object) throws MissingResourceException{
+        if(!_entity_list.contains(object)) throw new MissingResourceException("Missing object in this block.", "Block", "");
+        _entity_list.remove(object);
+    }
+
+    public boolean contains(Entity entity){
+        return this.getEntityList().contains(entity);
     }
 }

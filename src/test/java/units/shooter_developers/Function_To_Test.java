@@ -2,7 +2,6 @@ package units.shooter_developers;
 
 
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -66,10 +65,10 @@ public class Function_To_Test {
         Entity test_entity3 = new Entity(1920, 1080);
         Block test_block = new Block(1920, 1080, 0.1, 0.1);
 
-        test_block.addDynamicObject(test_entity1);
-        test_block.addDynamicObject(test_entity2);
-        test_block.addDynamicObject(test_entity3);
-        ArrayList<Map_object_dynamic> entities_list = test_block.getDynamicObjectList();
+        test_block.addEntity(test_entity1);
+        test_block.addEntity(test_entity2);
+        test_block.addEntity(test_entity3);
+        ArrayList<Entity> entities_list = test_block.getEntityList();
         assertEquals(3,entities_list.size());
     }
 
@@ -80,13 +79,13 @@ public class Function_To_Test {
         Entity test_entity3 = new Entity(1920, 1080);
         Block test_block = new Block(1920, 1080, 0.1, 0.1);
 
-        test_block.addDynamicObject(test_entity1);
-        test_block.addDynamicObject(test_entity2);
-        test_block.addDynamicObject(test_entity3);
-        test_block.removeDynamicObject(test_entity1);
-        test_block.removeDynamicObject(test_entity2);
-        test_block.removeDynamicObject(test_entity3);
-        ArrayList<Map_object_dynamic> entities_list = test_block.getDynamicObjectList();
+        test_block.addEntity(test_entity1);
+        test_block.addEntity(test_entity2);
+        test_block.addEntity(test_entity3);
+        test_block.removeEntity(test_entity1);
+        test_block.removeEntity(test_entity2);
+        test_block.removeEntity(test_entity3);
+        ArrayList<Entity> entities_list = test_block.getEntityList();
         assertEquals(0,entities_list.size());
     }
 
@@ -96,7 +95,7 @@ public class Function_To_Test {
         Block test_block = new Block(1920, 1080, 0.1, 0.1);
         String exception = "MissingResourceException";
         try {
-            test_block.removeDynamicObject(test_entity1);
+            test_block.removeEntity(test_entity1);
             fail("exception not thrown");
         } catch(Exception e) {
             String error_name = e.getClass().getSimpleName();
@@ -112,7 +111,6 @@ public class Function_To_Test {
         test_entity1.setHitbox(new Rectangle(2, 2));
         test_entity1.setVelocity(1, 0);
         room.getBlock(0, 1).setPassable(false);
-        room.getBlock(0, 0).addDynamicObject(test_entity1);
 
         for(int t=1; t<=50; t++){
             test_entity1.update(t);
@@ -130,7 +128,7 @@ public class Function_To_Test {
         test_entity1.setHitbox(new Rectangle(2, 2));
         test_entity1.setVelocity(0, 1);
         room.getBlock(1, 0).setPassable(false);
-        room.getBlock(0, 0).addDynamicObject(test_entity1);
+        room.getBlock(0, 0).addEntity(test_entity1);
 
         for(int t=1; t<=50; t++){
             test_entity1.update(t);
@@ -147,7 +145,7 @@ public class Function_To_Test {
         test_entity1.setCoordinates(5, 5);
         test_entity1.setHitbox(new Rectangle(2, 2));
         test_entity1.setVelocity(1, 1);
-        room.getBlock(0, 0).addDynamicObject(test_entity1);
+        room.getBlock(0, 0).addEntity(test_entity1);
         for(int t=1; t<=10; t++){
             test_entity1.move(t);
         }
@@ -163,7 +161,7 @@ public class Function_To_Test {
         test_entity1.setCoordinates(15, 15);
         test_entity1.setHitbox(new Rectangle(2, 2));
         test_entity1.setVelocity(-1, -1);
-        room.getBlock(0, 0).addDynamicObject(test_entity1);
+        room.getBlock(0, 0).addEntity(test_entity1);
         for(int t=1; t<=10; t++){
             test_entity1.move(t);
         }
@@ -179,7 +177,7 @@ public class Function_To_Test {
         test_entity1.setCoordinates(95, 95);
         test_entity1.setHitbox(new Rectangle(2, 2));
         test_entity1.setVelocity(1, 1);
-        room.getBlock(1, 1).addDynamicObject(test_entity1);
+        room.getBlock(1, 1).addEntity(test_entity1);
         for(int t=1; t<=10; t++){
             test_entity1.move(t);
         }
@@ -195,12 +193,26 @@ public class Function_To_Test {
         test_entity1.setCoordinates(5, 5);
         test_entity1.setHitbox(new Rectangle(2, 2));
         test_entity1.setVelocity(-1, -1);
-        room.getBlock(1, 1).addDynamicObject(test_entity1);
+        room.getBlock(1, 1).addEntity(test_entity1);
         for(int t=1; t<=10; t++){
             test_entity1.move(t);
         }
 
         boolean entity_is_out_of_bounds = !((test_entity1.getX()>=0) && (test_entity1.getY()>=0));
         assertEquals(true, entity_is_out_of_bounds);
+    }
+
+    @Test
+    void EntityPlacementMovesWhenBlockChanges(){
+        Room room = new Room(100, 100, 10);
+        Entity test_entity1 = new Entity(100, 100, room);
+        test_entity1.setCoordinates(5, 5);
+        test_entity1.setVelocity(1, 0);
+        for(int t=1; t<=10; t++){
+            test_entity1.move(t);
+        }
+
+        boolean entity_moved = room.getBlock(0, 1).getEntityList().contains(test_entity1);
+        assertEquals(true, entity_moved);
     }
 }

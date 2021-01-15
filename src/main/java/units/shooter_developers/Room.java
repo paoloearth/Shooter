@@ -1,6 +1,9 @@
 package units.shooter_developers;
 
+import javafx.util.Pair;
+
 import java.util.ArrayList;
+import java.util.MissingResourceException;
 
 import static java.lang.Math.floor;
 
@@ -10,7 +13,7 @@ public class Room implements Map_object_renderizable {
     private int _ncols;
     private int _width;
     private int _height;
-    private ArrayList<Map_object_dynamic> _dynamic_objects_list;
+    private ArrayList<Entity> _entity_list;
 
     Room(int width, int height, int nrows){
         this(width, height, 0, 0);
@@ -30,6 +33,7 @@ public class Room implements Map_object_renderizable {
         _height = height;
         _nrows = nrows;
         _ncols = ncols; //square condition could break
+        _entity_list = new ArrayList<Entity>();
 
         this.generateBlockMatrix();
         this.initializeBlocks();
@@ -57,12 +61,43 @@ public class Room implements Map_object_renderizable {
         }
     }
 
+    public Pair<Integer, Integer> toBlockCoordinates(Pair<Integer, Integer> coordinates){
+        int x = coordinates.getKey();
+        int y = coordinates.getValue();
+        x = (int) floor((double)x/this.getBlockWidth());
+        y = (int) floor((double)y/this.getBlockHeight());
+        return(new Pair<Integer, Integer>(x, y));
+    }
+
+    public void addEntity(Entity object) throws  MissingResourceException{
+        this._entity_list.add(object);
+        var object_block_coordinates = this.toBlockCoordinates(object.getCoordinates());
+        this.getBlock(object_block_coordinates).addEntity(object);
+    }
+
+    public void removeEntity(Entity object){
+        //if(!_entity_list.contains(object)) throw new MissingResourceException("Missing object in this room.", "Entity", "");
+        var object_block_coordinates = this.toBlockCoordinates(object.getCoordinates());
+        this.getBlock(object_block_coordinates).removeEntity(object);
+        this._entity_list.remove(object);
+    }
+
     public void render(){
         return;
     }
 
-    public Block getBlock(int row, int col){
+    public Block getBlock(Pair<Integer, Integer> block_coordinates){
+        int row = block_coordinates.getKey();
+        int col = block_coordinates.getValue();
+        if(((row >= _nrows-1) || (col >= _ncols-1)) || ((row < 0) || (col < 0))){
+            return null;
+        }
         return _block_matrix.get(row).get(col);
+    }
+
+    public Block getBlock(int row, int col){
+        var block_coordinates = new Pair<Integer, Integer>(row, col);
+        return this.getBlock(block_coordinates);
     }
 
     public void setBlock(int row, int col, Block block){
@@ -85,6 +120,14 @@ public class Room implements Map_object_renderizable {
 
     public int getNumberOfColumns(){
         return _ncols;
+    }
+
+    public int getWidth(){
+        return this._width;
+    }
+
+    public int getHeight(){
+        return this._height;
     }
 
 }
