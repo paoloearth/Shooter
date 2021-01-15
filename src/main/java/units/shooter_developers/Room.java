@@ -15,6 +15,10 @@ public class Room implements Map_object_renderizable {
     private int _height;
     private ArrayList<Entity> _entity_list;
 
+    /********************************************************************************/
+    /* CONSTRUCTORS                                                                 */
+    /********************************************************************************/
+
     Room(int width, int height, int nrows){
         this(width, height, 0, 0);
         _nrows = nrows;
@@ -39,27 +43,9 @@ public class Room implements Map_object_renderizable {
         this.initializeBlocks();
     }
 
-    private void generateBlockMatrix(){
-        for(int i=0; i<_nrows; i++){
-            ArrayList<Block> row = new ArrayList<Block>();
-            for(int j=0; j<_ncols; j++){
-                row.add(null);
-            }
-            _block_matrix.add(row);
-        }
-    }
-
-    private void initializeBlocks(){
-        for(int i=0; i<_nrows; i++){
-            for(int j=0; j<_ncols; j++){
-                Block block = new Block(_width, _height, 1./_nrows, 1./_ncols);
-                int coord_X = j*this.getBlockWidth();
-                int coord_Y = i*this.getBlockHeight();
-                block.setCoordinates(coord_X, coord_Y);
-                this.setBlock(i, j, block);
-            }
-        }
-    }
+    /********************************************************************************/
+    /* BLOCKS AND ENTITIES MANAGEMENT                                               */
+    /********************************************************************************/
 
     public Pair<Integer, Integer> toBlockCoordinates(Pair<Integer, Integer> coordinates){
         int x = coordinates.getKey();
@@ -82,8 +68,32 @@ public class Room implements Map_object_renderizable {
         this._entity_list.remove(object);
     }
 
-    public void render(){
-        return;
+    private void generateBlockMatrix(){
+        for(int i=0; i<_nrows; i++){
+            ArrayList<Block> row = new ArrayList<Block>();
+            for(int j=0; j<_ncols; j++){
+                row.add(null);
+            }
+            _block_matrix.add(row);
+        }
+    }
+
+    private void initializeBlocks(){
+        for(int i=0; i<_nrows; i++){
+            for(int j=0; j<_ncols; j++){
+                Block block = new Block(_width, _height, 1./_nrows, 1./_ncols);
+                int coord_X = j*this.getBlockWidth();
+                int coord_Y = i*this.getBlockHeight();
+                block.setCoordinates(coord_X, coord_Y);
+                this.setBlock(i, j, block);
+            }
+        }
+    }
+
+    public void setBlock(int row, int col, Block block){
+        var blocks_row = _block_matrix.get(row);
+        blocks_row.set(col, block);
+        _block_matrix.set(row, blocks_row);
     }
 
     public Block getBlock(Pair<Integer, Integer> block_coordinates){
@@ -100,18 +110,20 @@ public class Room implements Map_object_renderizable {
         return this.getBlock(block_coordinates);
     }
 
-    public void setBlock(int row, int col, Block block){
-        var blocks_row = _block_matrix.get(row);
-        blocks_row.set(col, block);
-        _block_matrix.set(row, blocks_row);
-    }
-
     public int getBlockWidth(){
         return((int) floor((double)_width/_ncols));
     }
 
     public int getBlockHeight(){
         return((int) floor((double)_height/_nrows));
+    }
+
+    /********************************************************************************/
+    /* OTHER                                                                        */
+    /********************************************************************************/
+
+    public void render(){
+        return;
     }
 
     public int getNumberOfRows(){

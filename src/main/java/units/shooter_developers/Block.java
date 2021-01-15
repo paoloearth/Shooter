@@ -13,6 +13,10 @@ public class Block extends Map_object implements Map_object_renderizable{
     private Pair<Integer, Integer> _block_dimensions;
     private ArrayList<Entity> _entity_list;
 
+    /********************************************************************************/
+    /* CONSTRUCTORS                                                                 */
+    /********************************************************************************/
+
     public Block(int width, int height, Pair<Double, Double> block_dimensions_ratio){
         super(width, height);
         this.setPassable(true);
@@ -29,16 +33,9 @@ public class Block extends Map_object implements Map_object_renderizable{
         this(width, height, new Pair<Double, Double>(block_width_ratio, block_height_ratio));
     }
 
-    @Override
-    public void render() {
-        // -> not implement the rendering up to having a class for sprites!!
-        return;
-    }
-
-    public void affect_player(Map_object player){
-        // -> Here it should be modified the features of the player (velocity, damage, collision damage, etc.)
-        // -> The signature of this function will change. It probably will have as argument a sort of Player-type object.
-    }
+    /********************************************************************************/
+    /* SET/GET ATTRIBUTES                                                           */
+    /********************************************************************************/
 
     public void setBlockDimensionsRatio(Pair<Double, Double> block_dimensions_ratio){
 
@@ -87,14 +84,6 @@ public class Block extends Map_object implements Map_object_renderizable{
         return _block_dimensions;
     }
 
-    public void setAffectsPlayer(boolean affects_player){
-        _affects_player = affects_player;
-    }
-
-    public boolean affectsPlayer(){
-        return _affects_player;
-    }
-
     public void setPassable(boolean passable){
         _passable = passable;
     }
@@ -103,8 +92,27 @@ public class Block extends Map_object implements Map_object_renderizable{
         return _passable;
     }
 
-    public ArrayList<Entity> getEntityList(){
-        return _entity_list;
+    /********************************************************************************/
+    /* OTHER                                                                        */
+    /********************************************************************************/
+
+    @Override
+    public void render() {
+        // -> not implement the rendering up to having a class for sprites!!
+        return;
+    }
+
+    public void affect_player(Map_object player){
+        // -> Here it should be modified the features of the player (velocity, damage, collision damage, etc.)
+        // -> The signature of this function will change. It probably will have as argument a sort of Player-type object.
+    }
+
+    public void setAffectsPlayer(boolean affects_player){
+        _affects_player = affects_player;
+    }
+
+    public boolean affectsPlayer(){
+        return _affects_player;
     }
 
     public void addEntity(Entity object){
@@ -114,6 +122,10 @@ public class Block extends Map_object implements Map_object_renderizable{
     public void removeEntity(Entity object) throws MissingResourceException{
         if(!_entity_list.contains(object)) throw new MissingResourceException("Missing object in this block.", "Block", "");
         _entity_list.remove(object);
+    }
+
+    public ArrayList<Entity> getEntityList(){
+        return _entity_list;
     }
 
     public boolean contains(Entity entity){

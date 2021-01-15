@@ -14,6 +14,10 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
     private Pair<Integer, Integer> _velocity;
     private double _t;
 
+    /********************************************************************************/
+    /* CONSTRUCTORS                                                                 */
+    /********************************************************************************/
+
     Entity(int width, int height){
         super(width, height);
         _block_dimensions = null;
@@ -46,8 +50,28 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
         this.getRoom().addEntity(this);
     }
 
-    public void render(){
-        return;
+    /********************************************************************************/
+    /* PHYSICS AND MOVEMENT                                                         */
+    /********************************************************************************/
+
+    @Override
+    public void setCoordinates(Pair<Integer, Integer> coordinates){
+        if(this.getRoom() != null){
+            if(this.getBlock() != null) {
+                this.getBlock().removeEntity(this);
+            }
+        }
+        super.setCoordinates(coordinates);
+        if(this.getRoom() != null){
+            if(this.getBlock() != null) {
+                this.getBlock().addEntity(this);
+            }
+        }
+    }
+
+    @Override
+    public void setCoordinates(int x, int y){
+        this.setCoordinates(new Pair<Integer, Integer>(x, y));
     }
 
     public void update(double t){
@@ -118,8 +142,37 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
         return _velocity.getValue();
     }
 
+    public void move(double t){
+        int coord_X = this.getX();
+        int coord_Y = this.getY();
+        double delta_t = t-_t;
+        coord_X += (int) (this.getVelocityX()*delta_t);
+        coord_Y += (int) (this.getVelocityY()*delta_t);
+        this.setCoordinates(coord_X, coord_Y);
+        this._t = t;
+    }
+
+    public boolean checkCollision(Block target){
+        Shape target_hitbox = target.getHitbox();
+        Shape my_hitbox = this.getHitbox();
+        Shape intersection = Shape.intersect(target_hitbox, my_hitbox);
+        return !intersection.getLayoutBounds().isEmpty();
+    }
+
+    public boolean checkCollision(Map_object_dynamic target){
+        return false;
+    }
+
     public Pair<Integer, Integer> getVelocity(){
         return _velocity;
+    }
+
+    /********************************************************************************/
+    /* OTHER                                                                        */
+    /********************************************************************************/
+
+    public void render(){
+        return;
     }
 
     public void setRoom(Room room){
@@ -161,27 +214,6 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
         return surrounding_blocks;
     }
 
-    public void move(double t){
-        int coord_X = this.getX();
-        int coord_Y = this.getY();
-        double delta_t = t-_t;
-        coord_X += (int) (this.getVelocityX()*delta_t);
-        coord_Y += (int) (this.getVelocityY()*delta_t);
-        this.setCoordinates(coord_X, coord_Y);
-        this._t = t;
-    }
-
-    public boolean checkCollision(Block target){
-        Shape target_hitbox = target.getHitbox();
-        Shape my_hitbox = this.getHitbox();
-        Shape intersection = Shape.intersect(target_hitbox, my_hitbox);
-        return !intersection.getLayoutBounds().isEmpty();
-    }
-
-    public boolean checkCollision(Map_object_dynamic target){
-        return false;
-    }
-
     public Block getBlock(){
         if(_room == null){
             throw new MissingResourceException("Room is not defined!.", "Entity", "");
@@ -191,24 +223,4 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
         return this.getRoom().getBlock(room_coordinates);
     }
 
-
-    @Override
-    public void setCoordinates(Pair<Integer, Integer> coordinates){
-        if(this.getRoom() != null){
-            if(this.getBlock() != null) {
-                this.getBlock().removeEntity(this);
-            }
-        }
-        super.setCoordinates(coordinates);
-        if(this.getRoom() != null){
-            if(this.getBlock() != null) {
-                this.getBlock().addEntity(this);
-            }
-        }
-    }
-
-    @Override
-    public void setCoordinates(int x, int y){
-        this.setCoordinates(new Pair<Integer, Integer>(x, y));
-    }
 }
