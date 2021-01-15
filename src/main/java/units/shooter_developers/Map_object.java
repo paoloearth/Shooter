@@ -44,13 +44,13 @@ public class Map_object{
     public void setCoordinates(Pair<Integer, Integer> coordinates) throws IllegalArgumentException{
         int x = coordinates.getKey();
         int y = coordinates.getValue();
-
+        /*
         if(x<0 || x>=_width){
             throw new IllegalArgumentException("X coordinate (" + Integer.toString(x) + ") must be positive and lower than width (" + Integer.toString(_width) + ")");
         } else if (y<0 || y>=_height){
             throw new IllegalArgumentException("Y coordinate (" + Integer.toString(y) + ") must be positive and lower than height (" + Integer.toString(_height) + ")");
         }
-
+        */
         this._coordinates = coordinates;
         if(this.getHitbox() != null) {
             this._hitbox.setX(this.getX());

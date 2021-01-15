@@ -23,19 +23,6 @@ public class Function_To_Test {
         assertEquals(number, number);
     }
 
-    @ParameterizedTest
-    @CsvSource({"-1,0,IllegalArgumentException", "0,-1,IllegalArgumentException", "300000,0,IllegalArgumentException", "0, 123456, IllegalArgumentException"})
-    void Map_object_explodes_with_wrong_values(int coordX, int coordY, String exception){
-        Map_object example = new Map_object(1920, 1080);
-        try {
-            example.setCoordinates(coordX, coordY);
-            fail("exception not thrown");
-        } catch(Exception e) {
-            String error_name = e.getClass().getSimpleName();
-            assertEquals(error_name, exception);
-        }
-    }
-
     @Test
     void Block_dimensions_ratio_setting_and_getting_works(){
         Block testing_block = new Block(1920, 1080, 0.5, 0.5);
@@ -136,6 +123,24 @@ public class Function_To_Test {
     }
 
     @Test
+    void testCollisionEntityBlockY(){
+        Room room = new Room(100, 100, 10);
+        Entity test_entity1 = new Entity(100, 100, room);
+        test_entity1.setCoordinates(5, 5);
+        test_entity1.setHitbox(new Rectangle(2, 2));
+        test_entity1.setVelocity(0, 1);
+        room.getBlock(1, 0).setPassable(false);
+        room.getBlock(0, 0).addDynamicObject(test_entity1);
+
+        for(int t=1; t<=50; t++){
+            test_entity1.update(t);
+        }
+
+        boolean entity_not_crossed_block = test_entity1.getX() < room.getBlock(0, 1).getX();
+        assertEquals(true, entity_not_crossed_block);
+    }
+
+    @Test
     void testMovementWorksInPositiveDirections(){
         Room room = new Room(100, 100, 10);
         Entity test_entity1 = new Entity(100, 100, room);
@@ -147,11 +152,55 @@ public class Function_To_Test {
             test_entity1.move(t);
         }
 
-        Shape hola = new Rectangle(1, 1, 1, 1);
-        Shape adios = new Rectangle(5, 5, 1, 1);
-        var inter = Shape.intersect(hola, adios);
-
         boolean entity_not_throwed_block = (test_entity1.getX()==15) && (test_entity1.getY()==15);
         assertEquals(true, entity_not_throwed_block);
+    }
+
+    @Test
+    void testMovementWorksInNegativeDirections(){
+        Room room = new Room(100, 100, 10);
+        Entity test_entity1 = new Entity(100, 100, room);
+        test_entity1.setCoordinates(15, 15);
+        test_entity1.setHitbox(new Rectangle(2, 2));
+        test_entity1.setVelocity(-1, -1);
+        room.getBlock(0, 0).addDynamicObject(test_entity1);
+        for(int t=1; t<=10; t++){
+            test_entity1.move(t);
+        }
+
+        boolean entity_not_throwed_block = (test_entity1.getX()==5) && (test_entity1.getY()==5);
+        assertEquals(true, entity_not_throwed_block);
+    }
+
+    @Test
+    void OutOfUpperBounds(){
+        Room room = new Room(100, 100, 10);
+        Entity test_entity1 = new Entity(100, 100, room);
+        test_entity1.setCoordinates(95, 95);
+        test_entity1.setHitbox(new Rectangle(2, 2));
+        test_entity1.setVelocity(1, 1);
+        room.getBlock(1, 1).addDynamicObject(test_entity1);
+        for(int t=1; t<=10; t++){
+            test_entity1.move(t);
+        }
+
+        boolean entity_is_out_of_bounds = !((test_entity1.getX()<100) && (test_entity1.getY()<100));
+        assertEquals(true, entity_is_out_of_bounds);
+    }
+
+    @Test
+    void OutOfLowerBounds(){
+        Room room = new Room(100, 100, 10);
+        Entity test_entity1 = new Entity(100, 100, room);
+        test_entity1.setCoordinates(5, 5);
+        test_entity1.setHitbox(new Rectangle(2, 2));
+        test_entity1.setVelocity(-1, -1);
+        room.getBlock(1, 1).addDynamicObject(test_entity1);
+        for(int t=1; t<=10; t++){
+            test_entity1.move(t);
+        }
+
+        boolean entity_is_out_of_bounds = !((test_entity1.getX()>=0) && (test_entity1.getY()>=0));
+        assertEquals(true, entity_is_out_of_bounds);
     }
 }
