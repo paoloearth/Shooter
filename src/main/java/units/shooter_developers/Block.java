@@ -18,14 +18,13 @@ public class Block extends Map_object implements Map_object_renderizable{
     /********************************************************************************/
 
     public Block(){
-        super();
-        this.setPassable(true);
-        this.setAffectsPlayer(false);
-        _block_dimensions = new Pair<Integer, Integer>(this.getWidth(), this.getHeight());
+        this(800, 600);
     }
 
     public Block(int width, int height){
         super(width, height);
+        this.setPassable(true);
+        this.setAffectsPlayer(false);
         _block_dimensions = new Pair<Integer, Integer>(width, height);
         Rectangle hitbox = new Rectangle(this.getX(),  this.getY(), this.getBlockWidth(), this.getBlockHeight());
     }

@@ -116,7 +116,7 @@ public class Function_To_Test {
             test_entity1.update(t);
         }
 
-        boolean entity_not_crossed_block = test_entity1.getX() < room.getBlock(0, 1).getX();
+        boolean entity_not_crossed_block = test_entity1.getX() < 9;
         assertEquals(true, entity_not_crossed_block);
     }
 
@@ -134,7 +134,26 @@ public class Function_To_Test {
             test_entity1.update(t);
         }
 
-        boolean entity_not_crossed_block = test_entity1.getX() < room.getBlock(0, 1).getX();
+        boolean entity_not_crossed_block = test_entity1.getY() < 9;
+        assertEquals(true, entity_not_crossed_block);
+    }
+
+    @Test
+    void testCollisionEntityBlockXY(){
+        Room room = new Room(100, 100, 10);
+        Entity test_entity1 = new Entity(100, 100, room);
+        test_entity1.setCoordinates(5, 5);
+        test_entity1.setHitbox(new Rectangle(2, 2));
+        test_entity1.setVelocity(1, 1);
+        room.getBlock(1, 1).setPassable(false);
+        room.getBlock(0, 0).addEntity(test_entity1);
+
+        for(int t=1; t<=50; t++){
+            test_entity1.update(t);
+        }
+
+        boolean entity_not_crossed_block = test_entity1.getY() < 9;
+        entity_not_crossed_block = entity_not_crossed_block && (test_entity1.getY() < 9);
         assertEquals(true, entity_not_crossed_block);
     }
 
@@ -148,6 +167,22 @@ public class Function_To_Test {
         room.getBlock(0, 0).addEntity(test_entity1);
         for(int t=1; t<=10; t++){
             test_entity1.move(t);
+        }
+
+        boolean entity_not_throwed_block = (test_entity1.getX()==15) && (test_entity1.getY()==15);
+        assertEquals(true, entity_not_throwed_block);
+    }
+
+    @Test
+    void testMovementWorksInPositiveDirectionsWithUpdate(){
+        Room room = new Room(100, 100, 10);
+        Entity test_entity1 = new Entity(100, 100, room);
+        test_entity1.setCoordinates(5, 5);
+        test_entity1.setHitbox(new Rectangle(2, 2));
+        test_entity1.setVelocity(1, 1);
+        room.getBlock(0, 0).addEntity(test_entity1);
+        for(int t=1; t<=10; t++){
+            test_entity1.update(t);
         }
 
         boolean entity_not_throwed_block = (test_entity1.getX()==15) && (test_entity1.getY()==15);
@@ -216,7 +251,27 @@ public class Function_To_Test {
         assertEquals(true, entity_moved);
     }
 
-    /*
+    @Test
+    void testCollisionEntityEntityX(){
+        Room room = new Room(100, 100, 10);
+        Entity dynamic_entity = new Entity(100, 100, room);
+        Entity fixed_entity = new Entity(100, 100, room);
+        dynamic_entity.setCoordinates(5, 5);
+        fixed_entity.setCoordinates(15, 5);
+        dynamic_entity.setHitbox(new Rectangle(2, 2));
+        fixed_entity.setHitbox(new Rectangle(2, 2));
+        dynamic_entity.setVelocity(1, 0);
+        fixed_entity.setVelocity(0, 0);
+
+        for(int t=1; t<=50; t++){
+            dynamic_entity.update(t);
+            fixed_entity.update(t);
+        }
+
+        boolean entity_not_crossed_through = dynamic_entity.getX() <= 13;
+        assertEquals(true, entity_not_crossed_through);
+    }
+
     @Test
     void testCollisionEntityEntityY(){
         Room room = new Room(100, 100, 10);
@@ -228,15 +283,36 @@ public class Function_To_Test {
         fixed_entity.setHitbox(new Rectangle(2, 2));
         dynamic_entity.setVelocity(0, 1);
         fixed_entity.setVelocity(0, 0);
-        room.getBlock(0, 0).addEntity(dynamic_entity);
 
         for(int t=1; t<=50; t++){
             dynamic_entity.update(t);
             fixed_entity.update(t);
         }
 
-        boolean entity_not_crossed_through = dynamic_entity.getY() < fixed_entity.getY();
+        boolean entity_not_crossed_through = dynamic_entity.getY() <= 13;
         assertEquals(true, entity_not_crossed_through);
     }
-    */
+
+    @Test
+    void testCollisionEntityEntityXY(){
+        Room room = new Room(100, 100, 10);
+        Entity dynamic_entity = new Entity(100, 100, room);
+        Entity fixed_entity = new Entity(100, 100, room);
+        dynamic_entity.setCoordinates(5, 5);
+        fixed_entity.setCoordinates(15, 15);
+        dynamic_entity.setHitbox(new Rectangle(2, 2));
+        fixed_entity.setHitbox(new Rectangle(2, 2));
+        dynamic_entity.setVelocity(1, 1);
+        fixed_entity.setVelocity(0, 0);
+
+        for(int t=1; t<=15; t++){
+            dynamic_entity.update(t);
+            fixed_entity.update(t);
+        }
+
+        boolean entity_not_crossed_through = dynamic_entity.getY() <= 13;
+        entity_not_crossed_through = entity_not_crossed_through && (dynamic_entity.getX() <= 13);
+        assertEquals(true, entity_not_crossed_through);
+    }
+
 }

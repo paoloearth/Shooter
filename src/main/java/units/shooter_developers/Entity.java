@@ -1,5 +1,6 @@
 package units.shooter_developers;
 
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.util.Pair;
 
@@ -80,54 +81,99 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
     }
 
     public void update(double t){
-        boolean legal_movement_X = true;
-        boolean legal_movement_Y = true;
+        Pair<Boolean, Boolean> legal_movements = new Pair<Boolean, Boolean>(true, true);
 
-        Entity copy = new Entity(this);
-        int old_X = copy.getX();
-        int old_Y = copy.getY();
-        copy.move(t);
-        int new_X = copy.getX();
-        int new_Y = copy.getY();
+        int old_X = this.getX();
+        int old_Y = this.getY();
+        this.move(t);
+        int new_X = this.getX();
+        int new_Y = this.getY();
+        this.setCoordinates(old_X, old_Y);
 
-        var a = this.getSurroundingBlocks();
+        Pair<Integer, Integer> old_coordinates = new Pair<>(old_X, old_Y);
+        Pair<Integer, Integer> new_coordinates = new Pair<>(new_X, new_Y);
+
+        Rectangle hitbox = this.getHitbox();
+
         for(Block block:this.getSurroundingBlocks()){
             if(!block.isPassable()){
+                legal_movements = this.testCollisionInDirection(block.getHitbox(),
+                        old_coordinates, new_coordinates,
+                        true, false,
+                        legal_movements);
 
-                copy.setCoordinates(new_X, old_Y);
-                if(copy.checkCollision(block)){
-                    legal_movement_X = false;
-                }
-                copy.setCoordinates(old_X, new_Y);
-                if(copy.checkCollision(block)){
-                    legal_movement_Y = false;
-                }
+                legal_movements = this.testCollisionInDirection(block.getHitbox(),
+                        old_coordinates, new_coordinates,
+                        false, true,
+                        legal_movements);
+
+
+                legal_movements = this.testCollisionInDirection(block.getHitbox(),
+                        old_coordinates, new_coordinates,
+                        true, true,
+                        legal_movements);
 
             } else {
                 var entity_list = block.getEntityList();
                 var entity_iterator = entity_list.iterator();
                 while(entity_iterator.hasNext()){
                     var entity = entity_iterator.next();
-                    if((legal_movement_X || legal_movement_Y) && !this.equals(entity)){
-                        copy.setCoordinates(new_X, old_Y);
-                        if(copy.checkCollision(entity)){
-                            legal_movement_X = false;
-                        }
-                        copy.setCoordinates(old_X, new_Y);
-                        if(copy.checkCollision(entity)){
-                            legal_movement_Y = false;
-                        }
+                    if((legal_movements.getKey() || legal_movements.getValue()) && !this.equals(entity)){
+
+                        legal_movements = this.testCollisionInDirection(entity.getHitbox(),
+                                old_coordinates, new_coordinates,
+                                true, false,
+                                legal_movements);
+
+                        legal_movements = this.testCollisionInDirection(entity.getHitbox(),
+                                old_coordinates, new_coordinates,
+                                false, true,
+                                legal_movements);
+
+                        legal_movements = this.testCollisionInDirection(entity.getHitbox(),
+                                old_coordinates, new_coordinates,
+                                true, true,
+                                legal_movements);
                     }
                 }
             }
         }
 
-        this.getRoom().removeEntity(copy);
-
-        if(!legal_movement_X) new_X = old_X;
-        if(!legal_movement_Y) new_Y = old_Y;
+        if(!legal_movements.getKey()) new_X = old_X;
+        if(!legal_movements.getValue()) new_Y = old_Y;
         this.setCoordinates(new_X, new_Y);
-        this._t = copy._t;
+        this._t = t;
+    }
+
+    private Pair<Boolean, Boolean> testCollisionInDirection(Rectangle target_hitbox,
+                                             Pair<Integer, Integer> old_coordinates, Pair<Integer, Integer> new_coordinates,
+                                             boolean consider_new_X, boolean consider_new_Y,
+                                                            Pair<Boolean, Boolean> legal_movements){
+        var hitbox = this.getHitbox();
+        boolean legal_movement_X = legal_movements.getKey();
+        boolean legal_movement_Y = legal_movements.getValue();
+
+        hitbox.setX(old_coordinates.getKey());
+        hitbox.setY(old_coordinates.getValue());
+
+        var new_x = new_coordinates.getKey();
+        var new_y = new_coordinates.getValue();
+
+        if(consider_new_X) hitbox.setX(new_x);
+        if(consider_new_Y) hitbox.setY(new_y);
+
+        if(this.checkCollision(target_hitbox)){
+            if(consider_new_X && consider_new_Y){
+                legal_movement_X = false;
+                legal_movement_Y = false;
+            } else if(consider_new_X){
+                legal_movement_X = false;
+            } else if(consider_new_Y){
+                legal_movement_Y = false;
+            }
+        }
+
+        return new Pair<Boolean, Boolean>(legal_movement_X, legal_movement_Y);
     }
 
     public void setVelocity(int velocityX, int velocityY){
@@ -159,6 +205,12 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
 
     public boolean checkCollision(Block target){
         Shape target_hitbox = target.getHitbox();
+        Shape my_hitbox = this.getHitbox();
+        Shape intersection = Shape.intersect(target_hitbox, my_hitbox);
+        return !intersection.getLayoutBounds().isEmpty();
+    }
+
+    public boolean checkCollision(Shape target_hitbox){
         Shape my_hitbox = this.getHitbox();
         Shape intersection = Shape.intersect(target_hitbox, my_hitbox);
         return !intersection.getLayoutBounds().isEmpty();

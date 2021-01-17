@@ -3,7 +3,6 @@ package units.shooter_developers;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.util.Pair;
 
 interface Map_object_renderizable{
@@ -78,7 +77,7 @@ public class Map_object{
         this._hitbox = hitbox;
     }
 
-    public Shape getHitbox(){
+    public Rectangle getHitbox(){
         return this._hitbox;
     }
 
