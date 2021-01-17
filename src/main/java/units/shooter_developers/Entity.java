@@ -81,8 +81,7 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
     }
 
     public void update(double t){
-        boolean legal_movement_X = true;
-        boolean legal_movement_Y = true;
+        Pair<Boolean, Boolean> legal_movements = new Pair<Boolean, Boolean>(true, true);
 
         int old_X = this.getX();
         int old_Y = this.getY();
@@ -91,59 +90,90 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
         int new_Y = this.getY();
         this.setCoordinates(old_X, old_Y);
 
+        Pair<Integer, Integer> old_coordinates = new Pair<>(old_X, old_Y);
+        Pair<Integer, Integer> new_coordinates = new Pair<>(new_X, new_Y);
+
         Rectangle hitbox = this.getHitbox();
 
         for(Block block:this.getSurroundingBlocks()){
             if(!block.isPassable()){
+                legal_movements = this.testCollisionInDirection(block.getHitbox(),
+                        old_coordinates, new_coordinates,
+                        true, false,
+                        legal_movements);
 
-                hitbox.setX(new_X);
-                hitbox.setX(old_Y);
-                if(this.checkCollision(block)){
-                    legal_movement_X = false;
-                }
-                hitbox.setX(old_X);
-                hitbox.setY(new_Y);
-                if(this.checkCollision(block)){
-                    legal_movement_Y = false;
-                }
-                hitbox.setX(new_X);
-                hitbox.setY(new_Y);
-                if(this.checkCollision(block)){
-                    legal_movement_X = false;
-                    legal_movement_Y = false;
-                }
+                legal_movements = this.testCollisionInDirection(block.getHitbox(),
+                        old_coordinates, new_coordinates,
+                        false, true,
+                        legal_movements);
+
+
+                legal_movements = this.testCollisionInDirection(block.getHitbox(),
+                        old_coordinates, new_coordinates,
+                        true, true,
+                        legal_movements);
 
             } else {
                 var entity_list = block.getEntityList();
                 var entity_iterator = entity_list.iterator();
                 while(entity_iterator.hasNext()){
                     var entity = entity_iterator.next();
-                    if((legal_movement_X || legal_movement_Y) && !this.equals(entity)){
-                        hitbox.setX(new_X);
-                        hitbox.setX(old_Y);
-                        if(this.checkCollision(entity)){
-                            legal_movement_X = false;
-                        }
-                        hitbox.setX(old_X);
-                        hitbox.setY(new_Y);
-                        if(this.checkCollision(entity)){
-                            legal_movement_Y = false;
-                        }
-                        hitbox.setX(new_X);
-                        hitbox.setY(new_Y);
-                        if(this.checkCollision(entity)){
-                            legal_movement_X = false;
-                            legal_movement_Y = false;
-                        }
+                    if((legal_movements.getKey() || legal_movements.getValue()) && !this.equals(entity)){
+
+                        legal_movements = this.testCollisionInDirection(entity.getHitbox(),
+                                old_coordinates, new_coordinates,
+                                true, false,
+                                legal_movements);
+
+                        legal_movements = this.testCollisionInDirection(entity.getHitbox(),
+                                old_coordinates, new_coordinates,
+                                false, true,
+                                legal_movements);
+
+                        legal_movements = this.testCollisionInDirection(entity.getHitbox(),
+                                old_coordinates, new_coordinates,
+                                true, true,
+                                legal_movements);
                     }
                 }
             }
         }
 
-        if(!legal_movement_X) new_X = old_X;
-        if(!legal_movement_Y) new_Y = old_Y;
+        if(!legal_movements.getKey()) new_X = old_X;
+        if(!legal_movements.getValue()) new_Y = old_Y;
         this.setCoordinates(new_X, new_Y);
         this._t = t;
+    }
+
+    private Pair<Boolean, Boolean> testCollisionInDirection(Rectangle target_hitbox,
+                                             Pair<Integer, Integer> old_coordinates, Pair<Integer, Integer> new_coordinates,
+                                             boolean consider_new_X, boolean consider_new_Y,
+                                                            Pair<Boolean, Boolean> legal_movements){
+        var hitbox = this.getHitbox();
+        boolean legal_movement_X = legal_movements.getKey();
+        boolean legal_movement_Y = legal_movements.getValue();
+
+        hitbox.setX(old_coordinates.getKey());
+        hitbox.setY(old_coordinates.getValue());
+
+        var new_x = new_coordinates.getKey();
+        var new_y = new_coordinates.getValue();
+
+        if(consider_new_X) hitbox.setX(new_x);
+        if(consider_new_Y) hitbox.setY(new_y);
+
+        if(this.checkCollision(target_hitbox)){
+            if(consider_new_X && consider_new_Y){
+                legal_movement_X = false;
+                legal_movement_Y = false;
+            } else if(consider_new_X){
+                legal_movement_X = false;
+            } else if(consider_new_Y){
+                legal_movement_Y = false;
+            }
+        }
+
+        return new Pair<Boolean, Boolean>(legal_movement_X, legal_movement_Y);
     }
 
     public void setVelocity(int velocityX, int velocityY){
