@@ -1,5 +1,6 @@
 package units.shooter_developers;
 
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.util.Pair;
 
@@ -83,23 +84,32 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
         boolean legal_movement_X = true;
         boolean legal_movement_Y = true;
 
-        Entity copy = new Entity(this);
-        int old_X = copy.getX();
-        int old_Y = copy.getY();
-        copy.move(t);
-        int new_X = copy.getX();
-        int new_Y = copy.getY();
+        int old_X = this.getX();
+        int old_Y = this.getY();
+        this.move(t);
+        int new_X = this.getX();
+        int new_Y = this.getY();
+        this.setCoordinates(old_X, old_Y);
 
-        var a = this.getSurroundingBlocks();
+        Rectangle hitbox = this.getHitbox();
+
         for(Block block:this.getSurroundingBlocks()){
             if(!block.isPassable()){
 
-                copy.setCoordinates(new_X, old_Y);
-                if(copy.checkCollision(block)){
+                hitbox.setX(new_X);
+                hitbox.setX(old_Y);
+                if(this.checkCollision(block)){
                     legal_movement_X = false;
                 }
-                copy.setCoordinates(old_X, new_Y);
-                if(copy.checkCollision(block)){
+                hitbox.setX(old_X);
+                hitbox.setY(new_Y);
+                if(this.checkCollision(block)){
+                    legal_movement_Y = false;
+                }
+                hitbox.setX(new_X);
+                hitbox.setY(new_Y);
+                if(this.checkCollision(block)){
+                    legal_movement_X = false;
                     legal_movement_Y = false;
                 }
 
@@ -109,12 +119,20 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
                 while(entity_iterator.hasNext()){
                     var entity = entity_iterator.next();
                     if((legal_movement_X || legal_movement_Y) && !this.equals(entity)){
-                        copy.setCoordinates(new_X, old_Y);
-                        if(copy.checkCollision(entity)){
+                        hitbox.setX(new_X);
+                        hitbox.setX(old_Y);
+                        if(this.checkCollision(entity)){
                             legal_movement_X = false;
                         }
-                        copy.setCoordinates(old_X, new_Y);
-                        if(copy.checkCollision(entity)){
+                        hitbox.setX(old_X);
+                        hitbox.setY(new_Y);
+                        if(this.checkCollision(entity)){
+                            legal_movement_Y = false;
+                        }
+                        hitbox.setX(new_X);
+                        hitbox.setY(new_Y);
+                        if(this.checkCollision(entity)){
+                            legal_movement_X = false;
                             legal_movement_Y = false;
                         }
                     }
@@ -122,12 +140,10 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
             }
         }
 
-        this.getRoom().removeEntity(copy);
-
         if(!legal_movement_X) new_X = old_X;
         if(!legal_movement_Y) new_Y = old_Y;
         this.setCoordinates(new_X, new_Y);
-        this._t = copy._t;
+        this._t = t;
     }
 
     public void setVelocity(int velocityX, int velocityY){
@@ -159,6 +175,12 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
 
     public boolean checkCollision(Block target){
         Shape target_hitbox = target.getHitbox();
+        Shape my_hitbox = this.getHitbox();
+        Shape intersection = Shape.intersect(target_hitbox, my_hitbox);
+        return !intersection.getLayoutBounds().isEmpty();
+    }
+
+    public boolean checkCollision(Shape target_hitbox){
         Shape my_hitbox = this.getHitbox();
         Shape intersection = Shape.intersect(target_hitbox, my_hitbox);
         return !intersection.getLayoutBounds().isEmpty();
