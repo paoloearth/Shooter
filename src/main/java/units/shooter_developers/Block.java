@@ -26,16 +26,13 @@ public class Block extends Map_object implements Map_object_renderizable{
         this.setPassable(true);
         this.setAffectsPlayer(false);
         _block_dimensions = new Pair<Integer, Integer>(width, height);
+        this._entity_list = new ArrayList<Entity>();
         Rectangle hitbox = new Rectangle(this.getX(),  this.getY(), this.getBlockWidth(), this.getBlockHeight());
     }
 
     public Block(int width, int height, Pair<Double, Double> block_dimensions_ratio){
         this(width, height);
         this.setBlockDimensionsRatio(block_dimensions_ratio);
-        Rectangle hitbox = new Rectangle(this.getX(),  this.getY(), this.getBlockWidth(), this.getBlockHeight());
-        this.setHitbox(hitbox);
-
-        this._entity_list = new ArrayList<Entity>();
     }
 
     public Block(int width, int height, double block_width_ratio, double block_height_ratio){
@@ -61,6 +58,9 @@ public class Block extends Map_object implements Map_object_renderizable{
                 (int)(block_width_ratio*this.getWidth()),
                 (int)(block_height_ratio*this.getHeight()));
         _block_dimensions = block_dimensions;
+
+        Rectangle new_hitbox = new Rectangle(this.getBlockWidth(), this.getBlockHeight());
+        this.setHitbox(new_hitbox);
     }
 
     public void setBlockDimensionsRatio(double block_width_ratio, double block_height_ratio){
@@ -135,9 +135,5 @@ public class Block extends Map_object implements Map_object_renderizable{
 
     public ArrayList<Entity> getEntityList(){
         return _entity_list;
-    }
-
-    public boolean contains(Entity entity){
-        return this.getEntityList().contains(entity);
     }
 }

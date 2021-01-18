@@ -10,7 +10,6 @@ import java.util.MissingResourceException;
 import static java.lang.Math.floor;
 
 public class Entity extends Map_object implements Map_object_renderizable, Map_object_dynamic{
-    private Pair<Integer, Integer> _block_dimensions;
     private Room _room;
     private Pair<Integer, Integer> _velocity;
     private double _t;
@@ -25,15 +24,9 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
 
     Entity(int width, int height){
         super(width, height);
-        _block_dimensions = null;
         _room = null;
         _t = 0;
         this.setCoordinates(0, 0);
-    }
-
-    Entity(int width, int height, Pair<Integer, Integer> block_dimensions){
-        this(width, height);
-        _block_dimensions = block_dimensions;
     }
 
     Entity(int width, int height, Room room){
@@ -41,14 +34,8 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
         this.setRoom(room);
     }
 
-    Entity(int width, int height, Pair<Integer, Integer> block_dimensions, Room room){
-        this(width, height, room);
-        _block_dimensions = block_dimensions;
-    }
-
     Entity(Entity object){
         super(object);
-        _block_dimensions = object._block_dimensions;
         _room = object._room;
         _t = object._t;
         _velocity = object._velocity;
@@ -93,8 +80,6 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
         Pair<Integer, Integer> old_coordinates = new Pair<>(old_X, old_Y);
         Pair<Integer, Integer> new_coordinates = new Pair<>(new_X, new_Y);
 
-        Rectangle hitbox = this.getHitbox();
-
         for(Block block:this.getSurroundingBlocks()){
             if(!block.isPassable()){
                 legal_movements = this.testCollisionInDirection(block.getHitbox(),
@@ -114,10 +99,9 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
                         legal_movements);
 
             } else {
+
                 var entity_list = block.getEntityList();
-                var entity_iterator = entity_list.iterator();
-                while(entity_iterator.hasNext()){
-                    var entity = entity_iterator.next();
+                for(var entity:entity_list){
                     if((legal_movements.getKey() || legal_movements.getValue()) && !this.equals(entity)){
 
                         legal_movements = this.testCollisionInDirection(entity.getHitbox(),
@@ -205,19 +189,18 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
 
     public boolean checkCollision(Block target){
         Shape target_hitbox = target.getHitbox();
-        Shape my_hitbox = this.getHitbox();
-        Shape intersection = Shape.intersect(target_hitbox, my_hitbox);
-        return !intersection.getLayoutBounds().isEmpty();
+        return this.checkCollision(target.getHitbox());
+    }
+
+    public boolean checkCollision(Entity target){
+        Shape target_hitbox = target.getHitbox();
+        return this.checkCollision(target.getHitbox());
     }
 
     public boolean checkCollision(Shape target_hitbox){
         Shape my_hitbox = this.getHitbox();
         Shape intersection = Shape.intersect(target_hitbox, my_hitbox);
         return !intersection.getLayoutBounds().isEmpty();
-    }
-
-    public boolean checkCollision(Map_object_dynamic target){
-        return false;
     }
 
     public Pair<Integer, Integer> getVelocity(){
@@ -242,14 +225,16 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
     }
 
     public Pair<Integer, Integer> computeRoomCoordinates(){
-        int col = (int) floor(this.getX()/this.getRoom().getBlockWidth());
-        int row = (int) floor(this.getY()/this.getRoom().getBlockHeight());
+        int col = (int) floor((double)this.getX()/this.getRoom().getBlockWidth());
+        int row = (int) floor((double)this.getY()/this.getRoom().getBlockHeight());
 
         var coordinates = new Pair<Integer, Integer>(row, col);
         return coordinates;
     }
 
     public ArrayList<Block> getSurroundingBlocks(){
+        if(_room == null) throw new MissingResourceException("Room not found!.", "Entity", "");
+
         ArrayList<Block> surrounding_blocks= new ArrayList<Block>();
 
         var my_coordinates = this.computeRoomCoordinates();
@@ -273,7 +258,7 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
 
     public Block getBlock(){
         if(_room == null){
-            throw new MissingResourceException("Room is not defined!.", "Entity", "");
+            throw new MissingResourceException("Room not found!.", "Entity", "");
         }
 
         var room_coordinates = this.computeRoomCoordinates();

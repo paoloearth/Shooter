@@ -22,6 +22,10 @@ public class Map_object{
     private int _width;
     private int _height;
 
+    /********************************************************************************/
+    /* CONSTRUCTORS                                                                 */
+    /********************************************************************************/
+
     public Map_object(){
         this.setCoordinates(0, 0);
         this._sprite = null;
@@ -44,14 +48,15 @@ public class Map_object{
         _height = map_object._height;
     }
 
+    /********************************************************************************/
+    /* SET/GET METHODS                                                              */
+    /********************************************************************************/
+
     public void setCoordinates(int x, int y) throws IllegalArgumentException {
         this.setCoordinates(new Pair<Integer, Integer>(x, y));
     }
 
     public void setCoordinates(Pair<Integer, Integer> coordinates){
-        int x = coordinates.getKey();
-        int y = coordinates.getValue();
-
         this._coordinates = coordinates;
         if(this.getHitbox() != null) {
             this._hitbox.setX(this.getX());
@@ -81,31 +86,11 @@ public class Map_object{
         return this._hitbox;
     }
 
-    public void setSprite(String path){
-        Image image = new Image(path);
-        this._sprite = new ImageView(image);
-    }
-
-    public void setSprite(String path, double sprite_width_ratio, double sprite_height_ratio){
-        Image image = new Image(path);
-        this._sprite = new ImageView(image);
-        this.resizeSprite(sprite_width_ratio, sprite_height_ratio);
-    }
-
-    public void resizeSprite(double sprite_width_ratio, double sprite_height_ratio){
-        _sprite.resize(sprite_width_ratio*_width, sprite_height_ratio*_height);
-        return;
-    }
-
     public int getWidth(){
         return _width;
     }
 
     public int getHeight(){
         return _height;
-    }
-
-    public ImageView getSprite(){
-        return this._sprite;
     }
 }

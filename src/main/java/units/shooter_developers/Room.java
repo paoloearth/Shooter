@@ -37,10 +37,9 @@ public class Room implements Map_object_renderizable {
         this(width, height);
         _nrows = nrows;
 
-        //_nrows is set to get blocks with square dimensions
+        //_nrows is set to generate square blocks
         int height_per_block = (int) floor((double)_height/_nrows);
-        int ncols = (int) floor(_width/height_per_block);
-        _ncols = ncols;
+        _ncols = (int) floor((double)_width/height_per_block);
 
         this.generateBlockMatrix();
         this.initializeBlocks();
