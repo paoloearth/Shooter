@@ -5,8 +5,10 @@ import javafx.scene.shape.Shape;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.MissingResourceException;
 
+import static java.lang.Math.abs;
 import static java.lang.Math.floor;
 
 public class Entity extends Map_object implements Map_object_renderizable, Map_object_dynamic{
@@ -67,12 +69,12 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
         this.setCoordinates(new Pair<Integer, Integer>(x, y));
     }
 
-    public void update(double t){
+    public void update(double delta_t){
         Pair<Boolean, Boolean> legal_movements = new Pair<Boolean, Boolean>(true, true);
 
         int old_X = this.getX();
         int old_Y = this.getY();
-        this.move(t);
+        this.move(delta_t);
         int new_X = this.getX();
         int new_Y = this.getY();
         this.setCoordinates(old_X, old_Y);
@@ -80,53 +82,56 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
         Pair<Integer, Integer> old_coordinates = new Pair<>(old_X, old_Y);
         Pair<Integer, Integer> new_coordinates = new Pair<>(new_X, new_Y);
 
-        for(Block block:this.getSurroundingBlocks()){
-            if(!block.isPassable()){
-                legal_movements = this.testCollisionInDirection(block.getHitbox(),
-                        old_coordinates, new_coordinates,
-                        true, false,
-                        legal_movements);
-
-                legal_movements = this.testCollisionInDirection(block.getHitbox(),
-                        old_coordinates, new_coordinates,
-                        false, true,
-                        legal_movements);
-
-
-                legal_movements = this.testCollisionInDirection(block.getHitbox(),
-                        old_coordinates, new_coordinates,
-                        true, true,
-                        legal_movements);
-
-            } else {
-
-                var entity_list = block.getEntityList();
-                for(var entity:entity_list){
-                    if((legal_movements.getKey() || legal_movements.getValue()) && !this.equals(entity)){
-
-                        legal_movements = this.testCollisionInDirection(entity.getHitbox(),
-                                old_coordinates, new_coordinates,
-                                true, false,
-                                legal_movements);
-
-                        legal_movements = this.testCollisionInDirection(entity.getHitbox(),
-                                old_coordinates, new_coordinates,
-                                false, true,
-                                legal_movements);
-
-                        legal_movements = this.testCollisionInDirection(entity.getHitbox(),
-                                old_coordinates, new_coordinates,
-                                true, true,
-                                legal_movements);
-                    }
-                }
-            }
+        this.setCoordinates(new_X, new_Y);
+        long collided = this.getRoom().getBlockMatrix().parallelStream()
+                .flatMap(Collection::parallelStream)
+                .filter(b -> b.isNeighbourOf(this))
+                .filter(b -> !b.isPassable())
+                .filter(b -> checkCollision(this))
+                .count();
+        if(collided > 0){
+            this.setCoordinates(old_X, old_Y);
+            return;
         }
 
-        if(!legal_movements.getKey()) new_X = old_X;
-        if(!legal_movements.getValue()) new_Y = old_Y;
+        //implementacion con streams y sin lista de entidades
         this.setCoordinates(new_X, new_Y);
-        this._t = t;
+        collided = this.getRoom().getEntityList().parallelStream()
+                .filter(e -> e.isNeighbourOf(this))
+                .filter(e -> checkCollision(this))
+                .count();
+
+        if(collided > 0) this.setCoordinates(old_X, old_Y);
+
+    }
+
+    boolean isNeighbourOf(Entity neighbour_candidate){
+        if(neighbour_candidate == this)
+            return false;
+
+        var my_block_coordinates = this.getRoom().toBlockCoordinates(this.getCoordinates());
+        var neighbour_block_coordinates = this.getRoom().toBlockCoordinates(this.getCoordinates());
+
+        var diference_x = abs(my_block_coordinates.getKey() - neighbour_block_coordinates.getKey());
+        var diference_y = abs(my_block_coordinates.getValue() - neighbour_block_coordinates.getValue());
+
+        if((diference_x <= 1) && (diference_y <= 1))
+            return true;
+        else return false;
+
+    }
+
+    boolean isNeighbourOf(Block neighbour_candidate){
+        var my_block_coordinates = this.getRoom().toBlockCoordinates(this.getCoordinates());
+        var neighbour_block_coordinates = this.getRoom().toBlockCoordinates(this.getCoordinates());
+
+        var diference_x = abs(my_block_coordinates.getKey() - neighbour_block_coordinates.getKey());
+        var diference_y = abs(my_block_coordinates.getValue() - neighbour_block_coordinates.getValue());
+
+        if((diference_x <= 1) && (diference_y <= 1))
+            return true;
+        else return false;
+
     }
 
     private Pair<Boolean, Boolean> testCollisionInDirection(Rectangle target_hitbox,
@@ -177,14 +182,12 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
         return _velocity.getValue();
     }
 
-    public void move(double t){
+    public void move(double delta_t){
         int coord_X = this.getX();
         int coord_Y = this.getY();
-        double delta_t = t-_t;
         coord_X += (int) (this.getVelocityX()*delta_t);
         coord_Y += (int) (this.getVelocityY()*delta_t);
         this.setCoordinates(coord_X, coord_Y);
-        this._t = t;
     }
 
     public boolean checkCollision(Block target){

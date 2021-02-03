@@ -3,6 +3,7 @@ package units.shooter_developers;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.MissingResourceException;
 
 import static java.lang.Math.floor;
@@ -96,6 +97,7 @@ public class Room implements Map_object_renderizable {
                 int coord_X = j*this.getBlockWidth();
                 int coord_Y = i*this.getBlockHeight();
                 block.setCoordinates(coord_X, coord_Y);
+                block.setRoom(this);
                 this.setBlock(i, j, block);
             }
         }
@@ -110,6 +112,7 @@ public class Room implements Map_object_renderizable {
     public Block getBlock(Pair<Integer, Integer> block_coordinates){
         int row = block_coordinates.getKey();
         int col = block_coordinates.getValue();
+
         if(((row >= _nrows-1) || (col >= _ncols-1)) || ((row < 0) || (col < 0))){
             return null;
         }
@@ -129,12 +132,21 @@ public class Room implements Map_object_renderizable {
         return((int) floor((double)_height/_nrows));
     }
 
+    public ArrayList<ArrayList<Block>> getBlockMatrix(){
+        return _block_matrix;
+    }
+
     /********************************************************************************/
     /* OTHER                                                                        */
     /********************************************************************************/
 
     public void render(){
         return;
+    }
+
+    public void update(double delta_t){
+        this._entity_list.parallelStream()
+                .forEach(e -> e.update(delta_t));
     }
 
     public int getNumberOfRows(){
@@ -159,6 +171,10 @@ public class Room implements Map_object_renderizable {
 
     public int getHeight(){
         return this._height;
+    }
+
+    ArrayList<Entity> getEntityList(){
+        return this._entity_list;
     }
 
 }

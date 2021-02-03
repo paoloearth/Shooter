@@ -1,6 +1,5 @@
 package units.shooter_developers;
 
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
@@ -10,7 +9,7 @@ interface Map_object_renderizable{
 }
 
 interface Map_object_dynamic{
-    void update(double t);
+    void update(double delta_t);
     public void setCoordinates(Pair<Integer, Integer> coordinates);
     public Pair<Integer, Integer> getCoordinates();
 }
@@ -51,6 +50,13 @@ public class Map_object{
     /********************************************************************************/
     /* SET/GET METHODS                                                              */
     /********************************************************************************/
+    public void copyFrom(Map_object map_object){
+        this._width = map_object._width;
+        this._height = map_object._height;
+        this._hitbox = map_object._hitbox;
+        this._sprite = map_object._sprite;
+        this._coordinates = map_object._coordinates;
+    }
 
     public void setCoordinates(int x, int y) throws IllegalArgumentException {
         this.setCoordinates(new Pair<Integer, Integer>(x, y));
