@@ -6,12 +6,15 @@ import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.MissingResourceException;
 
+import static java.lang.Math.abs;
+
 public class Block extends Map_object implements Map_object_renderizable{
 
     private boolean _passable;
     private boolean _affects_player;
     private Pair<Integer, Integer> _block_dimensions;
     private ArrayList<Entity> _entity_list;
+    private Room _room;
 
     /********************************************************************************/
     /* CONSTRUCTORS                                                                 */
@@ -42,6 +45,15 @@ public class Block extends Map_object implements Map_object_renderizable{
     /********************************************************************************/
     /* SET/GET ATTRIBUTES                                                           */
     /********************************************************************************/
+
+    public void copyFrom(Block block){
+        super.copyFrom(block);
+        this._entity_list = block._entity_list;
+        this._passable = block._passable;
+        this._block_dimensions = block._block_dimensions;
+        this._affects_player = block._affects_player;
+
+    }
 
     public void setBlockDimensionsRatio(Pair<Double, Double> block_dimensions_ratio){
 
@@ -101,6 +113,14 @@ public class Block extends Map_object implements Map_object_renderizable{
         return _passable;
     }
 
+    public void setRoom(Room room) {
+        _room = room;
+    }
+
+    public Room getRoom() {
+        return this._room;
+    }
+
     /********************************************************************************/
     /* OTHER                                                                        */
     /********************************************************************************/
@@ -135,5 +155,35 @@ public class Block extends Map_object implements Map_object_renderizable{
 
     public ArrayList<Entity> getEntityList(){
         return _entity_list;
+    }
+
+    boolean isNeighbourOf(Block neighbour_candidate){
+        if(neighbour_candidate == this)
+            return false;
+
+        var my_block_coordinates = this.getRoom().toBlockCoordinates(this.getCoordinates());
+        var neighbour_block_coordinates = this.getRoom().toBlockCoordinates(this.getCoordinates());
+
+        var diference_x = abs(my_block_coordinates.getKey() - neighbour_block_coordinates.getKey());
+        var diference_y = abs(my_block_coordinates.getValue() - neighbour_block_coordinates.getValue());
+
+        if((diference_x <= 1) && (diference_y <= 1))
+            return true;
+        else return false;
+
+    }
+
+    boolean isNeighbourOf(Entity neighbour_candidate){
+
+        var my_block_coordinates = this.getRoom().toBlockCoordinates(this.getCoordinates());
+        var neighbour_block_coordinates = this.getRoom().toBlockCoordinates(this.getCoordinates());
+
+        var diference_x = abs(my_block_coordinates.getKey() - neighbour_block_coordinates.getKey());
+        var diference_y = abs(my_block_coordinates.getValue() - neighbour_block_coordinates.getValue());
+
+        if((diference_x <= 1) && (diference_y <= 1))
+            return true;
+        else return false;
+
     }
 }

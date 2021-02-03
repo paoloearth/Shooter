@@ -9,6 +9,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -113,7 +115,7 @@ public class Function_To_Test {
         room.getBlock(0, 1).setPassable(false);
 
         for(int t=1; t<=50; t++){
-            test_entity1.update(t);
+            test_entity1.update(1);
         }
 
         boolean entity_not_crossed_block = test_entity1.getX() < 9;
@@ -131,7 +133,7 @@ public class Function_To_Test {
         room.getBlock(0, 0).addEntity(test_entity1);
 
         for(int t=1; t<=50; t++){
-            test_entity1.update(t);
+            test_entity1.update(1);
         }
 
         boolean entity_not_crossed_block = test_entity1.getY() < 9;
@@ -149,7 +151,7 @@ public class Function_To_Test {
         room.getBlock(0, 0).addEntity(test_entity1);
 
         for(int t=1; t<=50; t++){
-            test_entity1.update(t);
+            test_entity1.update(1);
         }
 
         boolean entity_not_crossed_block = test_entity1.getY() < 9;
@@ -166,7 +168,7 @@ public class Function_To_Test {
         test_entity1.setVelocity(1, 1);
         room.getBlock(0, 0).addEntity(test_entity1);
         for(int t=1; t<=10; t++){
-            test_entity1.move(t);
+            test_entity1.move(1);
         }
 
         boolean entity_not_throwed_block = (test_entity1.getX()==15) && (test_entity1.getY()==15);
@@ -182,7 +184,7 @@ public class Function_To_Test {
         test_entity1.setVelocity(1, 1);
         room.getBlock(0, 0).addEntity(test_entity1);
         for(int t=1; t<=10; t++){
-            test_entity1.update(t);
+            test_entity1.update(1);
         }
 
         boolean entity_not_throwed_block = (test_entity1.getX()==15) && (test_entity1.getY()==15);
@@ -198,7 +200,7 @@ public class Function_To_Test {
         test_entity1.setVelocity(-1, -1);
         room.getBlock(0, 0).addEntity(test_entity1);
         for(int t=1; t<=10; t++){
-            test_entity1.move(t);
+            test_entity1.move(1);
         }
 
         boolean entity_not_throwed_block = (test_entity1.getX()==5) && (test_entity1.getY()==5);
@@ -214,7 +216,7 @@ public class Function_To_Test {
         test_entity1.setVelocity(1, 1);
         room.getBlock(1, 1).addEntity(test_entity1);
         for(int t=1; t<=10; t++){
-            test_entity1.move(t);
+            test_entity1.move(1);
         }
 
         boolean entity_is_out_of_bounds = !((test_entity1.getX()<100) && (test_entity1.getY()<100));
@@ -230,7 +232,7 @@ public class Function_To_Test {
         test_entity1.setVelocity(-1, -1);
         room.getBlock(1, 1).addEntity(test_entity1);
         for(int t=1; t<=10; t++){
-            test_entity1.move(t);
+            test_entity1.move(1);
         }
 
         boolean entity_is_out_of_bounds = !((test_entity1.getX()>=0) && (test_entity1.getY()>=0));
@@ -244,7 +246,7 @@ public class Function_To_Test {
         test_entity1.setCoordinates(5, 5);
         test_entity1.setVelocity(1, 0);
         for(int t=1; t<=10; t++){
-            test_entity1.move(t);
+            test_entity1.move(1);
         }
 
         boolean entity_moved = room.getBlock(0, 1).getEntityList().contains(test_entity1);
@@ -264,8 +266,8 @@ public class Function_To_Test {
         fixed_entity.setVelocity(0, 0);
 
         for(int t=1; t<=50; t++){
-            dynamic_entity.update(t);
-            fixed_entity.update(t);
+            dynamic_entity.update(1);
+            fixed_entity.update(1);
         }
 
         boolean entity_not_crossed_through = dynamic_entity.getX() <= 13;
@@ -285,8 +287,8 @@ public class Function_To_Test {
         fixed_entity.setVelocity(0, 0);
 
         for(int t=1; t<=50; t++){
-            dynamic_entity.update(t);
-            fixed_entity.update(t);
+            dynamic_entity.update(1);
+            fixed_entity.update(1);
         }
 
         boolean entity_not_crossed_through = dynamic_entity.getY() <= 13;
@@ -305,13 +307,45 @@ public class Function_To_Test {
         dynamic_entity.setVelocity(1, 1);
         fixed_entity.setVelocity(0, 0);
 
-        for(int t=1; t<=15; t++){
-            dynamic_entity.update(t);
-            fixed_entity.update(t);
+        ArrayList<Entity> entity_list = new ArrayList<Entity>();
+        entity_list.add(dynamic_entity);
+        entity_list.add(fixed_entity);
+
+        for(int t=1; t<=15; t++) {
+            entity_list.stream()
+                    .forEach(e -> e.update(1));
         }
+        //implementación cambiada al uso de streams
+
 
         boolean entity_not_crossed_through = dynamic_entity.getY() <= 13;
         entity_not_crossed_through = entity_not_crossed_through && (dynamic_entity.getX() <= 13);
+        assertEquals(true, entity_not_crossed_through);
+    }
+
+    @Test
+    void testCollisionDynamicDynamic(){
+        Room room = new Room(100, 100, 10);
+        Entity dynamic_entity_1 = new Entity(100, 100, room);
+        Entity dynamic_entity_2 = new Entity(100, 100, room);
+        dynamic_entity_1.setCoordinates(5, 5);
+        dynamic_entity_2.setCoordinates(15, 15);
+        dynamic_entity_1.setHitbox(new Rectangle(2, 2));
+        dynamic_entity_2.setHitbox(new Rectangle(2, 2));
+        dynamic_entity_1.setVelocity(1, 1);
+        dynamic_entity_2.setVelocity(-1, -1);
+
+        ArrayList<Entity> entity_list = new ArrayList<Entity>();
+        entity_list.add(dynamic_entity_1);
+        entity_list.add(dynamic_entity_2);
+
+        for(int t=1; t<=50; t++) {
+            room.update(1);
+        }
+
+
+        boolean entity_not_crossed_through = dynamic_entity_1.getY() <= dynamic_entity_2.getY();
+        entity_not_crossed_through = entity_not_crossed_through && (dynamic_entity_1.getX() <= dynamic_entity_2.getX());
         assertEquals(true, entity_not_crossed_through);
     }
 
