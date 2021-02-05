@@ -94,7 +94,11 @@ public class GameMenu extends Menu{
     @Override
     public void start(Stage menu_stage) throws Exception{
         Pane root = createContent(menu_stage);
-        this.addItem("Prueba", root);
+        this.addItem("CONTINUE", root);
+        this.addItem("NEW GAME", root);
+        this.addItem("NEW LAN-GAME", root);
+        this.addItem("OPTIONS", root);
+        this.addItem("EXIT", root);
         Scene scene = new Scene(root);
         menu_stage.setTitle("VIDEO GAME");
         menu_stage.setScene(scene);

@@ -60,12 +60,7 @@ public class Menu extends Application {
         title.setTranslateX(50);
         title.setTranslateY(200);
 
-        Menu.MenuBox vbox = new Menu.MenuBox(
-                new Menu.MenuItem("CONTINUE", _menu_items),
-                new Menu.MenuItem("NEW GAME", _menu_items),
-                new Menu.MenuItem("NEW LAN-GAME", _menu_items),
-                new Menu.MenuItem("OPTIONS", _menu_items),
-                new Menu.MenuItem("EXIT", _menu_items));
+        Menu.MenuBox vbox = new Menu.MenuBox();
         vbox.setTranslateX(100);
         vbox.setTranslateY(300);
 
