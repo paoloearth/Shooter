@@ -37,7 +37,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.*;
 
-public class GameMenu extends Application{
+public class GameMenu extends Menu{
     ArrayList<MenuItem> _menu_items;
     Simulation _gameInstance;
     boolean _game_running;
@@ -55,7 +55,8 @@ public class GameMenu extends Application{
     }
 
     //implementa los aspectos gráficos del menú y define los elementos presentes
-    private Parent createContent(Stage menu_stage) {
+/*
+    public Pane createContent(Stage menu_stage) {
         Pane root = new Pane();
 
         root.setPrefSize(1050, 600);
@@ -88,10 +89,13 @@ public class GameMenu extends Application{
         return root;
 
     }
+*/
 
     @Override
     public void start(Stage menu_stage) throws Exception{
-        Scene scene = new Scene(createContent(menu_stage));
+        Pane root = createContent(menu_stage);
+        this.addItem("Prueba", root);
+        Scene scene = new Scene(root);
         menu_stage.setTitle("VIDEO GAME");
         menu_stage.setScene(scene);
         menu_stage.show();
