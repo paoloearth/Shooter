@@ -82,24 +82,6 @@ public class Menu extends Application {
 
         Menu.MenuBox vbox1 = (MenuBox) vbox;
         vbox1.addItem(new_item);
-
-        var hola1 = root.getChildren();
-        var lista = root.getChildren();
-        var nombre = lista.get(0).getClass().getName();
-
-        ArrayList<String> list = new ArrayList<>();
-        for(var elem:lista)
-        {
-            list.add(elem.getClass().getSimpleName());
-        }
-
-
-        var hola = lista.stream()
-                .map(e -> e.getClass().getSimpleName())
-                .collect(Collectors.toList());
-
-
-        hola = hola;
     }
 
     private static class Title extends StackPane {
@@ -142,7 +124,7 @@ public class Menu extends Application {
 
     }
 
-    private static class MenuItem extends StackPane {
+    public static class MenuItem extends StackPane {
         String _name;
 
         public MenuItem(String name) {
