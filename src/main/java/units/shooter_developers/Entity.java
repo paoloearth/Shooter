@@ -28,7 +28,7 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
         super(width, height);
         _room = null;
         _t = 0;
-        this.setCoordinates(0, 0);
+        this.set_coordinates(0, 0);
     }
 
     Entity(int width, int height, Room room){
@@ -37,7 +37,7 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
     }
 
     Entity(Entity object){
-        super(object);
+        //super(object);
         _room = object._room;
         _t = object._t;
         _velocity = object._velocity;
@@ -50,13 +50,13 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
     /********************************************************************************/
 
     @Override
-    public void setCoordinates(Pair<Integer, Integer> coordinates){
+    public void set_coordinates(Pair<Integer, Integer> coordinates){
         if(this.getRoom() != null){
             if(this.getBlock() != null) {
                 this.getBlock().removeEntity(this);
             }
         }
-        super.setCoordinates(coordinates);
+        super.set_coordinates(coordinates);
         if(this.getRoom() != null){
             if(this.getBlock() != null) {
                 this.getBlock().addEntity(this);
@@ -65,8 +65,8 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
     }
 
     @Override
-    public void setCoordinates(int x, int y){
-        this.setCoordinates(new Pair<Integer, Integer>(x, y));
+    public void set_coordinates(int x, int y){
+        this.set_coordinates(new Pair<Integer, Integer>(x, y));
     }
 
     public void update(double delta_t){
@@ -77,12 +77,12 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
         this.move(delta_t);
         int new_X = this.getX();
         int new_Y = this.getY();
-        this.setCoordinates(old_X, old_Y);
+        this.set_coordinates(old_X, old_Y);
 
         Pair<Integer, Integer> old_coordinates = new Pair<>(old_X, old_Y);
         Pair<Integer, Integer> new_coordinates = new Pair<>(new_X, new_Y);
 
-        this.setCoordinates(new_X, new_Y);
+        this.set_coordinates(new_X, new_Y);
         long collided = this.getRoom().getBlockMatrix().parallelStream()
                 .flatMap(Collection::parallelStream)
                 .filter(b -> b.isNeighbourOf(this))
@@ -90,18 +90,18 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
                 .filter(b -> checkCollision(this))
                 .count();
         if(collided > 0){
-            this.setCoordinates(old_X, old_Y);
+            this.set_coordinates(old_X, old_Y);
             return;
         }
 
         //implementacion con streams y sin lista de entidades
-        this.setCoordinates(new_X, new_Y);
+        this.set_coordinates(new_X, new_Y);
         collided = this.getRoom().getEntityList().parallelStream()
                 .filter(e -> e.isNeighbourOf(this))
                 .filter(e -> checkCollision(this))
                 .count();
 
-        if(collided > 0) this.setCoordinates(old_X, old_Y);
+        if(collided > 0) this.set_coordinates(old_X, old_Y);
 
     }
 
@@ -187,7 +187,7 @@ public class Entity extends Map_object implements Map_object_renderizable, Map_o
         int coord_Y = this.getY();
         coord_X += (int) (this.getVelocityX()*delta_t);
         coord_Y += (int) (this.getVelocityY()*delta_t);
-        this.setCoordinates(coord_X, coord_Y);
+        this.set_coordinates(coord_X, coord_Y);
     }
 
     public boolean checkCollision(Block target){

@@ -47,7 +47,7 @@ public class Block extends Map_object implements Map_object_renderizable{
     /********************************************************************************/
 
     public void copyFrom(Block block){
-        super.copyFrom(block);
+       // super.copyFrom(block);
         this._entity_list = block._entity_list;
         this._passable = block._passable;
         this._block_dimensions = block._block_dimensions;
