@@ -42,57 +42,47 @@ public class GameMenu extends Menu{
     boolean _game_running;
 
     public GameMenu(){
-        super();   // <- Elementos añadidos para gestionar mejor el ciclo
-        _gameInstance = new Simulation();   //    de ejecución de la simulación.
+        this(new Simulation());
         _game_running = false;
     }
 
     public GameMenu(Simulation game_instance){
-        this();
+        super();
         _gameInstance = game_instance;
         _game_running = true;
     }
 
     @Override
     public void start(Stage menu_stage) throws Exception{
-        Pane root = createContent(menu_stage);
-        this.addItem("CONTINUE", root);
-        this.addItem("NEW GAME", root);
-        this.addItem("NEW LAN-GAME", root);
-        this.addItem("OPTIONS", root);
-        this.addItem("EXIT", root);
-        Scene scene = new Scene(root);
+        this.createContent(menu_stage);
+        this.addItem("CONTINUE");
+        this.addItem("NEW GAME");
+        this.addItem("NEW LAN-GAME");
+        this.addItem("OPTIONS");
+        this.addItem("EXIT");
+        Scene scene = new Scene(this.getRoot());
         menu_stage.setTitle("VIDEO GAME");
         menu_stage.setScene(scene);
         menu_stage.show();
 
         Stage game_stage = new Stage();
 
-        //para cada elemento, se compara la etiqueta y se hace el trabajo para la opcion correspondiente
         for(var item:_menu_items)
         {
             item.setOnMouseReleased(event -> {
                 if(item.getName() == "NEW GAME") {
-                    try {                           //habría que quitar el try catch de alguna manera
-                        menu_stage.close();
-                        if(_game_running) {
-                            _gameInstance.stop();
-                            _gameInstance = new Simulation();
-                        }
-                        _gameInstance.start(game_stage);
-                        _game_running = true;
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    menu_stage.close();
+                    if(_game_running) {
+                        _gameInstance.stop();
+                        _gameInstance = new Simulation();
                     }
+                    _gameInstance.start(game_stage);
+                    _game_running = true;
                 }
 
                 if(item.getName() == "CONTINUE") {
-                    try {
-                        if(_game_running)
-                            menu_stage.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    if(_game_running)
+                        menu_stage.close();
                 }
 
                 if(item.getName() == "EXIT") {
@@ -103,12 +93,7 @@ public class GameMenu extends Menu{
 
                 if(item.getName() == "OPTIONS") {
                     OptionsMenu options_menu = new OptionsMenu();
-
-                    try {
-                        options_menu.start(menu_stage);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    options_menu.start(menu_stage);
                 }
 
 

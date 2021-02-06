@@ -88,7 +88,7 @@ public class OptionsMenu extends Application{
 
     }
     @Override
-    public void start(Stage menu_stage) throws Exception{
+    public void start(Stage menu_stage){
         Scene scene = new Scene(createContent(menu_stage));
         menu_stage.setTitle("VIDEO GAME");
         menu_stage.setScene(scene);

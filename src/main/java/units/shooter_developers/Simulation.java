@@ -31,7 +31,7 @@ public class Simulation extends Application{
         launch(args);
     }
 
-    public void start(Stage game_stage) throws Exception {
+    public void start(Stage game_stage){
         game_stage.setTitle("Call of Pouty: Tergeste Warfare");
 
         Group root = new Group();

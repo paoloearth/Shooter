@@ -41,7 +41,7 @@ public class Menu extends Application {
 
     }
 
-    public Pane createContent(Stage menu_stage) {
+    public void createContent(Stage menu_stage) {
         Pane root = new Pane();
 
 
@@ -67,15 +67,17 @@ public class Menu extends Application {
         root.getChildren().addAll(title, vbox);
 
         _root = root;
-        return root;
 
     }
 
-    public void addItem(String new_menu_item, Pane root){
+    public Parent getRoot(){
+        return _root;
+    }
+
+    public void addItem(String new_menu_item){
         MenuItem new_item = new Menu.MenuItem(new_menu_item, _menu_items);
 
         var vbox = _root.getChildren().parallelStream()
-                .map(e -> e)
                 .filter(e -> e instanceof Menu.MenuBox)
                 .findFirst()
                 .orElse(null);
