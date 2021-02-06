@@ -93,10 +93,12 @@ public class Room implements Map_object_renderizable {
     private void initializeBlocks(){
         for(int i=0; i<_nrows; i++){
             for(int j=0; j<_ncols; j++){
-                Block block = new Block(_width, _height, 1./_nrows, 1./_ncols);
+                Block block = new Block(_width, _height,
+                        1./_nrows,
+                        1./_ncols);
                 int coord_X = j*this.getBlockWidth();
                 int coord_Y = i*this.getBlockHeight();
-                block.setCoordinates(coord_X, coord_Y);
+                block.set_coordinates(coord_X, coord_Y);
                 block.setRoom(this);
                 this.setBlock(i, j, block);
             }

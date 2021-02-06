@@ -38,10 +38,9 @@ public class Simulation extends Application{
     }
 
     public Simulation(int width, int height){
+        this();
         this._width = width;
         this._height = height;
-        _close    = false;
-        _pause    = false;
     }
 
     public static void main(String[] args)
@@ -60,7 +59,6 @@ public class Simulation extends Application{
 
 
         Scene scene = new Scene(root);
-
 
 
         game_stage.setScene(scene);

@@ -14,8 +14,8 @@ interface Map_object_renderizable{
 
 interface Map_object_dynamic{
     void update(double delta_t);
-    public void setCoordinates(Pair<Integer, Integer> coordinates);
-    public Pair<Integer, Integer> getCoordinates();
+     void set_coordinates(Pair<Integer, Integer> coordinates);
+    Pair<Integer, Integer> getCoordinates();
 }
 
 public abstract class Map_object extends Pane {
@@ -52,47 +52,44 @@ public abstract class Map_object extends Pane {
     /* CONSTRUCTORS                                                                 */
     /********************************************************************************/
 
-    public Map_object(String URL, double SCALE, int ROW_SHEET, 
-                     int COLUMNS_SHEET, int WIDTH, int HEIGHT, 
-                     Pair<Integer, Integer> COORDINATES)
+    public Map_object(String URL, double SCALE,
+                      int WIDTH, int HEIGHT,
+                      Pair<Integer, Integer> COORDINATES)
     {
+
+        this._url = URL;
+
         this._height=HEIGHT;
         this._width = WIDTH;
-        
         this._scale = SCALE;
 
         /* Read the picture*/
         this._picture = retrieve_image(URL, SCALE, HEIGHT ,WIDTH);
 
-        /* Setting the parameters of the image */
-        this._row_sheet = ROW_SHEET;
-        this._columns_sheet = COLUMNS_SHEET;
-
         /* Setting the initial coordinates of the mapobject */
         set_coordinates(COORDINATES);
 
         this._view = new ImageView(this._picture);
+
     }
 
-    protected  void set_coordinates(Pair<Integer, Integer> COORDINATES)
+    public Map_object(String URL, double SCALE,
+                      int ROW_SHEET, int COLUMNS_SHEET,
+                      int WIDTH, int HEIGHT,
+                      Pair<Integer, Integer> COORDINATES)
     {
-        this.setLayoutX(COORDINATES.getKey());
-        this.setLayoutY(COORDINATES.getValue());
-    };
+        this(URL,SCALE,WIDTH,HEIGHT,COORDINATES);
 
-    public Map_object(){
-        this.setCoordinates(0, 0);
-        this._view = null;
-        this._hitbox = null;
-        this._width = 800;
-        this._width = 600;
+        /* Setting the parameters of the image */
+        this._row_sheet = ROW_SHEET;
+        this._columns_sheet = COLUMNS_SHEET;
+
     }
 
-    public Map_object(int width, int height) {
-        this();
-        this._width = width;
-        this._height = height;
-    }
+    public abstract void render();
+
+
+
 
     /********************************************************************************/
     /* FUNCTIONS                                                             */
@@ -103,39 +100,42 @@ public abstract class Map_object extends Pane {
     }
 
 
-    /********************************************************************************/
-    /* SET/GET METHODS                                                              */
-    /********************************************************************************/
-    public void copyFrom(Map_object map_object){
-        this._width = map_object._width;
-        this._height = map_object._height;
-        this._hitbox = map_object._hitbox;
-        this._view = map_object._view;
-        this._coordinates = map_object._coordinates;
-    }
+    protected  void set_coordinates(Pair<Integer, Integer> COORDINATES)
+    {
+        this._coordinates = COORDINATES;
 
-    public void setCoordinates(int x, int y) throws IllegalArgumentException {
-        this.setCoordinates(new Pair<Integer, Integer>(x, y));
-    }
-
-    public void setCoordinates(Pair<Integer, Integer> coordinates){
-        this._coordinates = coordinates;
         if(this.getHitbox() != null) {
             this._hitbox.setX(this.getX());
             this._hitbox.setY(this.getY());
         }
+
+        this.setLayoutX(COORDINATES.getKey());
+        this.setLayoutY(COORDINATES.getValue());
+
     }
 
+    protected  void set_coordinates(int x, int y)
+    {
+        this.set_coordinates(new Pair<>(x, y));
+    }
+
+
+    /********************************************************************************/
+    /* SET/GET METHODS                                                              */
+    /********************************************************************************/
+
+
+
     public Pair<Integer, Integer> getCoordinates(){
-        return new Pair<Integer, Integer>(0,  0);
+        return new Pair<>(getX(),  getY());
     }
 
     public int getX(){
-        return _coordinates.getKey();
+        return (int) this.getLayoutX();
     }
 
     public int getY(){
-        return _coordinates.getValue();
+        return (int) this.getLayoutY();
     }
 
     void setHitbox(Rectangle hitbox){
