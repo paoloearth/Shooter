@@ -14,7 +14,7 @@ interface Map_object_dynamic{
     public Pair<Integer, Integer> getCoordinates();
 }
 
-public class Map_object{
+public class Map_object {
     private Pair<Integer, Integer> _coordinates;
     private ImageView _sprite;
     private Rectangle _hitbox;
