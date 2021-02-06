@@ -49,7 +49,7 @@ public class Simulation extends Application{
         launch(args);
     }
 
-    public void start(Stage game_stage) throws Exception {
+    public void start(Stage game_stage){
 
         /* Add windows title */
         game_stage.setTitle("Shooter 2D GAME");
