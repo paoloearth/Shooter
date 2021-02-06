@@ -32,7 +32,11 @@ public class Simulation extends Application{
     }
 
     public void start(Stage game_stage) throws Exception {
+
+        /* Add windows title */
         game_stage.setTitle("Shooter 2D GAME");
+
+
 
         Group root = new Group();
         Scene scene = new Scene(root);
@@ -58,10 +62,7 @@ public class Simulation extends Application{
         {
             public void handle(long currentNanoTime)
             {
-                // calculate time since last update.
-                double t = (currentNanoTime - lastNanoTime[0]) / 1000000000.0;
-                lastNanoTime[0] = currentNanoTime;
-
+                /*
                     try {
                         GameMenu pause_menu = new GameMenu(reference_to_game_instance);
                         Stage secondary_stage = new Stage();
@@ -72,10 +73,12 @@ public class Simulation extends Application{
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                */
 
                 if(_close) {
                     game_stage.close();
                 }
+                while(_pause){};
             }
 
                 //update objects here!
