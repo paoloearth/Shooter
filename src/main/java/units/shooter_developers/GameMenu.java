@@ -53,7 +53,7 @@ public class GameMenu extends Menu{
     }
 
     @Override
-    public void start(Stage menu_stage) throws Exception{
+    public void start(Stage menu_stage){
         this.createContent(menu_stage);
         this.addItem("CONTINUE");
         this.addItem("NEW GAME");
