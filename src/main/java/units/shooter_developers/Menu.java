@@ -59,6 +59,8 @@ public class Menu extends Application {
         _height = bounds.getHeight();
 
         root.setPrefSize(_width_ratio*_width, _height_ratio*_height);
+        _width = 1050;///////////////////////////////////////////////////
+        _height = 600;//////////////////////////////////////////////////
         //original default resolution was 1050x600
 
         try (InputStream is = Files.newInputStream(Paths.get("src/main/resources/menu.jpeg"))) {
@@ -71,8 +73,8 @@ public class Menu extends Application {
         }
 
         Menu.Title title = new Menu.Title("C A M P A I G N");
-        title.setTranslateX(50);
-        title.setTranslateY(200);
+        title.setTranslateX(0.0476*_width*_width_ratio);
+        title.setTranslateY(0.333*_height*_height_ratio);
 
         Menu.MenuBox vbox = new Menu.MenuBox();
         vbox.setTranslateX(100);
