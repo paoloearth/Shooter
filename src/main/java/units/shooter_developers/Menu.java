@@ -77,8 +77,8 @@ public class Menu extends Application {
         title.setTranslateY(0.333*_height*_height_ratio);
 
         Menu.MenuBox vbox = new Menu.MenuBox();
-        vbox.setTranslateX(100);
-        vbox.setTranslateY(300);
+        vbox.setTranslateX(0.0952*_width*_width_ratio);
+        vbox.setTranslateY(0.5*_height*_height_ratio);
 
         root.getChildren().addAll(title, vbox);
 
