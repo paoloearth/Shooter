@@ -147,7 +147,7 @@ public class Menu extends Application {
 
     }
 
-    public static class MenuItem extends StackPane {
+    public class MenuItem extends StackPane {
         String _name;
 
         public MenuItem(String name) {
@@ -160,8 +160,8 @@ public class Menu extends Application {
                     new Stop(1, Color.DARKBLUE)
 
             });
-
-            Rectangle bg = new Rectangle(200,30);
+            
+            Rectangle bg = new Rectangle(0.19*_width*_width_ratio,0.05*_height*_height_ratio);
             bg.setOpacity(0.4);
 
             Text text = new Text(name);
