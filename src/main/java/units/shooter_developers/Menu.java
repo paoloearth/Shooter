@@ -59,8 +59,8 @@ public class Menu extends Application {
         _height = bounds.getHeight();
 
         root.setPrefSize(_width_ratio*_width, _height_ratio*_height);
-        _width = 1050;///////////////////////////////////////////////////
-        _height = 600;//////////////////////////////////////////////////
+        //_width = 1050;///////////////////////////////////////////////////
+        //_height = 600;//////////////////////////////////////////////////
         //original default resolution was 1050x600
 
         try (InputStream is = Files.newInputStream(Paths.get("src/main/resources/menu.jpeg"))) {
@@ -124,7 +124,7 @@ public class Menu extends Application {
     }
 
     //wrapper para los elementos del menú
-    private static class MenuBox extends VBox {
+    private class MenuBox extends VBox {
 
         public MenuBox(Menu.MenuItem... items) {
             getChildren().add(createSeperator());
@@ -136,7 +136,7 @@ public class Menu extends Application {
 
         private Line createSeperator() {
             Line sep = new Line();
-            sep.setEndX(210);
+            sep.setEndX(0.2*_width*_width_ratio);
             sep.setStroke(Color.DARKGREY);
             return sep;
         }
