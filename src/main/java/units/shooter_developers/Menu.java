@@ -34,6 +34,7 @@ public class Menu extends Application {
 
     public Menu() {
         _menu_items = new ArrayList<>();
+        this.createContent();
     }
 
     @Override
@@ -41,7 +42,7 @@ public class Menu extends Application {
 
     }
 
-    public void createContent(Stage menu_stage) {
+    public void createContent() {
         Pane root = new Pane();
 
 
