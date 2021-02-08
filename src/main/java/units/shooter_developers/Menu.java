@@ -107,9 +107,9 @@ public class Menu extends Application {
         vbox1.addItem(new_item);
     }
 
-    private static class Title extends StackPane {
+    private class Title extends StackPane {
         public Title(String name) {
-            Rectangle bg = new Rectangle(375, 60);
+            Rectangle bg = new Rectangle(0.357*_width*_width_ratio, 0.1*_height*_height_ratio);
             bg.setStroke(Color.WHITE);
             bg.setStrokeWidth(2);
             bg.setFill(null);
