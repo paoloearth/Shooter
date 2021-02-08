@@ -2,6 +2,7 @@ package units.shooter_developers;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,6 +18,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -45,8 +47,13 @@ public class Menu extends Application {
     public void createContent() {
         Pane root = new Pane();
 
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
 
-        root.setPrefSize(1050, 600);
+        double native_width = bounds.getWidth();
+        double native_height = bounds.getHeight();
+
+        root.setPrefSize(native_width, native_height);
 
         try (InputStream is = Files.newInputStream(Paths.get("src/main/resources/menu.jpeg"))) {
             ImageView img = new ImageView(new Image(is));
