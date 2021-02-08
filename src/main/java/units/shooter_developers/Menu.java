@@ -116,7 +116,7 @@ public class Menu extends Application {
 
             Text text = new Text(name);
             text.setFill(Color.WHITE);
-            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, 50));
+            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, 0.0833*_height*_height_ratio));
 
             setAlignment(Pos.CENTER);
             getChildren().addAll(bg, text);
