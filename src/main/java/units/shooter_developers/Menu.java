@@ -160,13 +160,13 @@ public class Menu extends Application {
                     new Stop(1, Color.DARKBLUE)
 
             });
-            
+
             Rectangle bg = new Rectangle(0.19*_width*_width_ratio,0.05*_height*_height_ratio);
             bg.setOpacity(0.4);
 
             Text text = new Text(name);
             text.setFill(Color.DARKGREY);
-            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,20));
+            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333*_height*_height_ratio));
 
             setAlignment(Pos.CENTER);
             getChildren().addAll(bg, text);
