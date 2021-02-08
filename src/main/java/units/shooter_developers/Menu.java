@@ -33,8 +33,14 @@ import java.util.stream.Collectors;
 public class Menu extends Application {
     ArrayList<Menu.MenuItem> _menu_items;
     Pane _root;
+    private double _width;
+    private double _height;
+    private double _width_ratio;
+    private double _height_ratio;
 
     public Menu() {
+        _width_ratio = 1;
+        _height_ratio = 1;
         _menu_items = new ArrayList<>();
         this.createContent();
     }
@@ -49,16 +55,16 @@ public class Menu extends Application {
 
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
+        _width = bounds.getWidth();
+        _height = bounds.getHeight();
 
-        double native_width = bounds.getWidth();
-        double native_height = bounds.getHeight();
-
-        root.setPrefSize(native_width, native_height);
+        root.setPrefSize(_width_ratio*_width, _height_ratio*_height);
+        //original default resolution was 1050x600
 
         try (InputStream is = Files.newInputStream(Paths.get("src/main/resources/menu.jpeg"))) {
             ImageView img = new ImageView(new Image(is));
-            img.setFitWidth(1050);
-            img.setFitHeight(600);
+            img.setFitWidth(_width_ratio*_width);
+            img.setFitHeight(_height_ratio*_height);
             root.getChildren().add(img);
         } catch (IOException e) {
             System.out.println("Couldn't load image");
@@ -80,6 +86,11 @@ public class Menu extends Application {
 
     public Parent getRoot(){
         return _root;
+    }
+
+    public void rescale(double width_ratio, double height_ratio){
+        _width_ratio = width_ratio;
+        _height_ratio = height_ratio;
     }
 
     public void addItem(String new_menu_item){
