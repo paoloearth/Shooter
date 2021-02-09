@@ -225,6 +225,32 @@ public class Menu extends Application {
         }
     }
 
+    public class UnanimatedItem extends StackPane {
+        String _name;
+
+        public UnanimatedItem(String name) {
+            _name = name;
+
+            LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[] {
+                    new Stop(0, Color.DARKBLUE),
+                    new Stop(0.1, Color.BLACK),
+                    new Stop(0.9, Color.BLACK),
+                    new Stop(1, Color.DARKBLUE)
+
+            });
+
+            Rectangle bg = new Rectangle(0.19*_width*_width_ratio,0.05*_height*_height_ratio);
+            bg.setOpacity(0.4);
+
+            Text text = new Text(name);
+            text.setFill(Color.DARKGREY);
+            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333*_height*_height_ratio));
+
+            setAlignment(Pos.CENTER);
+            getChildren().addAll(bg, text);
+        }
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
