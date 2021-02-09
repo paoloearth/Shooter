@@ -220,8 +220,9 @@ public class Menu extends Application {
 
     public class SelectableItem extends HBox{
         public SelectableItem(String name){
-            Rectangle bg = new Rectangle(0.19*_width*_width_ratio,0.05*_height*_height_ratio);
-            this.getChildren().add(bg);
+            setAlignment(Pos.CENTER);
+            UnanimatedItem name_item = new UnanimatedItem(name);
+            this.getChildren().add(name_item);
         }
     }
 
@@ -230,14 +231,6 @@ public class Menu extends Application {
 
         public UnanimatedItem(String name) {
             _name = name;
-
-            LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[] {
-                    new Stop(0, Color.DARKBLUE),
-                    new Stop(0.1, Color.BLACK),
-                    new Stop(0.9, Color.BLACK),
-                    new Stop(1, Color.DARKBLUE)
-
-            });
 
             Rectangle bg = new Rectangle(0.19*_width*_width_ratio,0.05*_height*_height_ratio);
             bg.setOpacity(0.4);
