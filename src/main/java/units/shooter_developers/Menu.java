@@ -231,9 +231,9 @@ public class Menu extends Application {
 
     public class SelectableItem extends HBox{
         public SelectableItem(String name){
-            setAlignment(Pos.CENTER);
+            //setAlignment(Pos.CENTER);
             UnanimatedItem name_item = new UnanimatedItem(name);
-            MenuItem left_arrow = new MenuItem("<", 0.10, 0.10);
+            MenuItem left_arrow = new MenuItem("<", 0.04, -1);
 
             this.getChildren().addAll(name_item, left_arrow);
         }
