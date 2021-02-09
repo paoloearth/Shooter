@@ -169,10 +169,18 @@ public class Menu extends Application {
         String _name;
 
         public MenuItem(String name) {
-            this(name, 0.19, 0.05);
+            this(name, -1, -1);
         }
 
         public MenuItem(String name, double item_width, double item_height) {
+            var effective_item_width = item_width;
+            var effective_item_height = item_height;
+            if(item_width < 0){
+                effective_item_width = 0.19;
+            }
+            if(item_height < 0){
+                effective_item_height = 0.05;
+            }
             _name = name;
 
             LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[] {
@@ -183,7 +191,7 @@ public class Menu extends Application {
 
             });
 
-            Rectangle bg = new Rectangle(item_width*_width*_width_ratio,item_height*_height*_height_ratio);
+            Rectangle bg = new Rectangle(effective_item_width*_width*_width_ratio,effective_item_height*_height*_height_ratio);
             bg.setOpacity(0.4);
 
             Text text = new Text(name);
@@ -225,7 +233,7 @@ public class Menu extends Application {
         public SelectableItem(String name){
             setAlignment(Pos.CENTER);
             UnanimatedItem name_item = new UnanimatedItem(name);
-            MenuItem left_arrow = new MenuItem("<");
+            MenuItem left_arrow = new MenuItem("<", 0.10, 0.10);
 
             this.getChildren().addAll(name_item, left_arrow);
         }
