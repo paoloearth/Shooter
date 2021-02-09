@@ -234,8 +234,10 @@ public class Menu extends Application {
             //setAlignment(Pos.CENTER);
             UnanimatedItem name_item = new UnanimatedItem(name);
             MenuItem left_arrow = new MenuItem("<", 0.04, -1);
+            UnanimatedItem feature_item = new UnanimatedItem("feature_here");
+            MenuItem right_arrow = new MenuItem(">", 0.04, -1);
 
-            this.getChildren().addAll(name_item, left_arrow);
+            this.getChildren().addAll(name_item, left_arrow, feature_item, right_arrow);
         }
     }
 
