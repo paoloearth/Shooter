@@ -57,6 +57,7 @@ public class OptionsMenu extends Menu{
         this.addItem("RESOLUTION");
         this.addItem("LIGHT/DARK MODE");
         this.addItem("BACK");
+        this.addSelectableItem("hola");
         Scene scene = new Scene(this.getRoot());
         menu_stage.setTitle("VIDEO GAME");
         menu_stage.setScene(scene);

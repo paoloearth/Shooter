@@ -111,6 +111,14 @@ public class Menu extends Application {
 
     public void addSelectableItem(String new_selectable_item){
         SelectableItem new_item = new Menu.SelectableItem(new_selectable_item);
+
+        var vbox = _root.getChildren().parallelStream()
+                .filter(e -> e instanceof Menu.MenuBox)
+                .findFirst()
+                .orElse(null);
+
+        Menu.MenuBox vbox1 = (MenuBox) vbox;
+        vbox1.addSelectableItem(new_item);
     }
 
     private class Title extends StackPane {
@@ -211,7 +219,10 @@ public class Menu extends Application {
     }
 
     public class SelectableItem extends HBox{
-        public SelectableItem(String name){}
+        public SelectableItem(String name){
+            Rectangle bg = new Rectangle(0.19*_width*_width_ratio,0.05*_height*_height_ratio);
+            this.getChildren().add(bg);
+        }
     }
 
     public static void main(String[] args) {
