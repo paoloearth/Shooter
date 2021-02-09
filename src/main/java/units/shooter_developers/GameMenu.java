@@ -68,35 +68,38 @@ public class GameMenu extends Menu{
 
         for(var item:_menu_items)
         {
-            item.setOnMouseReleased(event -> {
-                if(item.getName() == "NEW GAME") {
-                    menu_stage.close();
-                    if(_game_running) {
-                        _gameInstance.stop();
-                        _gameInstance = new Simulation();
-                    }
-                    _gameInstance.start(game_stage);
-                    _game_running = true;
-                }
-
-                if(item.getName() == "CONTINUE") {
-                    if(_game_running)
+            if(item instanceof MenuItem) {
+                var item_casted = (MenuItem)item;
+                item.setOnMouseReleased(event -> {
+                    if (item_casted.getName() == "NEW GAME") {
                         menu_stage.close();
-                }
+                        if (_game_running) {
+                            _gameInstance.stop();
+                            _gameInstance = new Simulation();
+                        }
+                        _gameInstance.start(game_stage);
+                        _game_running = true;
+                    }
 
-                if(item.getName() == "EXIT") {
-                    _gameInstance.stop();
-                    _game_running = false;
-                    menu_stage.close();
-                }
+                    if (item_casted.getName() == "CONTINUE") {
+                        if (_game_running)
+                            menu_stage.close();
+                    }
 
-                if(item.getName() == "OPTIONS") {
-                    OptionsMenu options_menu = new OptionsMenu();
-                    options_menu.start(menu_stage);
-                }
+                    if (item_casted.getName() == "EXIT") {
+                        _gameInstance.stop();
+                        _game_running = false;
+                        menu_stage.close();
+                    }
+
+                    if (item_casted.getName() == "OPTIONS") {
+                        OptionsMenu options_menu = new OptionsMenu();
+                        options_menu.start(menu_stage);
+                    }
 
 
-            });
+                });
+            }
         }
     }
 

@@ -3,9 +3,11 @@ package units.shooter_developers;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -31,7 +33,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Menu extends Application {
-    ArrayList<Menu.MenuItem> _menu_items;
+    ArrayList<Node> _menu_items;
     Pane _root;
     private double _width;
     private double _height;
@@ -107,6 +109,10 @@ public class Menu extends Application {
         vbox1.addItem(new_item);
     }
 
+    public void addSelectableItem(String new_selectable_item){
+        SelectableItem new_item = new Menu.SelectableItem(new_selectable_item);
+    }
+
     private class Title extends StackPane {
         public Title(String name) {
             Rectangle bg = new Rectangle(0.357*_width*_width_ratio, 0.1*_height*_height_ratio);
@@ -142,6 +148,10 @@ public class Menu extends Application {
         }
 
         public void addItem(Menu.MenuItem new_item){
+            getChildren().addAll(new_item, createSeperator());
+        }
+
+        public void addSelectableItem(Menu.SelectableItem new_item){
             getChildren().addAll(new_item, createSeperator());
         }
 
@@ -189,7 +199,7 @@ public class Menu extends Application {
 
         }
 
-        public MenuItem(String name, ArrayList<Menu.MenuItem> items_list) {
+        public MenuItem(String name, ArrayList<Node> items_list) {
             this(name);
             items_list.add(this);
         }
@@ -198,6 +208,10 @@ public class Menu extends Application {
             return _name;
         }
 
+    }
+
+    public class SelectableItem extends HBox{
+        public SelectableItem(String name){}
     }
 
     public static void main(String[] args) {

@@ -67,7 +67,8 @@ public class OptionsMenu extends Menu{
         for(var item:_menu_items)
         {
             item.setOnMouseReleased(event -> {
-                if(item.getName() == "BACK") {
+                var item_casted = (MenuItem)item;
+                if(item_casted.getName() == "BACK") {
                     GameMenu main_menu = new GameMenu();
                     main_menu.start(menu_stage);
                 }
