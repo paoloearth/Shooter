@@ -222,7 +222,9 @@ public class Menu extends Application {
         public SelectableItem(String name){
             setAlignment(Pos.CENTER);
             UnanimatedItem name_item = new UnanimatedItem(name);
-            this.getChildren().add(name_item);
+            MenuItem left_arrow = new MenuItem("<");
+
+            this.getChildren().addAll(name_item, left_arrow);
         }
     }
 
