@@ -237,7 +237,22 @@ public class Menu extends Application {
             UnanimatedItem feature_item = new UnanimatedItem("feature_here");
             MenuItem right_arrow = new MenuItem(">", 0.04, -1);
 
-            this.getChildren().addAll(name_item, left_arrow, feature_item, right_arrow);
+            Rectangle long_space = new Rectangle(0.10*_width*_width_ratio, 0.05*_height*_height_ratio);
+            long_space.setOpacity(0);
+
+            Rectangle short_space_1 = new Rectangle(0.005*_width*_width_ratio, 0.05*_height*_height_ratio);
+            short_space_1.setOpacity(0);
+
+            Rectangle short_space_2 = new Rectangle(0.005*_width*_width_ratio, 0.05*_height*_height_ratio);
+            short_space_2.setOpacity(0);
+
+            this.getChildren().addAll(name_item,
+                    long_space,
+                    left_arrow,
+                    short_space_1,
+                    feature_item,
+                    short_space_2,
+                    right_arrow);
         }
     }
 
