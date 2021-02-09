@@ -169,6 +169,10 @@ public class Menu extends Application {
         String _name;
 
         public MenuItem(String name) {
+            this(name, 0.19, 0.05);
+        }
+
+        public MenuItem(String name, double item_width, double item_height) {
             _name = name;
 
             LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[] {
@@ -179,7 +183,7 @@ public class Menu extends Application {
 
             });
 
-            Rectangle bg = new Rectangle(0.19*_width*_width_ratio,0.05*_height*_height_ratio);
+            Rectangle bg = new Rectangle(item_width*_width*_width_ratio,item_height*_height*_height_ratio);
             bg.setOpacity(0.4);
 
             Text text = new Text(name);
@@ -215,7 +219,6 @@ public class Menu extends Application {
         public String getName() {
             return _name;
         }
-
     }
 
     public class SelectableItem extends HBox{
