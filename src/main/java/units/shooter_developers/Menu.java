@@ -156,10 +156,12 @@ public class Menu extends Application {
         }
 
         public void addItem(Menu.MenuItem new_item){
+            new_item.setTranslateX(0.005*_width*_width_ratio);
             getChildren().addAll(new_item, createSeperator());
         }
 
         public void addSelectableItem(Menu.SelectableItem new_item){
+            new_item.setTranslateX(0.005*_width*_width_ratio);
             getChildren().addAll(new_item, createSeperator());
         }
 
@@ -198,7 +200,8 @@ public class Menu extends Application {
             text.setFill(Color.DARKGREY);
             text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333*_height*_height_ratio));
 
-            setAlignment(Pos.CENTER);
+            //setAlignment(Pos.CENTER);
+            setAlignment(Pos.CENTER_LEFT);
             getChildren().addAll(bg, text);
             setOnMouseEntered(event -> {
                 bg.setFill(gradient);
@@ -232,6 +235,7 @@ public class Menu extends Application {
     public class SelectableItem extends HBox{
         public SelectableItem(String name){
             //setAlignment(Pos.CENTER);
+            setAlignment(Pos.CENTER_LEFT);
             UnanimatedItem name_item = new UnanimatedItem(name);
             MenuItem left_arrow = new MenuItem("<", 0.04, -1);
             UnanimatedItem feature_item = new UnanimatedItem("feature_here");
@@ -269,7 +273,8 @@ public class Menu extends Application {
             text.setFill(Color.DARKGREY);
             text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333*_height*_height_ratio));
 
-            setAlignment(Pos.CENTER);
+            //setAlignment(Pos.CENTER);
+            setAlignment(Pos.CENTER_LEFT);
             getChildren().addAll(bg, text);
         }
     }
