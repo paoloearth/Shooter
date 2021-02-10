@@ -72,12 +72,12 @@ public class Menu extends Application {
         }
 
         Menu.Title title = new Menu.Title("title_not_found");
-        title.setTranslateX(0.0476*_width*_width_ratio);
-        title.setTranslateY(0.333*_height*_height_ratio);
+        title.setTranslateX(0.0476*getMenuWidth());
+        title.setTranslateY(0.333*getMenuHeight());
 
         Menu.MenuBox vbox = new Menu.MenuBox();
-        vbox.setTranslateX(0.0952*_width*_width_ratio);
-        vbox.setTranslateY(0.5*_height*_height_ratio);
+        vbox.setTranslateX(0.0952*getMenuWidth());
+        vbox.setTranslateY(0.5*getMenuHeight());
 
         root.getChildren().addAll(title, vbox);
 
@@ -92,8 +92,8 @@ public class Menu extends Application {
                 .findFirst()
                 .orElse(null);
 
-        new_title.setTranslateX(0.0476*_width*_width_ratio);
-        new_title.setTranslateY(0.333*_height*_height_ratio);
+        new_title.setTranslateX(0.0476*getMenuWidth());
+        new_title.setTranslateY(0.333*getMenuHeight());
 
         var index = _root.getChildren().indexOf(old_title);
         _root.getChildren().remove(old_title);
@@ -224,7 +224,6 @@ public class Menu extends Application {
             text.setFill(Color.DARKGREY);
             text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333*_height*_height_ratio));
 
-            //setAlignment(Pos.CENTER);
             setAlignment(Pos.CENTER_LEFT);
             getChildren().addAll(bg, text);
             setOnMouseEntered(event -> {
