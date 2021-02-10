@@ -61,6 +61,7 @@ public class GameMenu extends Menu{
         this.addItem("EXIT");
         Scene scene = new Scene(this.getRoot());
         menu_stage.setTitle("VIDEO GAME");
+        setTitle("C A M P A I G N");
         menu_stage.setScene(scene);
         menu_stage.show();
 

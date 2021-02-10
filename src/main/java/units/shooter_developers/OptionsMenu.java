@@ -54,6 +54,7 @@ public class OptionsMenu extends Menu{
 
     @Override
     public void start(Stage menu_stage){
+        setTitle("O P T I O N S");
         this.addItem("RESOLUTION");
         this.addItem("LIGHT/DARK MODE");
         this.addSelectableItem("hola", "item_1", "item_2", "item_3");

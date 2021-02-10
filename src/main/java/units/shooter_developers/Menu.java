@@ -58,8 +58,8 @@ public class Menu extends Application {
         _height = bounds.getHeight();
 
         root.setPrefSize(getMenuWidth(), getMenuHeight());
-        //_width = 1050;///////////////////////////////////////////////////
-        //_height = 600;//////////////////////////////////////////////////
+        _width = 1050;///////////////////////////////////////////////////
+        _height = 600;//////////////////////////////////////////////////
         //original default resolution was 1050x600
 
         try (InputStream is = Files.newInputStream(Paths.get("src/main/resources/menu.jpeg"))) {
@@ -68,10 +68,10 @@ public class Menu extends Application {
             img.setFitHeight(getMenuHeight());
             root.getChildren().add(img);
         } catch (IOException e) {
-            System.out.println("Couldn't load image");
+            System.out.println("Menu background image not found");
         }
 
-        Menu.Title title = new Menu.Title("C A M P A I G N");
+        Menu.Title title = new Menu.Title("title_not_found");
         title.setTranslateX(0.0476*_width*_width_ratio);
         title.setTranslateY(0.333*_height*_height_ratio);
 
@@ -83,6 +83,21 @@ public class Menu extends Application {
 
         _root = root;
 
+    }
+
+    public void setTitle(String title){
+        Menu.Title new_title = new Menu.Title(title);
+        var old_title = (Menu.Title) _root.getChildren().stream()
+                .filter(e -> e instanceof Menu.Title)
+                .findFirst()
+                .orElse(null);
+
+        new_title.setTranslateX(0.0476*_width*_width_ratio);
+        new_title.setTranslateY(0.333*_height*_height_ratio);
+
+        var index = _root.getChildren().indexOf(old_title);
+        _root.getChildren().remove(old_title);
+        _root.getChildren().add(index, new_title);
     }
 
     public double getMenuHeight() {
