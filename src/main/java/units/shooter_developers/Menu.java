@@ -147,14 +147,14 @@ public class Menu extends Application {
 
     private class Title extends StackPane {
         public Title(String name) {
-            Rectangle bg = new Rectangle(0.357*_width*_width_ratio, 0.1*_height*_height_ratio);
+            Rectangle bg = new Rectangle(0.357*getMenuWidth(), 0.1*getMenuHeight());
             bg.setStroke(Color.WHITE);
             bg.setStrokeWidth(2);
             bg.setFill(null);
 
             Text text = new Text(name);
             text.setFill(Color.WHITE);
-            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, 0.0833*_height*_height_ratio));
+            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, 0.0833*getMenuHeight()));
 
             setAlignment(Pos.CENTER);
             getChildren().addAll(bg, text);
@@ -174,18 +174,18 @@ public class Menu extends Application {
 
         private Line createSeperator() {
             Line sep = new Line();
-            sep.setEndX(0.2*_width*_width_ratio);
+            sep.setEndX(0.2*getMenuWidth());
             sep.setStroke(Color.DARKGREY);
             return sep;
         }
 
         public void addItem(Menu.MenuItem new_item){
-            new_item.setTranslateX(0.005*_width*_width_ratio);
+            new_item.setTranslateX(0.005*getMenuWidth());
             getChildren().addAll(new_item, createSeperator());
         }
 
         public void addSelectableItem(Menu.SelectableItem new_item){
-            new_item.setTranslateX(0.005*_width*_width_ratio);
+            new_item.setTranslateX(0.005*getMenuWidth());
             getChildren().addAll(new_item, createSeperator());
         }
 
@@ -217,7 +217,7 @@ public class Menu extends Application {
 
             });
 
-            Rectangle bg = new Rectangle(effective_item_width*_width*_width_ratio,effective_item_height*_height*_height_ratio);
+            Rectangle bg = new Rectangle(effective_item_width*getMenuWidth(),effective_item_height*getMenuHeight());
             bg.setOpacity(0.4);
 
             Text text = new Text(name);
@@ -279,13 +279,13 @@ public class Menu extends Application {
                 next();
             });
 
-            Rectangle long_space = new Rectangle(0.10*_width*_width_ratio, 0.05*_height*_height_ratio);
+            Rectangle long_space = new Rectangle(0.10*getMenuWidth(), 0.05*getMenuHeight());
             long_space.setOpacity(0);
 
-            Rectangle short_space_1 = new Rectangle(0.005*_width*_width_ratio, 0.05*_height*_height_ratio);
+            Rectangle short_space_1 = new Rectangle(0.005*getMenuWidth(), 0.05*getMenuHeight());
             short_space_1.setOpacity(0);
 
-            Rectangle short_space_2 = new Rectangle(0.005*_width*_width_ratio, 0.05*_height*_height_ratio);
+            Rectangle short_space_2 = new Rectangle(0.005*getMenuWidth(), 0.05*getMenuHeight());
             short_space_2.setOpacity(0);
 
             this.getChildren().addAll(name_item,
@@ -349,12 +349,12 @@ public class Menu extends Application {
         public UnanimatedItem(String name) {
             _name = name;
 
-            Rectangle bg = new Rectangle(0.19*_width*_width_ratio,0.05*_height*_height_ratio);
+            Rectangle bg = new Rectangle(0.19*getMenuWidth(),0.05*getMenuHeight());
             bg.setOpacity(0.4);
 
             Text text = new Text(name);
             text.setFill(Color.DARKGREY);
-            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333*_height*_height_ratio));
+            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333*getMenuHeight()));
 
             //setAlignment(Pos.CENTER);
             setAlignment(Pos.CENTER_LEFT);
