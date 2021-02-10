@@ -108,6 +108,7 @@ public class Menu extends Application {
 
     public void addSelectableItem(String new_selectable_item, String ... selection_tags){
         SelectableItem new_item = new Menu.SelectableItem(new_selectable_item);
+
         for(var tag:selection_tags){
             new_item.addSelectionElement(tag);
         }
@@ -298,6 +299,7 @@ public class Menu extends Application {
 
         public void addSelectionElement(String selection_tag){
             _selection_list.add(selection_tag);
+            updateText();
         }
 
         private void updateText(){
