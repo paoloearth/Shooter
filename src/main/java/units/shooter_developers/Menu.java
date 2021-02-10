@@ -25,12 +25,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Menu extends Application {
     ArrayList<Node> _menu_items;
@@ -233,13 +230,30 @@ public class Menu extends Application {
     }
 
     public class SelectableItem extends HBox{
+        private ArrayList<String> _item_list;
+        private int _item;
+
         public SelectableItem(String name){
-            //setAlignment(Pos.CENTER);
+            _item = 0;
+            _item_list = new ArrayList<String>();
+            _item_list.add("item_1");
+            _item_list.add("item_2");
+            _item_list.add("item_3");
+
+            UnanimatedItem _feature_item;
+            _feature_item = new UnanimatedItem(_item_list.get(_item));
+
             setAlignment(Pos.CENTER_LEFT);
             UnanimatedItem name_item = new UnanimatedItem(name);
             MenuItem left_arrow = new MenuItem("<", 0.04, -1);
-            UnanimatedItem feature_item = new UnanimatedItem("feature_here");
+            left_arrow.setOnMouseReleased(event -> {
+                previous();
+            });
+
             MenuItem right_arrow = new MenuItem(">", 0.04, -1);
+            right_arrow.setOnMouseReleased(event -> {
+                next();
+            });
 
             Rectangle long_space = new Rectangle(0.10*_width*_width_ratio, 0.05*_height*_height_ratio);
             long_space.setOpacity(0);
@@ -254,9 +268,38 @@ public class Menu extends Application {
                     long_space,
                     left_arrow,
                     short_space_1,
-                    feature_item,
+                    _feature_item,
                     short_space_2,
                     right_arrow);
+        }
+
+        public void next(){
+            if(_item == _item_list.size()-1)
+                _item = 0;
+            else
+                _item += 1;
+            updateText();
+        }
+
+        public void previous(){
+            if(_item == 0)
+                _item = _item_list.size()-1;
+            else
+                _item -= 1;
+            updateText();
+        }
+
+        private void updateText(){
+            var feature_item = (UnanimatedItem)getChildren().stream()
+                    .filter(e -> e instanceof UnanimatedItem)
+                    .skip(1)
+                    .findFirst()
+                    .orElse(null);
+
+            var index = getChildren().indexOf(feature_item);
+            getChildren().remove(feature_item);
+            feature_item = new UnanimatedItem(_item_list.get(_item));
+            getChildren().add(index, feature_item);
         }
     }
 
