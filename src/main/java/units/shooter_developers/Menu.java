@@ -230,18 +230,18 @@ public class Menu extends Application {
     }
 
     public class SelectableItem extends HBox{
-        private ArrayList<String> _item_list;
-        private int _item;
+        private ArrayList<String> _selection_list;
+        private int _selection_index;
 
         public SelectableItem(String name){
-            _item = 0;
-            _item_list = new ArrayList<String>();
-            _item_list.add("item_1");
-            _item_list.add("item_2");
-            _item_list.add("item_3");
+            _selection_index = 0;
+            _selection_list = new ArrayList<String>();
+            addSelectionElement("item_1");
+            addSelectionElement("item_2");
+            addSelectionElement("item_3");
 
-            UnanimatedItem _feature_item;
-            _feature_item = new UnanimatedItem(_item_list.get(_item));
+            UnanimatedItem selection_item;
+            selection_item = new UnanimatedItem("not_found");
 
             setAlignment(Pos.CENTER_LEFT);
             UnanimatedItem name_item = new UnanimatedItem(name);
@@ -268,38 +268,46 @@ public class Menu extends Application {
                     long_space,
                     left_arrow,
                     short_space_1,
-                    _feature_item,
+                    selection_item,
                     short_space_2,
                     right_arrow);
         }
 
         public void next(){
-            if(_item == _item_list.size()-1)
-                _item = 0;
+            if(_selection_index == _selection_list.size()-1)
+                _selection_index = 0;
             else
-                _item += 1;
+                _selection_index += 1;
             updateText();
         }
 
         public void previous(){
-            if(_item == 0)
-                _item = _item_list.size()-1;
+            if(_selection_index == 0)
+                _selection_index = _selection_list.size()-1;
             else
-                _item -= 1;
+                _selection_index -= 1;
             updateText();
         }
 
+        public void addSelectionElement(String selection_tag){
+            _selection_list.add(selection_tag);
+        }
+
         private void updateText(){
-            var feature_item = (UnanimatedItem)getChildren().stream()
+            var selection_item = (UnanimatedItem)getChildren().stream()
                     .filter(e -> e instanceof UnanimatedItem)
                     .skip(1)
                     .findFirst()
                     .orElse(null);
 
-            var index = getChildren().indexOf(feature_item);
-            getChildren().remove(feature_item);
-            feature_item = new UnanimatedItem(_item_list.get(_item));
-            getChildren().add(index, feature_item);
+            var index = getChildren().indexOf(selection_item);
+            getChildren().remove(selection_item);
+            if(_selection_list.isEmpty()){
+                selection_item = new UnanimatedItem("not_found");
+            } else {
+                selection_item = new UnanimatedItem(_selection_list.get(_selection_index));
+            }
+            getChildren().add(index, selection_item);
         }
     }
 
