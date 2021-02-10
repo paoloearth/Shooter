@@ -106,8 +106,11 @@ public class Menu extends Application {
         vbox1.addItem(new_item);
     }
 
-    public void addSelectableItem(String new_selectable_item){
+    public void addSelectableItem(String new_selectable_item, String ... selection_tags){
         SelectableItem new_item = new Menu.SelectableItem(new_selectable_item);
+        for(var tag:selection_tags){
+            new_item.addSelectionElement(tag);
+        }
 
         var vbox = _root.getChildren().parallelStream()
                 .filter(e -> e instanceof Menu.MenuBox)
@@ -236,9 +239,6 @@ public class Menu extends Application {
         public SelectableItem(String name){
             _selection_index = 0;
             _selection_list = new ArrayList<String>();
-            addSelectionElement("item_1");
-            addSelectionElement("item_2");
-            addSelectionElement("item_3");
 
             UnanimatedItem selection_item;
             selection_item = new UnanimatedItem("not_found");
@@ -271,6 +271,13 @@ public class Menu extends Application {
                     selection_item,
                     short_space_2,
                     right_arrow);
+        }
+
+        public SelectableItem(String name, String ... selection_tag){
+            this(name);
+            for(var tag:selection_tag){
+                addSelectionElement(tag);
+            }
         }
 
         public void next(){
