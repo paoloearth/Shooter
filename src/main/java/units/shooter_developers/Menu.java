@@ -30,8 +30,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class Menu extends Application {
-    ArrayList<Node> _menu_items;
-    Pane _root;
+    ArrayList<Node> _menu_items;    //hay que privatizar esta variable
+    private Pane _root;
     private double _width;
     private double _height;
     private double _width_ratio;
@@ -57,15 +57,15 @@ public class Menu extends Application {
         _width = bounds.getWidth();
         _height = bounds.getHeight();
 
-        root.setPrefSize(_width_ratio*_width, _height_ratio*_height);
+        root.setPrefSize(getMenuWidth(), getMenuHeight());
         //_width = 1050;///////////////////////////////////////////////////
         //_height = 600;//////////////////////////////////////////////////
         //original default resolution was 1050x600
 
         try (InputStream is = Files.newInputStream(Paths.get("src/main/resources/menu.jpeg"))) {
             ImageView img = new ImageView(new Image(is));
-            img.setFitWidth(_width_ratio*_width);
-            img.setFitHeight(_height_ratio*_height);
+            img.setFitWidth(getMenuWidth());
+            img.setFitHeight(getMenuHeight());
             root.getChildren().add(img);
         } catch (IOException e) {
             System.out.println("Couldn't load image");
@@ -83,6 +83,14 @@ public class Menu extends Application {
 
         _root = root;
 
+    }
+
+    public double getMenuHeight() {
+        return _height_ratio*_height;
+    }
+
+    public double getMenuWidth() {
+        return _width_ratio*_width;
     }
 
     public Parent getRoot(){
