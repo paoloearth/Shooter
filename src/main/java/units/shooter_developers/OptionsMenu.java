@@ -67,6 +67,7 @@ public class OptionsMenu extends Menu{
 
         Stage game_stage = new Stage();
 
+
         for(var item:_menu_items)
         {
             item.setOnMouseReleased(event -> {
@@ -80,5 +81,6 @@ public class OptionsMenu extends Menu{
 
             });
         }
+
     }
 }

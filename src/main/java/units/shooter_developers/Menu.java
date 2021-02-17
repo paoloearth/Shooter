@@ -118,34 +118,33 @@ public class Menu extends Application {
     }
 
     public void addItem(String new_menu_item){
-        MenuItem new_item = new Menu.MenuItem(new_menu_item);
-        _menu_items.add(new_item);
-
         var vbox = _root.getChildren().parallelStream()
                 .filter(e -> e instanceof Menu.MenuBox)
                 .findFirst()
                 .orElse(null);
 
         Menu.MenuBox vbox1 = (MenuBox) vbox;
-        vbox1.addItem(new_item);
+        vbox1.addItem(new_menu_item);
     }
 
     public void addSelectableItem(String new_selectable_item, String ... selection_tags){
-        SelectableItem new_item = new Menu.SelectableItem(new_selectable_item);
-
-        for(var tag:selection_tags){
-            new_item.addSelectionElement(tag);
-        }
-
         var vbox = _root.getChildren().parallelStream()
                 .filter(e -> e instanceof Menu.MenuBox)
                 .findFirst()
                 .orElse(null);
 
         Menu.MenuBox vbox1 = (MenuBox) vbox;
-        vbox1.addSelectableItem(new_item);
+
+        ArrayList<String> tags= new ArrayList<String>();
+        for(var tag:selection_tags){
+           tags.add(tag);
+        }
+
+        vbox1.addSelectableItem(new_selectable_item, tags);
     }
 
+
+    /////////////// TITLE ///////////////////////
     private class Title extends StackPane {
         public Title(String name) {
             Rectangle bg = new Rectangle(0.357*getMenuWidth(), 0.1*getMenuHeight());
@@ -162,7 +161,9 @@ public class Menu extends Application {
         }
     }
 
-    //wrapper para los elementos del menú
+
+
+    /////////////////////// MENU BOX ///////////////////////////////
     private class MenuBox extends VBox {
 
         public MenuBox(Menu.MenuItem... items) {
@@ -180,18 +181,30 @@ public class Menu extends Application {
             return sep;
         }
 
-        public void addItem(Menu.MenuItem new_item){
+        public void addItem(String new_menu_item){
+            MenuItem new_item = new Menu.MenuItem(new_menu_item);
             new_item.setTranslateX(0.005*getMenuWidth());
+            _menu_items.add(new_item);
+
             getChildren().addAll(new_item, createSeperator());
         }
 
-        public void addSelectableItem(Menu.SelectableItem new_item){
+        public void addSelectableItem(String new_selectable_item, ArrayList<String> selection_tags){
+            SelectableItem new_item = new Menu.SelectableItem(new_selectable_item);
             new_item.setTranslateX(0.005*getMenuWidth());
+
+            for(var tag:selection_tags){
+                new_item.addSelectionElement(tag);
+            }
+
             getChildren().addAll(new_item, createSeperator());
         }
+
 
     }
 
+
+    //////////////////// MENU ITEM ///////////////////////////////
     public class MenuItem extends StackPane {
         String _name;
 
@@ -256,6 +269,8 @@ public class Menu extends Application {
         }
     }
 
+
+    ///////////////// SELECTABLE ITEM ///////////////////////////////////
     public class SelectableItem extends HBox{
         private ArrayList<String> _selection_list;
         private int _selection_index;
@@ -343,6 +358,8 @@ public class Menu extends Application {
         }
     }
 
+
+    //////////////////// UNANIMATED ITEM ///////////////////////////////
     public class UnanimatedItem extends StackPane {
         String _name;
 
