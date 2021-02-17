@@ -222,8 +222,8 @@ public class Menu extends Application {
                 effective_item_height = 0.05;
             }
             _name = name;
-            this.setWidth(effective_item_width*getMenuWidth());
-            this.setHeight(effective_item_height*getMenuHeight());
+            this.setMaxWidth(effective_item_width*getMenuWidth());
+            this.setMaxHeight(effective_item_height*getMenuHeight());
 
             LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[] {
                     new Stop(0, Color.DARKBLUE),
