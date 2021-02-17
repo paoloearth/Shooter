@@ -59,6 +59,7 @@ public class OptionsMenu extends Menu{
         this.addItem("LIGHT/DARK MODE");
         this.addSelectableItem("hola", "item_1", "item_2", "item_3");
         this.addItem("BACK");
+
         Scene scene = new Scene(this.getRoot());
         menu_stage.setTitle("VIDEO GAME");
         menu_stage.setScene(scene);

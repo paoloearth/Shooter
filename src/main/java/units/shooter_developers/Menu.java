@@ -58,8 +58,8 @@ public class Menu extends Application {
         _height = bounds.getHeight();
 
         root.setPrefSize(getMenuWidth(), getMenuHeight());
-        _width = 1050;///////////////////////////////////////////////////
-        _height = 600;//////////////////////////////////////////////////
+        //_width = 1050;///////////////////////////////////////////////////
+        //_height = 600;//////////////////////////////////////////////////
         //original default resolution was 1050x600
 
         try (InputStream is = Files.newInputStream(Paths.get("src/main/resources/menu.jpeg"))) {
@@ -118,7 +118,8 @@ public class Menu extends Application {
     }
 
     public void addItem(String new_menu_item){
-        MenuItem new_item = new Menu.MenuItem(new_menu_item, _menu_items);
+        MenuItem new_item = new Menu.MenuItem(new_menu_item);
+        _menu_items.add(new_item);
 
         var vbox = _root.getChildren().parallelStream()
                 .filter(e -> e instanceof Menu.MenuBox)
@@ -208,6 +209,8 @@ public class Menu extends Application {
                 effective_item_height = 0.05;
             }
             _name = name;
+            this.setWidth(effective_item_width*getMenuWidth());
+            this.setHeight(effective_item_height*getMenuHeight());
 
             LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[] {
                     new Stop(0, Color.DARKBLUE),
@@ -225,7 +228,7 @@ public class Menu extends Application {
             text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333*_height*_height_ratio));
 
             setAlignment(Pos.CENTER_LEFT);
-            getChildren().addAll(bg, text);
+
             setOnMouseEntered(event -> {
                 bg.setFill(gradient);
                 text.setFill(Color.WHITE);
@@ -235,6 +238,7 @@ public class Menu extends Application {
                 bg.setFill(Color.BLACK);
                 text.setFill(Color.DARKGREY);
             });
+
             setOnMousePressed(event -> {
                 bg.setFill(Color.DARKVIOLET);
             });
@@ -243,11 +247,8 @@ public class Menu extends Application {
                 bg.setFill(gradient);
             });
 
-        }
+            getChildren().addAll(bg, text);
 
-        public MenuItem(String name, ArrayList<Node> items_list) {
-            this(name);
-            items_list.add(this);
         }
 
         public String getName() {
