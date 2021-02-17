@@ -29,11 +29,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import static java.util.List.of;
+
 public class Menu extends Application {
     ArrayList<Node> _menu_items;    //hay que privatizar esta variable
     private Pane _root;
-    private double _width;
-    private double _height;
+    private double _stage_width;
+    private double _stage_height;
     private double _width_ratio;
     private double _height_ratio;
 
@@ -45,17 +47,15 @@ public class Menu extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-
-    }
+    public void start(Stage primaryStage) throws Exception {}
 
     public void createContent() {
         Pane root = new Pane();
 
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
-        _width = bounds.getWidth();
-        _height = bounds.getHeight();
+        _stage_width = bounds.getWidth();
+        _stage_height = bounds.getHeight();
 
         root.setPrefSize(getMenuWidth(), getMenuHeight());
         //_width = 1050;///////////////////////////////////////////////////
@@ -101,11 +101,11 @@ public class Menu extends Application {
     }
 
     public double getMenuHeight() {
-        return _height_ratio*_height;
+        return _height_ratio* _stage_height;
     }
 
     public double getMenuWidth() {
-        return _width_ratio*_width;
+        return _width_ratio* _stage_width;
     }
 
     public Parent getRoot(){
@@ -118,29 +118,28 @@ public class Menu extends Application {
     }
 
     public void addItem(String new_menu_item){
-        var vbox = _root.getChildren().parallelStream()
+        var items_box = _root.getChildren().parallelStream()
                 .filter(e -> e instanceof Menu.MenuBox)
                 .findFirst()
                 .orElse(null);
 
-        Menu.MenuBox vbox1 = (MenuBox) vbox;
-        vbox1.addItem(new_menu_item);
+        Menu.MenuBox items_box_casted = (MenuBox) items_box;
+        items_box_casted.addItem(new_menu_item);
     }
 
-    public void addSelectableItem(String new_selectable_item, String ... selection_tags){
-        var vbox = _root.getChildren().parallelStream()
+    public void addSelectableItem(String item_name, String ... selection_tags){
+        var items_box = _root.getChildren().parallelStream()
                 .filter(e -> e instanceof Menu.MenuBox)
                 .findFirst()
                 .orElse(null);
 
-        Menu.MenuBox vbox1 = (MenuBox) vbox;
+        Menu.MenuBox items_box_refactored = (MenuBox) items_box;
 
-        ArrayList<String> tags= new ArrayList<String>();
-        for(var tag:selection_tags){
-           tags.add(tag);
-        }
+        ArrayList<String> tag_list= new ArrayList<String>();
+        for(var tag:selection_tags){ tag_list.add(tag); }
 
-        vbox1.addSelectableItem(new_selectable_item, tags);
+
+        items_box_refactored.addSelectableItem(item_name, tag_list);
     }
 
 
@@ -167,18 +166,20 @@ public class Menu extends Application {
     private class MenuBox extends VBox {
 
         public MenuBox(Menu.MenuItem... items) {
-            getChildren().add(createSeperator());
+            getChildren().add(createSeparator());
 
             for (Menu.MenuItem item : items) {
-                getChildren().addAll(item, createSeperator());
+                getChildren().addAll(item, createSeparator());
             }
         }
 
-        private Line createSeperator() {
-            Line sep = new Line();
-            sep.setEndX(0.2*getMenuWidth());
-            sep.setStroke(Color.DARKGREY);
-            return sep;
+        private Line createSeparator() {
+            Color separator_color = Color.DARKGREY;
+
+            Line separator_line = new Line();
+            separator_line.setEndX(0.2*getMenuWidth());
+            separator_line.setStroke(separator_color);
+            return separator_line;
         }
 
         public void addItem(String new_menu_item){
@@ -186,18 +187,18 @@ public class Menu extends Application {
             new_item.setTranslateX(0.005*getMenuWidth());
             _menu_items.add(new_item);
 
-            getChildren().addAll(new_item, createSeperator());
+            getChildren().addAll(new_item, createSeparator());
         }
 
-        public void addSelectableItem(String new_selectable_item, ArrayList<String> selection_tags){
-            SelectableItem new_item = new Menu.SelectableItem(new_selectable_item);
+        public void addSelectableItem(String selectable_name, ArrayList<String> tag_list){
+            SelectableItem new_item = new Menu.SelectableItem(selectable_name);
             new_item.setTranslateX(0.005*getMenuWidth());
 
-            for(var tag:selection_tags){
-                new_item.addSelectionElement(tag);
+            for(var tag:tag_list){
+                new_item.addTag(tag);
             }
 
-            getChildren().addAll(new_item, createSeperator());
+            getChildren().addAll(new_item, createSeparator());
         }
 
 
@@ -212,13 +213,13 @@ public class Menu extends Application {
             this(name, -1, -1);
         }
 
-        public MenuItem(String name, double item_width, double item_height) {
-            var effective_item_width = item_width;
-            var effective_item_height = item_height;
-            if(item_width < 0){
+        public MenuItem(String name, double item_width_ratio, double item_height_ratio) {
+            var effective_item_width = item_width_ratio;
+            var effective_item_height = item_height_ratio;
+            if(item_width_ratio < 0){
                 effective_item_width = 0.19;
             }
-            if(item_height < 0){
+            if(item_height_ratio < 0){
                 effective_item_height = 0.05;
             }
 
@@ -245,7 +246,7 @@ public class Menu extends Application {
 
             Text text = new Text(name);
             text.setFill(text_color);
-            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333*_height*_height_ratio));
+            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333* _stage_height *_height_ratio));
 
             setAlignment(Pos.CENTER_LEFT);
 
@@ -322,7 +323,7 @@ public class Menu extends Application {
         public SelectableItem(String name, String ... selection_tag){
             this(name);
             for(var tag:selection_tag){
-                addSelectionElement(tag);
+                addTag(tag);
             }
         }
 
@@ -331,7 +332,7 @@ public class Menu extends Application {
                 _selection_index = 0;
             else
                 _selection_index += 1;
-            updateText();
+            updateTagText();
         }
 
         public void previous(){
@@ -339,15 +340,15 @@ public class Menu extends Application {
                 _selection_index = _selection_list.size()-1;
             else
                 _selection_index -= 1;
-            updateText();
+            updateTagText();
         }
 
-        public void addSelectionElement(String selection_tag){
+        public void addTag(String selection_tag){
             _selection_list.add(selection_tag);
-            updateText();
+            updateTagText();
         }
 
-        private void updateText(){
+        private void updateTagText(){
             var selection_item = (UnanimatedItem)getChildren().stream()
                     .filter(e -> e instanceof UnanimatedItem)
                     .skip(1)
@@ -383,8 +384,7 @@ public class Menu extends Application {
             Text text = new Text(name);
             text.setFill(text_color);
             text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333*getMenuHeight()));
-
-            //setAlignment(Pos.CENTER);
+            
             setAlignment(Pos.CENTER_LEFT);
             getChildren().addAll(bg, text);
         }
