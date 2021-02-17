@@ -221,15 +221,22 @@ public class Menu extends Application {
             if(item_height < 0){
                 effective_item_height = 0.05;
             }
+
+            Color text_color = Color.SILVER;
+            Color item_clicked_color = Color.DARKVIOLET;
+            Color item_selected_color_lateral = Color.DARKBLUE;
+            Color item_background_color = Color.BLACK;
+            Color text_selected_color = Color.WHITE;
+
             _name = name;
             this.setMaxWidth(effective_item_width*getMenuWidth());
             this.setMaxHeight(effective_item_height*getMenuHeight());
 
             LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[] {
-                    new Stop(0, Color.DARKBLUE),
-                    new Stop(0.1, Color.BLACK),
-                    new Stop(0.9, Color.BLACK),
-                    new Stop(1, Color.DARKBLUE)
+                    new Stop(0, item_selected_color_lateral),
+                    new Stop(0.1, item_background_color),
+                    new Stop(0.9, item_background_color),
+                    new Stop(1, item_selected_color_lateral)
 
             });
 
@@ -237,23 +244,23 @@ public class Menu extends Application {
             bg.setOpacity(0.4);
 
             Text text = new Text(name);
-            text.setFill(Color.DARKGREY);
+            text.setFill(text_color);
             text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333*_height*_height_ratio));
 
             setAlignment(Pos.CENTER_LEFT);
 
             setOnMouseEntered(event -> {
                 bg.setFill(gradient);
-                text.setFill(Color.WHITE);
+                text.setFill(text_selected_color);
             });
 
             setOnMouseExited(event -> {
-                bg.setFill(Color.BLACK);
-                text.setFill(Color.DARKGREY);
+                bg.setFill(item_background_color);
+                text.setFill(text_color);
             });
 
             setOnMousePressed(event -> {
-                bg.setFill(Color.DARKVIOLET);
+                bg.setFill(item_clicked_color);
             });
 
             setOnMouseReleased(event -> {
@@ -367,7 +374,7 @@ public class Menu extends Application {
             _name = name;
 
             Rectangle bg = new Rectangle(0.19*getMenuWidth(),0.05*getMenuHeight());
-            bg.setOpacity(0.4);
+            bg.setOpacity(0.3);
 
             Text text = new Text(name);
             text.setFill(Color.DARKGREY);
