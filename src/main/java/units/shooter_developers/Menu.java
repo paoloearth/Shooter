@@ -373,11 +373,15 @@ public class Menu extends Application {
         public UnanimatedItem(String name) {
             _name = name;
 
+            Color text_color = Color.DARKGREY;
+            Color background_color = Color.BLACK;
+
             Rectangle bg = new Rectangle(0.19*getMenuWidth(),0.05*getMenuHeight());
             bg.setOpacity(0.3);
+            bg.setFill(background_color);
 
             Text text = new Text(name);
-            text.setFill(Color.DARKGREY);
+            text.setFill(text_color);
             text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333*getMenuHeight()));
 
             //setAlignment(Pos.CENTER);
