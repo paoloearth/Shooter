@@ -27,13 +27,10 @@ public class Simulation extends Application{
     int HEIGHT;
     int WIDTH;
 
-
     /* Status of the game */
     private boolean _close,_pause;
 
     Pair<Double,Double> scaling_factors;
-
-
 
 
 
@@ -45,7 +42,9 @@ public class Simulation extends Application{
     public void start(Stage stage){
 
         /* Add windows title */
-        stage.setTitle("Shooter 2D GAME");
+        stage.setTitle("Shooter");
+
+
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -53,7 +52,6 @@ public class Simulation extends Application{
 
         stage.show();
     }
-
 
 
 
