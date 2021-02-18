@@ -24,6 +24,7 @@ public class Function_To_Test {
         assertEquals(number, number);
     }
 
+    /*
     @Test
     void Block_dimensions_ratio_setting_and_getting_works(){
         Block testing_block = new Block(1920, 1080, 0.5, 0.5);
@@ -348,5 +349,5 @@ public class Function_To_Test {
         entity_not_crossed_through = entity_not_crossed_through && (dynamic_entity_1.getX() <= dynamic_entity_2.getX());
         assertEquals(true, entity_not_crossed_through);
     }
-
+*/
 }
