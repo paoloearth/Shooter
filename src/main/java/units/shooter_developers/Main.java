@@ -9,9 +9,9 @@ public class Main extends Application {
         launch(args);
     }
 
-    public void start(Stage theStage) throws Exception{
+    public void start(Stage stage) throws Exception{
         GameMenu menu = new GameMenu();
-
-        menu.start(theStage);
+        menu.start(stage);
     }
 }
+
