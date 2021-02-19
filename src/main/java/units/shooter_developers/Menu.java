@@ -282,13 +282,15 @@ public class Menu extends Application {
     public class SelectableItem extends HBox{
         private ArrayList<String> _selection_list;
         private int _selection_index;
+        private double _width_selection_item;
 
         public SelectableItem(String name){
             _selection_index = 0;
             _selection_list = new ArrayList<String>();
+            _width_selection_item = 0.25;
 
             UnanimatedItem selection_item;
-            selection_item = new UnanimatedItem("not_found");
+            selection_item = new UnanimatedItem("not_found", _width_selection_item, 0.05);
 
             setAlignment(Pos.CENTER_LEFT);
             UnanimatedItem name_item = new UnanimatedItem(name);
@@ -358,9 +360,9 @@ public class Menu extends Application {
             var index = getChildren().indexOf(selection_item);
             getChildren().remove(selection_item);
             if(_selection_list.isEmpty()){
-                selection_item = new UnanimatedItem("not_found");
+                selection_item = new UnanimatedItem("not_found", _width_selection_item, -1);
             } else {
-                selection_item = new UnanimatedItem(_selection_list.get(_selection_index));
+                selection_item = new UnanimatedItem(_selection_list.get(_selection_index), _width_selection_item, -1);
             }
             getChildren().add(index, selection_item);
         }
@@ -371,20 +373,35 @@ public class Menu extends Application {
     public class UnanimatedItem extends StackPane {
         String _name;
 
-        public UnanimatedItem(String name) {
+        public UnanimatedItem(String name){
+            this(name, -1, -1);
+        }
+
+        public UnanimatedItem(String name, double item_width_ratio, double item_height_ratio) {
+            var effective_width_ratio = 0.19;
+            var effective_height_ratio = 0.05;
+            if(item_width_ratio >= 0){
+                effective_width_ratio = item_width_ratio;
+            }
+            if(item_height_ratio >= 0){
+                effective_height_ratio = item_height_ratio;
+            }
+
+
             _name = name;
 
             Color text_color = Color.DARKGREY;
             Color background_color = Color.BLACK;
 
-            Rectangle bg = new Rectangle(0.19*getMenuWidth(),0.05*getMenuHeight());
+            Rectangle bg = new Rectangle(effective_width_ratio*getMenuWidth(),effective_height_ratio*getMenuHeight());
+            //Rectangle bg = new Rectangle(0.19*getMenuWidth(),0.05*getMenuHeight());
             bg.setOpacity(0.3);
             bg.setFill(background_color);
 
             Text text = new Text(name);
             text.setFill(text_color);
             text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333*getMenuHeight()));
-            
+
             setAlignment(Pos.CENTER_LEFT);
             getChildren().addAll(bg, text);
         }

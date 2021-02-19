@@ -58,6 +58,14 @@ public class OptionsMenu extends Menu{
         this.addItem("RESOLUTION");
         this.addItem("LIGHT/DARK MODE");
         this.addSelectableItem("hola", "item_1", "item_2", "item_3");
+        this.addSelectableItem("RESOLUTION",
+                "640x360 (widescreen)",
+                "800x600",
+                "1024x768",
+                "1280x720 (widescreen)",
+                "1536x864 (widescreen)",
+                "1600x900 (widescreen)",
+                "1920x1080 (widescreen)");
         this.addItem("BACK");
 
         Scene scene = new Scene(this.getRoot());
