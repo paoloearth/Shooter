@@ -44,6 +44,7 @@ import java.util.ArrayList;
 
 public class Menu extends Application {
     ArrayList<Node> _menu_items;    //hay que privatizar esta variable
+    private ArrayList<SelectableItem> _selectable_items;
     private Pane _root;
     private double _stage_width;
     private double _stage_height;
@@ -61,6 +62,7 @@ public class Menu extends Application {
         _width_ratio = 1;
         _height_ratio = 1;
         _menu_items = new ArrayList<>();
+        _selectable_items = new ArrayList<>();
         this.createContent(stage_width, stage_height);
     }
 
@@ -74,9 +76,6 @@ public class Menu extends Application {
         _stage_height = stage_height;
 
         root.setPrefSize(getMenuWidth(), getMenuHeight());
-        //_width = 1050;///////////////////////////////////////////////////
-        //_height = 600;//////////////////////////////////////////////////
-        //original default resolution was 1050x600
 
         try (InputStream is = Files.newInputStream(Paths.get("src/main/resources/menu.jpeg"))) {
             ImageView img = new ImageView(new Image(is));
@@ -184,6 +183,19 @@ public class Menu extends Application {
         items_box_refactored.addSelectableItem(item_name, tag_list);
     }
 
+    public SelectableItem getSelectableItem(String name){
+        SelectableItem item = (SelectableItem)getSelectableItems().stream()
+                .filter(e -> e.getName() == name)
+                .findFirst()
+                .orElse(null);
+
+        return item;
+    }
+
+    public ArrayList<SelectableItem> getSelectableItems(){
+        return _selectable_items;
+    }
+
 
     /////////////// TITLE ///////////////////////
     private class Title extends StackPane {
@@ -235,6 +247,7 @@ public class Menu extends Application {
         public void addSelectableItem(String selectable_name, ArrayList<String> tag_list){
             SelectableItem new_item = new Menu.SelectableItem(selectable_name);
             new_item.setTranslateX(0.005*getMenuWidth());
+            _selectable_items.add(new_item);
 
             for(var tag:tag_list){
                 new_item.addTag(tag);
@@ -325,11 +338,14 @@ public class Menu extends Application {
         private ArrayList<String> _selection_list;
         private int _selection_index;
         private double _width_selection_item;
+        private String _name;
 
         public SelectableItem(String name){
             _selection_index = 0;
             _selection_list = new ArrayList<String>();
             _width_selection_item = 0.25;
+            _name = name;
+
 
             UnanimatedItem selection_item;
             selection_item = new UnanimatedItem("not_found", _width_selection_item, 0.05);
@@ -411,6 +427,10 @@ public class Menu extends Application {
 
         public String getText(){
             return _selection_list.get(_selection_index);
+        }
+
+        public String getName(){
+            return _name;
         }
     }
 

@@ -58,6 +58,9 @@ public class OptionsMenu extends Menu{
                     main_menu.start(menu_stage);
                 } else if(item_casted.getName() == "APPLY") {
                     applyCurrentSettings();
+
+                    OptionsMenu options_menu = new OptionsMenu(getStageWidth(), getStageHeight());
+                    options_menu.start(menu_stage);
                     //insert here other possible settings updating
                 }
             });
@@ -76,7 +79,8 @@ public class OptionsMenu extends Menu{
 
         String regex = "\\d+";
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher("1600x900 (widescreen)");
+        Matcher matcher = pattern.matcher(getSelectableItem("RESOLUTION").getText());
+        //Matcher matcher = pattern.matcher("1600x900");
         matcher.find();
         width_string = matcher.group();
         matcher.find();
