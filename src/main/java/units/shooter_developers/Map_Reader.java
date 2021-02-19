@@ -27,7 +27,7 @@ public class Map_Reader {
     Map_Reader(String URL) throws IOException {
 
         _lines = extract_lines(URL);
-        _tileset = get_tileset();
+        //_tileset = get_tileset();
 
         //Lines representing the map
         //_map = _lines.stream().skip(Custom_Settings.NUMBER_OF_METADATA_LINES).collect(Collectors.toList());
