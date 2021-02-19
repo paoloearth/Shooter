@@ -12,20 +12,8 @@ import org.testfx.framework.junit5.Start;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-@ExtendWith(ApplicationExtension.class)
+
 public class Map_Reader_Tests {
-
-    @Start
-    private void start(Stage stage) {
-    }
-
-
-    @ParameterizedTest
-    @CsvSource({"map_desert.png,800"})
-    void should_contain_button_with_text(String URL,int number) {
-        assertEquals( new Image(URL).getWidth(), number);
-    }
-
 
 
     @ParameterizedTest
