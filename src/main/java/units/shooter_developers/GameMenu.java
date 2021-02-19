@@ -1,41 +1,7 @@
-package units.shooter_developers;/*
- *
- *  MICHAEL J. SIDERIUS
- *
- *  DECEMBER 30 2015
- *  VIDEO GAME MENU CONCEPT V1
- *  GOAL: PRACTICE USING JAVAFX TECHNOLOGY AND METHODS
- *
- *
- *  Credit to: https://github.com/Siderim/video-game-menu/
- */
+package units.shooter_developers;
 
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-
-import javafx.application.*;
 import javafx.stage.*;
-import javafx.geometry.*;
 import javafx.scene.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.*;
 
 public class GameMenu extends Menu{
     Simulation _gameInstance;

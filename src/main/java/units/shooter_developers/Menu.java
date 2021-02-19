@@ -1,5 +1,17 @@
 package units.shooter_developers;
 
+/*
+ *
+ *  MENU BASED ON MICHAEL J. SIDERIUS'S ONE:
+ *
+ *  DECEMBER 30 2015
+ *  VIDEO GAME MENU CONCEPT V1
+ *  GOAL: PRACTICE USING JAVAFX TECHNOLOGY AND METHODS
+ *
+ *
+ *  https://github.com/Siderim/video-game-menu/
+ */
+
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -22,14 +34,13 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import static java.util.List.of;
+
 
 public class Menu extends Application {
     ArrayList<Node> _menu_items;    //hay que privatizar esta variable
