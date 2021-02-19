@@ -76,7 +76,11 @@ public class GameMenu extends Menu{
                         _gameInstance.stop();
                         _gameInstance = new Simulation();
                     }
-                    _gameInstance.start(game_stage);
+                    try {
+                        _gameInstance.start(game_stage);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     _game_running = true;
                 }
 
