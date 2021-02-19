@@ -20,27 +20,18 @@ import java.util.stream.Collectors;
 */
 public class Map_Reader {
 
-    Image _spritesheet;
     List<String[]> _lines;
-    Pair<Integer,Integer> _num_blocks;
-    Integer _cell_side;
-    final Set<Integer> _set_of_passable;
-    final Set<Integer> _set_of_NOT_passable_projectile;
-    Pair<Pair<Integer,Integer>,Pair<Integer,Integer>> _players_positions;
-    Pair<Pair<Integer,Integer>,Pair<Integer,Integer>> _teleport_positions;
-    List<String[]> _map;
-
 
     // Constructor
     Map_Reader(String URL) throws IOException {
 
-        _lines = extract_lines(URL);
+       // _lines = extract_lines(URL);
 
         //Lines representing the map
-        _map = _lines.stream().skip(Custom_Settings.NUMBER_OF_METADATA_LINES).collect(Collectors.toList());
+        //_map = _lines.stream().skip(Custom_Settings.NUMBER_OF_METADATA_LINES).collect(Collectors.toList());
     }
 
-    private List<String[]> extract_lines(String URL) throws IOException {
+    List<String[]> extract_lines(String URL) throws IOException {
         File file = new File(getClass().getClassLoader().getResource(URL).getFile());
         return Files.lines(file.toPath()).parallel().map(l -> l.split(",")).collect(Collectors.toList());
     }
