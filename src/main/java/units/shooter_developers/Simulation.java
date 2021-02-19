@@ -60,6 +60,7 @@ public class Simulation extends Application{
         HEIGHT = required_full_screen?   (int) screenBounds.getHeight() : Custom_Settings.DEFAULT_Y;
 
         _root.setMinSize(WIDTH, HEIGHT);
+        _root.setPrefSize(WIDTH, HEIGHT);
         _root.setMaxSize(WIDTH, HEIGHT);
     }
 
