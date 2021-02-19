@@ -22,6 +22,8 @@ jobs:
         java-version: 15.0.1
     - name: Grant execute permission for gradlew and install openjfx
       run:  chmod +x gradlew
+    - name: Install xvfb
+      run: sudo apt-get install xvfb
     - name: Update system
       run: sudo apt update
     - name: Install openjfk
