@@ -15,8 +15,7 @@ public class Map_Reader_Tests {
     @CsvSource({"Three_lines.txt,3", "Five_lines.txt,5"})
     void Reads_true_number_of_lines(String file_name, int num_lines) throws IOException {
         var MR = new Map_Reader(file_name);
-        var lines = MR.extract_lines(file_name);
-        assertEquals(lines.size(), num_lines);
+        assertEquals(MR.get_lines().size(), num_lines);
     }
 
 

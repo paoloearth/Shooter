@@ -20,20 +20,29 @@ import java.util.stream.Collectors;
 */
 public class Map_Reader {
 
-    List<String[]> _lines;
+    Image _tileset;
+    private List<String[]> _lines;
 
     // Constructor
     Map_Reader(String URL) throws IOException {
 
-       // _lines = extract_lines(URL);
+        _lines = extract_lines(URL);
+        _tileset = get_tileset();
 
         //Lines representing the map
         //_map = _lines.stream().skip(Custom_Settings.NUMBER_OF_METADATA_LINES).collect(Collectors.toList());
     }
 
+    private Image get_tileset() {
+        return new Image(_lines.get(0)[0]);
+    }
+
     List<String[]> extract_lines(String URL) throws IOException {
         File file = new File(getClass().getClassLoader().getResource(URL).getFile());
         return Files.lines(file.toPath()).parallel().map(l -> l.split(",")).collect(Collectors.toList());
+    }
+    public List<String[]> get_lines() {
+        return _lines;
     }
 
 
