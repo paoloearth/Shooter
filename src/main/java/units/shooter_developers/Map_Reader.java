@@ -31,5 +31,20 @@ public class Map_Reader {
     List<String[]> _map;
 
 
+    // Constructor
+    Map_Reader(String URL) throws IOException {
+
+        _lines = extract_lines(URL);
+
+        //Lines representing the map
+        _map = _lines.stream().skip(Custom_Settings.NUMBER_OF_METADATA_LINES).collect(Collectors.toList());
+    }
+
+    private List<String[]> extract_lines(String URL) throws IOException {
+        File file = new File(getClass().getClassLoader().getResource(URL).getFile());
+        return Files.lines(file.toPath()).parallel().map(l -> l.split(",")).collect(Collectors.toList());
+    }
+
+
 
 }
