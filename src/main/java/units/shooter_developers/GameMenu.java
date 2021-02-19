@@ -30,6 +30,7 @@ public class GameMenu extends Menu{
         } else {
             this.addUnanimatedItem("CONTINUE");
         }
+
         this.addItem("NEW GAME");
         this.addItem("NEW LAN-GAME");
         this.addItem("OPTIONS");

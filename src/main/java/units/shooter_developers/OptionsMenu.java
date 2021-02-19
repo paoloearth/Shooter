@@ -30,6 +30,7 @@ public class OptionsMenu extends Menu{
         setTitle("O P T I O N S");
         this.addSelectableItem("INTERFACE MODE", "light", "dark");
         this.addSelectableItem("RESOLUTION",
+                Integer.toString((int)getStageWidth()) + "x" + Integer.toString((int)getStageHeight()) + " (detected)",
                 "640x360 (widescreen)",
                 "800x600",
                 "1024x768",
