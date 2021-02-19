@@ -1,27 +1,20 @@
 package units.shooter_developers;
 
 
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import org.junit.Test;
-import org.testfx.framework.junit.ApplicationTest;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
+public class Simulation_Tests   {
 
-class Simulation_Test  extends ApplicationTest {
-    @Override
-    public void start(Stage stage) {
-        Scene scene = new Scene(new Pane(), 800, 600);
-        stage.setScene(scene);
-        stage.show();
+    @ParameterizedTest
+    @ValueSource(ints = {4})
+    void Test_if_tests_works(int number) {
+        assertEquals(number, number);
     }
 
-    @Test
-    public void test_set_title() {
-
-
-    }
 
 
 
