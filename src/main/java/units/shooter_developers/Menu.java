@@ -168,6 +168,16 @@ public class Menu extends Application {
         items_box_casted.addItem(new_menu_item);
     }
 
+    public void addUnanimatedItem(String new_menu_item){
+        var items_box = _root.getChildren().parallelStream()
+                .filter(e -> e instanceof Menu.MenuBox)
+                .findFirst()
+                .orElse(null);
+
+        Menu.MenuBox items_box_casted = (MenuBox) items_box;
+        items_box_casted.addUnanimatedItem(new_menu_item);
+    }
+
     public void addSelectableItem(String item_name, String ... selection_tags){
         var items_box = _root.getChildren().parallelStream()
                 .filter(e -> e instanceof Menu.MenuBox)
@@ -240,6 +250,13 @@ public class Menu extends Application {
             MenuItem new_item = new Menu.MenuItem(new_menu_item);
             new_item.setTranslateX(0.005*getMenuWidth());
             _menu_items.add(new_item);
+
+            getChildren().addAll(new_item, createSeparator());
+        }
+
+        public void addUnanimatedItem(String new_menu_item){
+            UnanimatedItem new_item = new UnanimatedItem(new_menu_item);
+            new_item.setTranslateX(0.005*getMenuWidth());
 
             getChildren().addAll(new_item, createSeparator());
         }

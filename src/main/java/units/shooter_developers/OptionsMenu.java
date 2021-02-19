@@ -28,7 +28,6 @@ public class OptionsMenu extends Menu{
     @Override
     public void start(Stage menu_stage){
         setTitle("O P T I O N S");
-        this.addItem("RESOLUTION");
         this.addSelectableItem("INTERFACE MODE", "light", "dark");
         this.addSelectableItem("RESOLUTION",
                 "640x360 (widescreen)",
@@ -80,7 +79,6 @@ public class OptionsMenu extends Menu{
         String regex = "\\d+";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(getSelectableItem("RESOLUTION").getText());
-        //Matcher matcher = pattern.matcher("1600x900");
         matcher.find();
         width_string = matcher.group();
         matcher.find();

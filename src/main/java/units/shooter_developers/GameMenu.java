@@ -25,7 +25,11 @@ public class GameMenu extends Menu{
 
     @Override
     public void start(Stage menu_stage){
-        this.addItem("CONTINUE");
+        if(_game_running) {
+            this.addItem("CONTINUE");
+        } else {
+            this.addUnanimatedItem("CONTINUE");
+        }
         this.addItem("NEW GAME");
         this.addItem("NEW LAN-GAME");
         this.addItem("OPTIONS");
