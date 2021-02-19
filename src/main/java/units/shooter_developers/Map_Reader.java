@@ -1,4 +1,14 @@
 package units.shooter_developers;
+import javafx.scene.image.Image;
+import javafx.util.Pair;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 /* TEMPLATE
@@ -9,4 +19,17 @@ package units.shooter_developers;
        4. sprite_1_blocco_x, sprite_1_blocco_y,sprite_2_blocco_x, sprite_2_blocco_y
 */
 public class Map_Reader {
+
+    Image _spritesheet;
+    List<String[]> _lines;
+    Pair<Integer,Integer> _num_blocks;
+    Integer _cell_side;
+    final Set<Integer> _set_of_passable;
+    final Set<Integer> _set_of_NOT_passable_projectile;
+    Pair<Pair<Integer,Integer>,Pair<Integer,Integer>> _players_positions;
+    Pair<Pair<Integer,Integer>,Pair<Integer,Integer>> _teleport_positions;
+    List<String[]> _map;
+
+
+
 }
