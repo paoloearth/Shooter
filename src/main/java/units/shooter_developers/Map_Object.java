@@ -14,4 +14,14 @@ public class Map_Object extends Pane {
     {
 
     }
+
+    void move_to(Pair<Integer, Integer> coordinates)
+    {
+        this.relocate(coordinates.getKey(),coordinates.getValue());
+    }
+
+    public int get_current_X_position() { return (int)this.getLayoutX(); }
+
+    public int get_current_Y_position() { return (int)this.getLayoutY(); }
+
 }
