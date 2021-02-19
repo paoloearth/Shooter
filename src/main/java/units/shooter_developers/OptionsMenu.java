@@ -56,8 +56,7 @@ public class OptionsMenu extends Menu{
     public void start(Stage menu_stage){
         setTitle("O P T I O N S");
         this.addItem("RESOLUTION");
-        this.addItem("LIGHT/DARK MODE");
-        this.addSelectableItem("hola", "item_1", "item_2", "item_3");
+        this.addSelectableItem("INTERFACE MODE", "light", "dark");
         this.addSelectableItem("RESOLUTION",
                 "640x360 (widescreen)",
                 "800x600",
