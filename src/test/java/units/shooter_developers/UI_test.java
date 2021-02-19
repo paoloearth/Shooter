@@ -1,6 +1,7 @@
 package units.shooter_developers;
 
 
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxRobot;
@@ -31,6 +32,7 @@ class UI_test {
         stage.setScene(new Scene(new StackPane(button), 100, 100));
         stage.show();
     }
+
 
     /**
      * @param robot - Will be injected by the test runner.

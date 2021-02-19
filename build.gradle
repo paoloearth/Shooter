@@ -15,10 +15,12 @@ dependencies {
     testImplementation(platform('org.junit:junit-bom:5.6.2'))
     testImplementation('org.junit.jupiter:junit-jupiter')
     testCompile "org.testfx:testfx-junit5:4.0.16-alpha"
+    testRuntime "org.testfx:openjfx-monocle:8u76-b04"
 }
 
 test {
-    useJUnitPlatform()
+   useJUnitPlatform()
+
 }
 
 javafx {
