@@ -42,8 +42,8 @@ public class Menu extends Application {
     }
 
     public void createContent(Stage menu_stage) {
-        Pane root = new Pane();
 
+        Pane root = new Pane();
 
         root.setPrefSize(1050, 600);
 
