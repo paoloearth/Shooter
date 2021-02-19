@@ -20,14 +20,19 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 15.0.1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 14
     - name: Grant execute permission for gradlew and install openjfx
       run:  chmod +x gradlew
     - name: Install xvfb
       run: sudo apt-get install xvfb
     - name: Install npm
-      run: sudo apt-get install npm
-    - name: Test npm
-      run:  xvfb-run --auto-servernum npm test
+      run: npm install
+    - name: Run headless test
+      uses: GabrielBB/xvfb-action@v1
+      with:
+        run: npm test
     - name: Update system
       run: sudo apt update
     - name: Install openjfk
