@@ -28,11 +28,8 @@ jobs:
       run:  sudo apt install openjfx
     - name: Export variable
       run:  export DISPLAY=:99.0
-    - name: xvfb comandi
-      run: |
-           Xvfb :99 &>/dev/null &
 
-    - name: Before
+    - name: PROVA
       run: |
            - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
            - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
