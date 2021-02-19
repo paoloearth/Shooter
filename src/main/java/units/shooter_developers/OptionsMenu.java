@@ -17,6 +17,8 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javafx.application.*;
 import javafx.stage.*;
@@ -37,12 +39,19 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.*;
 
+import javax.swing.text.html.Option;
+
 public class OptionsMenu extends Menu{
     Simulation _gameInstance;
     boolean _game_running;
 
     public OptionsMenu(){
         super();
+        _game_running = false;
+    }
+
+    public OptionsMenu(double width, double height){
+        super(width, height);
         _game_running = false;
     }
 
@@ -65,6 +74,7 @@ public class OptionsMenu extends Menu{
                 "1536x864 (widescreen)",
                 "1600x900 (widescreen)",
                 "1920x1080 (widescreen)");
+        this.addItem("APPLY");
         this.addItem("BACK");
 
         Scene scene = new Scene(this.getRoot());
@@ -80,14 +90,41 @@ public class OptionsMenu extends Menu{
             item.setOnMouseReleased(event -> {
                 var item_casted = (MenuItem)item;
                 if(item_casted.getName() == "BACK") {
-                    GameMenu main_menu = new GameMenu();
+                    GameMenu main_menu = new GameMenu(getStageWidth(), getStageHeight());
                     main_menu.start(menu_stage);
+                } else if(item_casted.getName() == "APPLY") {
+                    applyCurrentSettings();
+                    //insert here other possible settings updating
                 }
-
-
-
             });
+
+
+
         }
 
+    }
+
+
+
+    private void updateResolution(){
+        String width_string = "";
+        String height_string = "";
+
+        String regex = "\\d+";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher("1600x900 (widescreen)");
+        matcher.find();
+        width_string = matcher.group();
+        matcher.find();
+        height_string = matcher.group();
+
+        int width = Integer.parseInt(width_string);
+        int height = Integer.parseInt(height_string);
+
+        setStageDimensions(width, height);
+    }
+
+    private void applyCurrentSettings(){
+        updateResolution();
     }
 }

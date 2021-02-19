@@ -46,16 +46,21 @@ public class Menu extends Application {
         this.createContent();
     }
 
+    public Menu(double stage_width, double stage_height) {
+        _width_ratio = 1;
+        _height_ratio = 1;
+        _menu_items = new ArrayList<>();
+        this.createContent(stage_width, stage_height);
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {}
 
-    public void createContent() {
+    public void createContent(double stage_width, double stage_height) {
         Pane root = new Pane();
 
-        Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
-        _stage_width = bounds.getWidth();
-        _stage_height = bounds.getHeight();
+        _stage_width = stage_width;
+        _stage_height = stage_height;
 
         root.setPrefSize(getMenuWidth(), getMenuHeight());
         //_width = 1050;///////////////////////////////////////////////////
@@ -85,6 +90,17 @@ public class Menu extends Application {
 
     }
 
+    public void createContent() {
+        Pane root = new Pane();
+
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+        var stage_width = bounds.getWidth();
+        var stage_height = bounds.getHeight();
+
+        createContent(stage_width, stage_height);
+    }
+
     public void setTitle(String title){
         Menu.Title new_title = new Menu.Title(title);
         var old_title = (Menu.Title) _root.getChildren().stream()
@@ -108,6 +124,14 @@ public class Menu extends Application {
         return _width_ratio* _stage_width;
     }
 
+    public double getStageHeight() {
+        return _stage_height;
+    }
+
+    public double getStageWidth() {
+        return _stage_width;
+    }
+
     public Parent getRoot(){
         return _root;
     }
@@ -115,6 +139,13 @@ public class Menu extends Application {
     public void rescale(double width_ratio, double height_ratio){
         _width_ratio = width_ratio;
         _height_ratio = height_ratio;
+    }
+
+    public void setStageDimensions(int width, int height){
+        _stage_width = width;
+        _stage_height = height;
+
+        //PUT HERE THE SIMULATION (if it procceed) REDIMENSIONING
     }
 
     public void addItem(String new_menu_item){
@@ -365,6 +396,10 @@ public class Menu extends Application {
                 selection_item = new UnanimatedItem(_selection_list.get(_selection_index), _width_selection_item, -1);
             }
             getChildren().add(index, selection_item);
+        }
+
+        public String getText(){
+            return _selection_list.get(_selection_index);
         }
     }
 

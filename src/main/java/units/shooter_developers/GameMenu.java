@@ -42,7 +42,12 @@ public class GameMenu extends Menu{
     boolean _game_running;
 
     public GameMenu(){
-        this(new Simulation());
+        super();
+        _game_running = false;
+    }
+
+    public GameMenu(double stage_width, double stage_height){
+        super(stage_width, stage_height);
         _game_running = false;
     }
 
@@ -88,13 +93,13 @@ public class GameMenu extends Menu{
                     }
 
                     if (item_casted.getName() == "EXIT") {
-                        _gameInstance.stop();
+                        //stop game instance
                         _game_running = false;
                         menu_stage.close();
                     }
 
                     if (item_casted.getName() == "OPTIONS") {
-                        OptionsMenu options_menu = new OptionsMenu();
+                        OptionsMenu options_menu = new OptionsMenu(getStageWidth(), getStageHeight());
                         options_menu.start(menu_stage);
                     }
 
