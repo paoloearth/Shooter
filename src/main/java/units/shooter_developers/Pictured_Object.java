@@ -47,7 +47,9 @@ public abstract class Pictured_Object extends Map_Object {
 
     }
 
-    // Custom constructor for SpriteSheet with multiple views
+    /*
+    Custom constructor for SpriteSheet with multiple views
+      */
     public Pictured_Object(Pair<Double,Double> scaling_factors, String url, int n_rows, int n_cols )
     {
         this(scaling_factors,url);
@@ -59,11 +61,18 @@ public abstract class Pictured_Object extends Map_Object {
         _height =  _height/ _n_rows;
     }
 
-
     // Create an image given an URL
     Image retrieve_image(String URL)
     {
         return new Image(URL);
     }
+
+    // Scaling on x-axis and y-axis of images according to the resolution of the window
+    void update_view() {
+        this._view.setFitWidth( _scale * _scaling_factors.getKey()  * _width);
+        this._view.setFitHeight(_scale * _scaling_factors.getValue() * _height);
+        this._view.setPreserveRatio(false);
+    }
+
 
 }
