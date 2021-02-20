@@ -2,6 +2,7 @@ package units.shooter_developers;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Pair;
@@ -82,6 +83,9 @@ public abstract class Pictured_Object extends Map_Object {
     {
         return (int) this._view.getFitWidth();
     }
+
+    //Abstract method to be implemented that defines the bounds of a map object used to check collision
+    public abstract Rectangle2D get_bounds();
 
 
 }
