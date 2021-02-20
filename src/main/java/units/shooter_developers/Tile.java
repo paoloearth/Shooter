@@ -37,4 +37,11 @@ public class Tile extends ImageView {
 
     }
 
+    public Pair<Integer, Integer> get_pixel_of_block_position() {
+
+        return this.block_pixel_position;
+    }
+
+
+
 }
