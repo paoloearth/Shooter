@@ -46,6 +46,7 @@ public class Menu extends Application {
     ArrayList<Node> _menu_items;    //hay que privatizar esta variable
     private ArrayList<SelectableItem> _selectable_items;
     private Pane _root;
+    private Stage _stage;
     private double _stage_width;
     private double _stage_height;
     private double _width_ratio;
@@ -55,6 +56,7 @@ public class Menu extends Application {
         _width_ratio = 1;
         _height_ratio = 1;
         _menu_items = new ArrayList<>();
+        _selectable_items = new ArrayList<>();
         this.createContent();
     }
 
@@ -67,13 +69,13 @@ public class Menu extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {}
+    public void start(Stage primaryStage) throws Exception {
+    }
 
     public void createContent(double stage_width, double stage_height) {
         Pane root = new Pane();
 
-        _stage_width = stage_width;
-        _stage_height = stage_height;
+        setStageDimensions(stage_width, stage_height);
 
         root.setPrefSize(getMenuWidth(), getMenuHeight());
 
@@ -118,6 +120,14 @@ public class Menu extends Application {
         return bounds.getHeight();
     }
 
+    public void setStage(Stage stage){
+        _stage = stage;
+    }
+
+    public Stage getStage(){
+        return _stage;
+    }
+
     public void setTitle(String title){
         Menu.Title new_title = new Menu.Title(title);
         var old_title = (Menu.Title) _root.getChildren().stream()
@@ -134,11 +144,11 @@ public class Menu extends Application {
     }
 
     public double getMenuHeight() {
-        return _height_ratio* _stage_height;
+        return _height_ratio*_stage_height;
     }
 
     public double getMenuWidth() {
-        return _width_ratio* _stage_width;
+        return _width_ratio*_stage_width;
     }
 
     public double getStageHeight() {
@@ -158,10 +168,14 @@ public class Menu extends Application {
         _height_ratio = height_ratio;
     }
 
-    public void setStageDimensions(int width, int height){
+    public void setStageDimensions(double width, double height){
         _stage_width = width;
         _stage_height = height;
 
+        if(getStage() != null) {
+            getStage().setWidth(width);
+            getStage().setHeight(height);
+        }
         //PUT HERE THE SIMULATION (if it procceed) REDIMENSIONING
     }
 

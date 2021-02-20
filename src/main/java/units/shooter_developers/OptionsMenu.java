@@ -27,10 +27,14 @@ public class OptionsMenu extends Menu{
 
     @Override
     public void start(Stage menu_stage){
+        setStage(menu_stage);
+        setStageDimensions(getStageWidth(), getStageHeight());
+
         setTitle("O P T I O N S");
         this.addSelectableItem("INTERFACE MODE", "light", "dark");
         this.addSelectableItem("RESOLUTION",
-                Integer.toString((int)getStageWidth()) + "x" + Integer.toString((int)getStageHeight()) + " (detected)",
+                Integer.toString((int)getStageWidth()) + "x" + Integer.toString((int)getStageHeight()) + " (current)",
+                ((int)getScreenWidth()) + "x" + Integer.toString((int)getScreenHeight()) + " (native)",
                 "640x360 (widescreen)",
                 "800x600",
                 "1024x768",
@@ -46,21 +50,18 @@ public class OptionsMenu extends Menu{
         menu_stage.setScene(scene);
         menu_stage.show();
 
-        Stage game_stage = new Stage();
-
 
         for(var item:_menu_items)
         {
             item.setOnMouseReleased(event -> {
                 var item_casted = (MenuItem)item;
                 if(item_casted.getName() == "BACK") {
+                    var hola = getStageWidth();//////////////////////
+                    var adios = getStageHeight();////////////////////////////
                     GameMenu main_menu = new GameMenu(getStageWidth(), getStageHeight());
                     main_menu.start(menu_stage);
                 } else if(item_casted.getName() == "APPLY") {
                     applyCurrentSettings();
-
-                    OptionsMenu options_menu = new OptionsMenu(getStageWidth(), getStageHeight());
-                    options_menu.start(menu_stage);
                     //insert here other possible settings updating
                 }
             });
@@ -85,10 +86,17 @@ public class OptionsMenu extends Menu{
         matcher.find();
         height_string = matcher.group();
 
-        int width = Integer.parseInt(width_string);
-        int height = Integer.parseInt(height_string);
+        double width = Integer.parseInt(width_string);
+        double height = Integer.parseInt(height_string);
 
+        var stage = getStage();
+
+        stage.setMaximized(false);
         setStageDimensions(width, height);
+
+        OptionsMenu options_menu = new OptionsMenu(getStageWidth(), getStageHeight());
+        options_menu.start(stage);
+
     }
 
     private void applyCurrentSettings(){

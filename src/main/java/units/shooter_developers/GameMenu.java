@@ -25,6 +25,9 @@ public class GameMenu extends Menu{
 
     @Override
     public void start(Stage menu_stage){
+        setStage(menu_stage);
+        setStageDimensions(getStageWidth(), getStageHeight());
+
         if(_game_running) {
             this.addItem("CONTINUE");
         } else {
@@ -41,8 +44,6 @@ public class GameMenu extends Menu{
         menu_stage.setScene(scene);
         menu_stage.show();
 
-        Stage game_stage = new Stage();
-
         for(var item:_menu_items)
         {
             if(item instanceof MenuItem) {
@@ -54,13 +55,14 @@ public class GameMenu extends Menu{
                             _gameInstance.stop();
                             _gameInstance = new Simulation();
                         }
-                        _gameInstance.start(game_stage);
                         _game_running = true;
+                        // START GAME HERE
                     }
 
                     if (item_casted.getName() == "CONTINUE") {
                         if (_game_running)
                             menu_stage.close();
+                        //  RESUME SIMULATION
                     }
 
                     if (item_casted.getName() == "EXIT") {
