@@ -21,16 +21,18 @@ public class Tile extends ImageView {
         this.setLayoutX(pos_x);
         this.setLayoutY(pos_y);
 
-
+        /* Position the tile in the proper position */
         this.setFitWidth(width);
         this.setFitHeight(height);
 
-
+        /* Save the pixel posiion of the block */
         this.block_pixel_position = new Pair<>(pos_x,pos_y);
 
+        /* Set passability parameters */
         this.is_passable.setValue(passable);
         this.not_passable_for_p.setValue(not_passable_p);
 
+        /* Set image property of the figure */
         this.setImage(img);
         this.setViewport(r2);
         this.setPreserveRatio(false);
@@ -38,7 +40,6 @@ public class Tile extends ImageView {
     }
 
     public Pair<Integer, Integer> get_pixel_of_block_position() {
-
         return this.block_pixel_position;
     }
 
