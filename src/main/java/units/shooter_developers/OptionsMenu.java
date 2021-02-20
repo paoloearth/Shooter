@@ -155,13 +155,10 @@ public class OptionsMenu extends Application{
         public MenuItem(String name) {
             _name = name;
 
-            LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[] {
-                    new Stop(0, Color.DARKBLUE),
+            LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop(0, Color.DARKBLUE),
                     new Stop(0.1, Color.BLACK),
                     new Stop(0.9, Color.BLACK),
-                    new Stop(1, Color.DARKBLUE)
-
-            });
+                    new Stop(1, Color.DARKBLUE));
 
             Rectangle bg = new Rectangle(200,30);
             bg.setOpacity(0.4);
