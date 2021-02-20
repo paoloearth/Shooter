@@ -101,14 +101,21 @@ public class Menu extends Application {
     }
 
     public void createContent() {
-        Pane root = new Pane();
+        createContent(getScreenWidth(), getScreenHeight());
+    }
 
+    public static double getScreenWidth(){
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
-        var stage_width = bounds.getWidth();
-        var stage_height = bounds.getHeight();
 
-        createContent(stage_width, stage_height);
+        return bounds.getWidth();
+    }
+
+    public static double getScreenHeight(){
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+
+        return bounds.getHeight();
     }
 
     public void setTitle(String title){
