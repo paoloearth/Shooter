@@ -22,12 +22,14 @@ public class Map_Reader {
 
     Image _tileset;
     private List<String[]> _lines;
+    Integer _cell_side;
 
     // Constructor
     Map_Reader(String URL) throws IOException {
 
         _lines = extract_lines(URL);
-        //_tileset = get_tileset();
+        _tileset = get_tileset();
+        _cell_side = get_cell_side();
 
         //Lines representing the map
         //_map = _lines.stream().skip(Custom_Settings.NUMBER_OF_METADATA_LINES).collect(Collectors.toList());
@@ -44,6 +46,12 @@ public class Map_Reader {
     public List<String[]> get_lines() {
         return _lines;
     }
+
+    private Integer get_cell_side() {
+        return  Integer.parseInt(_lines.get(1)[2]);
+    }
+
+
 
 
 
