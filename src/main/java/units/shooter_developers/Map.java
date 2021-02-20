@@ -54,17 +54,17 @@ public class Map {
         int n_cols = _MR._num_tiles.getKey();
         int n_rows = _MR._num_tiles.getValue();
 
-        int LENGTH = n_cols * n_rows;
+        int flat_length = n_cols * n_rows;
 
         /* Used to get the tile sprite */
         int tile_per_row = _MR.get_tiles_per_row();
 
 
-        IntStream.range(0, LENGTH).forEach(index -> {
+        IntStream.range(0, flat_length).forEach(index -> {
 
                                   /* From single index to double */
                                    var i = index / n_cols;
-                                   int j = index % n_cols;
+                                   var j = index % n_cols;
 
                                    /* Read cell of the code */
                                    var code = Integer.parseInt(_MR._map.get(i)[j]);
@@ -93,8 +93,6 @@ public class Map {
 
         /* Picture the right tile on tileset */
         _tiles.forEach(tile -> _cells.getChildren().add(tile));
-
-
 
     }
     public int getBlockWidth() {

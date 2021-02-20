@@ -16,6 +16,9 @@ public class Simulation extends Application{
     private static  int WIDTH;
     private static  int HEIGHT ;
 
+    /* Map component */
+    private Map _map;
+
     /* Main component on which we add elements */
      final Pane _root = new Pane();
      Stage _stage = new Stage();
@@ -42,11 +45,19 @@ public class Simulation extends Application{
     }
 
     private void createContent() throws IOException {
+
+        /* These variables will be passed by the menu to here in some way */
         var required_full_screen = false;
+        var map_url = "map_islands.csv";
+
+        /* Create the window */
         create_frame(required_full_screen);
+
+        /* Load map from file */
+        create_map(map_url);
     }
 
-    private void create_frame(boolean required_full_screen) throws IOException {
+    private void create_frame(boolean required_full_screen)  {
 
         /* Compute the bounds of the screen to set the dimension of the window */
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
@@ -57,13 +68,13 @@ public class Simulation extends Application{
         WIDTH =  required_full_screen?   (int) screenBounds.getWidth()  : Custom_Settings.DEFAULT_X;
         HEIGHT = required_full_screen?   (int) screenBounds.getHeight() : Custom_Settings.DEFAULT_Y;
 
-
         _root.setMaxSize(WIDTH, HEIGHT);
-
-        var R  = new Map(_root, "map_islands.csv", WIDTH,HEIGHT);
 
     }
 
+    private void create_map(String map_url) throws IOException {
+        _map = new Map(_root, "map_islands.csv", WIDTH,HEIGHT);
+    }
 
 
 

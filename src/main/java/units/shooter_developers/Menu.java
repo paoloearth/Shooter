@@ -56,7 +56,8 @@ public class Menu extends Application {
             System.out.println("Couldn't load image");
         }
 
-        Menu.Title title = new Menu.Title("C A M P A I G N");
+        Menu.Title title = new Menu.Title("S H O O T E R");
+
         title.setTranslateX(50);
         title.setTranslateY(200);
 
