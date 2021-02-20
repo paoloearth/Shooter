@@ -35,6 +35,22 @@ public abstract class Pictured_Object extends Map_Object {
         // Setting the URL  of the image
         this._url = url;
 
+        // Read the picture into the variable
+        this._picture = retrieve_image(_url);
+
+        // Set the view
+        this._view = new ImageView(_picture);
+
+        this._width   = (int) _picture.getWidth();
+        this._height =  (int) _picture.getHeight();
+
+
+    }
+
+    // Create an image given an URL
+    Image retrieve_image(String URL)
+    {
+        return new Image(URL);
     }
 
 }
