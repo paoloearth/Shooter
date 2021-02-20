@@ -47,6 +47,19 @@ public abstract class Pictured_Object extends Map_Object {
 
     }
 
+    // Custom constructor for SpriteSheet with multiple views
+    public Pictured_Object(Pair<Double,Double> scaling_factors, String url, int n_rows, int n_cols )
+    {
+        this(scaling_factors,url);
+
+        this._n_rows = n_rows;
+        this._n_cols = n_cols;
+
+        _width   = _width /  _n_cols;
+        _height =  _height/ _n_rows;
+    }
+
+
     // Create an image given an URL
     Image retrieve_image(String URL)
     {
