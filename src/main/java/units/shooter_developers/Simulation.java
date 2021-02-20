@@ -7,6 +7,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 
 public class Simulation extends Application{
 
@@ -39,13 +41,12 @@ public class Simulation extends Application{
         stage.show();
     }
 
-    private void createContent() {
-        var required_full_screen = true;
+    private void createContent() throws IOException {
+        var required_full_screen = false;
         create_frame(required_full_screen);
     }
 
-    private void create_frame(boolean required_full_screen)
-    {
+    private void create_frame(boolean required_full_screen) throws IOException {
 
         /* Compute the bounds of the screen to set the dimension of the window */
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
@@ -56,9 +57,11 @@ public class Simulation extends Application{
         WIDTH =  required_full_screen?   (int) screenBounds.getWidth()  : Custom_Settings.DEFAULT_X;
         HEIGHT = required_full_screen?   (int) screenBounds.getHeight() : Custom_Settings.DEFAULT_Y;
 
-        _root.setMinSize(WIDTH, HEIGHT);
-        _root.setPrefSize(WIDTH, HEIGHT);
+
         _root.setMaxSize(WIDTH, HEIGHT);
+
+        var R  = new Map(_root, "map_islands.csv", WIDTH,HEIGHT);
+
     }
 
 

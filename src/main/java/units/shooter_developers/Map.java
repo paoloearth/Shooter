@@ -1,12 +1,16 @@
 package units.shooter_developers;
 
 
+import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static java.lang.Math.ceil;
 
 public class Map {
 
@@ -40,27 +44,67 @@ public class Map {
         /* */
         this.populateCells();
 
+        root.getChildren().add(_cells);
+
     }
 
     private void populateCells() {
 
-        int LENGTH = 100;
-        int tile_per_row = 50;
+        /* Used to get the right position */
+        int n_cols = _MR._num_tiles.getKey();
+        int n_rows = _MR._num_tiles.getValue();
 
-        IntStream.range(0, 100).parallel()
-                               .forEach(index -> {
+        int LENGTH = n_cols * n_rows;
 
-                                   var i = index / tile_per_row;
-                                   int j = index % tile_per_row;
+        /* Used to get the tile sprite */
+        int tile_per_row = _MR.get_tiles_per_row();
 
-                                  // var code = Integer.parseInt(_MR._map.get(j)[i]);
 
-                                                });
+        IntStream.range(0, LENGTH).forEach(index -> {
 
-                                  //  1) Leggere la cella della matrice codici (i, j)
-                                  //  var code = Integer.parseInt(_MR._map.get(j)[i]);
+                                  /* From single index to double */
+                                   var i = index / n_cols;
+                                   int j = index % n_cols;
+
+                                   /* Read cell of the code */
+                                   var code = Integer.parseInt(_MR._map.get(i)[j]);
+
+                                   /* From single index to double */
+                                   int pos_row = code / tile_per_row;
+                                   int pos_col = code % tile_per_row;
+
+                                   /* Compute final position */
+                                   pos_row *= _MR._cell_side;
+                                   pos_col *= _MR._cell_side;
+
+                                   /* Set property of the node */
+                                   boolean passable = _MR._set_of_passable.contains(code);
+                                   boolean not_passable_for_p = _MR._set_of_NOT_passable_for_projectile.contains(code);
+
+                                    /* Picture the right tile on tilese of the map */
+                                   Rectangle2D R = new Rectangle2D(pos_col, pos_row, _MR._cell_side,_MR._cell_side);
+
+                                    /* Picture the right tile on tileset */
+                                   _tiles.add(  new Tile(j*getBlockWidth(), i*getBlockHeight(),
+                                                               getBlockWidth(), getBlockHeight(),
+                                                               passable,not_passable_for_p, _MR._tileset, R));
+
+                                    });
+
+        /* Picture the right tile on tileset */
+        _tiles.forEach(tile -> _cells.getChildren().add(tile));
+
+
 
     }
+    public int getBlockWidth() {
+        return( _width/_MR._num_tiles.getKey());
+    }
+
+    public int getBlockHeight(){
+        return(_height/_MR._num_tiles.getValue());
+    }
+
 
 
 }
