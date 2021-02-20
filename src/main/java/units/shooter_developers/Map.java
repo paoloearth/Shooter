@@ -37,11 +37,14 @@ public class Map {
         _map_URL = map_URL;
 
         /* */
-        //this.populateCells(root);
+        this.populateCells();
 
     }
 
+    private void populateCells() {
 
+
+    }
 
 
 }
