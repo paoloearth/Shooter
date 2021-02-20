@@ -36,6 +36,7 @@ public abstract class Dynamic_Object extends Pictured_Object {
 
     protected abstract  boolean illegal_move(Map M);
 
+    //Check if an element of the map is out of it
     protected boolean is_out_of_map(Map M) {
         return  this.get_future_x() <= 0 ||
                 this.get_future_y() <= 0 ||
