@@ -3,6 +3,7 @@ package units.shooter_developers;
 
 import javafx.scene.layout.Pane;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,20 @@ public class Map {
 
     /* URL to the map.csv */
     String _map_URL;
+
+    Map(Pane root, String map_URL, int width, int height) throws IOException {
+
+        /* Set variables  */
+        _MR = new Map_Reader(map_URL);
+        _width = width;
+        _height = height;
+        _map_URL = map_URL;
+
+        /* */
+        //this.populateCells(root);
+
+    }
+
 
 
 
