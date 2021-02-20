@@ -34,4 +34,14 @@ public abstract class Dynamic_Object extends Pictured_Object {
         return this.get_current_Y_position() + _deltaY;
     }
 
+    protected abstract  boolean illegal_move(Map M);
+
+    protected boolean is_out_of_map(Map M) {
+        return  this.get_future_x() <= 0 ||
+                this.get_future_y() <= 0 ||
+                this.get_future_x()  + get_actual_width() >= M.get_width() ||
+                this.get_future_y() + get_actual_height() >= M.get_height();
+    }
+
+
 }

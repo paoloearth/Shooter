@@ -95,6 +95,13 @@ public class Map {
         _tiles.forEach(tile -> _cells.getChildren().add(tile));
 
     }
+
+    public int get_width() {
+        return _width;
+    }
+    public int get_height() {
+        return _height;
+    }
     public int getBlockWidth() {
         return( _width/_MR._num_tiles.getKey());
     }
