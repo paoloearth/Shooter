@@ -53,11 +53,7 @@ public class Menu extends Application {
     private double _height_ratio;
 
     public Menu() {
-        _width_ratio = 1;
-        _height_ratio = 1;
-        _menu_items = new ArrayList<>();
-        _selectable_items = new ArrayList<>();
-        this.createContent();
+        this(getScreenWidth(), getScreenHeight());
     }
 
     public Menu(double stage_width, double stage_height) {
