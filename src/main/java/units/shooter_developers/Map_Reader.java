@@ -28,6 +28,9 @@ public class Map_Reader {
     final Set<Integer> _set_of_NOT_passable_for_projectile;
     Pair<Pair<Integer,Integer>,Pair<Integer,Integer>> _players_positions;  //position of the player in the corresponding map
     Pair<Pair<Integer,Integer>,Pair<Integer,Integer>> _teleport_positions; //positon of teleports in the corresponding map
+    List<String[]> _map;                                           // List of tiles composing the map
+
+
     // Constructor
     Map_Reader(String URL) throws IOException {
 
@@ -41,8 +44,8 @@ public class Map_Reader {
         _teleport_positions = get_positions(5);
 
 
-        //Lines representing the map
-        //_map = _lines.stream().skip(Custom_Settings.NUMBER_OF_METADATA_LINES).collect(Collectors.toList());
+        //Lines representing the map skipping the first 5 rows
+        _map = _lines.stream().skip(Custom_Settings.NUMBER_OF_METADATA_LINES).collect(Collectors.toList());
     }
 
     private Image get_tileset() {
@@ -61,6 +64,13 @@ public class Map_Reader {
         return  Integer.parseInt(_lines.get(1)[2]);
     }
 
+
+    // Return the number of tiles in a row of the tileset image
+    public int get_tiles_per_row() {
+        return (int) (_tileset.getWidth() / _cell_side);
+    }
+
+    // Return the number of tiles in the rows and columns in the map
     private Pair<Integer, Integer> get_num_of_tiles() {
         return new Pair<>(Integer.parseInt(_lines.get(1)[0]),Integer.parseInt(_lines.get(1)[1]));
     }
@@ -74,10 +84,10 @@ public class Map_Reader {
     }
 
     /*
-    Reads the pair of positions of:
-     - the players at row 4th
-     - teleports at row 5th
-      */
+     Reads the pair of positions of:
+      - the players at row 4th
+      - teleports at row 5th
+     */
     private Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> get_positions(int index) {
         var values = Arrays.stream(_lines.get(index)).parallel().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
         return new Pair<>(new Pair<>(values.get(0), values.get(1)), new Pair<>(values.get(2), values.get(3)));
