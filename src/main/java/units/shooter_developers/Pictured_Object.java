@@ -74,5 +74,14 @@ public abstract class Pictured_Object extends Map_Object {
         this._view.setPreserveRatio(false);
     }
 
+    protected  int get_actual_height()
+    {
+        return (int) this._view.getFitHeight();
+    }
+    protected  int get_actual_width()
+    {
+        return (int) this._view.getFitWidth();
+    }
+
 
 }
