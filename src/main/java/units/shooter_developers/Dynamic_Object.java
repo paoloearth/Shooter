@@ -22,4 +22,16 @@ public abstract class Dynamic_Object extends Pictured_Object {
         super(scaling_factors, url, _n_rows, _n_cols);
     }
 
+    //Compute future x-component of the position
+    int get_future_x()
+    {
+        return this.get_current_X_position() + _deltaX;
+    }
+
+    //Compute future y-component of the position
+    int get_future_y()
+    {
+        return this.get_current_Y_position() + _deltaY;
+    }
+
 }
