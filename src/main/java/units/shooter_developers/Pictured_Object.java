@@ -4,6 +4,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Pair;
 
 public abstract class Pictured_Object extends Map_Object {
     protected String _url;                // URL path to locate the spritesheet containing the pictures
@@ -21,5 +22,19 @@ public abstract class Pictured_Object extends Map_Object {
 
     // Boolean dead;
     BooleanProperty _isDead = new SimpleBooleanProperty(false);
+
+    //Custom constructor
+    public Pictured_Object(Pair<Double,Double> scaling_factors, String url )
+    {
+        super(scaling_factors);
+
+        // Setting the number of rows and columns
+        this._n_rows = 1;
+        this._n_cols = 1;
+
+        // Setting the URL  of the image
+        this._url = url;
+
+    }
 
 }

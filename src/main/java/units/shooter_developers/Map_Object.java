@@ -15,6 +15,8 @@ public class Map_Object extends Pane {
 
     }
 
+    Map_Object(Pair<Double,Double> scaling_factors) { this._scaling_factors = scaling_factors; }
+
     void move_to(Pair<Integer, Integer> coordinates)
     {
         this.relocate(coordinates.getKey(),coordinates.getValue());
