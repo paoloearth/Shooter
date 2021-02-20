@@ -6,6 +6,7 @@ import javafx.scene.layout.Pane;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Map {
 
@@ -43,6 +44,21 @@ public class Map {
 
     private void populateCells() {
 
+        int LENGTH = 100;
+        int tile_per_row = 50;
+
+        IntStream.range(0, 100).parallel()
+                               .forEach(index -> {
+
+                                   var i = index / tile_per_row;
+                                   int j = index % tile_per_row;
+
+                                  // var code = Integer.parseInt(_MR._map.get(j)[i]);
+
+                                                });
+
+                                  //  1) Leggere la cella della matrice codici (i, j)
+                                  //  var code = Integer.parseInt(_MR._map.get(j)[i]);
 
     }
 
