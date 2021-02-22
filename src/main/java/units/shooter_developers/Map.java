@@ -139,7 +139,7 @@ public class Map {
         return  (x * _MR._num_tiles.getValue()) + y;
     }
 
-    public List<Tile> get_block_matrix() {
+    public List<Tile> get_tile_matrix() {
         return _tiles;
     }
 

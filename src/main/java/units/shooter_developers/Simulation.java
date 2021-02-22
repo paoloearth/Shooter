@@ -52,6 +52,9 @@ public class Simulation extends Application{
         /* Add root to the scene */
         Scene scene = new Scene(_root);
 
+        /* Start the game */
+        GAME();
+
         /* Set the listeners to capture the movements of the player */
         addKeyHandler_PRESS(scene,    Player_1, Player_2);
         addKeyHandler_RELEASED(scene, Player_1,Player_2);

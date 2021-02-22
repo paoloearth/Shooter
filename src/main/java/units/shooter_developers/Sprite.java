@@ -137,7 +137,7 @@ public class Sprite extends Dynamic_Object {
         {
             for (int j=top_tile; j<= bottom_tile; j++)
             {
-                Tile b = M.get_block_matrix().get(M.single_index(i,j));
+                Tile b = M.get_tile_matrix().get(M.single_index(i,j));
                 if(!b.is_passable.getValue()) {
                     return true;
                 }
