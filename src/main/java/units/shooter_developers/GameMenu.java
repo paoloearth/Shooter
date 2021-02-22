@@ -57,9 +57,11 @@ public class GameMenu extends Menu{
             item.setOnMouseReleased(event -> {
                 if (item.getName().equals("NEW GAME")) {
                     menu_stage.close();
-                    if (_game_running) {
-                        _gameInstance.stop();
-                        _gameInstance = new Simulation();
+                    _gameInstance = new Simulation();
+                    try {
+                        _gameInstance.start(getStage());
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
 
                     _game_running = true;
