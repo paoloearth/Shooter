@@ -44,7 +44,6 @@ import java.util.stream.Collectors;
 
 
 public class Menu extends Application {
-    private ArrayList<SelectableItem> _selectable_items;
     private Pane _root;
     private Stage _stage;
     private double _stage_width;
@@ -59,14 +58,12 @@ public class Menu extends Application {
     public Menu(double stage_width, double stage_height) {
         _width_ratio = 1;
         _height_ratio = 1;
-        _selectable_items = new ArrayList<>();
         this.createContent(stage_width, stage_height);
     }
 
     public Menu(Menu other_menu){
         _width_ratio = other_menu._width_ratio;
         _height_ratio = other_menu._height_ratio;
-        _selectable_items = new ArrayList<>();
         _stage_width = other_menu._stage_width;
         _stage_height = other_menu._stage_height;
         this.createContent(_stage_width, _stage_height);
@@ -291,7 +288,6 @@ public class Menu extends Application {
         public void addSelectableItem(String selectable_name, ArrayList<String> tag_list){
             SelectableItem new_item = new Menu.SelectableItem(selectable_name);
             new_item.setTranslateX(0.005*getMenuWidth());
-            _selectable_items.add(new_item);
 
             for(var tag:tag_list){
                 new_item.addTag(tag);
