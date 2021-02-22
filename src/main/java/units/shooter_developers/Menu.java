@@ -173,7 +173,7 @@ public class Menu extends Application {
         return getItemsBox().getSelectableItems();
     }
 
-    public void rescale(double width_ratio, double height_ratio){
+    public void resize(double width_ratio, double height_ratio){
         _width_ratio = width_ratio;
         _height_ratio = height_ratio;
     }

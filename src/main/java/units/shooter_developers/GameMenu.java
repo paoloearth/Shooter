@@ -45,6 +45,7 @@ public class GameMenu extends Menu{
         this.addItem("NEW LAN-GAME");
         this.addItem("OPTIONS");
         this.addItem("EXIT");
+        this.addItem("temp");
         Scene scene = new Scene(this.getRoot());
         menu_stage.setTitle("VIDEO GAME");
         setTitle("C A M P A I G N");
@@ -84,6 +85,10 @@ public class GameMenu extends Menu{
                         options_menu.start(menu_stage);
                     }
 
+                    if (item_casted.getName() == "temp") {
+                        resize(0.5, 0.5);
+                    }
+
 
                 });
             }
@@ -106,6 +111,13 @@ public class GameMenu extends Menu{
         } catch (IOException e) {
             return;
         }
+    }
+
+    @Override
+    public void resize(double width_ratio, double height_ratio){
+        super.resize(width_ratio, height_ratio);
+        GameMenu new_menu = new GameMenu(this);
+        new_menu.start(getStage());
     }
 
     public static void main(String[] args) {
