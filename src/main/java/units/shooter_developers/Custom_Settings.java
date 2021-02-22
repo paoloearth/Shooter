@@ -19,4 +19,7 @@ public class Custom_Settings {
     */
 
     public static final int NUMBER_OF_METADATA_LINES  = 6;
+
+    /* HEALTHBAR */
+    public static final double HB_PROPORTIONAL_WIDTH  = 0.1 ;   // HB height is 10 % of sprite's height
 }
