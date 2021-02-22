@@ -1,5 +1,6 @@
 package units.shooter_developers;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -10,6 +11,8 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class Simulation extends Application{
@@ -109,6 +112,39 @@ public class Simulation extends Application{
       boolean _close = true;
     }
 
+    /* ---------------------------------- GAME LOOP ---------------------------------- */
+    private void GAME() {
+
+
+        /* Create timer */
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+
+                all_sprites().forEach(
+                        s ->{
+                            switch (s._type)
+                            {
+                                case "SPRITE" -> ((Sprite) s).move(_map);
+
+
+
+
+
+
+                            }
+
+                        }
+
+                );
+
+            }
+        };
+
+
+        timer.start();
+    }
+
 
 
 
@@ -155,6 +191,13 @@ public class Simulation extends Application{
                 }
             }
         });}
+
+    //List of pictured object on the map
+    private List<Pictured_Object> all_sprites()
+    {
+        return _root.getChildren().stream().parallel().filter(i -> i instanceof Pictured_Object).map(n->(Pictured_Object)n).collect(Collectors.toList());
+    }
+
 
 
 }
