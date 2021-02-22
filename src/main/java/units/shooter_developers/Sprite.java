@@ -1,7 +1,5 @@
 package units.shooter_developers;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -9,7 +7,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
 import javafx.util.Pair;
 
 
@@ -43,7 +40,7 @@ public class Sprite extends Dynamic_Object {
 
         H = getHealthBar();
 
-        this.is_dead.bind(H.Health.lessThanOrEqualTo(0));
+        this._isDead.bind(H.Health.lessThanOrEqualTo(0));
 
 
         move_to(M.get_player_pixel_position(id));
@@ -64,6 +61,52 @@ public class Sprite extends Dynamic_Object {
 
     }
 
+    //Update the movement in the right direction
+    public void update_delta() {
+        _deltaX = _deltaY = 0;
+        if (goNorth) _deltaY -= _speed;
+        if (goSouth) _deltaY += _speed;
+        if (goEast)  _deltaX += _speed;
+        if (goWest)  _deltaX -= _speed;
+    }
+
+    // HERE I TRY TO INFER THE DIRECTION SO THAT I CAN PICK THE RIGHT SPRITE
+    public void update_get_direction(double destination_x, double destination_y)
+    {
+        Direction D;
+
+        if(Math.abs(_deltaX) >0 || Math.abs(_deltaY)  > 0)
+        {
+            if (Math.abs(_deltaX) > Math.abs(_deltaY))      // NEED TO CHOOSE BETWEEN RIGHT OR LEFT
+            {
+                if (destination_x  < get_current_X_position()) D=Direction.LEFT;
+                else                                           D=Direction.RIGHT;
+
+            } else {                  // NEED TO CHOOSE BETWEEN UP OR DOWN
+                if (destination_y  < get_current_Y_position()) D = Direction.UP;
+                else                                           D= Direction.DOWN;
+            }
+
+            _current_direction.set(D);
+        }
+    }
+
+
+
+    public void move(Map M) {
+        update_delta();
+
+        if (this._deltaX == 0 && this._deltaY == 0) return;
+
+        int future_x = get_current_X_position() + _deltaX;
+        int future_y = get_current_Y_position() + _deltaY;
+
+        update_get_direction(future_x, future_y);
+
+        //if(future_x <= 0 || future_y <= 0 || future_x+get_actual_width()>=M.get_width() || future_y+get_actual_height()>=R.get_height()) return;
+        if(!(is_out_of_map(M) || illegal_move(M))) move_to(new Pair<>(future_x, future_y));
+
+    }
 
     @Override
     protected  boolean illegal_move(Map M) {
@@ -76,11 +119,11 @@ public class Sprite extends Dynamic_Object {
 
         top += get_actual_height() * 2/3;
 
-        int left_tile = left/M.getBlockWidth();
-        int rigth_tile = right/M.getBlockWidth();
+        int left_tile = left/M.getTileWidth();
+        int rigth_tile = right/M.getTileWidth();
 
-        int top_tile = top/M.getBlockHeight();
-        int bottom_tile = bottom/M.getBlockHeight();
+        int top_tile = top/M.getTileHeight();
+        int bottom_tile = bottom/M.getTileHeight();
 
 
         if(left_tile < 0) left_tile = 0;
@@ -94,7 +137,7 @@ public class Sprite extends Dynamic_Object {
         {
             for (int j=top_tile; j<= bottom_tile; j++)
             {
-                Block b = M.get_block_matrix().get(M.single_index(i,j));
+                Tile b = M.get_block_matrix().get(M.single_index(i,j));
                 if(!b.is_passable.getValue()) {
                     return true;
                 }
@@ -102,6 +145,15 @@ public class Sprite extends Dynamic_Object {
         }
         return  false;
 
+    }
+
+    //Return the bounds of the player used to check collision
+    public Rectangle2D get_bounds()
+    {
+        return new Rectangle2D(get_current_X_position(),
+                get_current_Y_position() +get_actual_height() * 0.15 ,
+                get_actual_width(),
+                get_actual_height() * 3.0/4);
     }
 
 
