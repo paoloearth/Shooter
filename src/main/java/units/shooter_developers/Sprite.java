@@ -57,6 +57,13 @@ public class Sprite extends Dynamic_Object {
         return new HealthBar(this);
     }
 
+    //Change the picture of the Sprite in the SpriteSheet according to the direction
+    private ChangeListener<Object> getListener() {
+
+        return (ov, o, o2) -> this._view.setViewport(new Rectangle2D( _frame.get()*_width, _current_direction.get().getOffset() * _height, _width, _height));
+
+    }
+
 
     @Override
     protected  boolean illegal_move(Map M) {
