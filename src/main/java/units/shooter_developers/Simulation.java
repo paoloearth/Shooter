@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.io.IOException;
 
@@ -23,6 +24,14 @@ public class Simulation extends Application{
      final Pane _root = new Pane();
      Stage _stage = new Stage();
      Scene _scene;
+
+    /* Create Players */
+    private Sprite Player_1 ;
+    private Sprite Player_2;
+
+    /*Scale the objects on the map according to the resolution*/
+    Pair<Double,Double> scaling_factors;
+
 
 
 
@@ -55,6 +64,9 @@ public class Simulation extends Application{
 
         /* Load map from file */
         create_map(map_url);
+
+        /* Load the players and locate them on the map*/
+        create_players();
     }
 
     private void create_frame(boolean required_full_screen)  {
@@ -69,11 +81,21 @@ public class Simulation extends Application{
         HEIGHT = required_full_screen?   (int) screenBounds.getHeight() : Custom_Settings.DEFAULT_Y;
 
         _root.setMaxSize(WIDTH, HEIGHT);
+        /* Compute the scaling factor that will be used to update some parameters at RUNTIME*/
+        scaling_factors = new Pair<>( (double) WIDTH / Custom_Settings.DEFAULT_X, (double) HEIGHT / Custom_Settings.DEFAULT_Y);
+
+
+
 
     }
 
     private void create_map(String map_url) throws IOException {
         _map = new Map(_root, "map_islands.csv", WIDTH,HEIGHT);
+    }
+
+    private void create_players() {
+        Player_1 = new Sprite(_root,_map , scaling_factors, "astrologer.png",4, 1 , "P1", Direction.RIGHT);
+        Player_2 = new Sprite(_root,_map, scaling_factors, "artist.png",    4, 1,  "P2", Direction.LEFT);
     }
 
 
