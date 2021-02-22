@@ -53,9 +53,13 @@ public class Sprite extends Dynamic_Object {
         root.getChildren().add(this);
     }
 
+    private HealthBar getHealthBar() {
+        return new HealthBar(this);
+    }
+
 
     @Override
-    protected  boolean illegal_move(Room R) {
+    protected  boolean illegal_move(Map M) {
         var left = get_future_x();
         int top = get_future_y();
 
@@ -65,17 +69,17 @@ public class Sprite extends Dynamic_Object {
 
         top += get_actual_height() * 2/3;
 
-        int left_tile = left/R.getBlockWidth();
-        int rigth_tile = right/R.getBlockWidth();
+        int left_tile = left/M.getBlockWidth();
+        int rigth_tile = right/M.getBlockWidth();
 
-        int top_tile = top/R.getBlockHeight();
-        int bottom_tile = bottom/R.getBlockHeight();
+        int top_tile = top/M.getBlockHeight();
+        int bottom_tile = bottom/M.getBlockHeight();
 
 
         if(left_tile < 0) left_tile = 0;
-        if(rigth_tile > R.get_width()) rigth_tile = R.get_width();
+        if(rigth_tile > M.get_width()) rigth_tile = M.get_width();
         if(top_tile < 0) top_tile = 0;
-        if(bottom_tile>R.get_height()) bottom_tile = R.get_height();
+        if(bottom_tile>M.get_height()) bottom_tile = M.get_height();
 
 
 
@@ -83,7 +87,7 @@ public class Sprite extends Dynamic_Object {
         {
             for (int j=top_tile; j<= bottom_tile; j++)
             {
-                Block b = R.get_block_matrix().get(R.single_index(i,j));
+                Block b = M.get_block_matrix().get(M.single_index(i,j));
                 if(!b.is_passable.getValue()) {
                     return true;
                 }
