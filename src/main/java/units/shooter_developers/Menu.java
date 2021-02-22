@@ -15,7 +15,6 @@ package units.shooter_developers;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -50,6 +49,8 @@ public class Menu extends Application {
     private double _stage_height;
     private double _width_ratio;
     private double _height_ratio;
+    private double _position_width_ratio;
+    private double _position_height_ratio;
 
     public Menu() {
         this(getScreenWidth(), getScreenHeight());
@@ -58,6 +59,8 @@ public class Menu extends Application {
     public Menu(double stage_width, double stage_height) {
         _width_ratio = 1;
         _height_ratio = 1;
+        _position_width_ratio = 0;
+        _position_height_ratio = 0;
         this.createContent(stage_width, stage_height);
     }
 
@@ -66,6 +69,8 @@ public class Menu extends Application {
         _height_ratio = other_menu._height_ratio;
         _stage_width = other_menu._stage_width;
         _stage_height = other_menu._stage_height;
+        _position_width_ratio = other_menu._position_width_ratio;
+        _position_height_ratio = other_menu._position_height_ratio;
         this.createContent(_stage_width, _stage_height);
     }
 
@@ -84,18 +89,20 @@ public class Menu extends Application {
             ImageView img = new ImageView(new Image(is));
             img.setFitWidth(getMenuWidth());
             img.setFitHeight(getMenuHeight());
+            img.setX(getPositionX());
+            img.setY(getPositionY());
             root.getChildren().add(img);
         } catch (IOException e) {
             System.out.println("Menu background image not found");
         }
 
         Menu.Title title = new Menu.Title("title_not_found");
-        title.setTranslateX(0.0476*getMenuWidth());
-        title.setTranslateY(0.333*getMenuHeight());
+        title.setTranslateX(0.0476*getMenuWidth() + getPositionX());
+        title.setTranslateY(0.333*getMenuHeight() + getPositionY());
 
         Menu.MenuBox vbox = new Menu.MenuBox();
-        vbox.setTranslateX(0.0952*getMenuWidth());
-        vbox.setTranslateY(0.5*getMenuHeight());
+        vbox.setTranslateX(0.0952*getMenuWidth() + getPositionX());
+        vbox.setTranslateY(0.5*getMenuHeight() + getPositionY());
 
         root.getChildren().addAll(title, vbox);
 
@@ -129,8 +136,8 @@ public class Menu extends Application {
         Menu.Title new_title = new Menu.Title(title);
         Title old_title = getTitle();
 
-        new_title.setTranslateX(0.0476*getMenuWidth());
-        new_title.setTranslateY(0.333*getMenuHeight());
+        new_title.setTranslateX(0.0476*getMenuWidth() + getPositionX());
+        new_title.setTranslateY(0.333*getMenuHeight() + getPositionY());
 
         var index = _root.getChildren().indexOf(old_title);
         _root.getChildren().remove(old_title);
@@ -159,6 +166,19 @@ public class Menu extends Application {
 
     public double getStageWidth() {
         return _stage_width;
+    }
+
+    public void setPositionRatio(double position_width_ratio, double position_height_ratio){
+        _position_width_ratio = position_width_ratio;
+        _position_height_ratio = position_height_ratio;
+    }
+
+    public double getPositionX(){
+        return _position_width_ratio*getMenuWidth();
+    }
+
+    public double getPositionY(){
+        return _position_height_ratio*getMenuHeight();
     }
 
     public Parent getRoot(){
