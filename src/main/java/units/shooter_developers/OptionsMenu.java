@@ -14,8 +14,8 @@ public class OptionsMenu extends Menu{
         _game_running = false;
     }
 
-    public OptionsMenu(double width, double height){
-        super(width, height);
+    public OptionsMenu(Menu other_menu){
+        super(other_menu);
         _game_running = false;
     }
 
@@ -56,9 +56,7 @@ public class OptionsMenu extends Menu{
             item.setOnMouseReleased(event -> {
                 var item_casted = (MenuItem)item;
                 if(item_casted.getName() == "BACK") {
-                    var hola = getStageWidth();//////////////////////
-                    var adios = getStageHeight();////////////////////////////
-                    GameMenu main_menu = new GameMenu(getStageWidth(), getStageHeight());
+                    GameMenu main_menu = new GameMenu(this);
                     main_menu.start(menu_stage);
                 } else if(item_casted.getName() == "APPLY") {
                     applyCurrentSettings();
@@ -94,7 +92,7 @@ public class OptionsMenu extends Menu{
         stage.setMaximized(false);
         setStageDimensions(width, height);
 
-        OptionsMenu options_menu = new OptionsMenu(getStageWidth(), getStageHeight());
+        OptionsMenu options_menu = new OptionsMenu(this);
         options_menu.start(stage);
 
     }

@@ -12,8 +12,8 @@ public class GameMenu extends Menu{
         _game_running = false;
     }
 
-    public GameMenu(double stage_width, double stage_height){
-        super(stage_width, stage_height);
+    public GameMenu(Menu other_menu){
+        super(other_menu);
         _game_running = false;
     }
 
@@ -72,7 +72,8 @@ public class GameMenu extends Menu{
                     }
 
                     if (item_casted.getName() == "OPTIONS") {
-                        OptionsMenu options_menu = new OptionsMenu(getStageWidth(), getStageHeight());
+                        //OptionsMenu options_menu = new OptionsMenu(getStageWidth(), getStageHeight());
+                        OptionsMenu options_menu = new OptionsMenu(this);
                         options_menu.start(menu_stage);
                     }
 

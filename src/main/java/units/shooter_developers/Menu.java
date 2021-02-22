@@ -64,6 +64,16 @@ public class Menu extends Application {
         this.createContent(stage_width, stage_height);
     }
 
+    public Menu(Menu other_menu){
+        _width_ratio = other_menu._width_ratio;
+        _height_ratio = other_menu._height_ratio;
+        _menu_items = new ArrayList<>();
+        _selectable_items = new ArrayList<>();
+        _stage_width = other_menu._stage_width;
+        _stage_height = other_menu._stage_height;
+        this.createContent(_stage_width, _stage_height);
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
     }
@@ -96,10 +106,6 @@ public class Menu extends Application {
 
         _root = root;
 
-    }
-
-    public void createContent() {
-        createContent(getScreenWidth(), getScreenHeight());
     }
 
     public static double getScreenWidth(){
@@ -289,7 +295,6 @@ public class Menu extends Application {
 
             getChildren().addAll(new_item, createSeparator());
         }
-
 
     }
 
