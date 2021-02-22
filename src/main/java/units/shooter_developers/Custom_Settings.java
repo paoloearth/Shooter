@@ -19,4 +19,13 @@ public class Custom_Settings {
     */
 
     public static final int NUMBER_OF_METADATA_LINES  = 6;
+
+    /* SPEEDS */
+    public static final int PLAYER_SPEED  = 2;
+
+    /*  SCALES */
+    public static final double PLAYER_SCALE  = 1.0/20;
+
+    /* HEALTHBAR */
+    public static final double HB_PROPORTIONAL_WIDTH  = 0.1 ;   // HB height is 10 % of sprite's height
 }

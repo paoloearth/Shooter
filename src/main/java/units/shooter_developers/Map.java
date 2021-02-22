@@ -3,14 +3,12 @@ package units.shooter_developers;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.Pane;
+import javafx.util.Pair;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import static java.lang.Math.ceil;
 
 public class Map {
 
@@ -85,8 +83,8 @@ public class Map {
                                    Rectangle2D R = new Rectangle2D(pos_col, pos_row, _MR._cell_side,_MR._cell_side);
 
                                     /* Picture the right tile on tileset */
-                                   _tiles.add(  new Tile(j*getBlockWidth(), i*getBlockHeight(),
-                                                               getBlockWidth(), getBlockHeight(),
+                                   _tiles.add(  new Tile(j* getTileWidth(), i* getTileHeight(),
+                                                               getTileWidth(), getTileHeight(),
                                                                passable,not_passable_for_p, _MR._tileset, R));
 
                                     });
@@ -96,18 +94,51 @@ public class Map {
 
     }
 
+    Pair<Integer,Integer> get_player_pixel_position(String player_id)
+    {
+        if (player_id.equals("P1"))
+            return  get_pixel_position(_MR._players_positions.getKey());
+        else
+            return get_pixel_position(_MR._players_positions.getValue());
+    }
+
+    //Given the coordinates of a tile
+    Pair<Integer,Integer> get_pixel_position(Pair<Integer,Integer> tile_coordinates)
+    {
+        var a = new Pair<>(tile_coordinates.getKey()* getTileWidth(),tile_coordinates.getValue() * getTileHeight() );
+        return a;
+    }
+
+
     public int get_width() {
         return _width;
     }
     public int get_height() {
         return _height;
     }
-    public int getBlockWidth() {
+    public int getTileWidth() {
         return( _width/_MR._num_tiles.getKey());
     }
 
-    public int getBlockHeight(){
+    public int getTileHeight(){
         return(_height/_MR._num_tiles.getValue());
+    }
+
+    void set_value_at_index(int x, int y)
+    {
+        int i = single_index(x,y);
+        Tile n = (Tile) _cells.getChildren().get(i);
+        n.is_passable.set(false);
+        _cells.getChildren().set(i,n);
+    }
+
+    int single_index(int x, int y)
+    {
+        return  (x * _MR._num_tiles.getValue()) + y;
+    }
+
+    public List<Tile> get_block_matrix() {
+        return _tiles;
     }
 
 
