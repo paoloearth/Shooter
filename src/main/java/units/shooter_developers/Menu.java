@@ -52,6 +52,8 @@ public abstract class Menu extends Application {
     private double _position_width_ratio;
     private double _position_height_ratio;
 
+    /************************** CONSTRUCTORS *****************************/
+
     public Menu() {
         this(getScreenWidth(), getScreenHeight());
     }
@@ -106,104 +108,8 @@ public abstract class Menu extends Application {
 
     }
 
-    public static double getScreenWidth(){
-        Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
 
-        return bounds.getWidth();
-    }
-
-    public static double getScreenHeight(){
-        Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
-
-        return bounds.getHeight();
-    }
-
-    public void setStage(Stage stage){
-        _stage = stage;
-    }
-
-    public Stage getStage(){
-        return _stage;
-    }
-
-    public void setTitle(String title){
-        Menu.Title new_title = new Menu.Title(title);
-        Title old_title = getTitle();
-
-        new_title.setTranslateX(0.0476*getMenuWidth() + getPositionX());
-        new_title.setTranslateY(0.333*getMenuHeight() + getPositionY());
-
-        var index = _root.getChildren().indexOf(old_title);
-        _root.getChildren().remove(old_title);
-        _root.getChildren().add(index, new_title);
-    }
-
-    private Title getTitle() {
-        var old_title = (Title) _root.getChildren().stream()
-                .filter(e -> e instanceof Title)
-                .findFirst()
-                .orElse(null);
-        return old_title;
-    }
-
-    public double getMenuHeight() {
-        return _height_ratio*_stage_height;
-    }
-
-    public double getMenuWidth() {
-        return _width_ratio*_stage_width;
-    }
-
-    public double getStageHeight() {
-        return _stage_height;
-    }
-
-    public double getStageWidth() {
-        return _stage_width;
-    }
-
-    public void setPositionRatio(double position_width_ratio, double position_height_ratio){
-        _position_width_ratio = position_width_ratio;
-        _position_height_ratio = position_height_ratio;
-    }
-
-    public double getPositionX(){
-        return _position_width_ratio*getMenuWidth();
-    }
-
-    public double getPositionY(){
-        return _position_height_ratio*getMenuHeight();
-    }
-
-    public Parent getRoot(){
-        return _root;
-    }
-
-    public ArrayList<MenuItem> getItems(){
-        return getItemsBox().getItems();
-    }
-
-    public ArrayList<SelectableItem> getSelectableItems(){
-        return getItemsBox().getSelectableItems();
-    }
-
-    public void resize(double width_ratio, double height_ratio){
-        _width_ratio = width_ratio;
-        _height_ratio = height_ratio;
-    }
-
-    public void setStageDimensions(double width, double height){
-        _stage_width = width;
-        _stage_height = height;
-
-        if(getStage() != null) {
-            getStage().setWidth(width);
-            getStage().setHeight(height);
-        }
-        //PUT HERE THE SIMULATION (if it procceed) REDIMENSIONING
-    }
+    /************************** ELEMENTS MANAGEMENT *****************************/
 
     public void addItem(String new_menu_item){
         var items_box = getItemsBox();
@@ -231,11 +137,120 @@ public abstract class Menu extends Application {
         items_box_refactored.addSelectableItem(item_name, tag_list);
     }
 
+    public void setTitle(String title){
+        Menu.Title new_title = new Menu.Title(title);
+        Title old_title = getTitle();
+
+        new_title.setTranslateX(0.0476*getMenuWidth() + getPositionX());
+        new_title.setTranslateY(0.333*getMenuHeight() + getPositionY());
+
+        var index = _root.getChildren().indexOf(old_title);
+        _root.getChildren().remove(old_title);
+        _root.getChildren().add(index, new_title);
+    }
+
+
+    /************************** SET/GET METHODS *****************************/
+
+    /** SCREEN **/
+    public static double getScreenWidth(){
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+
+        return bounds.getWidth();
+    }
+
+    public static double getScreenHeight(){
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+
+        return bounds.getHeight();
+    }
+
+    /** STAGE **/
+    public void setStage(Stage stage){
+        _stage = stage;
+    }
+
+    public Stage getStage(){
+        return _stage;
+    }
+
+    public void setStageDimensions(double width, double height){
+        _stage_width = width;
+        _stage_height = height;
+
+        if(getStage() != null) {
+            getStage().setWidth(width);
+            getStage().setHeight(height);
+        }
+        //PUT HERE THE SIMULATION (if it procceed) REDIMENSIONING
+    }
+
+    public double getStageHeight() {
+        return _stage_height;
+    }
+
+    public double getStageWidth() {
+        return _stage_width;
+    }
+
+    /** MENU **/
+
+    public void resize(double width_ratio, double height_ratio){
+        _width_ratio = width_ratio;
+        _height_ratio = height_ratio;
+    }
+
+    public double getMenuHeight() {
+        return _height_ratio*_stage_height;
+    }
+
+    public double getMenuWidth() {
+        return _width_ratio*_stage_width;
+    }
+
+    public void setPositionRatio(double position_width_ratio, double position_height_ratio){
+        _position_width_ratio = position_width_ratio;
+        _position_height_ratio = position_height_ratio;
+    }
+
+    public double getPositionX(){
+        return _position_width_ratio*getMenuWidth();
+    }
+
+    public double getPositionY(){
+        return _position_height_ratio*getMenuHeight();
+    }
+
+    /** MENU ELEMENTS **/
+
+    public Parent getRoot(){
+        return _root;
+    }
+
+    private Title getTitle() {
+        var old_title = (Title) _root.getChildren().stream()
+                .filter(e -> e instanceof Title)
+                .findFirst()
+                .orElse(null);
+        return old_title;
+    }
+
     public MenuBox getItemsBox() {
         return (MenuBox)_root.getChildren().parallelStream()
                 .filter(e -> e instanceof MenuBox)
                 .findFirst()
                 .orElse(null);
+    }
+
+
+    public ArrayList<MenuItem> getItems(){
+        return getItemsBox().getItems();
+    }
+
+    public ArrayList<SelectableItem> getSelectableItems(){
+        return getItemsBox().getSelectableItems();
     }
 
     public SelectableItem getSelectableItem(String name){
@@ -247,8 +262,12 @@ public abstract class Menu extends Application {
         return item;
     }
 
+    /*******************************************************************************/
+    /*                          MENU ELEMENTS                                      */
+    /*******************************************************************************/
 
-    /////////////// TITLE ///////////////////////
+
+    /************************ TITLE ****************************************/
     private class Title extends StackPane {
         public Title(String name) {
             Rectangle bg = new Rectangle(0.357*getMenuWidth(), 0.1*getMenuHeight());
@@ -266,8 +285,8 @@ public abstract class Menu extends Application {
     }
 
 
+    /************************ MENU BOX ****************************************/
 
-    /////////////////////// MENU BOX ///////////////////////////////
     private class MenuBox extends VBox {
 
         public MenuBox(Menu.MenuItem... items) {
@@ -333,7 +352,8 @@ public abstract class Menu extends Application {
     }
 
 
-    //////////////////// MENU ITEM ///////////////////////////////
+    /************************ MENU ITEM ****************************************/
+
     public class MenuItem extends StackPane {
         String _name;
 
@@ -406,7 +426,8 @@ public abstract class Menu extends Application {
     }
 
 
-    ///////////////// SELECTABLE ITEM ///////////////////////////////////
+    /************************ SELECTABLE ITEM ****************************************/
+
     public class SelectableItem extends HBox{
         private ArrayList<String> _selection_list;
         private int _selection_index;
@@ -451,13 +472,6 @@ public abstract class Menu extends Application {
                     selection_item,
                     short_space_2,
                     right_arrow);
-        }
-
-        public SelectableItem(String name, String ... selection_tag){
-            this(name);
-            for(var tag:selection_tag){
-                addTag(tag);
-            }
         }
 
         public void next(){
@@ -508,7 +522,8 @@ public abstract class Menu extends Application {
     }
 
 
-    //////////////////// UNANIMATED ITEM ///////////////////////////////
+    /************************ UNANIMATED ITEM ****************************************/
+
     public class UnanimatedItem extends StackPane {
         String _name;
 
