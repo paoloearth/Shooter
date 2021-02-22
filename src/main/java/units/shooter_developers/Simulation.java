@@ -1,14 +1,18 @@
 package units.shooter_developers;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class Simulation extends Application{
@@ -47,6 +51,13 @@ public class Simulation extends Application{
 
         /* Add root to the scene */
         Scene scene = new Scene(_root);
+
+        /* Start the game */
+        GAME();
+
+        /* Set the listeners to capture the movements of the player */
+        addKeyHandler_PRESS(scene,    Player_1, Player_2);
+        addKeyHandler_RELEASED(scene, Player_1,Player_2);
 
         /* Output the scene */
         stage.setScene(scene);
@@ -104,6 +115,39 @@ public class Simulation extends Application{
       boolean _close = true;
     }
 
+    /* ---------------------------------- GAME LOOP ---------------------------------- */
+    private void GAME() {
+
+
+        /* Create timer */
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+
+                all_sprites().forEach(
+                        s ->{
+                            switch (s._type)
+                            {
+                                case "SPRITE" -> ((Sprite) s).move(_map);
+
+
+
+
+
+
+                            }
+
+                        }
+
+                );
+
+            }
+        };
+
+
+        timer.start();
+    }
+
 
 
 
@@ -111,5 +155,52 @@ public class Simulation extends Application{
     {
         launch(args);
     }
+
+    /* ---------------------------------- HANDLE PLAYERS MOVEMENTS ---------------------------------- */
+
+    private void addKeyHandler_PRESS(Scene scene, Sprite s, Sprite p)
+    {
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
+            {
+                switch (ke.getCode()) {
+                    case UP    ->  s.setGoNorth(true);
+                    case DOWN  ->  s.setGoSouth(true);
+                    case LEFT  ->  s.setGoWest(true);
+                    case RIGHT ->  s.setGoEast(true);
+
+                    case W    ->  p.setGoNorth(true);
+                    case S    ->  p.setGoSouth(true);
+                    case A    ->  p.setGoWest(true);
+                    case D    ->  p.setGoEast(true);
+                }
+            }
+        });}
+
+
+    private void addKeyHandler_RELEASED(Scene scene, Sprite s, Sprite p)
+    {
+        scene.addEventHandler(KeyEvent.KEY_RELEASED, ke -> {
+            {
+                switch (ke.getCode()) {
+                    case UP    ->  s.setGoNorth(false);
+                    case DOWN  ->  s.setGoSouth(false);
+                    case LEFT  ->  s.setGoWest(false);
+                    case RIGHT ->  s.setGoEast(false);
+
+                    case W ->  p.setGoNorth(false);
+                    case S ->  p.setGoSouth(false);
+                    case A ->  p.setGoWest(false);
+                    case D ->  p.setGoEast(false);
+                }
+            }
+        });}
+
+    //List of pictured object on the map
+    private List<Pictured_Object> all_sprites()
+    {
+        return _root.getChildren().stream().parallel().filter(i -> i instanceof Pictured_Object).map(n->(Pictured_Object)n).collect(Collectors.toList());
+    }
+
+
 
 }

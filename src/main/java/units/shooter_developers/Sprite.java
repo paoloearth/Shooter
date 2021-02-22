@@ -137,7 +137,7 @@ public class Sprite extends Dynamic_Object {
         {
             for (int j=top_tile; j<= bottom_tile; j++)
             {
-                Tile b = M.get_block_matrix().get(M.single_index(i,j));
+                Tile b = M.get_tile_matrix().get(M.single_index(i,j));
                 if(!b.is_passable.getValue()) {
                     return true;
                 }
@@ -154,6 +154,23 @@ public class Sprite extends Dynamic_Object {
                 get_current_Y_position() +get_actual_height() * 0.15 ,
                 get_actual_width(),
                 get_actual_height() * 3.0/4);
+    }
+
+    /* Set the boolean attributes according to the key pressed*/
+    public void setGoNorth(boolean goNorth) {
+        this.goNorth = goNorth;
+    }
+
+    public void setGoSouth(boolean goSouth) {
+        this.goSouth = goSouth;
+    }
+
+    public void setGoEast(boolean goEast) {
+        this.goEast = goEast;
+    }
+
+    public void setGoWest(boolean goWest) {
+        this.goWest = goWest;
     }
 
 
