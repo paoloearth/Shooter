@@ -3,6 +3,7 @@ package units.shooter_developers;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -47,6 +48,10 @@ public class Simulation extends Application{
 
         /* Add root to the scene */
         Scene scene = new Scene(_root);
+
+        /* Set the listeners to capture the movements of the player */
+        addKeyHandler_PRESS(scene,    Player_1, Player_2);
+        addKeyHandler_RELEASED(scene, Player_1,Player_2);
 
         /* Output the scene */
         stage.setScene(scene);
@@ -111,5 +116,45 @@ public class Simulation extends Application{
     {
         launch(args);
     }
+
+    /* ---------------------------------- HANDLE PLAYERS MOVEMENTS ---------------------------------- */
+
+    private void addKeyHandler_PRESS(Scene scene, Sprite s, Sprite p)
+    {
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
+            {
+                switch (ke.getCode()) {
+                    case UP    ->  s.setGoNorth(true);
+                    case DOWN  ->  s.setGoSouth(true);
+                    case LEFT  ->  s.setGoWest(true);
+                    case RIGHT ->  s.setGoEast(true);
+
+                    case W    ->  p.setGoNorth(true);
+                    case S    ->  p.setGoSouth(true);
+                    case A    ->  p.setGoWest(true);
+                    case D    ->  p.setGoEast(true);
+                }
+            }
+        });}
+
+
+    private void addKeyHandler_RELEASED(Scene scene, Sprite s, Sprite p)
+    {
+        scene.addEventHandler(KeyEvent.KEY_RELEASED, ke -> {
+            {
+                switch (ke.getCode()) {
+                    case UP    ->  s.setGoNorth(false);
+                    case DOWN  ->  s.setGoSouth(false);
+                    case LEFT  ->  s.setGoWest(false);
+                    case RIGHT ->  s.setGoEast(false);
+
+                    case W ->  p.setGoNorth(false);
+                    case S ->  p.setGoSouth(false);
+                    case A ->  p.setGoWest(false);
+                    case D ->  p.setGoEast(false);
+                }
+            }
+        });}
+
 
 }
