@@ -1,5 +1,7 @@
 package units.shooter_developers;
 
+import java.io.*;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.stage.*;
@@ -99,5 +101,22 @@ public class OptionsMenu extends Menu{
 
     private void applyCurrentSettings(){
         updateResolution();
+        writeSettings();
+    }
+
+    private void writeSettings() {
+        Properties config = new Properties();
+        config.setProperty("WIDTH", String.valueOf(getStageWidth()));
+        config.setProperty("HEIGHT", String.valueOf(getStageHeight()));
+        config.setProperty("INTERFACE MODE", getSelectableItem("INTERFACE MODE").getText());
+
+        File configFile = new File("config.ini");
+        try{
+            FileWriter writer = new FileWriter(configFile);
+            config.store(writer, "Game settings");
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

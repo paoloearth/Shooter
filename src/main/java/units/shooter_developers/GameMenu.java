@@ -3,6 +3,12 @@ package units.shooter_developers;
 import javafx.stage.*;
 import javafx.scene.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
+
 public class GameMenu extends Menu{
     Simulation _gameInstance;
     boolean _game_running;
@@ -26,6 +32,7 @@ public class GameMenu extends Menu{
     @Override
     public void start(Stage menu_stage){
         setStage(menu_stage);
+        readSettings();
         setStageDimensions(getStageWidth(), getStageHeight());
 
         if(_game_running) {
@@ -80,6 +87,24 @@ public class GameMenu extends Menu{
 
                 });
             }
+        }
+    }
+
+    private void readSettings(){
+        File configFile = new File("config.ini");
+        Properties config = new Properties();
+
+        try{
+            FileReader reader = new FileReader(configFile);
+            config.load(reader);
+            double width = Double.parseDouble(config.getProperty("WIDTH"));
+            double height = Double.parseDouble(config.getProperty("HEIGHT"));
+            setStageDimensions(width, height);
+
+        } catch (FileNotFoundException e) {
+            return;
+        } catch (IOException e) {
+            return;
         }
     }
 
