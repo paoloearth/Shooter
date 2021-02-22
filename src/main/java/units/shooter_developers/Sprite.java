@@ -16,19 +16,19 @@ import javafx.util.Pair;
 public class Sprite extends Dynamic_Object {
     public String _id;                                                      // Player Name
     IntegerProperty _frame  = new SimpleIntegerProperty(0);        // Frame property to update the moving sprite
-
+    HealthBar H;
     private boolean goNorth, goSouth, goEast, goWest;
     BooleanProperty _can_shoot = new SimpleBooleanProperty(true);
 
     //constructor
-    public Sprite(Pane root, Room R, Pair<Double, Double> scaling_factor, String url, int _n_rows, int _n_cols, String id, Direction D)
+    public Sprite(Pane root, Map M, Pair<Double, Double> scaling_factor, String url, int _n_rows, int _n_cols, String id, Direction D)
     {
         super(scaling_factor, url, _n_rows, _n_cols);
 
         this._id = id;
         this._speed = (int) (Custom_Settings.PLAYER_SPEED*scaling_factor.getKey());
         this._scale = Custom_Settings.PLAYER_SCALE;
-        this.type = "SPRITE";
+        this._type = "SPRITE";
 
         _width   = (int)   (this._picture.getWidth()  /  _n_cols);
         _height =  (int)   (this._picture.getHeight() / _n_rows);
@@ -46,7 +46,7 @@ public class Sprite extends Dynamic_Object {
         this.is_dead.bind(H.Health.lessThanOrEqualTo(0));
 
 
-        move_to(R.get_player_pixel_position(id));
+        move_to(M.get_player_pixel_position(id));
 
 
         this.getChildren().addAll(H, _view);
