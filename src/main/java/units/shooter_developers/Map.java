@@ -8,6 +8,7 @@ import javafx.util.Pair;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Map {
@@ -41,6 +42,7 @@ public class Map {
 
         /* */
         this.populateCells();
+        _passable_tiles = _tiles.stream().filter(b-> b.is_passable.getValue()).collect(Collectors.toList());
 
         root.getChildren().add(_cells);
 
