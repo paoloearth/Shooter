@@ -50,8 +50,8 @@ public class OptionsMenu extends Menu{
         menu_stage.setScene(scene);
         menu_stage.show();
 
-
-        for(var item:_menu_items)
+        var menu_items = getItems();
+        for(var item:menu_items)
         {
             item.setOnMouseReleased(event -> {
                 var item_casted = (MenuItem)item;

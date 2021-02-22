@@ -39,11 +39,11 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class Menu extends Application {
-    ArrayList<Node> _menu_items;    //hay que privatizar esta variable
     private ArrayList<SelectableItem> _selectable_items;
     private Pane _root;
     private Stage _stage;
@@ -59,7 +59,6 @@ public class Menu extends Application {
     public Menu(double stage_width, double stage_height) {
         _width_ratio = 1;
         _height_ratio = 1;
-        _menu_items = new ArrayList<>();
         _selectable_items = new ArrayList<>();
         this.createContent(stage_width, stage_height);
     }
@@ -67,7 +66,6 @@ public class Menu extends Application {
     public Menu(Menu other_menu){
         _width_ratio = other_menu._width_ratio;
         _height_ratio = other_menu._height_ratio;
-        _menu_items = new ArrayList<>();
         _selectable_items = new ArrayList<>();
         _stage_width = other_menu._stage_width;
         _stage_height = other_menu._stage_height;
@@ -132,10 +130,7 @@ public class Menu extends Application {
 
     public void setTitle(String title){
         Menu.Title new_title = new Menu.Title(title);
-        var old_title = (Menu.Title) _root.getChildren().stream()
-                .filter(e -> e instanceof Menu.Title)
-                .findFirst()
-                .orElse(null);
+        Title old_title = getTitle();
 
         new_title.setTranslateX(0.0476*getMenuWidth());
         new_title.setTranslateY(0.333*getMenuHeight());
@@ -143,6 +138,14 @@ public class Menu extends Application {
         var index = _root.getChildren().indexOf(old_title);
         _root.getChildren().remove(old_title);
         _root.getChildren().add(index, new_title);
+    }
+
+    private Title getTitle() {
+        var old_title = (Title) _root.getChildren().stream()
+                .filter(e -> e instanceof Title)
+                .findFirst()
+                .orElse(null);
+        return old_title;
     }
 
     public double getMenuHeight() {
@@ -165,6 +168,14 @@ public class Menu extends Application {
         return _root;
     }
 
+    public ArrayList<MenuItem> getItems(){
+        return getItemsBox().getItems();
+    }
+
+    public ArrayList<SelectableItem> getSelectableItems(){
+        return getItemsBox().getSelectableItems();
+    }
+
     public void rescale(double width_ratio, double height_ratio){
         _width_ratio = width_ratio;
         _height_ratio = height_ratio;
@@ -182,30 +193,21 @@ public class Menu extends Application {
     }
 
     public void addItem(String new_menu_item){
-        var items_box = _root.getChildren().parallelStream()
-                .filter(e -> e instanceof Menu.MenuBox)
-                .findFirst()
-                .orElse(null);
+        var items_box = getItemsBox();
 
         Menu.MenuBox items_box_casted = (MenuBox) items_box;
         items_box_casted.addItem(new_menu_item);
     }
 
     public void addUnanimatedItem(String new_menu_item){
-        var items_box = _root.getChildren().parallelStream()
-                .filter(e -> e instanceof Menu.MenuBox)
-                .findFirst()
-                .orElse(null);
+        var items_box = getItemsBox();
 
         Menu.MenuBox items_box_casted = (MenuBox) items_box;
         items_box_casted.addUnanimatedItem(new_menu_item);
     }
 
     public void addSelectableItem(String item_name, String ... selection_tags){
-        var items_box = _root.getChildren().parallelStream()
-                .filter(e -> e instanceof Menu.MenuBox)
-                .findFirst()
-                .orElse(null);
+        var items_box = getItemsBox();
 
         Menu.MenuBox items_box_refactored = (MenuBox) items_box;
 
@@ -216,6 +218,13 @@ public class Menu extends Application {
         items_box_refactored.addSelectableItem(item_name, tag_list);
     }
 
+    public MenuBox getItemsBox() {
+        return (MenuBox)_root.getChildren().parallelStream()
+                .filter(e -> e instanceof MenuBox)
+                .findFirst()
+                .orElse(null);
+    }
+
     public SelectableItem getSelectableItem(String name){
         SelectableItem item = (SelectableItem)getSelectableItems().stream()
                 .filter(e -> e.getName() == name)
@@ -223,10 +232,6 @@ public class Menu extends Application {
                 .orElse(null);
 
         return item;
-    }
-
-    public ArrayList<SelectableItem> getSelectableItems(){
-        return _selectable_items;
     }
 
 
@@ -272,7 +277,6 @@ public class Menu extends Application {
         public void addItem(String new_menu_item){
             MenuItem new_item = new Menu.MenuItem(new_menu_item);
             new_item.setTranslateX(0.005*getMenuWidth());
-            _menu_items.add(new_item);
 
             getChildren().addAll(new_item, createSeparator());
         }
@@ -294,6 +298,24 @@ public class Menu extends Application {
             }
 
             getChildren().addAll(new_item, createSeparator());
+        }
+
+        public ArrayList<MenuItem> getItems(){
+            List<MenuItem> item_list = getChildren().stream()
+                    .filter(e -> e instanceof MenuItem)
+                    .map(e -> (MenuItem)e)
+                    .collect(Collectors.toList());
+
+            return new ArrayList<MenuItem>(item_list);
+        }
+
+        public ArrayList<SelectableItem> getSelectableItems(){
+            List<SelectableItem> item_list = getChildren().stream()
+                    .filter(e -> e instanceof SelectableItem)
+                    .map(e -> (SelectableItem)e)
+                    .collect(Collectors.toList());
+
+            return new ArrayList<SelectableItem>(item_list);
         }
 
     }

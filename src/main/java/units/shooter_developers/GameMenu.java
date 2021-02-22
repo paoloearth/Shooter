@@ -44,7 +44,8 @@ public class GameMenu extends Menu{
         menu_stage.setScene(scene);
         menu_stage.show();
 
-        for(var item:_menu_items)
+        var menu_items = getItems();
+        for(var item:menu_items)
         {
             if(item instanceof MenuItem) {
                 var item_casted = (MenuItem)item;
@@ -72,7 +73,6 @@ public class GameMenu extends Menu{
                     }
 
                     if (item_casted.getName() == "OPTIONS") {
-                        //OptionsMenu options_menu = new OptionsMenu(getStageWidth(), getStageHeight());
                         OptionsMenu options_menu = new OptionsMenu(this);
                         options_menu.start(menu_stage);
                     }
