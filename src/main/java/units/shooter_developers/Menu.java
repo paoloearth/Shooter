@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class Menu extends Application {
+public abstract class Menu extends Application {
     private Pane _root;
     private Stage _stage;
     private double _stage_width;
@@ -72,10 +72,6 @@ public class Menu extends Application {
         _position_width_ratio = other_menu._position_width_ratio;
         _position_height_ratio = other_menu._position_height_ratio;
         this.createContent(_stage_width, _stage_height);
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
     }
 
     public void createContent(double stage_width, double stage_height) {
