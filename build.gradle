@@ -12,22 +12,24 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
     testImplementation(platform('org.junit:junit-bom:5.6.2'))
     testImplementation('org.junit.jupiter:junit-jupiter')
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testCompile "org.testfx:testfx-junit5:4.0.16-alpha"
+
+}
+
+test {
+   useJUnitPlatform()
+
 }
 
 javafx {
     version = "15.0.1"
-    modules = [ 'javafx.controls', 'javafx.fxml' ]
+    modules = ['javafx.controls', 'javafx.fxml']
 }
 
 mainClassName = 'units.shooter_developers.Main'
 
-test {
-    useJUnitPlatform()
-}
 
 jar {
     manifest {

@@ -61,6 +61,7 @@ public class GameMenu extends Menu{
                         _gameInstance.stop();
                         _gameInstance = new Simulation();
                     }
+
                     _game_running = true;
                     // START GAME HERE
                 }
