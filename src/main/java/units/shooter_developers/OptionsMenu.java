@@ -1,50 +1,23 @@
 package units.shooter_developers;
-/*
- *
- *  MICHAEL J. SIDERIUS
- *
- *  DECEMBER 30 2015
- *  VIDEO GAME MENU CONCEPT V1
- *  GOAL: PRACTICE USING JAVAFX TECHNOLOGY AND METHODS
- *
- *
- *  Credit to: https://github.com/Siderim/video-game-menu/
- */
 
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-
-import javafx.application.*;
+import java.io.*;
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.stage.*;
-import javafx.geometry.*;
 import javafx.scene.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.*;
 
-public class OptionsMenu extends Application{
-    ArrayList<MenuItem> _menu_items;
+public class OptionsMenu extends Menu{
     Simulation _gameInstance;
     boolean _game_running;
 
     public OptionsMenu(){
-        _menu_items = new ArrayList<>();
-        _gameInstance = new Simulation();
+        super();
+        _game_running = false;
+    }
+
+    public OptionsMenu(Menu other_menu){
+        super(other_menu);
         _game_running = false;
     }
 
@@ -54,152 +27,98 @@ public class OptionsMenu extends Application{
         _game_running = true;
     }
 
-    private Parent createContent(Stage menu_stage) {
-        Pane root = new Pane();
-
-        root.setPrefSize(1050, 600);
-
-        try(InputStream is = Files.newInputStream(Paths.get("src/main/resources/menu.jpeg"))){
-            ImageView img = new ImageView(new Image(is));
-            img.setFitWidth(1050);
-            img.setFitHeight(600);
-            root.getChildren().add(img);
-        }
-        catch(IOException e) {
-            System.out.println("Couldn't load image");
-        }
-
-        Title title = new Title ("O P T I O N S");
-        title.setTranslateX(50);
-        title.setTranslateY(200);
-
-        Simulation gameInstance = new Simulation();
-
-        MenuBox vbox = new MenuBox(
-                new MenuItem("RESOLUTION", _menu_items),
-                new MenuItem("LIGHT/DARK MODE", _menu_items),
-                new MenuItem("BACK", _menu_items));
-        vbox.setTranslateX(100);
-        vbox.setTranslateY(300);
-
-        root.getChildren().addAll(title,vbox);
-
-        return root;
-
-    }
     @Override
     public void start(Stage menu_stage){
-        Scene scene = new Scene(createContent(menu_stage));
+        setStage(menu_stage);
+        setStageDimensions(getStageWidth(), getStageHeight());
+
+        setTitle("O P T I O N S");
+        this.addSelectableItem("INTERFACE MODE", "light", "dark");
+        this.addSelectableItem("RESOLUTION",
+                (int) getStageWidth() + "x" + (int) getStageHeight() + " (current)",
+                ((int)getScreenWidth()) + "x" + (int) getScreenHeight() + " (native)",
+                "640x360 (widescreen)",
+                "800x600",
+                "1024x768",
+                "1280x720 (widescreen)",
+                "1536x864 (widescreen)",
+                "1600x900 (widescreen)",
+                "1920x1080 (widescreen)");
+        this.addItem("APPLY");
+        this.addItem("BACK");
+
+        Scene scene = new Scene(this.getRoot());
         menu_stage.setTitle("VIDEO GAME");
         menu_stage.setScene(scene);
         menu_stage.show();
 
-        Stage game_stage = new Stage();
-
-        for(var item:_menu_items)
+        var menu_items = getItems();
+        for(var item:menu_items)
         {
             item.setOnMouseReleased(event -> {
-                if(item.getName() == "BACK") {
-                    try {
-                        GameMenu menu_instance = new GameMenu(_gameInstance);
-                        menu_instance.start(menu_stage);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                var item_casted = (MenuItem)item;
+
+                if(item_casted.getName() == "BACK") {
+                    GameMenu main_menu = new GameMenu(this);
+                    main_menu.start(menu_stage);
+
+                } else if(item_casted.getName() == "APPLY") {
+                    applyCurrentSettings();
+                    //insert here other possible settings updating
                 }
             });
-        }
-    }
 
-    private static class Title extends StackPane{
-        public Title(String name) {
-            Rectangle bg = new Rectangle(375, 60);
-            bg.setStroke(Color.WHITE);
-            bg.setStrokeWidth(2);
-            bg.setFill(null);
 
-            Text text = new Text(name);
-            text.setFill(Color.WHITE);
-            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, 50));
 
-            setAlignment(Pos.CENTER);
-            getChildren().addAll(bg,text);
-        }
-    }
-
-    private static class MenuBox extends VBox{
-        public MenuBox(MenuItem...items) {
-            getChildren().add(createSeperator());
-
-            for(MenuItem item : items) {
-                getChildren().addAll(item, createSeperator());
-            }
-        }
-
-        private Line createSeperator() {
-            Line sep = new Line();
-            sep.setEndX(210);
-            sep.setStroke(Color.DARKGREY);
-            return sep;
         }
 
     }
 
-    public interface Operations {
-        void performOperations();
+
+
+    private void updateResolution(){
+        String width_string;
+        String height_string;
+
+        String regex = "\\d+";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(getSelectableItem("RESOLUTION").getText());
+        matcher.find();
+        width_string = matcher.group();
+        matcher.find();
+        height_string = matcher.group();
+
+        double width = Integer.parseInt(width_string);
+        double height = Integer.parseInt(height_string);
+
+        var stage = getStage();
+
+        stage.setMaximized(false);
+        setStageDimensions(width, height);
+
+        OptionsMenu options_menu = new OptionsMenu(this);
+        options_menu.start(stage);
+
     }
 
-    private static class MenuItem extends StackPane{
-        String _name;
-
-        public MenuItem(String name) {
-            _name = name;
-
-            LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop(0, Color.DARKBLUE),
-                    new Stop(0.1, Color.BLACK),
-                    new Stop(0.9, Color.BLACK),
-                    new Stop(1, Color.DARKBLUE));
-
-            Rectangle bg = new Rectangle(200,30);
-            bg.setOpacity(0.4);
-
-            Text text = new Text(name);
-            text.setFill(Color.DARKGREY);
-            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,20));
-
-            setAlignment(Pos.CENTER);
-            getChildren().addAll(bg, text);
-            setOnMouseEntered(event -> {
-                bg.setFill(gradient);
-                text.setFill(Color.WHITE);
-            });
-
-            setOnMouseExited(event -> {
-                bg.setFill(Color.BLACK);
-                text.setFill(Color.DARKGREY);
-            });
-            setOnMousePressed(event -> {
-                bg.setFill(Color.DARKVIOLET);
-            });
-
-            setOnMouseReleased(event -> {
-                bg.setFill(gradient);
-            });
-
-        }
-
-        public MenuItem(String name, ArrayList<MenuItem> items_list){
-            this(name);
-            items_list.add(this);
-        }
-
-        public String getName(){
-            return _name;
-        }
+    private void applyCurrentSettings(){
+        updateResolution();
+        writeSettings();
     }
 
-    public static void main(String[] args) {
+    private void writeSettings() {
+        Properties config = new Properties();
+        config.setProperty("WIDTH", String.valueOf(getStageWidth()));
+        config.setProperty("HEIGHT", String.valueOf(getStageHeight()));
+        config.setProperty("INTERFACE MODE", getSelectableItem("INTERFACE MODE").getText());
 
-        launch(args);
+        File configFile = new File("config.ini");
+        try{
+            FileWriter writer = new FileWriter(configFile);
+            config.store(writer, "Game settings");
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

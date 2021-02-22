@@ -1,48 +1,25 @@
-package units.shooter_developers;/*
- *
- *  MICHAEL J. SIDERIUS
- *
- *  DECEMBER 30 2015
- *  VIDEO GAME MENU CONCEPT V1
- *  GOAL: PRACTICE USING JAVAFX TECHNOLOGY AND METHODS
- *
- *
- *  Credit to: https://github.com/Siderim/video-game-menu/
- */
+package units.shooter_developers;
 
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-
-import javafx.application.*;
 import javafx.stage.*;
-import javafx.geometry.*;
 import javafx.scene.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.*;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
 
 public class GameMenu extends Menu{
     Simulation _gameInstance;
     boolean _game_running;
 
     public GameMenu(){
-        this(new Simulation());
+        super();
+        _game_running = false;
+    }
+
+    public GameMenu(Menu other_menu){
+        super(other_menu);
         _game_running = false;
     }
 
@@ -53,56 +30,87 @@ public class GameMenu extends Menu{
     }
 
     @Override
-    public void start(Stage menu_stage) throws Exception{
-        this.createContent(menu_stage);
-        this.addItem("CONTINUE");
+    public void start(Stage menu_stage){
+        setStage(menu_stage);
+        readSettings();
+        setStageDimensions(getStageWidth(), getStageHeight());
+
+        if(_game_running) {
+            this.addItem("CONTINUE");
+        } else {
+            this.addUnanimatedItem("CONTINUE");
+        }
+
         this.addItem("NEW GAME");
         this.addItem("NEW LAN-GAME");
         this.addItem("OPTIONS");
         this.addItem("EXIT");
         Scene scene = new Scene(this.getRoot());
         menu_stage.setTitle("VIDEO GAME");
+        setTitle("C A M P A I G N");
         menu_stage.setScene(scene);
         menu_stage.show();
 
-        Stage game_stage = new Stage();
-
-        for(var item:_menu_items)
+        var menu_items = getItems();
+        for(var item:menu_items)
         {
             item.setOnMouseReleased(event -> {
-                if(item.getName() == "NEW GAME") {
+                if (item.getName().equals("NEW GAME")) {
                     menu_stage.close();
-                    if(_game_running) {
+                    if (_game_running) {
                         _gameInstance.stop();
                         _gameInstance = new Simulation();
                     }
-                    try {
-                        _gameInstance.start(game_stage);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+
                     _game_running = true;
+                    // START GAME HERE
                 }
-
-                if(item.getName() == "CONTINUE") {
-                    if(_game_running)
+                if (item.getName().equals("CONTINUE")) {
+                    if (_game_running)
                         menu_stage.close();
+                    //  RESUME SIMULATION
                 }
-
-                if(item.getName() == "EXIT") {
-                    _gameInstance.stop();
+                if (item.getName().equals("EXIT")) {
+                    //stop game instance
                     _game_running = false;
                     menu_stage.close();
                 }
-
-                if(item.getName() == "OPTIONS") {
-                    OptionsMenu options_menu = new OptionsMenu();
+                if (item.getName().equals("OPTIONS")) {
+                    OptionsMenu options_menu = new OptionsMenu(this);
                     options_menu.start(menu_stage);
                 }
-
-
             });
         }
+    }
+
+    private void readSettings(){
+        File configFile = new File("config.ini");
+        Properties config = new Properties();
+
+        try{
+            FileReader reader = new FileReader(configFile);
+            config.load(reader);
+            double width = Double.parseDouble(config.getProperty("WIDTH"));
+            double height = Double.parseDouble(config.getProperty("HEIGHT"));
+            setStageDimensions(width, height);
+
+        } catch (IOException e) {
+            return;
+        }
+    }
+
+    @Override
+    public void resize(double width_ratio, double height_ratio){
+        super.resize(width_ratio, height_ratio);
+        GameMenu new_menu = new GameMenu(this);
+        new_menu.start(getStage());
+    }
+
+    @Override
+    public void setPositionRatio(double position_width_ratio, double position_height_ratio){
+        super.setPositionRatio(position_width_ratio, position_height_ratio);
+        GameMenu new_menu = new GameMenu(this);
+        new_menu.start(getStage());
     }
 
     public static void main(String[] args) {
