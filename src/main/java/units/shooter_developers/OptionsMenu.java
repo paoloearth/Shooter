@@ -35,8 +35,8 @@ public class OptionsMenu extends Menu{
         setTitle("O P T I O N S");
         this.addSelectableItem("INTERFACE MODE", "light", "dark");
         this.addSelectableItem("RESOLUTION",
-                Integer.toString((int)getStageWidth()) + "x" + Integer.toString((int)getStageHeight()) + " (current)",
-                ((int)getScreenWidth()) + "x" + Integer.toString((int)getScreenHeight()) + " (native)",
+                (int) getStageWidth() + "x" + (int) getStageHeight() + " (current)",
+                ((int)getScreenWidth()) + "x" + (int) getScreenHeight() + " (native)",
                 "640x360 (widescreen)",
                 "800x600",
                 "1024x768",
@@ -57,9 +57,11 @@ public class OptionsMenu extends Menu{
         {
             item.setOnMouseReleased(event -> {
                 var item_casted = (MenuItem)item;
+
                 if(item_casted.getName() == "BACK") {
                     GameMenu main_menu = new GameMenu(this);
                     main_menu.start(menu_stage);
+
                 } else if(item_casted.getName() == "APPLY") {
                     applyCurrentSettings();
                     //insert here other possible settings updating
@@ -75,8 +77,8 @@ public class OptionsMenu extends Menu{
 
 
     private void updateResolution(){
-        String width_string = "";
-        String height_string = "";
+        String width_string;
+        String height_string;
 
         String regex = "\\d+";
         Pattern pattern = Pattern.compile(regex);

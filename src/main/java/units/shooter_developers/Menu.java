@@ -76,7 +76,7 @@ public abstract class Menu extends Application {
         this.createContent(_stage_width, _stage_height);
     }
 
-    public void createContent(double stage_width, double stage_height) {
+    private void createContent(double stage_width, double stage_height) {
         Pane root = new Pane();
 
         setStageDimensions(stage_width, stage_height);
@@ -112,29 +112,18 @@ public abstract class Menu extends Application {
     /************************** ELEMENTS MANAGEMENT *****************************/
 
     public void addItem(String new_menu_item){
-        var items_box = getItemsBox();
-
-        Menu.MenuBox items_box_casted = (MenuBox) items_box;
-        items_box_casted.addItem(new_menu_item);
+        getItemsBox().addItem(new_menu_item);
     }
 
     public void addUnanimatedItem(String new_menu_item){
-        var items_box = getItemsBox();
-
-        Menu.MenuBox items_box_casted = (MenuBox) items_box;
-        items_box_casted.addUnanimatedItem(new_menu_item);
+        getItemsBox().addUnanimatedItem(new_menu_item);
     }
 
     public void addSelectableItem(String item_name, String ... selection_tags){
-        var items_box = getItemsBox();
-
-        Menu.MenuBox items_box_refactored = (MenuBox) items_box;
-
         ArrayList<String> tag_list= new ArrayList<String>();
         for(var tag:selection_tags){ tag_list.add(tag); }
 
-
-        items_box_refactored.addSelectableItem(item_name, tag_list);
+        getItemsBox().addSelectableItem(item_name, tag_list);
     }
 
     public void setTitle(String title){
@@ -230,15 +219,14 @@ public abstract class Menu extends Application {
     }
 
     private Title getTitle() {
-        var old_title = (Title) _root.getChildren().stream()
+        return (Title) _root.getChildren().stream()
                 .filter(e -> e instanceof Title)
                 .findFirst()
                 .orElse(null);
-        return old_title;
     }
 
-    public MenuBox getItemsBox() {
-        return (MenuBox)_root.getChildren().parallelStream()
+        public MenuBox getItemsBox() {
+        return (MenuBox) _root.getChildren().parallelStream()
                 .filter(e -> e instanceof MenuBox)
                 .findFirst()
                 .orElse(null);
@@ -254,12 +242,10 @@ public abstract class Menu extends Application {
     }
 
     public SelectableItem getSelectableItem(String name){
-        SelectableItem item = (SelectableItem)getSelectableItems().stream()
-                .filter(e -> e.getName() == name)
+        return getSelectableItems().stream()
+                .filter(e -> e.getName().equals(name))
                 .findFirst()
                 .orElse(null);
-
-        return item;
     }
 
     /*******************************************************************************/
@@ -332,21 +318,19 @@ public abstract class Menu extends Application {
         }
 
         public ArrayList<MenuItem> getItems(){
-            List<MenuItem> item_list = getChildren().stream()
-                    .filter(e -> e instanceof MenuItem)
-                    .map(e -> (MenuItem)e)
-                    .collect(Collectors.toList());
 
-            return new ArrayList<MenuItem>(item_list);
+            return getChildren().stream()
+                    .filter(e -> e instanceof MenuItem)
+                    .map(e -> (MenuItem) e)
+                    .collect(Collectors.toCollection(ArrayList::new));
         }
 
         public ArrayList<SelectableItem> getSelectableItems(){
-            List<SelectableItem> item_list = getChildren().stream()
-                    .filter(e -> e instanceof SelectableItem)
-                    .map(e -> (SelectableItem)e)
-                    .collect(Collectors.toList());
 
-            return new ArrayList<SelectableItem>(item_list);
+            return getChildren().stream()
+                    .filter(e -> e instanceof SelectableItem)
+                    .map(e -> (SelectableItem) e)
+                    .collect(Collectors.toCollection(ArrayList::new));
         }
 
     }
@@ -361,7 +345,7 @@ public abstract class Menu extends Application {
             this(name, -1, -1);
         }
 
-        public MenuItem(String name, double item_width_ratio, double item_height_ratio) {
+        private MenuItem(String name, double item_width_ratio, double item_height_ratio) {
             var effective_item_width = item_width_ratio;
             var effective_item_height = item_height_ratio;
             if(item_width_ratio < 0){
@@ -381,13 +365,10 @@ public abstract class Menu extends Application {
             this.setMaxWidth(effective_item_width*getMenuWidth());
             this.setMaxHeight(effective_item_height*getMenuHeight());
 
-            LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[] {
-                    new Stop(0, item_selected_color_lateral),
+            LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop(0, item_selected_color_lateral),
                     new Stop(0.1, item_background_color),
                     new Stop(0.9, item_background_color),
-                    new Stop(1, item_selected_color_lateral)
-
-            });
+                    new Stop(1, item_selected_color_lateral));
 
             Rectangle bg = new Rectangle(effective_item_width*getMenuWidth(),effective_item_height*getMenuHeight());
             bg.setOpacity(0.4);
@@ -429,14 +410,14 @@ public abstract class Menu extends Application {
     /************************ SELECTABLE ITEM ****************************************/
 
     public class SelectableItem extends HBox{
-        private ArrayList<String> _selection_list;
+        private final ArrayList<String> _selection_list;
         private int _selection_index;
-        private double _width_selection_item;
-        private String _name;
+        private final double _width_selection_item;
+        private final String _name;
 
         public SelectableItem(String name){
             _selection_index = 0;
-            _selection_list = new ArrayList<String>();
+            _selection_list = new ArrayList<>();
             _width_selection_item = 0.25;
             _name = name;
 
@@ -474,7 +455,7 @@ public abstract class Menu extends Application {
                     right_arrow);
         }
 
-        public void next(){
+        private void next(){
             if(_selection_index == _selection_list.size()-1)
                 _selection_index = 0;
             else
@@ -482,7 +463,7 @@ public abstract class Menu extends Application {
             updateTagText();
         }
 
-        public void previous(){
+        private void previous(){
             if(_selection_index == 0)
                 _selection_index = _selection_list.size()-1;
             else
@@ -525,13 +506,13 @@ public abstract class Menu extends Application {
     /************************ UNANIMATED ITEM ****************************************/
 
     public class UnanimatedItem extends StackPane {
-        String _name;
+        private final String _name;
 
         public UnanimatedItem(String name){
             this(name, -1, -1);
         }
 
-        public UnanimatedItem(String name, double item_width_ratio, double item_height_ratio) {
+        private UnanimatedItem(String name, double item_width_ratio, double item_height_ratio) {
             var effective_width_ratio = 0.19;
             var effective_height_ratio = 0.05;
             if(item_width_ratio >= 0){
@@ -548,7 +529,6 @@ public abstract class Menu extends Application {
             Color background_color = Color.BLACK;
 
             Rectangle bg = new Rectangle(effective_width_ratio*getMenuWidth(),effective_height_ratio*getMenuHeight());
-            //Rectangle bg = new Rectangle(0.19*getMenuWidth(),0.05*getMenuHeight());
             bg.setOpacity(0.3);
             bg.setFill(background_color);
 

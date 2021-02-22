@@ -54,39 +54,31 @@ public class GameMenu extends Menu{
         var menu_items = getItems();
         for(var item:menu_items)
         {
-            if(item instanceof MenuItem) {
-                var item_casted = (MenuItem)item;
-                item.setOnMouseReleased(event -> {
-                    if (item_casted.getName() == "NEW GAME") {
+            item.setOnMouseReleased(event -> {
+                if (item.getName().equals("NEW GAME")) {
+                    menu_stage.close();
+                    if (_game_running) {
+                        _gameInstance.stop();
+                        _gameInstance = new Simulation();
+                    }
+                    _game_running = true;
+                    // START GAME HERE
+                }
+                if (item.getName().equals("CONTINUE")) {
+                    if (_game_running)
                         menu_stage.close();
-                        if (_game_running) {
-                            _gameInstance.stop();
-                            _gameInstance = new Simulation();
-                        }
-                        _game_running = true;
-                        // START GAME HERE
-                    }
-
-                    if (item_casted.getName() == "CONTINUE") {
-                        if (_game_running)
-                            menu_stage.close();
-                        //  RESUME SIMULATION
-                    }
-
-                    if (item_casted.getName() == "EXIT") {
-                        //stop game instance
-                        _game_running = false;
-                        menu_stage.close();
-                    }
-
-                    if (item_casted.getName() == "OPTIONS") {
-                        OptionsMenu options_menu = new OptionsMenu(this);
-                        options_menu.start(menu_stage);
-                    }
-
-
-                });
-            }
+                    //  RESUME SIMULATION
+                }
+                if (item.getName().equals("EXIT")) {
+                    //stop game instance
+                    _game_running = false;
+                    menu_stage.close();
+                }
+                if (item.getName().equals("OPTIONS")) {
+                    OptionsMenu options_menu = new OptionsMenu(this);
+                    options_menu.start(menu_stage);
+                }
+            });
         }
     }
 
@@ -101,8 +93,6 @@ public class GameMenu extends Menu{
             double height = Double.parseDouble(config.getProperty("HEIGHT"));
             setStageDimensions(width, height);
 
-        } catch (FileNotFoundException e) {
-            return;
         } catch (IOException e) {
             return;
         }
