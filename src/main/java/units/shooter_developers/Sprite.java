@@ -156,6 +156,23 @@ public class Sprite extends Dynamic_Object {
                 get_actual_height() * 3.0/4);
     }
 
+    /* Set the boolean attributes according to the key pressed*/
+    public void setGoNorth(boolean goNorth) {
+        this.goNorth = goNorth;
+    }
+
+    public void setGoSouth(boolean goSouth) {
+        this.goSouth = goSouth;
+    }
+
+    public void setGoEast(boolean goEast) {
+        this.goEast = goEast;
+    }
+
+    public void setGoWest(boolean goWest) {
+        this.goWest = goWest;
+    }
+
 
 
 }
