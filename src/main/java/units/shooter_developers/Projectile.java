@@ -51,9 +51,40 @@ public class Projectile extends Dynamic_Object{
     }
 
     @Override
-    protected boolean illegal_move(Map M) {
-        return false;
+    protected  boolean illegal_move(Map M) {
+
+        int left = get_future_x();
+        int top = get_future_y();
+
+        // Bounds da controllare
+        var bottom = top+get_actual_height() ;
+        var right = left+get_actual_width() ;
+
+        int left_tile = left/M.getTileWidth();
+        int rigth_tile = right/M.getTileWidth();
+
+        int top_tile = top/M.get_height();
+        int bottom_tile = bottom/M.get_height();
+
+
+        if(left_tile < 0) left_tile = 0;
+        if(rigth_tile > M.get_width()) rigth_tile = M.get_width();
+        if(top_tile < 0) top_tile = 0;
+        if(bottom_tile>M.get_height()) bottom_tile = M.get_height();
+
+
+        for (int i =left_tile; i<= rigth_tile; i++)
+        {
+            for (int j=top_tile; j<= bottom_tile; j++)
+            {
+                Tile t = M.get_tile_matrix().get(M.single_index(i,j));
+                if(t.not_passable_for_p.getValue()) return true;
+            }
+        }
+        return  false;
+
     }
+
 
     @Override
     public Rectangle2D get_bounds() {
