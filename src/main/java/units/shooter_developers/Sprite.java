@@ -1,5 +1,7 @@
 package units.shooter_developers;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -7,6 +9,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import javafx.util.Pair;
 
 
@@ -16,6 +19,11 @@ public class Sprite extends Dynamic_Object {
     HealthBar H;
     private boolean goNorth, goSouth, goEast, goWest;
     BooleanProperty _can_shoot = new SimpleBooleanProperty(true);
+
+    Timeline shooting_cooldown = new Timeline(
+            new KeyFrame(Duration.ZERO, event -> _can_shoot.setValue(false)),
+            new KeyFrame(Duration.seconds(0.5), event -> _can_shoot.setValue(true))
+    );
 
     //constructor
     public Sprite(Pane root, Map M, Pair<Double, Double> scaling_factor, String url, int _n_rows, int _n_cols, String id, Direction D)
@@ -157,6 +165,11 @@ public class Sprite extends Dynamic_Object {
                 get_current_Y_position() +get_actual_height() * 0.15 ,
                 get_actual_width(),
                 get_actual_height() * 3.0/4);
+    }
+
+    @Override
+    public void update(Map M, Sprite S) {
+
     }
 
     /* Set the boolean attributes according to the key pressed*/

@@ -91,6 +91,11 @@ public class Projectile extends Dynamic_Object{
         return new Rectangle2D(get_current_X_position(), get_current_Y_position(), get_actual_width(), get_actual_height());
     }
 
+    @Override
+    public void update(Map M, Sprite S) {
+        hit(S);
+    }
+
     public void hit(Sprite S)
     {
         if(!_isDead.getValue() && !Owner.equals(S._id)) // If player has not hit anything yet
