@@ -90,4 +90,14 @@ public class Projectile extends Dynamic_Object{
     public Rectangle2D get_bounds() {
         return new Rectangle2D(get_current_X_position(), get_current_Y_position(), get_actual_width(), get_actual_height());
     }
+
+    public void hit(Sprite S)
+    {
+        if(!_isDead.getValue() && !Owner.equals(S._id)) // If player has not hit anything yet
+        {
+            _isDead.setValue(true);        // Now the projectile has hit something
+            S.H.damage();                  //Compute damage
+        }
+    }
+
 }
