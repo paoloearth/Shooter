@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class Simulation extends Application{
 
-    /* Default Resolution */
+    /* Resolution Variables */
     private static  int WIDTH;
     private static  int HEIGHT ;
 
@@ -33,10 +33,8 @@ public class Simulation extends Application{
     private Sprite Player_1 ;
     private Sprite Player_2;
 
-    /*Scale the objects on the map according to the resolution*/
+    /* Scale the objects on the map according to the resolution */
     Pair<Double,Double> scaling_factors;
-
-
 
 
     @Override
@@ -90,8 +88,6 @@ public class Simulation extends Application{
         /* Compute the bounds of the screen to set the dimension of the window */
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 
-       // System.out.println("BOUNDS:" + screenBounds );
-
         /* Set the window dimension accordingly to the boolean variable full_screen*/
         WIDTH =  required_full_screen?   (int) screenBounds.getWidth()  : Custom_Settings.DEFAULT_X;
         HEIGHT = required_full_screen?   (int) screenBounds.getHeight() : Custom_Settings.DEFAULT_Y;
@@ -107,7 +103,7 @@ public class Simulation extends Application{
     }
 
     private void create_players() {
-        Player_1 = new Sprite(_root,_map , scaling_factors, "astrologer.png",4, 1 , "P1", Direction.RIGHT);
+        Player_1 = new Sprite(_root,_map , scaling_factors, "astrologer.png", 4, 1 , "P1", Direction.RIGHT);
         Player_2 = new Sprite(_root,_map, scaling_factors,  "artist.png",     4, 1,  "P2", Direction.LEFT);
     }
 
@@ -167,6 +163,7 @@ public class Simulation extends Application{
                                     if(t.intersect(Player_2)) t.update(_map,Player_2);
                                 }
 
+
                                 case "BONUS" -> {
 
                                     var b = (Bonus_Generator) s;
@@ -177,22 +174,25 @@ public class Simulation extends Application{
                                 }
 
 
-                                }
-
-
-
-
                             }
-
-
-
+                        }
                 );
+                try {
+                    remove_dead_objects();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
         };
 
 
         timer.start();
+    }
+
+    private void remove_dead_objects() {
+        _root.getChildren().removeIf(node -> (node instanceof Pictured_Object) && ((Pictured_Object)node)._isDead.getValue());
+        if (Player_1._isDead.getValue() || Player_2._isDead.getValue()) stop();
     }
 
 
