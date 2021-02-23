@@ -44,6 +44,11 @@ public class Teleport extends Pictured_Object{
         rotation.play();
     }
 
+    public void setDestination(Teleport T)
+    {
+        destination = new Pair<>(T.get_current_X_position() + get_actual_width()/4 ,T.get_current_Y_position()+get_actual_height());
+    }
+
     @Override
     public Rectangle2D get_bounds() {
         return new Rectangle2D(get_current_X_position() +  (get_actual_width()/4),
