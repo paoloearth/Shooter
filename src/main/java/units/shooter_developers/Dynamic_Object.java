@@ -13,7 +13,6 @@ public abstract class Dynamic_Object extends Pictured_Object {
     public Dynamic_Object(Pair<Double,Double> scaling_factors, String url)
     {
         super(scaling_factors, url);
-
     }
 
     //Custom Constructor
@@ -38,18 +37,10 @@ public abstract class Dynamic_Object extends Pictured_Object {
 
     //Check if an element of the map is out of it
     protected boolean is_out_of_map(Map M) {
-        if(this.get_future_x() <= 0 ||
+        return  this.get_future_x() <= 0 ||
                 this.get_future_y() <= 0 ||
                 this.get_future_x()  + get_actual_width() >= M.get_width() ||
-                this.get_future_y()  + get_actual_height() >= M.get_height())
-        {
-
-                System.out.println("OUT OF MAP ");
-                return true;
-
-
-        }
-        return false;
+                this.get_future_y()  + get_actual_height() >= M.get_height();
 
     }
 

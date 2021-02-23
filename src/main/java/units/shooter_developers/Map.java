@@ -55,26 +55,20 @@ public class Map {
         IntStream.range(0, _MR._num_tiles.getKey()).mapToObj(i ->
                 IntStream.range(0, _MR._num_tiles.getValue()).mapToObj(j -> {
 
-                    //  1) Leggere la cella della matrice codici (i, j)
+
                     var code = Integer.parseInt(_MR._map.get(j)[i]);
 
-                    //  2) Ricavare la posizione nello spritesheet con metodo matilde ... poi * 16
                     int pos_row = code / tile_per_row;
                     int pos_col = code % tile_per_row;
 
                     pos_row *= _MR._cell_side;
                     pos_col *= _MR._cell_side;
 
-                    //  3) Verificare se codice appartiene a celle passabili o non passabili (???)
-                    //    if code is in {passable} chiama costruttore con true else chiama costruttore con false
                     boolean passable = _MR._set_of_passable.contains(code);
                     boolean not_passable_for_p = _MR._set_of_NOT_passable_for_projectile.contains(code);
 
-                    // 4) Computare il rettangolo che ci interessa
                     Rectangle2D R = new Rectangle2D(pos_col, pos_row, _MR._cell_side,_MR._cell_side);
-                    //System.out.println("i "+ i + " j"+ j);
 
-                    // 5) Passiamo a block nel costruttore direttamente la imageview/rectangle 2D
                     var myblock = new Tile(i*getTileWidth(), j*getTileHeight(),
                             getTileWidth(), getTileHeight(),
                             passable,not_passable_for_p, _MR._tileset, R);
@@ -101,8 +95,8 @@ public class Map {
     //Given the coordinates of a tile
     Pair<Integer,Integer> get_pixel_position(Pair<Integer,Integer> tile_coordinates)
     {
-        var a = new Pair<>(tile_coordinates.getKey()* getTileWidth(),tile_coordinates.getValue() * getTileHeight() );
-        return a;
+        return new Pair<>(tile_coordinates.getKey()* getTileWidth(),tile_coordinates.getValue() * getTileHeight() );
+
     }
 
 
