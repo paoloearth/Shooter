@@ -159,12 +159,22 @@ public class Simulation extends Application{
                             }
                         }
                 );
+                try {
+                    remove_dead_objects();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
         };
 
 
         timer.start();
+    }
+
+    private void remove_dead_objects() {
+        _root.getChildren().removeIf(node -> (node instanceof Pictured_Object) && ((Pictured_Object)node)._isDead.getValue());
+        if (Player_1._isDead.getValue() || Player_2._isDead.getValue()) stop();
     }
 
 
