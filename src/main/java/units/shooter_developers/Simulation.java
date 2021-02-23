@@ -81,6 +81,8 @@ public class Simulation extends Application{
 
         /* Load the players and locate them on the map*/
         create_teleports();
+
+        create_bonus();
     }
 
     private void create_frame(boolean required_full_screen)  {
@@ -117,6 +119,10 @@ public class Simulation extends Application{
         T1.setDestination(T2);
         T2.setDestination(T1);
 
+    }
+
+    private void create_bonus(){
+        new Bonus_Generator(_root,_map, Custom_Settings.URL_HEART,1,10, scaling_factors);
     }
 
 
@@ -159,6 +165,15 @@ public class Simulation extends Application{
 
                                     if(t.intersect(Player_1)) t.update(_map,Player_1);
                                     if(t.intersect(Player_2)) t.update(_map,Player_2);
+                                }
+
+                                case "BONUS" -> {
+
+                                    var b = (Bonus_Generator) s;
+
+                                    if(b.intersect(Player_1)) b.update(_map,Player_1);
+                                    if(b.intersect(Player_2)) b.update(_map,Player_2);;
+
                                 }
 
 
