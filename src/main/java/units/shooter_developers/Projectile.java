@@ -96,6 +96,14 @@ public class Projectile extends Dynamic_Object{
         hit(S);
     }
 
+
+    public void translate(Map M)
+    {
+        if(is_out_of_map(M) || illegal_move(M)) _isDead.setValue(true);
+        else move_to(new Pair<>(get_future_x(), get_future_y()));
+    }
+
+
     public void hit(Sprite S)
     {
         if(!_isDead.getValue() && !Owner.equals(S._id)) // If player has not hit anything yet

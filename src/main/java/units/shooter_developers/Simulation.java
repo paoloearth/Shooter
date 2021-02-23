@@ -56,7 +56,7 @@ public class Simulation extends Application{
         GAME();
 
         /* Set the listeners to capture the movements of the player */
-        addKeyHandler_PRESS(scene,    Player_1, Player_2);
+        addKeyHandler_PRESS(scene,   Player_1, Player_2);
         addKeyHandler_RELEASED(scene, Player_1,Player_2);
 
         /* Output the scene */
@@ -95,9 +95,6 @@ public class Simulation extends Application{
         /* Compute the scaling factor that will be used to update some parameters at RUNTIME*/
         scaling_factors = new Pair<>( (double) WIDTH / Custom_Settings.DEFAULT_X, (double) HEIGHT / Custom_Settings.DEFAULT_Y);
 
-
-
-
     }
 
     private void create_map(String map_url) throws IOException {
@@ -106,7 +103,7 @@ public class Simulation extends Application{
 
     private void create_players() {
         Player_1 = new Sprite(_root,_map , scaling_factors, "astrologer.png",4, 1 , "P1", Direction.RIGHT);
-        Player_2 = new Sprite(_root,_map, scaling_factors, "artist.png",     4, 1,  "P2", Direction.LEFT);
+        Player_2 = new Sprite(_root,_map, scaling_factors,  "artist.png",     4, 1,  "P2", Direction.LEFT);
     }
 
 
@@ -128,9 +125,21 @@ public class Simulation extends Application{
                         s ->{
                             switch (s._type)
                             {
-                                case "SPRITE" -> ((Sprite) s).move(_map);
+                                case "SPRITE" -> {
 
+                                    ((Sprite) s).move(_map);
+                                }
 
+                                case "PROJECTILE" -> {
+
+                                    var p = (Projectile) s;
+
+                                    p.translate(_map);
+
+                                    if(p.intersect(Player_1)) p.update(_map,Player_1);
+                                    if(p.intersect(Player_2)) p.update(_map,Player_2);
+
+                                }
 
 
 
@@ -167,11 +176,13 @@ public class Simulation extends Application{
                     case DOWN  ->  s.setGoSouth(true);
                     case LEFT  ->  s.setGoWest(true);
                     case RIGHT ->  s.setGoEast(true);
+                    case ENTER ->  s.shoot(_root);
 
                     case W    ->  p.setGoNorth(true);
                     case S    ->  p.setGoSouth(true);
                     case A    ->  p.setGoWest(true);
                     case D    ->  p.setGoEast(true);
+                    case SPACE ->  p.shoot(_root);
                 }
             }
         });}
