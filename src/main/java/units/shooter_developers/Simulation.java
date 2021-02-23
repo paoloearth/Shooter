@@ -78,6 +78,9 @@ public class Simulation extends Application{
 
         /* Load the players and locate them on the map*/
         create_players();
+
+        /* Load the players and locate them on the map*/
+        create_teleports();
     }
 
     private void create_frame(boolean required_full_screen)  {
@@ -85,7 +88,7 @@ public class Simulation extends Application{
         /* Compute the bounds of the screen to set the dimension of the window */
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 
-        System.out.println("BOUNDS:" + screenBounds );
+       // System.out.println("BOUNDS:" + screenBounds );
 
         /* Set the window dimension accordingly to the boolean variable full_screen*/
         WIDTH =  required_full_screen?   (int) screenBounds.getWidth()  : Custom_Settings.DEFAULT_X;
@@ -104,6 +107,16 @@ public class Simulation extends Application{
     private void create_players() {
         Player_1 = new Sprite(_root,_map , scaling_factors, "astrologer.png",4, 1 , "P1", Direction.RIGHT);
         Player_2 = new Sprite(_root,_map, scaling_factors,  "artist.png",     4, 1,  "P2", Direction.LEFT);
+    }
+
+    private void create_teleports() {
+
+        var T1  = new Teleport(_root,  Custom_Settings.URL_TELEPORT,  _map, scaling_factors, "T1");
+        var T2  = new Teleport(_root,  Custom_Settings.URL_TELEPORT, _map, scaling_factors,"T2");
+
+        T1.setDestination(T2);
+        T2.setDestination(T1);
+
     }
 
 
@@ -136,8 +149,24 @@ public class Simulation extends Application{
 
                                     p.translate(_map);
 
+
                                     if(p.intersect(Player_1)) p.update(_map,Player_1);
                                     if(p.intersect(Player_2)) p.update(_map,Player_2);
+
+                                case "TELEPORT" -> {
+
+                                    var t = (Teleport) s;
+                                    if(t.get_bounds().intersects(Player_1.get_bounds()))
+                                    {
+                                        Player_1.move_to(t.destination);
+                                    }
+                                    if(t.get_bounds().intersects(Player_2.get_bounds()))
+                                    {
+                                        Player_2.move_to(t.destination);
+                                    }
+
+                                }
+
 
                                 }
 
