@@ -101,12 +101,12 @@ public class Simulation extends Application{
     }
 
     private void create_map(String map_url) throws IOException {
-        _map = new Map(_root, "map_islands.csv", WIDTH,HEIGHT);
+        _map = new Map(_root, map_url, WIDTH,HEIGHT);
     }
 
     private void create_players() {
         Player_1 = new Sprite(_root,_map , scaling_factors, "astrologer.png",4, 1 , "P1", Direction.RIGHT);
-        Player_2 = new Sprite(_root,_map, scaling_factors, "artist.png",    4, 1,  "P2", Direction.LEFT);
+        Player_2 = new Sprite(_root,_map, scaling_factors, "artist.png",     4, 1,  "P2", Direction.LEFT);
     }
 
 

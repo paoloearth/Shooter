@@ -38,10 +38,19 @@ public abstract class Dynamic_Object extends Pictured_Object {
 
     //Check if an element of the map is out of it
     protected boolean is_out_of_map(Map M) {
-        return  this.get_future_x() <= 0 ||
+        if(this.get_future_x() <= 0 ||
                 this.get_future_y() <= 0 ||
                 this.get_future_x()  + get_actual_width() >= M.get_width() ||
-                this.get_future_y() + get_actual_height() >= M.get_height();
+                this.get_future_y()  + get_actual_height() >= M.get_height())
+        {
+
+                System.out.println("OUT OF MAP ");
+                return true;
+
+
+        }
+        return false;
+
     }
 
 

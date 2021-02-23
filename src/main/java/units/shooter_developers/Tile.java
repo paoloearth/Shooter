@@ -18,8 +18,9 @@ public class Tile extends ImageView {
     Tile(int pos_x, int pos_y, int width, int height, boolean passable, boolean not_passable_p, Image img, Rectangle2D r2)
     {
         /* Position the tile in the proper position */
-        this.setLayoutX(pos_x);
-        this.setLayoutY(pos_y);
+    //    this.setLayoutX(pos_x);
+    //    this.setLayoutY(pos_y);
+        this.relocate(pos_x,pos_y);
 
         /* Position the tile in the proper position */
         this.setFitWidth(width);

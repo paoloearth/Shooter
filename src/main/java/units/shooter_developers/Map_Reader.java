@@ -46,6 +46,14 @@ public class Map_Reader {
 
         //Lines representing the map skipping the first 5 rows
         _map = _lines.stream().skip(Custom_Settings.NUMBER_OF_METADATA_LINES).collect(Collectors.toList());
+
+
+        System.out.println("\n Num of blocks " + _num_tiles +
+                "\n Cell side "     + _cell_side   +
+                "\n Set of passable "+ _set_of_passable+
+                "\n Players positions " + _players_positions+
+                "\n Not_passable_p " + _set_of_NOT_passable_for_projectile+
+                "\n Teleports positions" + _teleport_positions);
     }
 
     private Image get_tileset() {
