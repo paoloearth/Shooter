@@ -176,8 +176,6 @@ public class Simulation extends Application{
 
                                 }
 
-                            }
-
 
                                 }
 
