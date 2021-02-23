@@ -50,51 +50,45 @@ public class Map {
 
     private void populateCells() {
 
-        /* Used to get the right position */
-        int n_cols = _MR._num_tiles.getKey();
-        int n_rows = _MR._num_tiles.getValue();
-
-        int flat_length = n_cols * n_rows;
-
-        /* Used to get the tile sprite */
         int tile_per_row = _MR.get_tiles_per_row();
 
+        IntStream.range(0, _MR._num_tiles.getKey()).mapToObj(i ->
+                IntStream.range(0, _MR._num_tiles.getValue()).mapToObj(j -> {
 
-        IntStream.range(0, flat_length).forEach(index -> {
+                    //  1) Leggere la cella della matrice codici (i, j)
+                    var code = Integer.parseInt(_MR._map.get(j)[i]);
 
-                                  /* From single index to double */
-                                   var i = index / n_cols;
-                                   var j = index % n_cols;
+                    //  2) Ricavare la posizione nello spritesheet con metodo matilde ... poi * 16
+                    int pos_row = code / tile_per_row;
+                    int pos_col = code % tile_per_row;
 
-                                   /* Read cell of the code */
-                                   var code = Integer.parseInt(_MR._map.get(i)[j]);
+                    pos_row *= _MR._cell_side;
+                    pos_col *= _MR._cell_side;
 
-                                   /* From single index to double */
-                                   int pos_row = code / tile_per_row;
-                                   int pos_col = code % tile_per_row;
+                    //  3) Verificare se codice appartiene a celle passabili o non passabili (???)
+                    //    if code is in {passable} chiama costruttore con true else chiama costruttore con false
+                    boolean passable = _MR._set_of_passable.contains(code);
+                    boolean not_passable_for_p = _MR._set_of_NOT_passable_for_projectile.contains(code);
 
-                                   /* Compute final position */
-                                   pos_row *= _MR._cell_side;
-                                   pos_col *= _MR._cell_side;
+                    // 4) Computare il rettangolo che ci interessa
+                    Rectangle2D R = new Rectangle2D(pos_col, pos_row, _MR._cell_side,_MR._cell_side);
+                    //System.out.println("i "+ i + " j"+ j);
 
-                                   /* Set property of the node */
-                                   boolean passable = _MR._set_of_passable.contains(code);
-                                   boolean not_passable_for_p = _MR._set_of_NOT_passable_for_projectile.contains(code);
+                    // 5) Passiamo a block nel costruttore direttamente la imageview/rectangle 2D
+                    var myblock = new Tile(i*getTileWidth(), j*getTileHeight(),
+                            getTileWidth(), getTileHeight(),
+                            passable,not_passable_for_p, _MR._tileset, R);
 
-                                    /* Picture the right tile on tilese of the map */
-                                   Rectangle2D R = new Rectangle2D(pos_col, pos_row, _MR._cell_side,_MR._cell_side);
 
-                                    /* Picture the right tile on tileset */
-                                   _tiles.add(  new Tile(j* getTileWidth(), i* getTileHeight(),
-                                                               getTileWidth(), getTileHeight(),
-                                                               passable,not_passable_for_p, _MR._tileset, R));
+                    return myblock;
+                })
+        ).flatMap(s -> s).forEach(_cells.getChildren()::add);
 
-                                    });
+        this._tiles = _cells.getChildren().stream().parallel().map(s->(Tile) s).collect(Collectors.toList());
 
-        /* Picture the right tile on tileset */
-        _tiles.forEach(tile -> _cells.getChildren().add(tile));
 
     }
+
 
     Pair<Integer,Integer> get_player_pixel_position(String player_id)
     {
@@ -118,10 +112,10 @@ public class Map {
     public int get_height() {
         return _height;
     }
+
     public int getTileWidth() {
         return( _width/_MR._num_tiles.getKey());
     }
-
     public int getTileHeight(){
         return(_height/_MR._num_tiles.getValue());
     }

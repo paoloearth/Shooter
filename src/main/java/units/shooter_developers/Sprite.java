@@ -57,7 +57,9 @@ public class Sprite extends Dynamic_Object {
     //Change the picture of the Sprite in the SpriteSheet according to the direction
     private ChangeListener<Object> getListener() {
 
-        return (ov, o, o2) -> this._view.setViewport(new Rectangle2D( _frame.get()*_width, _current_direction.get().getOffset() * _height, _width, _height));
+        return (ov, o, o2) -> this._view.setViewport(new Rectangle2D( _frame.get()*_width,
+                                                                 _current_direction.get().getOffset() * _height,
+                                                                     _width, _height));
 
     }
 
@@ -114,8 +116,8 @@ public class Sprite extends Dynamic_Object {
         int top = get_future_y();
 
         // Bounds da controllare
-        var bottom = top+get_actual_height() ;
-        var right = left+get_actual_width() ;
+        var bottom = top +get_actual_height() ;
+        var right  = left+get_actual_width() ;
 
         top += get_actual_height() * 2/3;
 
@@ -137,8 +139,10 @@ public class Sprite extends Dynamic_Object {
         {
             for (int j=top_tile; j<= bottom_tile; j++)
             {
+               // System.out.println("Ispezione posizione "+ i + " " + j +" at pos " + M.single_index(i,j));
                 Tile b = M.get_tile_matrix().get(M.single_index(i,j));
                 if(!b.is_passable.getValue()) {
+                  //  System.out.println("Tile with code "+ b.get_pixel_of_block_position() + "is NOT passable" );
                     return true;
                 }
             }
