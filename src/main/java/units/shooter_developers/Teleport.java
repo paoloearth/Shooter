@@ -3,6 +3,7 @@ package units.shooter_developers;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import javafx.util.Pair;
@@ -41,6 +42,13 @@ public class Teleport extends Pictured_Object{
         rotation.setInterpolator(Interpolator.LINEAR);
         rotation.setCycleCount(Animation.INDEFINITE);
         rotation.play();
+    }
+
+    @Override
+    public Rectangle2D get_bounds() {
+        return new Rectangle2D(get_current_X_position() +  (get_actual_width()/4),
+                get_current_Y_position() +  (get_actual_height()/4),
+                get_actual_width()/2, get_actual_height()/2);
     }
 
 
