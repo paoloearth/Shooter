@@ -34,4 +34,15 @@ public class Object_Animation extends Transition {
         setInterpolator(Interpolator.LINEAR);
         setAutoReverse(true);
     }
+
+
+    protected void interpolate(double k) {
+        final int index = Math.min((int) Math.floor(k * count), count - 1);
+        if (index != lastIndex) {
+            final int x = (index % columns) * width  + offsetX;
+            final int y = (index / columns) * height + offsetY;
+            imageView.setViewport(new Rectangle2D(x, y, width, height));
+            lastIndex = index;
+        }
+    }
 }
