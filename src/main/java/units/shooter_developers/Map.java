@@ -8,6 +8,7 @@ import javafx.util.Pair;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -130,6 +131,13 @@ public class Map {
     public List<Tile> get_tile_matrix() {
         return _tiles;
     }
+
+    public Pair<Integer,Integer> get_random_location(){
+        int index = new Random().nextInt(_passable_tiles.size());
+
+        return _passable_tiles.get(index).get_pixel_of_block_position();
+    }
+
 
 
 

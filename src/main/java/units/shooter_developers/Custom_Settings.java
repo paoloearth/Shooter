@@ -26,9 +26,9 @@ public class Custom_Settings {
 
     /*  SCALES */
     public static final double PLAYER_SCALE  = 1.0/20;
-
     public static final double PROJECTILE_SCALE =  1.0/19;
     public static final double  TELEPORT_SCALE  = 1.0/18;
+    public static final double HEART_SCALE = 1.0/6;
 
 
 
