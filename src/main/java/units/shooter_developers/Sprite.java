@@ -105,7 +105,6 @@ public class Sprite extends Dynamic_Object {
 
         update_get_direction(future_x, future_y);
 
-        //if(future_x <= 0 || future_y <= 0 || future_x+get_actual_width()>=M.get_width() || future_y+get_actual_height()>=R.get_height()) return;
         if(!(is_out_of_map(M) || illegal_move(M))) move_to(new Pair<>(future_x, future_y));
 
     }
