@@ -25,6 +25,7 @@ public class Custom_Settings {
 
     /*  SCALES */
     public static final double PLAYER_SCALE  = 1.0/20;
+    public static final double  TELEPORT_SCALE  = 1.0/18;
 
     /* HEALTHBAR */
     public static final double HB_PROPORTIONAL_WIDTH  = 0.1 ;   // HB height is 10 % of sprite's height
