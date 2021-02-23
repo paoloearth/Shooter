@@ -171,6 +171,15 @@ public class Sprite extends Dynamic_Object {
         move(M);
     }
 
+    public void shoot(Pane root){
+
+        if(_can_shoot.getValue())
+        {
+            root.getChildren().add(new Projectile( _scaling_factors, Custom_Settings.URL_PROJECTILE,this));
+            shooting_cooldown.play();
+        }
+    }
+
     /* Set the boolean attributes according to the key pressed*/
     public void setGoNorth(boolean goNorth) {
         this.goNorth = goNorth;
