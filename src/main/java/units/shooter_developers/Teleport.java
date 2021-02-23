@@ -1,7 +1,10 @@
 package units.shooter_developers;
 
+import javafx.animation.Animation;
+import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import javafx.util.Pair;
 
 public class Teleport extends Pictured_Object{
@@ -30,6 +33,14 @@ public class Teleport extends Pictured_Object{
 
 
         root.getChildren().add(this);   // Add local pane to global root
+    }
+
+    private void rotation_animation() {
+        rotation = new RotateTransition(Duration.millis(3000), this);
+        rotation.setByAngle(360);
+        rotation.setInterpolator(Interpolator.LINEAR);
+        rotation.setCycleCount(Animation.INDEFINITE);
+        rotation.play();
     }
 
 
