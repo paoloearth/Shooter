@@ -50,7 +50,6 @@ public class Sprite extends Dynamic_Object {
 
         this._isDead.bind(H.Health.lessThanOrEqualTo(0));
 
-
         move_to(M.get_player_pixel_position(id));
 
 
@@ -169,7 +168,7 @@ public class Sprite extends Dynamic_Object {
 
     @Override
     public void update(Map M, Sprite S) {
-
+        move(M);
     }
 
     /* Set the boolean attributes according to the key pressed*/
