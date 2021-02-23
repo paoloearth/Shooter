@@ -169,10 +169,10 @@ public class Simulation extends Application{
 
                                 case "BONUS" -> {
 
-                                    var b = (Bonus_generator) s;
+                                    var b = (Bonus_Generator) s;
 
-                                    if(b.intersect(Player_1)) b.update(R,Player_1);
-                                    if(b.intersect(Player_2)) b.update(R,Player_2);;
+                                    if(b.intersect(Player_1)) b.update(_map,Player_1);
+                                    if(b.intersect(Player_2)) b.update(_map,Player_2);;
 
                                 }
 
