@@ -56,5 +56,10 @@ public class Teleport extends Pictured_Object{
                 get_actual_width()/2, get_actual_height()/2);
     }
 
+    @Override
+    public void update(Map M, Sprite S) {
+        S.move_to(destination);
+    }
+
 
 }

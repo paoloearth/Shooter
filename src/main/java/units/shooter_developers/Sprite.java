@@ -25,7 +25,7 @@ public class Sprite extends Dynamic_Object {
             new KeyFrame(Duration.seconds(0.5), event -> _can_shoot.setValue(true))
     );
 
-    //constructor
+
     public Sprite(Pane root, Map M, Pair<Double, Double> scaling_factor, String url, int _n_rows, int _n_cols, String id, Direction D)
     {
         super(scaling_factor, url, _n_rows, _n_cols);
