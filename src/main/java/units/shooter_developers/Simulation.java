@@ -172,7 +172,7 @@ public class Simulation extends Application{
                                     var b = (Bonus_Generator) s;
 
                                     if(b.intersect(Player_1)) b.update(_map,Player_1);
-                                    if(b.intersect(Player_2)) b.update(_map,Player_2);;
+                                    if(b.intersect(Player_2)) b.update(_map,Player_2);
 
                                 }
 
