@@ -85,7 +85,7 @@ public class Simulation extends Application{
         /* Compute the bounds of the screen to set the dimension of the window */
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 
-        System.out.println("BOUNDS:" + screenBounds );
+       // System.out.println("BOUNDS:" + screenBounds );
 
         /* Set the window dimension accordingly to the boolean variable full_screen*/
         WIDTH =  required_full_screen?   (int) screenBounds.getWidth()  : Custom_Settings.DEFAULT_X;
