@@ -38,7 +38,7 @@ public class OptionsMenu extends Menu{
                 (int) getStageWidth() + "x" + (int) getStageHeight() + " (current)",
                 ((int)getScreenWidth()) + "x" + (int) getScreenHeight() + " (native)",
                 "640x360 (widescreen)",
-                "800x600",
+                "1000x600",
                 "1024x768",
                 "1280x720 (widescreen)",
                 "1536x864 (widescreen)",
