@@ -23,12 +23,31 @@ public class Projectile extends Dynamic_Object{
 
         update_view();
 
-      //  update_deltas(S);
+        update_deltas(S);
 
         // Position the
         move_to(new Pair<>(S.get_future_x() + this.biasX, S.get_future_y() + this.biasY));
 
         this.getChildren().add(this._view);
+    }
+
+    private void update_deltas(Sprite s) {
+        _deltaY = _deltaX = 0;
+        biasX=biasY=0;
+        switch (s._current_direction.getValue()) {
+            case UP    ->  {this._deltaY -= _speed;
+                this.biasY= -(int) (get_actual_height()/2);
+                this.biasX=+(int)(get_actual_width());}
+            case DOWN  ->  {this._deltaY += _speed;
+                this.biasY= + (int)(get_actual_height()*2);
+                this.biasX=+(int)(get_actual_width()); }
+            case LEFT  ->  {this._deltaX -= _speed;
+                this.biasY=+(int)(get_actual_height()/2);
+                this.biasX= 0; }
+            case RIGHT ->  {this._deltaX += _speed;
+                this.biasY= (int)(get_actual_height()/2);
+                this.biasX=+(int)(get_actual_width()*2);}
+        }
     }
 
     @Override
