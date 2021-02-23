@@ -22,10 +22,13 @@ public class Custom_Settings {
 
     /* SPEEDS */
     public static final int PLAYER_SPEED  = 2;
+    public static final int PROJECTILE_SPEED  = 3;
 
     /*  SCALES */
     public static final double PLAYER_SCALE  = 1.0/20;
+    public static final double PROJECTILE_SCALE =  1.0/19;
 
     /* HEALTHBAR */
     public static final double HB_PROPORTIONAL_WIDTH  = 0.1 ;   // HB height is 10 % of sprite's height
+
 }
