@@ -22,8 +22,7 @@ public class Teleport extends Pictured_Object{
 
         update_view();
 
-
-        this.getChildren().add(_view);  // Add the view to local pane
+        this.getChildren().add(_view);
 
         rotation_animation();
 

@@ -37,12 +37,16 @@ public class Simulation extends Application{
     Pair<Double,Double> scaling_factors;
 
 
+
+
     @Override
     public void start(Stage stage) throws Exception{
 
+        this._stage = stage;
+
         /* Set the stage title of the game & to not resizable*/
-        stage.setTitle("Shooter");
-        stage.setResizable(false);
+        _stage.setTitle("Shooter");
+        _stage.setResizable(false);
 
         /* Create a new scene & fill it with necessary material */
         createContent();
@@ -58,8 +62,9 @@ public class Simulation extends Application{
         addKeyHandler_RELEASED(scene, Player_1,Player_2);
 
         /* Output the scene */
-        stage.setScene(scene);
-        stage.show();
+        _stage.setScene(scene);
+        _stage.show();
+
     }
 
     private void createContent() throws IOException {
@@ -92,9 +97,18 @@ public class Simulation extends Application{
         WIDTH =  required_full_screen?   (int) screenBounds.getWidth()  : Custom_Settings.DEFAULT_X;
         HEIGHT = required_full_screen?   (int) screenBounds.getHeight() : Custom_Settings.DEFAULT_Y;
 
-        _root.setMaxSize(WIDTH, HEIGHT);
+        WIDTH =  (int) _stage.getWidth();
+        HEIGHT = (int) _stage.getHeight();
+
+        System.out.println("W " + WIDTH + " H "+ HEIGHT);
+
+
         /* Compute the scaling factor that will be used to update some parameters at RUNTIME*/
         scaling_factors = new Pair<>( (double) WIDTH / Custom_Settings.DEFAULT_X, (double) HEIGHT / Custom_Settings.DEFAULT_Y);
+
+        System.out.println("SCALING FACTORS "+scaling_factors );
+
+
 
     }
 

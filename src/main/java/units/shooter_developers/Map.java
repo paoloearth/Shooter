@@ -12,6 +12,9 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.lang.Math.ceil;
+import static java.lang.Math.floor;
+
 public class Map {
 
     /* List of tiles that will be used to fast access the blocks property by indices*/
@@ -35,6 +38,7 @@ public class Map {
 
     Map(Pane root, String map_URL, int width, int height) throws IOException {
 
+
         /* Set variables  */
         _MR = new Map_Reader(map_URL);
         _width = width;
@@ -43,7 +47,10 @@ public class Map {
 
         /* */
         this.populateCells();
+
+
         _passable_tiles = _tiles.stream().filter(b-> b.is_passable.getValue()).collect(Collectors.toList());
+
 
         root.getChildren().add(_cells);
 
@@ -70,9 +77,9 @@ public class Map {
 
                     Rectangle2D R = new Rectangle2D(pos_col, pos_row, _MR._cell_side,_MR._cell_side);
 
-                    var myblock = new Tile(i*getTileWidth(), j*getTileHeight(),
-                            getTileWidth(), getTileHeight(),
-                            passable,not_passable_for_p, _MR._tileset, R);
+                    var myblock = new Tile(i*getTileWidth(), j*getTileHeight(), getTileWidth(), getTileHeight(), passable,not_passable_for_p, _MR._tileset, R);
+
+                   // System.out.println("TILE [ " + i + "," + j + " ] is positioned at [ " +i*getTileWidth() + " , " + j*getTileHeight() + "] ");
 
 
                     return myblock;
@@ -109,10 +116,15 @@ public class Map {
     }
 
     public int getTileWidth() {
-        return( _width/_MR._num_tiles.getKey());
+       // System.out.println( "WIDTH TILE " +  (int) ceil((double)_width/_MR._num_tiles.getKey()));
+        return((int) ceil((double)_width/_MR._num_tiles.getKey()));
+       // return( _width/_MR._num_tiles.getKey());
     }
     public int getTileHeight(){
-        return(_height/_MR._num_tiles.getValue());
+         // System.out.println("HEIGTH TILE " + (int) ceil((double)_height/_MR._num_tiles.getValue()));
+         return((int) ceil((double)_height/_MR._num_tiles.getValue()));
+        //  return(_height/_MR._num_tiles.getValue());
+
     }
 
     void set_value_at_index(int x, int y)
