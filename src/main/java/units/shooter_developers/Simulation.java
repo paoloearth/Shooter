@@ -4,10 +4,13 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Pair;
 
 import java.io.IOException;
@@ -15,36 +18,93 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class Simulation extends Application{
 
-    /* Resolution Variables */
-    private static  int WIDTH;
-    private static  int HEIGHT ;
 
-    /* Map component */
-    private Map _map;
+public class Simulation extends Application {
 
-    /* Main component on which we add elements */
-     final Pane _root = new Pane();
-     Stage _stage = new Stage();
-     Scene _scene;
+    /* Create a new Pane */
+    private final Pane root = new Pane();
+    private  Stage _stage;
 
-    /* Create Players */
+
+    /* Create a rectangle */
     private Sprite Player_1 ;
     private Sprite Player_2;
 
-    /* Scale the objects on the map according to the resolution */
+
+
+    int HEIGHT;
+    int WIDTH;
+
     Pair<Double,Double> scaling_factors;
+    Map R;
 
 
 
+    private void createContent() throws IOException{
+        create_frame(true);
+        create_map();
+        create_players();
+        create_teleports();
+        create_bonus();
+    }
 
-    @Override
-    public void start(Stage stage) throws Exception{
+    private void create_bonus(){
+        new Bonus_Generator(root,R, Custom_Settings.URL_HEART,1,10, scaling_factors);
+    }
 
+    private void create_teleports() {
+
+        var T1  = new Teleport(root,  Custom_Settings.URL_TELEPORT,  R, scaling_factors, "T1");
+        var T2  = new Teleport(root,  Custom_Settings.URL_TELEPORT,  R, scaling_factors,"T2");
+
+
+        T1.setDestination(T2);
+        T2.setDestination(T1);
+
+    }
+
+    private void create_map() throws IOException {
+        R = new Map(root, "map_islands.csv", WIDTH,HEIGHT);
+    }
+
+
+
+    private void create_players() {
+        Player_1 = new Sprite(root,R , scaling_factors, "astrologer.png",4, 1 , "P1", Direction.RIGHT);
+        Player_2 = new Sprite(root,R, scaling_factors, "artist.png",    4, 1,  "P2", Direction.LEFT);
+    }
+
+    private void create_frame(boolean full_screen) {
+
+        /* Compute the bounds of the screen to set the dimension of the window */
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+
+        System.out.println("BOUNDS:" + screenBounds );
+
+        /* Set the window dimension accordingly to the boolean variable full_screen*/
+        WIDTH =  full_screen?   (int) screenBounds.getWidth() : Custom_Settings.DEFAULT_X;
+        HEIGHT = full_screen?   (int) screenBounds.getHeight() : Custom_Settings.DEFAULT_Y;
+
+        WIDTH = (int) _stage.getWidth();
+        HEIGHT = (int) _stage.getHeight();
+
+
+        /* Compute the scaling factor that will be used to update some parameters at RUNTIME*/
+        scaling_factors = new Pair<>( (double) WIDTH / Custom_Settings.DEFAULT_X, (double) HEIGHT / Custom_Settings.DEFAULT_Y);
+
+
+    }
+
+
+    /* ---------------------------------- FIRST THINGS EXECUTED ---------------------------------- */
+    public void start(Stage stage) throws  IOException{
+        //stage.initStyle(StageStyle.TRANSPARENT);
         this._stage = stage;
 
-        /* Set the stage title of the game & to not resizable*/
+
+
+        /* Set the stage title of the game */
         _stage.setTitle("Shooter");
         _stage.setResizable(false);
 
@@ -52,93 +112,18 @@ public class Simulation extends Application{
         createContent();
 
         /* Add root to the scene */
-        Scene scene = new Scene(_root);
+        Scene scene = new Scene(root);
 
         /* Start the game */
         GAME();
 
         /* Set the listeners to capture the movements of the player */
-        addKeyHandler_PRESS(scene,   Player_1, Player_2);
+        addKeyHandler_PRESS(scene,    Player_1, Player_2);
         addKeyHandler_RELEASED(scene, Player_1,Player_2);
 
         /* Output the scene */
         _stage.setScene(scene);
         _stage.show();
-
-    }
-
-    private void createContent() throws IOException {
-
-        /* These variables will be passed by the menu to here in some way */
-        var required_full_screen = false;
-        var map_url = "map_islands.csv";
-
-        /* Create the window */
-        create_frame(required_full_screen);
-
-        /* Load map from file */
-        create_map(map_url);
-
-        /* Load the players and locate them on the map*/
-        create_players();
-
-        /* Load the players and locate them on the map*/
-        create_teleports();
-
-        create_bonus();
-    }
-
-    private void create_frame(boolean required_full_screen)  {
-
-        /* Compute the bounds of the screen to set the dimension of the window */
-        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-
-        /* Set the window dimension accordingly to the boolean variable full_screen*/
-        WIDTH =  required_full_screen?   (int) screenBounds.getWidth()  : Custom_Settings.DEFAULT_X;
-        HEIGHT = required_full_screen?   (int) screenBounds.getHeight() : Custom_Settings.DEFAULT_Y;
-
-        WIDTH =  (int) _stage.getWidth();
-        HEIGHT = (int) _stage.getHeight();
-
-        System.out.println("W " + WIDTH + " H "+ HEIGHT);
-
-
-        /* Compute the scaling factor that will be used to update some parameters at RUNTIME*/
-        scaling_factors = new Pair<>( (double) WIDTH / Custom_Settings.DEFAULT_X, (double) HEIGHT / Custom_Settings.DEFAULT_Y);
-
-        System.out.println("SCALING FACTORS "+scaling_factors );
-
-
-
-    }
-
-    private void create_map(String map_url) throws IOException {
-        _map = new Map(_root, map_url, WIDTH,HEIGHT);
-    }
-
-    private void create_players() {
-        Player_1 = new Sprite(_root,_map , scaling_factors, "astrologer.png", 4, 1 , "P1", Direction.RIGHT);
-        Player_2 = new Sprite(_root,_map, scaling_factors,  "artist.png",     4, 1,  "P2", Direction.LEFT);
-    }
-
-    private void create_teleports() {
-
-        var T1  = new Teleport(_root,  Custom_Settings.URL_TELEPORT,  _map, scaling_factors, "T1");
-        var T2  = new Teleport(_root,  Custom_Settings.URL_TELEPORT, _map, scaling_factors,"T2");
-
-        T1.setDestination(T2);
-        T2.setDestination(T1);
-
-    }
-
-    private void create_bonus(){
-        new Bonus_Generator(_root,_map, Custom_Settings.URL_HEART,1,10, scaling_factors);
-    }
-
-
-
-    public void stop(){
-      boolean _close = true;
     }
 
     /* ---------------------------------- GAME LOOP ---------------------------------- */
@@ -156,25 +141,25 @@ public class Simulation extends Application{
                             {
                                 case "SPRITE" -> {
 
-                                    ((Sprite) s).move(_map);
+                                    ((Sprite) s).move(R);
                                 }
 
                                 case "PROJECTILE" -> {
 
                                     var p = (Projectile) s;
 
-                                    p.translate(_map);
+                                    p.translate(R);
 
 
-                                    if (p.intersect(Player_1)) p.update(_map, Player_1);
-                                    if (p.intersect(Player_2)) p.update(_map, Player_2);
+                                    if (p.intersect(Player_1)) p.update(R, Player_1);
+                                    if (p.intersect(Player_2)) p.update(R, Player_2);
                                 }
 
                                 case "TELEPORT" -> {
                                     var t = (Teleport) s;
 
-                                    if(t.intersect(Player_1)) t.update(_map,Player_1);
-                                    if(t.intersect(Player_2)) t.update(_map,Player_2);
+                                    if(t.intersect(Player_1)) t.update(R,Player_1);
+                                    if(t.intersect(Player_2)) t.update(R,Player_2);
                                 }
 
 
@@ -182,8 +167,8 @@ public class Simulation extends Application{
 
                                     var b = (Bonus_Generator) s;
 
-                                    if(b.intersect(Player_1)) b.update(_map,Player_1);
-                                    if(b.intersect(Player_2)) b.update(_map,Player_2);
+                                    if(b.intersect(Player_1)) b.update(R,Player_1);
+                                    if(b.intersect(Player_2)) b.update(R,Player_2);
 
                                 }
 
@@ -205,17 +190,24 @@ public class Simulation extends Application{
     }
 
     private void remove_dead_objects() {
-        _root.getChildren().removeIf(node -> (node instanceof Pictured_Object) && ((Pictured_Object)node)._isDead.getValue());
-        if (Player_1._isDead.getValue() || Player_2._isDead.getValue()) stop();
+        root.getChildren().removeIf(node -> (node instanceof Pictured_Object) && ((Pictured_Object)node)._isDead.getValue());
+
+        if (Player_1._isDead.getValue() || Player_1._isDead.getValue())
+        {
+            System.out.println("GIOCO FINITO!");
+            // System.out.println("One of the player is dead");
+            // LANCIA UN'ALTRA "SCENA"
+        }
     }
 
 
 
 
-    public static void main(String[] args)
-    {
+    /* ---------------------------------- MAIN ---------------------------------- */
+    public static void main(String[] args) {
         launch(args);
     }
+
 
     /* ---------------------------------- HANDLE PLAYERS MOVEMENTS ---------------------------------- */
 
@@ -228,16 +220,23 @@ public class Simulation extends Application{
                     case DOWN  ->  s.setGoSouth(true);
                     case LEFT  ->  s.setGoWest(true);
                     case RIGHT ->  s.setGoEast(true);
-                    case ENTER ->  s.shoot(_root);
+                    case ENTER ->  s.shoot(root);
 
                     case W    ->  p.setGoNorth(true);
                     case S    ->  p.setGoSouth(true);
                     case A    ->  p.setGoWest(true);
                     case D    ->  p.setGoEast(true);
-                    case SPACE ->  p.shoot(_root);
+                    case SPACE -> p.shoot(root);
                 }
             }
         });}
+
+
+    private List<Pictured_Object> all_sprites()
+    {
+        return root.getChildren().stream().parallel().filter(i -> i instanceof Pictured_Object).map(n->(Pictured_Object)n).collect(Collectors.toList());
+    }
+
 
 
     private void addKeyHandler_RELEASED(Scene scene, Sprite s, Sprite p)
@@ -258,12 +257,8 @@ public class Simulation extends Application{
             }
         });}
 
-    //List of pictured object on the map
-    private List<Pictured_Object> all_sprites()
-    {
-        return _root.getChildren().stream().parallel().filter(i -> i instanceof Pictured_Object).map(n->(Pictured_Object)n).collect(Collectors.toList());
-    }
-
-
-
 }
+
+
+
+

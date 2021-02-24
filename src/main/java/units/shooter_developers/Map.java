@@ -108,7 +108,7 @@ public class Map {
     }
 
 
-    public int get_width() {
+    public int get_width()  {
         return _width;
     }
     public int get_height() {
