@@ -68,7 +68,13 @@ Menu elements:
 * `class UnanimatedItem`: non-interactive element similar to `MenuItem` one. It has only a constructor:
   * `UnanimatedItem(String name)`: Constructs the object by providing its name.
 
-### 4. Use
+### 4. Menu Composition Schema
+
+![Menu_schema](/home/jose/Escritorio/Magistrale/Software_Development_Methods/Proyecto/testing_projects/repo/Shooter/docs/Menu_schema.png)
+
+Red arrows represent that certain object instantiates a particular element shown on the menu.
+
+### 5. Use
 
 Menu is an abstract class that enforces the implementation of `start(Stage)`. A start method could have the following aspect:
 
@@ -104,4 +110,3 @@ public void start(Stage menu_stage){
 ```
 
  Note that at the beginning it has been set `setStage(menu_stage)`. This is an important aspect in order to avoid conflicts 
-
