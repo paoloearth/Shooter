@@ -32,6 +32,7 @@ public class Simulation extends Application {
     private Sprite Player_2;
 
     private Scene _scene;
+    private AnimationTimer _timer;
 
 
 
@@ -44,7 +45,7 @@ public class Simulation extends Application {
 
 
     private void createContent() throws IOException{
-        create_frame(true);
+        create_frame(false);
         create_map();
         create_players();
         create_teleports();
@@ -105,8 +106,7 @@ public class Simulation extends Application {
 
     /* ---------------------------------- FIRST THINGS EXECUTED ---------------------------------- */
     public void start(Stage stage) throws  IOException{
-        //stage.initStyle(StageStyle.TRANSPARENT);
-        this._stage = stage;
+        this._stage = stage;;
 
 
 
@@ -191,9 +191,20 @@ public class Simulation extends Application {
             }
         };
 
+        _timer = timer;
 
-        timer.start();
+        startSimulation();
     }
+
+    public void startSimulation(){
+        _timer.start();
+    }
+
+    public void stopSimulation(){
+        _timer.stop();
+    }
+
+
 
     private void remove_dead_objects() {
         root.getChildren().removeIf(node -> (node instanceof Pictured_Object) && ((Pictured_Object)node)._isDead.getValue());
@@ -237,8 +248,20 @@ public class Simulation extends Application {
                     case ESCAPE -> {
                         var game_menu = new GameMenu(this);
                         // PAUSE HERE THE GAME TIMER!!
+                        stopSimulation();
                         game_menu.start(_stage);
+                        startSimulation();
                     }
+                    /********** temporal controls added to check the effects of the simulation stopping */
+                    /*          remove where are not necessary any more                                 */
+                    case P -> {
+                        var game_menu = new GameMenu(this);
+                    }
+                    case R -> {
+                        var game_menu = new GameMenu(this);
+                        startSimulation();
+                    }
+                    /************************************************************************************/
                 }
             }
         });}

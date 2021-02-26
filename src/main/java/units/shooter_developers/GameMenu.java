@@ -10,24 +10,20 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class GameMenu extends Menu{
-    Scene _game_scene;
+
 
     public GameMenu(){
         super();
-        _game_scene = null;
         setGameRunning(false);
     }
 
     public GameMenu(Menu other_menu){
         super(other_menu);
-        _game_scene = null;
-        setGameRunning(false);
     }
 
     public GameMenu(Simulation game_instance){
         super();
         setGameInstance(game_instance);
-        _game_scene = game_instance.getScene();
         setGameRunning(true);
     }
 
@@ -59,18 +55,21 @@ public class GameMenu extends Menu{
                 if (item.getName().equals("NEW GAME")) {
                     setGameInstance(new Simulation());
                     try {
+                        menu_stage.close();
                         getGameInstance().start(getStage());
+                        //getStage().toFront();
+                        getStage().setAlwaysOnTop(true);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
                 if (item.getName().equals("CONTINUE")) {
-                    if (isGameRunning())
-                        menu_stage.setScene(_game_scene);
-                    //  RESUME HERE THE GAME TIMER
+                    menu_stage.close();
+                    menu_stage.setScene(getGameInstance().getScene());
+                    menu_stage.show();
+                    menu_stage.toFront();
                 }
                 if (item.getName().equals("EXIT")) {
-                    //stop game instance
                     menu_stage.close();
                 }
                 if (item.getName().equals("OPTIONS")) {
