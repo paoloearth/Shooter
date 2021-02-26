@@ -92,7 +92,7 @@ public class Map {
     }
 
 
-    Pair<Double,Double> get_player_pixel_position(String player_id)
+    Coordinates get_player_pixel_position(String player_id)
     {
         if (player_id.equals("P1"))
             return  get_pixel_position(_MR._players_positions.getKey());
@@ -101,9 +101,9 @@ public class Map {
     }
 
     //Given the coordinates of a tile
-    Pair<Double,Double> get_pixel_position(Pair<Double,Double> tile_coordinates)
+    Coordinates get_pixel_position(Coordinates tile_coordinates)
     {
-        return new Pair<>(tile_coordinates.getKey()* getTileWidth(),tile_coordinates.getValue() * getTileHeight() );
+        return new Coordinates(tile_coordinates.getX()* getTileWidth(),tile_coordinates.getY() * getTileHeight() );
 
     }
 
@@ -144,7 +144,7 @@ public class Map {
         return _tiles;
     }
 
-    public Pair<Double,Double> get_random_location(){
+    public Coordinates get_random_location(){
         int index = new Random().nextInt(_passable_tiles.size());
 
         return _passable_tiles.get(index).get_pixel_of_block_position();

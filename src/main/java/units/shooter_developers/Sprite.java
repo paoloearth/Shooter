@@ -110,7 +110,7 @@ public class Sprite extends Dynamic_Object {
 
         update_get_direction(future_x, future_y);
 
-        if(!(is_out_of_map(M) || illegal_move(M))) move_to(new Pair<>(future_x, future_y));
+        if(!(is_out_of_map(M) || illegal_move(M))) move_to(new Coordinates(future_x, future_y));
 
     }
 

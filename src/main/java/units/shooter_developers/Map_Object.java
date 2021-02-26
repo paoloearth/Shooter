@@ -18,9 +18,9 @@ public abstract class Map_Object extends Pane {
     //Custom constructor
     Map_Object(Pair<Double,Double> scaling_factors) { this._scaling_factors = scaling_factors; }
 
-    void move_to(Pair<Double, Double> coordinates)
+    void move_to(Coordinates coordinates)
     {
-        this.relocate(coordinates.getKey(),coordinates.getValue());
+        this.relocate(coordinates.getX(),coordinates.getY());
     }
 
     public double get_current_X_position() { return this.getLayoutX(); }

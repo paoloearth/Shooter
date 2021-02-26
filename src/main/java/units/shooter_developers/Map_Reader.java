@@ -26,8 +26,8 @@ public class Map_Reader {
     Pair<Integer,Integer> _num_tiles;                              //number of tiles of the map
     final Set<Integer> _set_of_passable;                           //set of passable tiles for the Player
     final Set<Integer> _set_of_NOT_passable_for_projectile;
-    Pair<Pair<Double,Double>,Pair<Double,Double>> _players_positions;  //position of the player in the corresponding map
-    Pair<Pair<Double,Double>,Pair<Double,Double>> _teleport_positions; //positon of teleports in the corresponding map
+    Pair<Coordinates,Coordinates> _players_positions;  //position of the player in the corresponding map
+    Pair<Coordinates,Coordinates> _teleport_positions; //positon of teleports in the corresponding map
     List<String[]> _map;                                           // List of tiles composing the map
 
 
@@ -89,10 +89,12 @@ public class Map_Reader {
       - the players at row 4th
       - teleports at row 5th
      */
-    private Pair<Pair<Double, Double>, Pair<Double,Double>> get_positions(int index) {
+    private Pair<Coordinates,Coordinates> get_positions(int index) {
         var values = Arrays.stream(_lines.get(index)).parallel().mapToDouble(Double::parseDouble).boxed().collect(Collectors.toList());
-        return new Pair<>(new Pair<>(values.get(0), values.get(1)), new Pair<>(values.get(2), values.get(3)));
+        return new Pair<>(new Coordinates(values.get(0), values.get(1)), new Coordinates(values.get(2), values.get(3)));
     }
+
+
 
 
 

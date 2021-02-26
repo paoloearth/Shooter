@@ -11,7 +11,7 @@ import javafx.util.Pair;
 public class Teleport extends Pictured_Object{
 
     RotateTransition rotation;
-    Pair<Double, Double> destination;
+    Coordinates destination;
 
     public Teleport(Pane root, String url, Map M, Pair<Double, Double> scaling_factor, String ID) {
         super(scaling_factor, url);
@@ -45,7 +45,7 @@ public class Teleport extends Pictured_Object{
 
     public void setDestination(Teleport T)
     {
-        destination = new Pair<Double, Double>(T.get_current_X_position() + get_actual_width()/4 ,T.get_current_Y_position()+get_actual_height());
+        destination = new Coordinates(T.get_current_X_position() + get_actual_width()/4 ,T.get_current_Y_position()+get_actual_height());
     }
 
     @Override
