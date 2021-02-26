@@ -196,6 +196,7 @@ public abstract class Menu extends Application {
     /** STAGE **/
     public void setStage(Stage stage){
         _stage = stage;
+        _stage.setMaximized(false);
     }
 
     public Stage getStage(){

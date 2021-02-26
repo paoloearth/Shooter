@@ -59,14 +59,19 @@ public class GameMenu extends Menu{
                 if (item.getName().equals("NEW GAME")) {
                     setGameInstance(new Simulation());
                     try {
+                        menu_stage.close();
                         getGameInstance().start(getStage());
+                        getStage().toFront();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
                 if (item.getName().equals("CONTINUE")) {
+                    menu_stage.close();
                     menu_stage.setScene(_game_scene);
-                    getGameInstance().startSimulation();
+                    menu_stage.show();
+                    menu_stage.toFront();
+                    //getGameInstance().startSimulation();
                     //  RESUME HERE THE GAME TIMER
                 }
                 if (item.getName().equals("EXIT")) {
