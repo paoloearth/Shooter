@@ -32,6 +32,7 @@ public class Simulation extends Application {
     private Sprite Player_2;
 
     private Scene _scene;
+    private AnimationTimer _timer;
 
 
 
@@ -191,9 +192,20 @@ public class Simulation extends Application {
             }
         };
 
+        _timer = timer;
 
-        timer.start();
+        startSimulation();
     }
+
+    public void startSimulation(){
+        _timer.start();
+    }
+
+    public void stopSimulation(){
+        _timer.stop();
+    }
+
+
 
     private void remove_dead_objects() {
         root.getChildren().removeIf(node -> (node instanceof Pictured_Object) && ((Pictured_Object)node)._isDead.getValue());
@@ -237,6 +249,7 @@ public class Simulation extends Application {
                     case ESCAPE -> {
                         var game_menu = new GameMenu(this);
                         // PAUSE HERE THE GAME TIMER!!
+                        stopSimulation();
                         game_menu.start(_stage);
                     }
                 }

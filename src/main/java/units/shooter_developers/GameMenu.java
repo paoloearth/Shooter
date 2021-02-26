@@ -65,8 +65,8 @@ public class GameMenu extends Menu{
                     }
                 }
                 if (item.getName().equals("CONTINUE")) {
-                    if (isGameRunning())
-                        menu_stage.setScene(_game_scene);
+                    menu_stage.setScene(_game_scene);
+                    getGameInstance().startSimulation();
                     //  RESUME HERE THE GAME TIMER
                 }
                 if (item.getName().equals("EXIT")) {
