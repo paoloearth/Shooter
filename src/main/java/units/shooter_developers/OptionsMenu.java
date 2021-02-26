@@ -52,6 +52,7 @@ public class OptionsMenu extends Menu{
         Scene scene = new Scene(this.getRoot());
         menu_stage.setTitle("VIDEO GAME");
         menu_stage.setScene(scene);
+        menu_stage.centerOnScreen();
         menu_stage.show();
 
         var menu_items = getItems();
