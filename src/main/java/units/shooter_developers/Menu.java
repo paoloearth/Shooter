@@ -16,6 +16,7 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -55,6 +56,8 @@ public abstract class Menu extends Application {
     private double _height_ratio;
     private double _position_width_ratio;
     private double _position_height_ratio;
+    private Simulation _gameInstance;
+    private boolean _game_running;
 
     /************************** CONSTRUCTORS *****************************/
 
@@ -77,6 +80,8 @@ public abstract class Menu extends Application {
         _stage_height = other_menu._stage_height;
         _position_width_ratio = other_menu._position_width_ratio;
         _position_height_ratio = other_menu._position_height_ratio;
+        _gameInstance = other_menu._gameInstance;
+        _game_running = other_menu._game_running;
         this.createContent(_stage_width, _stage_height);
     }
 
@@ -244,6 +249,10 @@ public abstract class Menu extends Application {
         return _position_height_ratio*getMenuHeight();
     }
 
+    public Scene getScene(){
+        return getStage().getScene();
+    }
+
     /** MENU ELEMENTS **/
 
     public Parent getRoot(){
@@ -278,6 +287,24 @@ public abstract class Menu extends Application {
                 .filter(e -> e.getName().equals(name))
                 .findFirst()
                 .orElse(null);
+    }
+
+    /** GAME INSTANCE **/
+
+    public Simulation getGameInstance(){
+        return _gameInstance;
+    }
+
+    public void setGameInstance(Simulation game_instance){
+        _gameInstance = game_instance;
+    }
+
+    public boolean isGameRunning(){
+        return _game_running;
+    }
+
+    public void setGameRunning(boolean is_game_running){
+        _game_running = is_game_running;
     }
 
     /*******************************************************************************/
