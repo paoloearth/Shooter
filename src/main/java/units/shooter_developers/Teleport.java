@@ -11,7 +11,7 @@ import javafx.util.Pair;
 public class Teleport extends Pictured_Object{
 
     RotateTransition rotation;
-    Pair<Integer, Integer> destination;
+    Pair<Double, Double> destination;
 
     public Teleport(Pane root, String url, Map M, Pair<Double, Double> scaling_factor, String ID) {
         super(scaling_factor, url);
@@ -27,7 +27,7 @@ public class Teleport extends Pictured_Object{
         rotation_animation();
 
         if(ID.equals("T1"))
-            move_to(M.get_pixel_position(M._MR._teleport_positions.getKey()));
+            move_to(M.get_pixel_position( M._MR._teleport_positions.getKey()));
         else
             move_to(M.get_pixel_position(M._MR._teleport_positions.getValue()));
 
@@ -45,7 +45,7 @@ public class Teleport extends Pictured_Object{
 
     public void setDestination(Teleport T)
     {
-        destination = new Pair<>(T.get_current_X_position() + get_actual_width()/4 ,T.get_current_Y_position()+get_actual_height());
+        destination = new Pair<Double, Double>(T.get_current_X_position() + get_actual_width()/4 ,T.get_current_Y_position()+get_actual_height());
     }
 
     @Override

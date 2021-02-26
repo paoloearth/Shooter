@@ -27,8 +27,8 @@ public class Map {
     Pane _cells = new Pane();
 
     /* Width & Height of the tiles */
-    private  int _width;
-    private  int _height;
+    private  double _width;
+    private  double _height;
 
     /* Map_Reader object, delegated to interact with the files */
     Map_Reader _MR;
@@ -36,7 +36,7 @@ public class Map {
     /* URL to the map.csv */
     String _map_URL;
 
-    Map(Pane root, String map_URL, int width, int height) throws IOException {
+    Map(Pane root, String map_URL, double width, double height) throws IOException {
 
 
         /* Set variables  */
@@ -79,7 +79,7 @@ public class Map {
 
                     var myblock = new Tile(i*getTileWidth(), j*getTileHeight(), getTileWidth(), getTileHeight(), passable,not_passable_for_p, _MR._tileset, R);
 
-                   // System.out.println("TILE [ " + i + "," + j + " ] is positioned at [ " +i*getTileWidth() + " , " + j*getTileHeight() + "] ");
+                  // System.out.println("TILE [ " + i + "," + j + " ] is positioned at [ " +i*getTileWidth() + " , " + j*getTileHeight() + "] ");
 
 
                     return myblock;
@@ -92,7 +92,7 @@ public class Map {
     }
 
 
-    Pair<Integer,Integer> get_player_pixel_position(String player_id)
+    Pair<Double,Double> get_player_pixel_position(String player_id)
     {
         if (player_id.equals("P1"))
             return  get_pixel_position(_MR._players_positions.getKey());
@@ -101,28 +101,28 @@ public class Map {
     }
 
     //Given the coordinates of a tile
-    Pair<Integer,Integer> get_pixel_position(Pair<Integer,Integer> tile_coordinates)
+    Pair<Double,Double> get_pixel_position(Pair<Double,Double> tile_coordinates)
     {
         return new Pair<>(tile_coordinates.getKey()* getTileWidth(),tile_coordinates.getValue() * getTileHeight() );
 
     }
 
 
-    public int get_width()  {
+    public double get_width()  {
         return _width;
     }
-    public int get_height() {
+    public double get_height() {
         return _height;
     }
 
-    public int getTileWidth() {
+    public double getTileWidth() {
        // System.out.println( "WIDTH TILE " +  (int) ceil((double)_width/_MR._num_tiles.getKey()));
-        return((int) ceil((double)_width/_MR._num_tiles.getKey()));
+        return _width/_MR._num_tiles.getKey();
        // return( _width/_MR._num_tiles.getKey());
     }
-    public int getTileHeight(){
+    public double getTileHeight(){
          // System.out.println("HEIGTH TILE " + (int) ceil((double)_height/_MR._num_tiles.getValue()));
-         return((int) ceil((double)_height/_MR._num_tiles.getValue()));
+         return _height/_MR._num_tiles.getValue();
         //  return(_height/_MR._num_tiles.getValue());
 
     }
@@ -144,7 +144,7 @@ public class Map {
         return _tiles;
     }
 
-    public Pair<Integer,Integer> get_random_location(){
+    public Pair<Double,Double> get_random_location(){
         int index = new Random().nextInt(_passable_tiles.size());
 
         return _passable_tiles.get(index).get_pixel_of_block_position();

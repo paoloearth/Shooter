@@ -26,7 +26,7 @@ public class Projectile extends Dynamic_Object{
         update_deltas(S);
 
         // Position the
-        move_to(new Pair<>(S.get_future_x() + this.biasX, S.get_future_y() + this.biasY));
+        move_to(new Pair<Double, Double>(S.get_future_x() + this.biasX, S.get_future_y() + this.biasY));
 
         this.getChildren().add(this._view);
     }
@@ -53,25 +53,24 @@ public class Projectile extends Dynamic_Object{
     @Override
     protected  boolean illegal_move(Map M) {
 
-        int left = get_future_x();
-        int top = get_future_y();
+        double left = get_future_x();
+        double top = get_future_y();
 
         // Bounds da controllare
         var bottom = top+get_actual_height() ;
         var right = left+get_actual_width() ;
 
-        int left_tile = left/M.getTileWidth();
-        int rigth_tile = right/M.getTileWidth();
+        int left_tile = (int) (left/M.getTileWidth());
+        int rigth_tile = (int) (right/M.getTileWidth());
 
-        int top_tile = top/M.get_height();
-        int bottom_tile = bottom/M.get_height();
+        int top_tile = (int) (top/M.getTileHeight());
+        int bottom_tile = (int) (bottom/M.getTileHeight());
 
 
         if(left_tile < 0) left_tile = 0;
-        if(rigth_tile > M.get_width()) rigth_tile = M.get_width();
+        if(rigth_tile > M.get_width()) rigth_tile = (int) M.get_width();
         if(top_tile < 0) top_tile = 0;
-        if(bottom_tile>M.get_height()) bottom_tile = M.get_height();
-
+        if(bottom_tile>M.get_height()) bottom_tile = (int) M.get_height();
 
         for (int i =left_tile; i<= rigth_tile; i++)
         {
@@ -81,7 +80,7 @@ public class Projectile extends Dynamic_Object{
                 if(t.not_passable_for_p.getValue()) return true;
             }
         }
-        return  false;
+        return false;
 
     }
 
@@ -100,7 +99,7 @@ public class Projectile extends Dynamic_Object{
     public void translate(Map M)
     {
         if(is_out_of_map(M) || illegal_move(M)) _isDead.setValue(true);
-        else move_to(new Pair<>(get_future_x(), get_future_y()));
+        else move_to(new Pair<Double, Double>(get_future_x(), get_future_y()));
     }
 
 

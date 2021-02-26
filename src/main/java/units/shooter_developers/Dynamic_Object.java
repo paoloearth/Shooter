@@ -22,13 +22,13 @@ public abstract class Dynamic_Object extends Pictured_Object {
     }
 
     //Compute future x-component of the position
-    int get_future_x()
+    double get_future_x()
     {
         return this.get_current_X_position() + _deltaX;
     }
 
     //Compute future y-component of the position
-    int get_future_y()
+    double get_future_y()
     {
         return this.get_current_Y_position() + _deltaY;
     }

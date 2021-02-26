@@ -36,8 +36,8 @@ public class Simulation extends Application {
 
 
 
-    int HEIGHT;
-    int WIDTH;
+    double HEIGHT;
+    double WIDTH;
 
     Pair<Double,Double> scaling_factors;
     Map R;
@@ -83,14 +83,12 @@ public class Simulation extends Application {
         /* Compute the bounds of the screen to set the dimension of the window */
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 
-        System.out.println("BOUNDS:" + screenBounds );
-
-        /* Set the window dimension accordingly to the boolean variable full_screen*/
+        /* Set the window dimension accordingly to the boolean variable full_screen
         WIDTH =  full_screen?   (int) screenBounds.getWidth() : Custom_Settings.DEFAULT_X;
         HEIGHT = full_screen?   (int) screenBounds.getHeight() : Custom_Settings.DEFAULT_Y;
-
-        WIDTH = (int) _stage.getWidth();
-        HEIGHT = (int) _stage.getHeight();
+        */
+        WIDTH =  _stage.getWidth();
+        HEIGHT = _stage.getHeight();
 
 
         /* Compute the scaling factor that will be used to update some parameters at RUNTIME*/

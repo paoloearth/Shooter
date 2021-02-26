@@ -105,8 +105,8 @@ public class Sprite extends Dynamic_Object {
 
         if (this._deltaX == 0 && this._deltaY == 0) return;
 
-        int future_x = get_current_X_position() + _deltaX;
-        int future_y = get_current_Y_position() + _deltaY;
+        double future_x = get_current_X_position() + _deltaX;
+        double future_y = get_current_Y_position() + _deltaY;
 
         update_get_direction(future_x, future_y);
 
@@ -117,29 +117,29 @@ public class Sprite extends Dynamic_Object {
     @Override
     protected  boolean illegal_move(Map M) {
         var left = get_future_x();
-        int top = get_future_y();
+        double top = get_future_y();
 
         // Bounds da controllare
         var bottom = top +get_actual_height() ;
         var right  = left+get_actual_width() ;
 
-        top += get_actual_height() * 2/3;
+        top += get_actual_height() * 2.0/3.0;
 
-        int left_tile = left/M.getTileWidth();
-        int rigth_tile = right/M.getTileWidth();
+        int left_tile = (int) (left/M.getTileWidth());
+        int rigth_tile = (int) (right/M.getTileWidth());
 
-        int top_tile = top/M.getTileHeight();
-        int bottom_tile = bottom/M.getTileHeight();
+        int top_tile = (int) (top/M.getTileHeight());
+        int bottom_tile = (int) (bottom/M.getTileHeight());
 
-
+        //System.out.println("left "+left+"top "+top+ " bottom "+bottom+ " rigth "+ right + " l_t "+left_tile);
         if(left_tile < 0) left_tile = 0;
-        if(rigth_tile > M.get_width()) rigth_tile = M.get_width();
+        if(rigth_tile > M.get_width()) rigth_tile = (int) M.get_width();
         if(top_tile < 0) top_tile = 0;
-        if(bottom_tile>M.get_height()) bottom_tile = M.get_height();
+        if(bottom_tile>M.get_height()) bottom_tile = (int) M.get_height();
 
 
 
-        for (int i =left_tile; i<= rigth_tile; i++)
+        for (int i = left_tile; i<= rigth_tile; i++)
         {
             for (int j=top_tile; j<= bottom_tile; j++)
             {
