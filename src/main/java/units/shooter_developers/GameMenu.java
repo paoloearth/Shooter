@@ -10,24 +10,21 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class GameMenu extends Menu{
-    Scene _game_scene;
+
 
     public GameMenu(){
         super();
-        _game_scene = null;
         setGameRunning(false);
     }
 
     public GameMenu(Menu other_menu){
         super(other_menu);
-        _game_scene = null;
         setGameRunning(false);
     }
 
     public GameMenu(Simulation game_instance){
         super();
         setGameInstance(game_instance);
-        _game_scene = game_instance.getScene();
         setGameRunning(true);
     }
 
@@ -68,7 +65,7 @@ public class GameMenu extends Menu{
                 }
                 if (item.getName().equals("CONTINUE")) {
                     menu_stage.close();
-                    menu_stage.setScene(_game_scene);
+                    menu_stage.setScene(getGameInstance().getScene());
                     menu_stage.show();
                     menu_stage.toFront();
                     //getGameInstance().startSimulation();
