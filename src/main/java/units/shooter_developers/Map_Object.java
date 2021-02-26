@@ -18,13 +18,13 @@ public abstract class Map_Object extends Pane {
     //Custom constructor
     Map_Object(Pair<Double,Double> scaling_factors) { this._scaling_factors = scaling_factors; }
 
-    void move_to(Pair<Integer, Integer> coordinates)
+    void move_to(Pair<Double, Double> coordinates)
     {
         this.relocate(coordinates.getKey(),coordinates.getValue());
     }
 
-    public int get_current_X_position() { return (int)this.getLayoutX(); }
+    public double get_current_X_position() { return this.getLayoutX(); }
 
-    public int get_current_Y_position() { return (int)this.getLayoutY(); }
+    public double get_current_Y_position() { return this.getLayoutY(); }
 
 }

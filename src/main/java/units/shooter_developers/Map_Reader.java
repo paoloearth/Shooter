@@ -26,8 +26,8 @@ public class Map_Reader {
     Pair<Integer,Integer> _num_tiles;                              //number of tiles of the map
     final Set<Integer> _set_of_passable;                           //set of passable tiles for the Player
     final Set<Integer> _set_of_NOT_passable_for_projectile;
-    Pair<Pair<Integer,Integer>,Pair<Integer,Integer>> _players_positions;  //position of the player in the corresponding map
-    Pair<Pair<Integer,Integer>,Pair<Integer,Integer>> _teleport_positions; //positon of teleports in the corresponding map
+    Pair<Pair<Double,Double>,Pair<Double,Double>> _players_positions;  //position of the player in the corresponding map
+    Pair<Pair<Double,Double>,Pair<Double,Double>> _teleport_positions; //positon of teleports in the corresponding map
     List<String[]> _map;                                           // List of tiles composing the map
 
 
@@ -47,13 +47,6 @@ public class Map_Reader {
         //Lines representing the map skipping the first 5 rows
         _map = _lines.stream().skip(Custom_Settings.NUMBER_OF_METADATA_LINES).collect(Collectors.toList());
 
-
-        System.out.println("\n Num of blocks " + _num_tiles +
-                "\n Cell side "     + _cell_side   +
-                "\n Set of passable "+ _set_of_passable+
-                "\n Players positions " + _players_positions+
-                "\n Not_passable_p " + _set_of_NOT_passable_for_projectile+
-                "\n Teleports positions" + _teleport_positions);
     }
 
     private Image get_tileset() {
@@ -96,8 +89,8 @@ public class Map_Reader {
       - the players at row 4th
       - teleports at row 5th
      */
-    private Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> get_positions(int index) {
-        var values = Arrays.stream(_lines.get(index)).parallel().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
+    private Pair<Pair<Double, Double>, Pair<Double,Double>> get_positions(int index) {
+        var values = Arrays.stream(_lines.get(index)).parallel().mapToDouble(Double::parseDouble).boxed().collect(Collectors.toList());
         return new Pair<>(new Pair<>(values.get(0), values.get(1)), new Pair<>(values.get(2), values.get(3)));
     }
 

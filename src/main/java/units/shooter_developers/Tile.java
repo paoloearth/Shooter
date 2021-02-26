@@ -9,13 +9,13 @@ import javafx.util.Pair;
 
 public class Tile extends ImageView {
 
-    private final Pair<Integer,Integer> block_pixel_position;
+    private final Pair<Double,Double> block_pixel_position;
 
     /* Properties to encode the "walkability" for a player and for a projectile*/
     BooleanProperty is_passable = new SimpleBooleanProperty(true);
     BooleanProperty not_passable_for_p = new SimpleBooleanProperty(true);
 
-    Tile(int pos_x, int pos_y, int width, int height, boolean passable, boolean not_passable_p, Image img, Rectangle2D r2)
+    Tile(double pos_x, double pos_y, double width, double height, boolean passable, boolean not_passable_p, Image img, Rectangle2D r2)
     {
         /* Position the tile in the proper position */
         this.relocate(pos_x,pos_y);
@@ -38,7 +38,7 @@ public class Tile extends ImageView {
 
     }
 
-    public Pair<Integer, Integer> get_pixel_of_block_position() {
+    public Pair<Double, Double> get_pixel_of_block_position() {
         return this.block_pixel_position;
     }
 

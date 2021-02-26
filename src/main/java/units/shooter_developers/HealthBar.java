@@ -31,7 +31,7 @@ public class HealthBar extends Map_Object{
         // Make the binding
         Green_rectangle.widthProperty().bind(Health);
 
-        move_to( new Pair<>(0, (int) (S.get_actual_height() * 1.1)));
+        move_to( new Pair<Double,Double>(.0, (S.get_actual_height() * 1.1)));
 
         this.getChildren().addAll(Red_rectangle, Green_rectangle);
 
