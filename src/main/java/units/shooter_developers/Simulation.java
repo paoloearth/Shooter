@@ -45,7 +45,6 @@ public class Simulation extends Application {
 
 
     private void createContent() throws IOException{
-        //create_frame(true);
         create_frame(false);
         create_map();
         create_players();
@@ -107,7 +106,6 @@ public class Simulation extends Application {
 
     /* ---------------------------------- FIRST THINGS EXECUTED ---------------------------------- */
     public void start(Stage stage) throws  IOException{
-        //stage.initStyle(StageStyle.TRANSPARENT);
         this._stage = stage;;
 
 
@@ -132,8 +130,6 @@ public class Simulation extends Application {
         /* Output the scene */
         _stage.setScene(_scene);
         _stage.show();
-        _stage.setAlwaysOnTop(true);
-        //_stage.setAlwaysOnTop(false);   //try to uncomment this line when project is compilated and see if works
     }
 
     /* ---------------------------------- GAME LOOP ---------------------------------- */
@@ -256,18 +252,16 @@ public class Simulation extends Application {
                         game_menu.start(_stage);
                         startSimulation();
                     }
-                    /**********/
+                    /********** temporal controls added to check the effects of the simulation stopping */
+                    /*          remove where are not necessary any more                                 */
                     case P -> {
                         var game_menu = new GameMenu(this);
-                        // PAUSE HERE THE GAME TIMER!!
-                        stopSimulation();
                     }
                     case R -> {
                         var game_menu = new GameMenu(this);
-                        // PAUSE HERE THE GAME TIMER!!
                         startSimulation();
                     }
-                    /**************/
+                    /************************************************************************************/
                 }
             }
         });}

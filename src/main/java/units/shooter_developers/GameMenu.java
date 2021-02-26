@@ -57,7 +57,8 @@ public class GameMenu extends Menu{
                     try {
                         menu_stage.close();
                         getGameInstance().start(getStage());
-                        getStage().toFront();
+                        //getStage().toFront();
+                        getStage().setAlwaysOnTop(true);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
