@@ -34,7 +34,6 @@ public class GameMenu extends Menu{
         //menu_stage.initStyle(StageStyle.TRANSPARENT);
         setStage(menu_stage);
         readSettings();
-        setStageDimensions(getStageWidth(), getStageHeight());
 
         if(_game_running) {
             this.addItem("CONTINUE");
