@@ -19,7 +19,6 @@ public class GameMenu extends Menu{
 
     public GameMenu(Menu other_menu){
         super(other_menu);
-        setGameRunning(false);
     }
 
     public GameMenu(Simulation game_instance){
@@ -68,11 +67,8 @@ public class GameMenu extends Menu{
                     menu_stage.setScene(getGameInstance().getScene());
                     menu_stage.show();
                     menu_stage.toFront();
-                    //getGameInstance().startSimulation();
-                    //  RESUME HERE THE GAME TIMER
                 }
                 if (item.getName().equals("EXIT")) {
-                    //stop game instance
                     menu_stage.close();
                 }
                 if (item.getName().equals("OPTIONS")) {

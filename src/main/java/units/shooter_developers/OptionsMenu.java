@@ -8,23 +8,20 @@ import javafx.stage.*;
 import javafx.scene.*;
 
 public class OptionsMenu extends Menu{
-    Simulation _gameInstance;
-    boolean _game_running;
 
     public OptionsMenu(){
         super();
-        _game_running = false;
+        setGameRunning(false);
     }
 
     public OptionsMenu(Menu other_menu){
         super(other_menu);
-        _game_running = false;
     }
 
     public OptionsMenu(Simulation game_instance){
         this();
-        _gameInstance = game_instance;
-        _game_running = true;
+        setGameInstance(game_instance);
+        setGameRunning(true);
     }
 
     @Override
@@ -34,16 +31,21 @@ public class OptionsMenu extends Menu{
 
         setTitle("O P T I O N S");
         this.addSelectableItem("INTERFACE MODE", "light", "dark");
-        this.addSelectableItem("RESOLUTION",
-                (int) getStageWidth() + "x" + (int) getStageHeight() + " (current)",
-                ((int)getScreenWidth()) + "x" + (int) getScreenHeight() + " (native)",
-                "640x360 (widescreen)",
-                "1000x600",
-                "1024x768",
-                "1280x720 (widescreen)",
-                "1536x864 (widescreen)",
-                "1600x900 (widescreen)",
-                "1920x1080 (widescreen)");
+
+        if(!isGameRunning()) {
+            this.addSelectableItem("RESOLUTION",
+                    (int) getStageWidth() + "x" + (int) getStageHeight() + " (current)",
+                    ((int) getScreenWidth()) + "x" + (int) getScreenHeight() + " (native)",
+                    "640x360 (widescreen)",
+                    "1000x600",
+                    "1024x768",
+                    "1280x720 (widescreen)",
+                    "1536x864 (widescreen)",
+                    "1600x900 (widescreen)",
+                    "1920x1080 (widescreen)");
+        } else {
+            this.addUnanimatedItem("RESOLUTION");
+        }
         this.addItem("APPLY");
         this.addItem("BACK");
 
