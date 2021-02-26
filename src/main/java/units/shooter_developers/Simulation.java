@@ -31,6 +31,8 @@ public class Simulation extends Application {
     private Sprite Player_1 ;
     private Sprite Player_2;
 
+    private Scene _scene;
+
 
 
     int HEIGHT;
@@ -96,6 +98,10 @@ public class Simulation extends Application {
 
     }
 
+    public Scene getScene(){
+        return _scene;
+    }
+
 
     /* ---------------------------------- FIRST THINGS EXECUTED ---------------------------------- */
     public void start(Stage stage) throws  IOException{
@@ -112,17 +118,17 @@ public class Simulation extends Application {
         createContent();
 
         /* Add root to the scene */
-        Scene scene = new Scene(root);
+        _scene = new Scene(root);
 
         /* Start the game */
         GAME();
 
         /* Set the listeners to capture the movements of the player */
-        addKeyHandler_PRESS(scene,    Player_1, Player_2);
-        addKeyHandler_RELEASED(scene, Player_1,Player_2);
+        addKeyHandler_PRESS(_scene,    Player_1, Player_2);
+        addKeyHandler_RELEASED(_scene, Player_1,Player_2);
 
         /* Output the scene */
-        _stage.setScene(scene);
+        _stage.setScene(_scene);
         _stage.show();
     }
 
@@ -227,6 +233,12 @@ public class Simulation extends Application {
                     case A    ->  p.setGoWest(true);
                     case D    ->  p.setGoEast(true);
                     case SPACE -> p.shoot(root);
+
+                    case ESCAPE -> {
+                        var game_menu = new GameMenu(this);
+                        // PAUSE HERE THE GAME TIMER!!
+                        game_menu.start(_stage);
+                    }
                 }
             }
         });}

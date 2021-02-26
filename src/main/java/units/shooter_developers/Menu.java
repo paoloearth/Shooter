@@ -16,6 +16,7 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -33,12 +34,16 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 
@@ -51,11 +56,13 @@ public abstract class Menu extends Application {
     private double _height_ratio;
     private double _position_width_ratio;
     private double _position_height_ratio;
+    private Simulation _gameInstance;
+    private boolean _game_running;
 
     /************************** CONSTRUCTORS *****************************/
 
     public Menu() {
-        this(getScreenWidth(), getScreenHeight());
+        this(tryReadWidth(), tryReadHeight());
     }
 
     public Menu(double stage_width, double stage_height) {
@@ -73,6 +80,8 @@ public abstract class Menu extends Application {
         _stage_height = other_menu._stage_height;
         _position_width_ratio = other_menu._position_width_ratio;
         _position_height_ratio = other_menu._position_height_ratio;
+        _gameInstance = other_menu._gameInstance;
+        _game_running = other_menu._game_running;
         this.createContent(_stage_width, _stage_height);
     }
 
@@ -106,6 +115,34 @@ public abstract class Menu extends Application {
 
         _root = root;
 
+    }
+
+    private static double tryReadWidth(){
+        File configFile = new File("config.ini");
+        Properties config = new Properties();
+
+        try{
+            FileReader reader = new FileReader(configFile);
+            config.load(reader);
+            double width = Double.parseDouble(config.getProperty("WIDTH"));
+            return width;
+        } catch(IOException e){
+            return getScreenWidth();
+        }
+    }
+
+    private static double tryReadHeight(){
+        File configFile = new File("config.ini");
+        Properties config = new Properties();
+
+        try{
+            FileReader reader = new FileReader(configFile);
+            config.load(reader);
+            double width = Double.parseDouble(config.getProperty("HEIGHT"));
+            return width;
+        } catch(IOException e){
+            return getScreenHeight();
+        }
     }
 
 
@@ -212,6 +249,10 @@ public abstract class Menu extends Application {
         return _position_height_ratio*getMenuHeight();
     }
 
+    public Scene getScene(){
+        return getStage().getScene();
+    }
+
     /** MENU ELEMENTS **/
 
     public Parent getRoot(){
@@ -246,6 +287,24 @@ public abstract class Menu extends Application {
                 .filter(e -> e.getName().equals(name))
                 .findFirst()
                 .orElse(null);
+    }
+
+    /** GAME INSTANCE **/
+
+    public Simulation getGameInstance(){
+        return _gameInstance;
+    }
+
+    public void setGameInstance(Simulation game_instance){
+        _gameInstance = game_instance;
+    }
+
+    public boolean isGameRunning(){
+        return _game_running;
+    }
+
+    public void setGameRunning(boolean is_game_running){
+        _game_running = is_game_running;
     }
 
     /*******************************************************************************/

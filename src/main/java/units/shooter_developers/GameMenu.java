@@ -10,33 +10,33 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class GameMenu extends Menu{
-    Simulation _gameInstance;
-    boolean _game_running;
+    Scene _game_scene;
 
     public GameMenu(){
         super();
-        _game_running = false;
+        _game_scene = null;
+        setGameRunning(false);
     }
 
     public GameMenu(Menu other_menu){
         super(other_menu);
-        _game_running = false;
+        _game_scene = null;
+        setGameRunning(false);
     }
 
     public GameMenu(Simulation game_instance){
         super();
-        _gameInstance = game_instance;
-        _game_running = true;
+        setGameInstance(game_instance);
+        _game_scene = game_instance.getScene();
+        setGameRunning(true);
     }
 
     @Override
     public void start(Stage menu_stage){
-        //menu_stage.initStyle(StageStyle.TRANSPARENT);
         setStage(menu_stage);
         readSettings();
-        setStageDimensions(getStageWidth(), getStageHeight());
 
-        if(_game_running) {
+        if(isGameRunning()) {
             this.addItem("CONTINUE");
         } else {
             this.addUnanimatedItem("CONTINUE");
@@ -57,25 +57,20 @@ public class GameMenu extends Menu{
         {
             item.setOnMouseReleased(event -> {
                 if (item.getName().equals("NEW GAME")) {
-                    menu_stage.close();
-                    _gameInstance = new Simulation();
+                    setGameInstance(new Simulation());
                     try {
-                        _gameInstance.start(getStage());
+                        getGameInstance().start(getStage());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
-                    _game_running = true;
-                    // START GAME HERE
                 }
                 if (item.getName().equals("CONTINUE")) {
-                    if (_game_running)
-                        menu_stage.close();
-                    //  RESUME SIMULATION
+                    if (isGameRunning())
+                        menu_stage.setScene(_game_scene);
+                    //  RESUME HERE THE GAME TIMER
                 }
                 if (item.getName().equals("EXIT")) {
                     //stop game instance
-                    _game_running = false;
                     menu_stage.close();
                 }
                 if (item.getName().equals("OPTIONS")) {
