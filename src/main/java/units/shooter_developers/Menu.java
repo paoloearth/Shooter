@@ -33,12 +33,16 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 
@@ -55,7 +59,7 @@ public abstract class Menu extends Application {
     /************************** CONSTRUCTORS *****************************/
 
     public Menu() {
-        this(getScreenWidth(), getScreenHeight());
+        this(tryReadWidth(), tryReadHeight());
     }
 
     public Menu(double stage_width, double stage_height) {
@@ -106,6 +110,34 @@ public abstract class Menu extends Application {
 
         _root = root;
 
+    }
+
+    private static double tryReadWidth(){
+        File configFile = new File("config.ini");
+        Properties config = new Properties();
+
+        try{
+            FileReader reader = new FileReader(configFile);
+            config.load(reader);
+            double width = Double.parseDouble(config.getProperty("WIDTH"));
+            return width;
+        } catch(IOException e){
+            return getScreenWidth();
+        }
+    }
+
+    private static double tryReadHeight(){
+        File configFile = new File("config.ini");
+        Properties config = new Properties();
+
+        try{
+            FileReader reader = new FileReader(configFile);
+            config.load(reader);
+            double width = Double.parseDouble(config.getProperty("HEIGHT"));
+            return width;
+        } catch(IOException e){
+            return getScreenHeight();
+        }
     }
 
 
