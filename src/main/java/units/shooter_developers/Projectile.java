@@ -26,7 +26,7 @@ public class Projectile extends Dynamic_Object{
         update_deltas(S);
 
         // Position the
-        move_to(new Pair<Double, Double>(S.get_future_x() + this.biasX, S.get_future_y() + this.biasY));
+        move_to(new Coordinates(S.get_future_x() + this.biasX, S.get_future_y() + this.biasY));
 
         this.getChildren().add(this._view);
     }
@@ -99,7 +99,7 @@ public class Projectile extends Dynamic_Object{
     public void translate(Map M)
     {
         if(is_out_of_map(M) || illegal_move(M)) _isDead.setValue(true);
-        else move_to(new Pair<Double, Double>(get_future_x(), get_future_y()));
+        else move_to(new Coordinates(get_future_x(), get_future_y()));
     }
 
 

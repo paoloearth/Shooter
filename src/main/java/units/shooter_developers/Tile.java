@@ -5,11 +5,10 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.util.Pair;
 
 public class Tile extends ImageView {
 
-    private final Pair<Double,Double> block_pixel_position;
+    private final Coordinates block_pixel_position;
 
     /* Properties to encode the "walkability" for a player and for a projectile*/
     BooleanProperty is_passable = new SimpleBooleanProperty(true);
@@ -25,7 +24,7 @@ public class Tile extends ImageView {
         this.setFitHeight(height);
 
         /* Save the pixel posiion of the block */
-        this.block_pixel_position = new Pair<>(pos_x,pos_y);
+        this.block_pixel_position = new Coordinates(pos_x,pos_y);
 
         /* Set passability parameters */
         this.is_passable.setValue(passable);
@@ -38,7 +37,7 @@ public class Tile extends ImageView {
 
     }
 
-    public Pair<Double, Double> get_pixel_of_block_position() {
+    public Coordinates get_pixel_of_block_position() {
         return this.block_pixel_position;
     }
 

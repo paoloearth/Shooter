@@ -31,7 +31,7 @@ public class HealthBar extends Map_Object{
         // Make the binding
         Green_rectangle.widthProperty().bind(Health);
 
-        move_to( new Pair<Double,Double>(.0, (S.get_actual_height() * 1.1)));
+        move_to( new Coordinates(0, (S.get_actual_height() * 1.1)));
 
         this.getChildren().addAll(Red_rectangle, Green_rectangle);
 
@@ -50,9 +50,6 @@ public class HealthBar extends Map_Object{
 
         if (Health.getValue() <= get_max_health()/2)  // When health goes below half, change bar colour to orange
             this.Green_rectangle.setFill(Color.ORANGE);
-
-
-
 
     }
 
