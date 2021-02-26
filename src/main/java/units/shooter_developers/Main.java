@@ -17,6 +17,7 @@ public class Main extends Application {
 
     public void start(Stage stage) throws Exception{
 
+        stage.initStyle(StageStyle.UNDECORATED);
         GameMenu M = new GameMenu();
         M.start(stage);
 

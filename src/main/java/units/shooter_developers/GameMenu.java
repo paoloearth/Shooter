@@ -31,7 +31,6 @@ public class GameMenu extends Menu{
 
     @Override
     public void start(Stage menu_stage){
-        //menu_stage.initStyle(StageStyle.TRANSPARENT);
         setStage(menu_stage);
         readSettings();
 
