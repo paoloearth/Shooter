@@ -156,6 +156,7 @@ public class Sprite extends Dynamic_Object {
     }
 
     //Return the bounds of the player used to check collision
+    @Override
     public Rectangle2D get_bounds()
     {
         return new Rectangle2D(get_current_X_position(),

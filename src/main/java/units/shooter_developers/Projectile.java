@@ -84,12 +84,6 @@ public class Projectile extends Dynamic_Object{
 
     }
 
-
-    @Override
-    public Rectangle2D get_bounds() {
-        return new Rectangle2D(get_current_X_position(), get_current_Y_position(), get_actual_width(), get_actual_height());
-    }
-
     @Override
     public void update(Map M, Sprite S) {
         hit(S);
