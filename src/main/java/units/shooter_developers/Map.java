@@ -95,9 +95,9 @@ public class Map {
     Coordinates get_player_pixel_position(String player_id)
     {
         if (player_id.equals("P1"))
-            return  get_pixel_position(_MR._players_positions.getKey());
+            return  get_pixel_position(_MR._players_positions[0]);
         else
-            return get_pixel_position(_MR._players_positions.getValue());
+            return get_pixel_position(_MR._players_positions[1]);
     }
 
     //Given the coordinates of a tile
