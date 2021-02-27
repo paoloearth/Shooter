@@ -1,5 +1,6 @@
 package units.shooter_developers;
 
+//Coordinates or class Point2D.Double
 public class Coordinates {
     private double x,y;
 

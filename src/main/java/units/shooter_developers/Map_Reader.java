@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
        2. set_of_passable_blocks
        3. set_of_non_passable_block_for_projectiles
        4. sprite_1_blocco_x, sprite_1_blocco_y,sprite_2_blocco_x, sprite_2_blocco_y
+       5. Teleport_1_x;Teleport_1_y; Teleport_2_x, Teleport_2_y
 */
 public class Map_Reader {
 
@@ -26,8 +27,9 @@ public class Map_Reader {
     Pair<Integer,Integer> _num_tiles;                              //number of tiles of the map
     final Set<Integer> _set_of_passable;                           //set of passable tiles for the Player
     final Set<Integer> _set_of_NOT_passable_for_projectile;
-    Pair<Coordinates,Coordinates> _players_positions;  //position of the player in the corresponding map
-    Pair<Coordinates,Coordinates> _teleport_positions; //positon of teleports in the corresponding map
+    //Array or map<String,Coordinates>?
+    Coordinates[] _players_positions; //position of the player in the corresponding map
+    Coordinates[] _teleport_positions; //positon of teleports in the corresponding map
     List<String[]> _map;                                           // List of tiles composing the map
 
 
@@ -89,10 +91,11 @@ public class Map_Reader {
       - the players at row 4th
       - teleports at row 5th
      */
-    private Pair<Coordinates,Coordinates> get_positions(int index) {
-        var values = Arrays.stream(_lines.get(index)).parallel().mapToDouble(Double::parseDouble).boxed().collect(Collectors.toList());
-        return new Pair<>(new Coordinates(values.get(0), values.get(1)), new Coordinates(values.get(2), values.get(3)));
+    private Coordinates[] get_positions(int index) {
+        var values = Arrays.stream(_lines.get(index)).parallel().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
+        return new Coordinates[]{new Coordinates(values.get(0), values.get(1)),new Coordinates(values.get(2), values.get(3))};
     }
+
 
 
 

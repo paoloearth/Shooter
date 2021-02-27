@@ -27,9 +27,9 @@ public class Teleport extends Pictured_Object{
         rotation_animation();
 
         if(ID.equals("T1"))
-            move_to(M.get_pixel_position( M._MR._teleport_positions.getKey()));
+            move_to(M.get_pixel_position( M._MR._teleport_positions[0]));
         else
-            move_to(M.get_pixel_position(M._MR._teleport_positions.getValue()));
+            move_to(M.get_pixel_position(M._MR._teleport_positions[1]));
 
 
         root.getChildren().add(this);   // Add local pane to global root
