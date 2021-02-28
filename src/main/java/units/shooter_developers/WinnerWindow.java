@@ -57,6 +57,7 @@ class WinnerScreenObject extends BorderPane {
         addBackgroundImage(sp, "menu.jpeg");
         addCentralComposition(sp, fireworks,winner_image);
         addTitle(sp, player_name);
+        addDisclaimer(sp);
 
         setCenter(sp);
 
@@ -69,6 +70,15 @@ class WinnerScreenObject extends BorderPane {
         top.setFill(Color.SILVER);
         setAlignment(top,Pos.TOP_CENTER);
         top.setTranslateY(-_height*0.4);
+        sp.getChildren().add(top);
+    }
+
+    private void addDisclaimer(StackPane sp){
+        Text top = new Text("<press a key to continue>");
+        top.setFont(Font.font("Times New Roman", FontWeight.BOLD,_width*0.02));
+        top.setFill(Color.GREY);
+        setAlignment(top,Pos.TOP_CENTER);
+        top.setTranslateY(_height*0.4);
         sp.getChildren().add(top);
     }
 
