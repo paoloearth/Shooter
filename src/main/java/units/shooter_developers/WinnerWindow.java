@@ -15,6 +15,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import units.shooter_developers.menu.GameMenu;
 
 public class WinnerWindow extends Application{
     WinnerScreenObject _content;
