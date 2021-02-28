@@ -49,12 +49,6 @@ public class Bonus_Generator extends Pictured_Object{
         if(this.get_current_X_position()+get_actual_width() >= M.get_width()) this.setLayoutX(get_current_X_position()-get_actual_width());
         if(this.get_current_Y_position()+get_actual_height() >= M.get_height()) this.setLayoutY(get_current_Y_position()-get_actual_height());
     }
-    @Override
-    public Rectangle2D get_bounds() {
-        return new Rectangle2D(get_current_X_position(),
-                get_current_Y_position(),
-                get_actual_width(), get_actual_height());
-    }
 
     @Override
     public void update(Map M, Sprite S) {
