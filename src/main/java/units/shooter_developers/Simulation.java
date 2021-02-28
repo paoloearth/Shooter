@@ -4,13 +4,10 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Pair;
 
 import java.io.IOException;
@@ -213,7 +210,8 @@ public class Simulation extends Application {
             // System.out.println("One of the player is dead");
             // LANCIA UN'ALTRA "SCENA"
             this.stopSimulation();
-            root.getChildren().add(new WinnerWindow(WIDTH, HEIGHT, "player", "warrior.png"));
+            var win_screen = new WinnerWindow(WIDTH, HEIGHT, "player", "warrior.png");
+            win_screen.start(_stage);
         }
     }
 
