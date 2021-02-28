@@ -210,15 +210,6 @@ public class Simulation extends Application {
         {
             System.out.println("GIOCO FINITO!");
 
-           // stopSimulation();
-
-            Pane P = new Pane();
-
-
-            Scene scene = new Scene(P);
-
-            _stage.setScene(scene);
-            _stage.show();
 
 
 
