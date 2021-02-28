@@ -26,6 +26,8 @@ public class WinnerWindow extends BorderPane {
         var winner_image = retrieve_image(player_spriteSheet_url,4,1);
         var fireworks = retrieve_image("fireworks.png", 1,1);
 
+        winner_image.resize(0.5*_width, 0.5*_height);
+
         setCenter(create_central_image_using_stackPane(fireworks,winner_image));
 
 
