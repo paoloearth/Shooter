@@ -1,10 +1,10 @@
-package units.shooter_developers;
+package units.shooter_developers.menu;
 
 import javafx.stage.*;
 import javafx.scene.*;
+import units.shooter_developers.Simulation;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;

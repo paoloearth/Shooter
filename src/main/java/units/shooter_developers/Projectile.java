@@ -1,7 +1,7 @@
 package units.shooter_developers;
 
-import javafx.geometry.Rectangle2D;
 import javafx.util.Pair;
+import units.shooter_developers.settings.Custom_Settings;
 
 public class Projectile extends Dynamic_Object{
     int biasX;

@@ -1,4 +1,4 @@
-package units.shooter_developers;
+package units.shooter_developers.menu;
 
 /*
  *
@@ -34,6 +34,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import units.shooter_developers.Simulation;
 
 import java.io.File;
 import java.io.FileReader;
@@ -42,7 +43,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
 

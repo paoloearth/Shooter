@@ -1,6 +1,7 @@
 package units.shooter_developers;
 import javafx.scene.image.Image;
 import javafx.util.Pair;
+import units.shooter_developers.settings.Custom_Settings;
 
 import java.io.File;
 import java.io.IOException;
