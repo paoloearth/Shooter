@@ -3,7 +3,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Pair;
+import units.shooter_developers.settings.Custom_Settings;
 
 
 public class HealthBar extends Map_Object{

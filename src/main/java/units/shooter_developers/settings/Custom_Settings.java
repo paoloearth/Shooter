@@ -1,4 +1,4 @@
-package units.shooter_developers;
+package units.shooter_developers.settings;
 
 public class Custom_Settings {
 

@@ -2,10 +2,10 @@ package units.shooter_developers;
 import javafx.animation.Animation;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import units.shooter_developers.settings.Custom_Settings;
 
 public class Bonus_Generator extends Pictured_Object{
     BooleanProperty is_waiting = new SimpleBooleanProperty(true);
