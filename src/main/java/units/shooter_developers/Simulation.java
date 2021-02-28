@@ -215,6 +215,9 @@ public class Simulation extends Application {
 
             // System.out.println("One of the player is dead");
             // LANCIA UN'ALTRA "SCENA"
+            this.stopSimulation();
+            var win_screen = new WinnerWindow(WIDTH, HEIGHT, "player", "warrior.png");
+            win_screen.start(_stage);
         }
     }
 

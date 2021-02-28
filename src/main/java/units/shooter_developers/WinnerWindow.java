@@ -2,40 +2,84 @@ package units.shooter_developers;
 
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
-public class WinnerWindow extends BorderPane {
+public class WinnerWindow extends Application{
+    WinnerScreenObject _content;
+
+    WinnerWindow(double width, double height, String player_name, String player_spriteSheet_url ){
+        _content = new WinnerScreenObject(width, height, player_name, player_spriteSheet_url);
+    }
+
+    public void start(Stage stage){
+        Pane root = new Pane();
+        root.getChildren().add(_content);
+        Scene scene = new Scene(root);
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
+            GameMenu new_menu = new GameMenu();
+            new_menu.start(stage);
+        });
+
+
+        stage.setScene(scene);
+        stage.close();
+        stage.show();
+    }
+}
+
+class WinnerScreenObject extends BorderPane {
 
     double _width, _height;
 
-    WinnerWindow(double width, double height, String player_name, String player_spriteSheet_url )
+    WinnerScreenObject(double width, double height, String player_name, String player_spriteSheet_url )
     {
         this._width = width;
         this._height = height;
         this.setPrefSize(width,height);
 
-        create_title(player_name);
-
 
         var winner_image = retrieve_image(player_spriteSheet_url,4,1);
         var fireworks = retrieve_image("fireworks.png", 1,1);
 
-        setCenter(create_central_image_using_stackPane(fireworks,winner_image));
+        StackPane sp = new StackPane();
+        addBackgroundImage(sp, "menu.jpeg");
+        addCentralComposition(sp, fireworks,winner_image);
+        addTitle(sp, player_name);
+        addDisclaimer(sp);
+
+        setCenter(sp);
 
 
     }
 
-    private void create_title(String winner){
+    private void addTitle(StackPane sp, String winner){
         Text top = new Text("The winner is "+ winner);
-        top.setFont(Font.font("Times New Roman", FontWeight.BOLD,80));
+        top.setFont(Font.font("Times New Roman", FontWeight.BOLD,_width*0.06));
+        top.setFill(Color.SILVER);
         setAlignment(top,Pos.TOP_CENTER);
-        setTop(top);
+        top.setTranslateY(-_height*0.4);
+        sp.getChildren().add(top);
+    }
+
+    private void addDisclaimer(StackPane sp){
+        Text top = new Text("<press a key to continue>");
+        top.setFont(Font.font("Times New Roman", FontWeight.BOLD,_width*0.02));
+        top.setFill(Color.GREY);
+        setAlignment(top,Pos.TOP_CENTER);
+        top.setTranslateY(_height*0.4);
+        sp.getChildren().add(top);
     }
 
 
@@ -47,20 +91,21 @@ public class WinnerWindow extends BorderPane {
         return IM;
     }
 
-    private StackPane create_central_image_using_stackPane(ImageView background, ImageView foreground)
+    private void addCentralComposition(StackPane sp, ImageView background_sprite, ImageView player_sprite)
     {
-        StackPane sp = new StackPane();
-        sp.setMinSize(_width/2,_height/2);
-        add_image_stackPane(background,sp);
-        add_image_stackPane(foreground,sp);
-        return sp;
+        sp.setMaxSize(_width/2,_height/2);
+        sp.setMinSize(_width/2, _height/2);
+        sp.getChildren().add(background_sprite);
+        sp.getChildren().add(player_sprite);
+        sp.setAlignment(Pos.CENTER);
     }
 
-    private void add_image_stackPane(ImageView image, StackPane sp){
-        image.fitHeightProperty().bind(sp.heightProperty());
-        image.setPreserveRatio(true);
-        sp.getChildren().add(image);
-        sp.setAlignment(Pos.CENTER);
+    private void addBackgroundImage(StackPane sp, String image_url){
+        ImageView background = new ImageView(image_url);
+        background.setFitWidth(_width);
+        background.setFitHeight(_height);
+        background.resize(_width, _height);
+        sp.getChildren().add(background);
     }
 
 }
