@@ -20,20 +20,20 @@ public class WinnerWindow extends BorderPane {
         this._height = height;
         this.setPrefSize(width,height);
 
-        create_title(player_name);
+        setTitle(player_name);
 
 
         var winner_image = retrieve_image(player_spriteSheet_url,4,1);
         var fireworks = retrieve_image("fireworks.png", 1,1);
 
-        var sp = create_central_image_using_stackPane(fireworks,winner_image);
+        var sp = setCentralComposition(fireworks,winner_image);
 
         setCenter(sp);
 
 
     }
 
-    private void create_title(String winner){
+    private void setTitle(String winner){
         Text top = new Text("The winner is "+ winner);
         top.setFont(Font.font("Times New Roman", FontWeight.BOLD,_width*0.06));
         setAlignment(top,Pos.TOP_CENTER);
@@ -49,22 +49,15 @@ public class WinnerWindow extends BorderPane {
         return IM;
     }
 
-    private StackPane create_central_image_using_stackPane(ImageView background, ImageView foreground)
+    private StackPane setCentralComposition(ImageView background_sprite, ImageView player_sprite)
     {
         StackPane sp = new StackPane();
-        //sp.setMinSize(_width/2,_height/2);
         sp.setMaxSize(_width/2,_height/2);
         sp.setMinSize(_width/2, _height/2);
-        add_image_stackPane(background,sp);
-        add_image_stackPane(foreground,sp);
-        return sp;
-    }
-
-    private void add_image_stackPane(ImageView image, StackPane sp){
-        image.fitHeightProperty().bind(sp.heightProperty());
-        image.setPreserveRatio(true);
-        sp.getChildren().add(image);
+        sp.getChildren().add(background_sprite);
+        sp.getChildren().add(player_sprite);
         sp.setAlignment(Pos.CENTER);
+        return sp;
     }
 
 }
