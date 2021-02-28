@@ -213,7 +213,7 @@ public class Simulation extends Application {
             // System.out.println("One of the player is dead");
             // LANCIA UN'ALTRA "SCENA"
             this.stopSimulation();
-            root.getChildren().add(new WinnerWindow(WIDTH, HEIGHT, "name_of_player", "warrior.png"));
+            root.getChildren().add(new WinnerWindow(WIDTH, HEIGHT, "player", "warrior.png"));
         }
     }
 
