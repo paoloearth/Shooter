@@ -25,7 +25,7 @@ public class WinnerWindow extends BorderPane {
 
         var winner_image = retrieve_image(player_spriteSheet_url,4,1);
         var fireworks = retrieve_image("fireworks.png", 1,1);
-        
+
         var sp = create_central_image_using_stackPane(fireworks,winner_image);
 
         setCenter(sp);
@@ -35,7 +35,7 @@ public class WinnerWindow extends BorderPane {
 
     private void create_title(String winner){
         Text top = new Text("The winner is "+ winner);
-        top.setFont(Font.font("Times New Roman", FontWeight.BOLD,60));
+        top.setFont(Font.font("Times New Roman", FontWeight.BOLD,_width*0.06));
         setAlignment(top,Pos.TOP_CENTER);
         setTop(top);
     }
