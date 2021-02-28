@@ -15,6 +15,7 @@ package units.shooter_developers.menu;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -161,6 +162,28 @@ public abstract class Menu extends Application {
         for(var tag:selection_tags){ tag_list.add(tag); }
 
         getItemsBox().addSelectableItem(item_name, tag_list);
+    }
+
+    public void addGenericNode(Node generic_node){
+        _root.getChildren().add(generic_node);
+    }
+
+    public void removeTitle(){
+        Title title_object = (Title)_root.getChildren().stream()
+                .filter(e -> e instanceof Title)
+                .findFirst()
+                .orElse(null);
+
+        _root.getChildren().remove(title_object);
+    }
+
+    public void removeMenuBox(){
+        MenuBox menu_box = (MenuBox) _root.getChildren().stream()
+                .filter(e -> e instanceof MenuBox)
+                .findFirst()
+                .orElse(null);
+
+        _root.getChildren().remove(menu_box);
     }
 
     public void setTitle(String title){

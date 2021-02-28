@@ -53,15 +53,34 @@ public class GameMenu extends Menu{
         {
             item.setOnMouseReleased(event -> {
                 if (item.getName().equals("NEW GAME")) {
+                    //------------------------------------------------------------------------------------
+                    /*
+                    Submenu submenu_launch_game = new Submenu(this);
+                    submenu_launch_game.start(menu_stage);
+                    */
+
+                    /**    /\
+                     *     |
+                     *     |
+                     *     UNCOMMENT FOR HAVING ACCESS TO LAUNCHING SUBMENU
+                     *     ------------------------------------------------------------------------------
+                     *     UNCOMMENT FOR HAVING ACCESS TO SIMULATION (UP-TO-NOW SITUATION)
+                     *     |
+                     *     |
+                     *    \/
+                     */
+
+                    /***/
                     setGameInstance(new Simulation());
                     try {
                         menu_stage.close();
                         getGameInstance().start(getStage());
-                        //getStage().toFront();
                         getStage().setAlwaysOnTop(true);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    /***/
+                    //----------------------------------------------------------------------------------------------
                 }
                 if (item.getName().equals("CONTINUE")) {
                     menu_stage.close();
