@@ -39,7 +39,7 @@ public class WinnerWindow extends BorderPane {
     }
 
 
-    ImageView retrieve_image(String URL, int n_rows, int n_cols)
+    private ImageView retrieve_image(String URL, int n_rows, int n_cols)
     {
         var I = new Image(URL);
         var IM =  new ImageView(I);
