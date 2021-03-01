@@ -232,13 +232,16 @@ public class Simulation extends Application {
 
         if (Player_1._isDead.getValue() || Player_2._isDead.getValue())
         {
-
             this.stopSimulation();
 
             var win_screen =  Player_2._isDead.getValue() ? new WinnerWindow(WIDTH, HEIGHT,  Player_1) :
                                                                          new WinnerWindow(WIDTH, HEIGHT, Player_2);
 
+
+
             win_screen.start(_stage);
+
+
         }
     }
 
