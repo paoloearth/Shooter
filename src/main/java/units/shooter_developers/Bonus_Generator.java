@@ -12,6 +12,7 @@ public class Bonus_Generator extends Pictured_Object{
     BooleanProperty is_waiting = new SimpleBooleanProperty(true);
     Object_Animation anim;
 
+
     public Bonus_Generator(Pane root, Map M, String url, int _n_rows, int _n_cols, Pair<Double, Double> scaling_factor)
     {
         super(scaling_factor,url,_n_rows,_n_cols);
@@ -25,7 +26,6 @@ public class Bonus_Generator extends Pictured_Object{
         generate(M);
 
 
-        // ADD to the main pane
         root.getChildren().add(this);
 
     }
@@ -62,7 +62,6 @@ public class Bonus_Generator extends Pictured_Object{
         this.getChildren().remove(_view);
         S.H.restore_life();
         generate(M);
-
     }
 
 
