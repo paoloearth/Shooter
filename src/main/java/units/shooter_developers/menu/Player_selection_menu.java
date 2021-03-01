@@ -22,7 +22,7 @@ public class Player_selection_menu extends GridPane {
 
     SimpleBooleanProperty all_set = new SimpleBooleanProperty(false);
 
-    Map<String, String> reverse_map;
+    Map<String, String> Name_URL;
 
     Player_selection_menu(double width, double height)
     {
@@ -45,7 +45,7 @@ public class Player_selection_menu extends GridPane {
 
     private void create_menu() {
 
-        Map<String, String> Name_URL = initialize_dictionary();
+        Name_URL = initialize_dictionary();
 
         /* CHOICE BOX  & ADD them to GRIDPANE in right position*/
 
@@ -72,15 +72,11 @@ public class Player_selection_menu extends GridPane {
     }
 
     private Map<String, String> initialize_dictionary() {
-        Map<String, String> Name_URL = new Hashtable<>();
+        Name_URL = new Hashtable<>();
         Name_URL.put("Artist","artist.png");
         Name_URL.put("Astrologer","astrologer.png");
         Name_URL.put("Warrior","warrior.png");
 
-        reverse_map  = new Hashtable<>();
-        reverse_map.put("artist.png","Artist");
-        reverse_map.put("astrologer.png","Astrologer");
-        reverse_map.put("warrior.png","Warrior");
         return Name_URL;
     }
 
@@ -118,22 +114,30 @@ public class Player_selection_menu extends GridPane {
     }
 
 
-    public List<String> get_players_data()
+    public List<String> get_players_names()
         {
-                var L = new ArrayList<String>();
 
-                L.add(CB_P1.get_value());
-                L.add(CB_P2.get_value());
+                var NAMES = new ArrayList<String>();
 
-                L.add(TB_P1.get_value());
-                L.add(TB_P2.get_value());
+                NAMES.add(TB_P1.get_value());
+                NAMES.add(TB_P2.get_value());
 
 
-                return L;
+                return NAMES;
 
         }
 
+    public List<String> get_players_URL() {
+        var URL = new ArrayList<String>();
+
+
+        URL.add(Name_URL.get(CB_P1.get_value()));
+        URL.add(Name_URL.get(CB_P2.get_value()));
+
+        return URL;
+    }
 
 
 
-}
+
+    }
