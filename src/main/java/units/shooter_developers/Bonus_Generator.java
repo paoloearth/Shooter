@@ -1,5 +1,7 @@
 package units.shooter_developers;
 import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.Pane;
@@ -36,11 +38,12 @@ public class Bonus_Generator extends Pictured_Object{
 
     public void generate(Map M)
     {
-
         move_to(M.get_random_location());
         push_inside_border(M);
-        this.getChildren().add(_view);
-
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(4), event -> {
+            this.getChildren().add(_view);
+        }));
+        timeline.play();
     }
 
     //relocate heart inside the map taking into account the size of heart.png
