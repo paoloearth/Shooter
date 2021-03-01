@@ -107,8 +107,8 @@ public class Simulation extends Application {
 
 
     private void create_players() {
-        Player_1 = new Sprite(root,R , scaling_factors, get_i_urls_sprite(0),4, 1 , "P1", Direction.RIGHT);
-        Player_2 = new Sprite(root,R, scaling_factors, get_i_urls_sprite(1),    4, 1,   "P2", Direction.LEFT);
+        Player_1 = new Sprite(root,R , scaling_factors, get_i_urls_sprite(0),4, 1 , "P1", Direction.RIGHT, get_i_player_name(0));
+        Player_2 = new Sprite(root,R, scaling_factors, get_i_urls_sprite(1),    4, 1,   "P2", Direction.LEFT, get_i_player_name(1));
     }
 
     private void create_frame() {
@@ -234,17 +234,15 @@ public class Simulation extends Application {
     private void remove_dead_objects() {
         root.getChildren().removeIf(node -> (node instanceof Pictured_Object) && ((Pictured_Object)node)._isDead.getValue());
 
-        if (Player_1._isDead.getValue() || Player_1._isDead.getValue())
+        if (Player_1._isDead.getValue() || Player_2._isDead.getValue())
         {
-            System.out.println("GIOCO FINITO!");
+            //System.out.println("GIOCO FINITO!");
 
-
-
-
-            // System.out.println("One of the player is dead");
-            // LANCIA UN'ALTRA "SCENA"
             this.stopSimulation();
-            var win_screen = new WinnerWindow(WIDTH, HEIGHT, "player", "warrior.png");
+
+            var win_screen =  Player_1._isDead.getValue() ? new WinnerWindow(WIDTH, HEIGHT, Player_1) :
+                                                                         new WinnerWindow(WIDTH, HEIGHT, Player_2);
+
             win_screen.start(_stage);
         }
     }

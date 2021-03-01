@@ -15,11 +15,14 @@ import units.shooter_developers.settings.Custom_Settings;
 
 
 public class Sprite extends Dynamic_Object {
-    public String _id;                                                      // Player Name
+    public String _id;                                                      // Player ID
     IntegerProperty _frame  = new SimpleIntegerProperty(0);        // Frame property to update the moving sprite
     HealthBar H;
     private boolean goNorth, goSouth, goEast, goWest;
     BooleanProperty _can_shoot = new SimpleBooleanProperty(true);
+    public String _player_name;
+
+
 
     Timeline shooting_cooldown = new Timeline(
             new KeyFrame(Duration.ZERO, event -> _can_shoot.setValue(false)),
@@ -27,10 +30,11 @@ public class Sprite extends Dynamic_Object {
     );
 
 
-    public Sprite(Pane root, Map M, Pair<Double, Double> scaling_factor, String url, int _n_rows, int _n_cols, String id, Direction D)
+    public Sprite(Pane root, Map M, Pair<Double, Double> scaling_factor, String url, int _n_rows, int _n_cols, String id, Direction D, String player_name)
     {
         super(scaling_factor, url, _n_rows, _n_cols);
 
+        this._player_name = player_name;
         this._id = id;
         this._speed = (int) (Custom_Settings.PLAYER_SPEED*scaling_factor.getKey());
         this._scale = Custom_Settings.PLAYER_SCALE;

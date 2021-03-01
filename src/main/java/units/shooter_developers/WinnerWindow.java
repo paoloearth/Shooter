@@ -20,8 +20,8 @@ import units.shooter_developers.menu.GameMenu;
 public class WinnerWindow extends Application{
     WinnerScreenObject _content;
 
-    WinnerWindow(double width, double height, String player_name, String player_spriteSheet_url ){
-        _content = new WinnerScreenObject(width, height, player_name, player_spriteSheet_url);
+    WinnerWindow(double width, double height, Sprite player ){
+        _content = new WinnerScreenObject(width, height, player);
     }
 
     public void start(Stage stage){
@@ -44,20 +44,20 @@ class WinnerScreenObject extends BorderPane {
 
     double _width, _height;
 
-    WinnerScreenObject(double width, double height, String player_name, String player_spriteSheet_url )
+    WinnerScreenObject(double width, double height, Sprite P)
     {
         this._width = width;
         this._height = height;
         this.setPrefSize(width,height);
 
 
-        var winner_image = retrieve_image(player_spriteSheet_url,4,1);
+        var winner_image = retrieve_image(P._url,4,1);
         var fireworks = retrieve_image("fireworks.png", 1,1);
 
         StackPane sp = new StackPane();
         addBackgroundImage(sp, "menu.jpeg");
         addCentralComposition(sp, fireworks,winner_image);
-        addTitle(sp, player_name);
+        addTitle(sp, P._player_name);
         addDisclaimer(sp);
 
         setCenter(sp);
