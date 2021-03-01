@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 import units.shooter_developers.Simulation;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Submenu extends Menu{
     Submenu(Menu other_menu){
@@ -54,7 +56,6 @@ public class Submenu extends Menu{
 
 
             // La parte che segue sarà cambiata per maggiore modularità
-
             HBox H = new HBox(P_map);
 
 
@@ -73,7 +74,7 @@ public class Submenu extends Menu{
                     {
 
                         launch_simulation(M);
-                        System.out.println(P_menu.get_players_names() + " " + P_menu.get_players_URL() + " "+ P_map.get_map_data());
+                        //System.out.println(P_menu.get_players_names() + " " + P_menu.get_players_URL() + " "+ P_map.get_map_data());
 
 
                     });
@@ -81,8 +82,10 @@ public class Submenu extends Menu{
 
         }
 
+
+
         private void launch_simulation(Submenu M) {
-            M.setGameInstance(new Simulation());
+            M.setGameInstance(new Simulation(P_menu.get_players_names(),P_menu.get_players_URL(), P_map.get_map_data()));
             try {
                 M.getStage().close();
                 getGameInstance().start(getStage());

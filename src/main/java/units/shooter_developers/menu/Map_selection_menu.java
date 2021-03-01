@@ -12,6 +12,7 @@ public class Map_selection_menu extends HBox {
     double _width, _height;
     Choice_Box CB_MAP;
     Map<String, String> Map_URL;
+    Map<String, String> Map_CSV;
 
     SimpleBooleanProperty all_set = new SimpleBooleanProperty(false);
 
@@ -34,11 +35,10 @@ public class Map_selection_menu extends HBox {
         Map_URL.put("Map Island","map_island.png");
         Map_URL.put("Map Desert","map_desert.png");
 
-        /*
-        reverse_map  = new Hashtable<>();
-        reverse_map.put("map_island.png","Map Island");
-        reverse_map.put("map_desert.png","Map Desert");
-*/
+
+        Map_CSV = new Hashtable<>();
+        Map_CSV.put("Map Island","map_island.csv");
+        Map_CSV.put("Map Desert","map_desert.csv");
 
         CB_MAP = new Choice_Box(Map_URL,1,1);
 
@@ -55,8 +55,7 @@ public class Map_selection_menu extends HBox {
     public List<String> get_map_data()
     {
         var L = new ArrayList<String>();
-        System.out.println(CB_MAP.get_value());
-        L.add(Map_URL.get(CB_MAP.get_value()));
+        L.add(Map_CSV.get(CB_MAP.get_value()));
 
         return L;
 
