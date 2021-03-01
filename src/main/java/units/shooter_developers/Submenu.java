@@ -70,8 +70,6 @@ public class Submenu extends Menu{
 
                         launch_simulation(M);
                         //System.out.println(P_menu.get_players_names() + " " + P_menu.get_players_URL() + " "+ P_map.get_map_data());
-
-
                     });
 
 
