@@ -22,6 +22,8 @@ public class Player_selection_menu extends GridPane {
 
     SimpleBooleanProperty all_set = new SimpleBooleanProperty(false);
 
+    Map<String, String> reverse_map;
+
     Player_selection_menu(double width, double height)
     {
         set_height(height);
@@ -74,6 +76,11 @@ public class Player_selection_menu extends GridPane {
         Name_URL.put("Artist","artist.png");
         Name_URL.put("Astrologer","astrologer.png");
         Name_URL.put("Warrior","warrior.png");
+
+        reverse_map  = new Hashtable<>();
+        reverse_map.put("artist.png","Artist");
+        reverse_map.put("astrologer.png","Astrologer");
+        reverse_map.put("warrior.png","Warrior");
         return Name_URL;
     }
 

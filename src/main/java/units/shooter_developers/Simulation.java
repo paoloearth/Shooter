@@ -74,7 +74,7 @@ public class Simulation extends Application {
 
     private void create_players() {
         Player_1 = new Sprite(root,R , scaling_factors, "astrologer.png",4, 1 , "P1", Direction.RIGHT);
-        Player_2 = new Sprite(root,R, scaling_factors, "artist.png",    4, 1,  "P2", Direction.LEFT);
+        Player_2 = new Sprite(root,R, scaling_factors, "artist.png",    4, 1,   "P2", Direction.LEFT);
     }
 
     private void create_frame(boolean full_screen) {

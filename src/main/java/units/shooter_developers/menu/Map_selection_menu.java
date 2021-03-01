@@ -11,6 +11,7 @@ import java.util.Map;
 public class Map_selection_menu extends HBox {
     double _width, _height;
     Choice_Box CB_MAP;
+    Map<String, String> reverse_map;
 
     SimpleBooleanProperty all_set = new SimpleBooleanProperty(false);
 
@@ -33,6 +34,11 @@ public class Map_selection_menu extends HBox {
         Map_URL.put("Map Island","map_island.png");
         Map_URL.put("Map Desert","map_desert.png");
 
+        reverse_map  = new Hashtable<>();
+        reverse_map.put("map_island.png","Map Island");
+        reverse_map.put("map_desert.png","Map Desert");
+
+
         CB_MAP = new Choice_Box(Map_URL,1,1);
 
         all_set.bind(CB_MAP.comboBox.getSelectionModel().selectedItemProperty().isNull());
@@ -48,7 +54,7 @@ public class Map_selection_menu extends HBox {
     public List<String> get_map_data()
     {
         var L = new ArrayList<String>();
-        L.add(CB_MAP.get_value());
+        L.add(reverse_map.get(CB_MAP.get_value()));
 
         return L;
 
