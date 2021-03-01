@@ -42,7 +42,7 @@ public class Map_selection_menu extends HBox {
 
         CB_MAP = new Choice_Box(Map_URL,1,1);
 
-        all_set.bind(CB_MAP.comboBox.getSelectionModel().selectedItemProperty().isNull());
+        all_set.bind(CB_MAP.getComboBox().getSelectionModel().selectedItemProperty().isNull());
 
         getChildren().add(CB_MAP);
     }

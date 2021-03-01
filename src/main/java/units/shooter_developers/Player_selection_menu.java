@@ -65,8 +65,8 @@ public class Player_selection_menu extends GridPane {
         /* BINDINGS */
         all_set.bind( TB_P1.textField.textProperty().isEmpty()
                 .or(TB_P2.textField.textProperty().isEmpty())
-                .or(CB_P1.comboBox.getSelectionModel().selectedItemProperty().isNull())
-                .or(CB_P2.comboBox.getSelectionModel().selectedItemProperty().isNull()));
+                .or(CB_P1.getComboBox().getSelectionModel().selectedItemProperty().isNull())
+                .or(CB_P2.getComboBox().getSelectionModel().selectedItemProperty().isNull()));
 
 
     }
