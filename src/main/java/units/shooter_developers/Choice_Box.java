@@ -23,7 +23,7 @@ public class Choice_Box extends VBox{
             set_padding();
 
             create_combobox_with_DICT(Name_URL);
-            add_combobox_to_vbox(comboBox);
+            add_combobox_to_vbox();
 
             HBox H = createCustomHbox();
             add_generic_child_node_to_parent_node(this,H);
@@ -52,7 +52,7 @@ public class Choice_Box extends VBox{
     }
 
     private String retrieve_selected_value_from_dict(String selected) {
-        return _dict.get(selected);
+        return get_dict().get(selected);
     }
 
 
@@ -78,10 +78,13 @@ public class Choice_Box extends VBox{
         setSpacing(10);
     }
 
-    private void add_combobox_to_vbox(ComboBox<String> c) {
-            getChildren().add(c);
+    private void add_combobox_to_vbox() {
+            getChildren().add(getComboBox());
         }
-
+    public String get_value()
+    {
+        return getComboBox().getValue();
+    }
 
 
     private void empty_HBox(HBox H) {
@@ -98,12 +101,9 @@ public class Choice_Box extends VBox{
                 return IM;
             }
 
-    public String get_value()
-    {
-        return comboBox.getValue();
-    }
 
-    /* Getters and Setters */
+
+    /**************************************   Getters and Setters ******************************************/
 
     /* For dictionary variable */
     public void set_dict(Map<String, String> _dict) {
