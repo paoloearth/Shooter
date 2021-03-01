@@ -1,4 +1,4 @@
-package units.shooter_developers.menu;
+package units.shooter_developers;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.HBox;

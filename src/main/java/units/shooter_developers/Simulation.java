@@ -2,16 +2,11 @@ package units.shooter_developers;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import units.shooter_developers.menu.GameMenu;
-
-import units.shooter_developers.settings.Custom_Settings;
 
 import java.io.IOException;
 import java.util.List;

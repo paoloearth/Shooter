@@ -11,7 +11,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import javafx.util.Pair;
-import units.shooter_developers.settings.Custom_Settings;
 
 
 public class Sprite extends Dynamic_Object {

@@ -1,8 +1,7 @@
-package units.shooter_developers.menu;
+package units.shooter_developers;
 
 import javafx.stage.*;
 import javafx.scene.*;
-import units.shooter_developers.Simulation;
 
 import java.io.File;
 import java.io.FileReader;

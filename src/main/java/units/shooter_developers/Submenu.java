@@ -1,18 +1,13 @@
-package units.shooter_developers.menu;
+package units.shooter_developers;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import units.shooter_developers.Simulation;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Submenu extends Menu{
     Submenu(Menu other_menu){
