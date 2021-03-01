@@ -10,6 +10,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import units.shooter_developers.menu.GameMenu;
+import units.shooter_developers.menu.WinnerWindow;
 import units.shooter_developers.settings.Custom_Settings;
 
 import java.io.IOException;
@@ -240,7 +241,7 @@ public class Simulation extends Application {
 
             this.stopSimulation();
 
-            var win_screen =  Player_1._isDead.getValue() ? new WinnerWindow(WIDTH, HEIGHT, Player_1) :
+            var win_screen =  Player_2._isDead.getValue() ? new WinnerWindow(WIDTH, HEIGHT,  Player_1) :
                                                                          new WinnerWindow(WIDTH, HEIGHT, Player_2);
 
             win_screen.start(_stage);

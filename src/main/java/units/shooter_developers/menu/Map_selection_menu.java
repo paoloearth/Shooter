@@ -37,7 +37,7 @@ public class Map_selection_menu extends HBox {
 
 
         Map_CSV = new Hashtable<>();
-        Map_CSV.put("Map Island","map_island.csv");
+        Map_CSV.put("Map Island","map_islands.csv");
         Map_CSV.put("Map Desert","map_desert.csv");
 
         CB_MAP = new Choice_Box(Map_URL,1,1);

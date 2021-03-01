@@ -8,6 +8,8 @@ import javafx.scene.image.ImageView;
 import javafx.util.Pair;
 
 public abstract class Pictured_Object extends Map_Object {
+
+
     protected String _url;                // URL path to locate the spritesheet containing the pictures
     protected Image _picture;             // Store reference file for the image to render
     protected ImageView _view;            // Will store the current view
@@ -95,6 +97,9 @@ public abstract class Pictured_Object extends Map_Object {
     }
 
     public abstract void update(Map M, Sprite S);
+    public String get_url() {
+        return _url;
+    }
 
 
 }
