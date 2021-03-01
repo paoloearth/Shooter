@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Player_selection_menu extends GridPane {
-    double _width;
-    double _height;
+    private double _width;
+    private double _height;
 
     Choice_Box CB_P1;
     Choice_Box CB_P2;

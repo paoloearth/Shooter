@@ -3,12 +3,12 @@ package units.shooter_developers;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.Flow;
 
 public class Submenu extends Menu{
     Submenu(Menu other_menu){
@@ -30,14 +30,15 @@ public class Submenu extends Menu{
         getStage().setAlwaysOnTop(true);
     }
 
-    private  class SubmenuObject extends VBox {
+    private  class SubmenuObject extends FlowPane {
 
         double _width, _height;
         Player_selection_menu P_menu;
         Map_selection_menu P_map;
+        Button_selection_menu P_buttons;
         Submenu M;
 
-        SubmenuObject(double width, double height, Submenu M) throws IOException {
+        SubmenuObject(double width, double height, Submenu M)  {
 
             this.M = M;
             this._width = width;
@@ -45,44 +46,25 @@ public class Submenu extends Menu{
 
             this.setPrefSize(width, height);
 
-            P_menu = new Player_selection_menu(_width, _height / 2);
-            P_map = new Map_selection_menu(_width * .8, _height / 2);
+            P_menu = new Player_selection_menu(  _width,         _height / 2);
+            P_map  = new Map_selection_menu(_width * .8,   _height / 2);
+            P_buttons  = new Button_selection_menu(_width * .2,   _height / 2);
 
-            P_map.setAlignment(Pos.CENTER);
-
-
-            /* La parte che segue sarà cambiata per maggiore modularità */
-            HBox H = new HBox(P_map);
-
-
-            Button LAUNCH_BUTTON = new Button();
-            LAUNCH_BUTTON.setText("LAUNCH SIMULATION");
-            H.getChildren().add(LAUNCH_BUTTON);
-            H.setAlignment(Pos.CENTER_LEFT);
-
-
-            LAUNCH_BUTTON.disableProperty().bind(P_map.all_setProperty().or(P_menu.all_setProperty()));
+            P_map.setAlignment(Pos.TOP_CENTER);
+            P_buttons.setAlignment(Pos.CENTER_LEFT);
 
             getChildren().add(P_menu);
-            getChildren().add(H);
-
-            H.setAlignment(Pos.CENTER_LEFT);
-
-
-            LAUNCH_BUTTON.setOnAction(event -> launch_simulation(M));
+            getChildren().add(P_map);
+            getChildren().add(P_buttons);
 
 
-            /* COMMENT HERE TO  CANCEL THE DEFAULT BUTTON */
-            Button DEFAULT = new Button();
-            DEFAULT.setText("LAUNCH with DEFAULT parameters");
-            H.getChildren().add(DEFAULT);
+            P_buttons.getLaunch_simulation().disableProperty().bind(P_map.all_setProperty().or(P_menu.all_setProperty()));
+            P_buttons.getLaunch_default().setOnAction(event -> launch_default(M));
 
-            DEFAULT.setOnAction(event -> launch_default(M));
+
 
 
         }
-
-
         private void launch_default(Submenu M) {
 
             var FAKE_NAMES = new ArrayList<String>();
@@ -119,5 +101,7 @@ public class Submenu extends Menu{
                 e.printStackTrace();
             }
         }
+
+
     }
 }
