@@ -1,7 +1,10 @@
 package units.shooter_developers;
 
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.animation.Transition;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -19,6 +22,9 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class WinnerWindow extends Application{
     WinnerScreenObject _content;
 
@@ -30,26 +36,55 @@ public class WinnerWindow extends Application{
         Pane root = new Pane();
         root.getChildren().add(_content);
         Scene scene = new Scene(root);
+
+       // time_before_read_input(stage, scene);
+
         scene.addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
+
             GameMenu new_menu = new GameMenu();
             new_menu.start(stage);
-        });
 
+        });
 
         stage.setScene(scene);
         stage.close();
         stage.show();
     }
+
+    private void time_before_read_input(Stage stage, Scene scene) {
+        Timer timer = new Timer();
+
+        TimerTask task_2 = new TimerTask()
+        {
+            public void run()
+            {
+
+                    scene.addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
+
+                    GameMenu new_menu = new GameMenu();
+                    new_menu.start(stage);
+
+                });
+            }
+        };
+
+        timer.schedule(task_2,2000);
+    }
+
+
+
+
+
 }
 
 class WinnerScreenObject extends BorderPane {
 
-    double _width, _height;
+     double  _width, _height;
 
     WinnerScreenObject(double width, double height, Sprite P)
     {
-        this._width = width;
-        this._height = height;
+        _width = width;
+        _height = height;
         this.setPrefSize(width,height);
 
 
@@ -82,7 +117,7 @@ class WinnerScreenObject extends BorderPane {
         }
 
        */
-    private void addDisclaimer(){
+    public  void addDisclaimer(){
         Text bottom = new Text("<press a key to continue>");
         bottom.setFont(Font.font("Times New Roman", FontWeight.BOLD,_width*0.025));
         bottom.setFill(Color.SILVER);

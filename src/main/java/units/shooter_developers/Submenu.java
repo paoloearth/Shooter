@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Submenu extends Menu{
     Submenu(Menu other_menu){
@@ -50,7 +51,7 @@ public class Submenu extends Menu{
             P_map.setAlignment(Pos.CENTER);
 
 
-            // La parte che segue sarà cambiata per maggiore modularità
+            /* La parte che segue sarà cambiata per maggiore modularità */
             HBox H = new HBox(P_map);
 
 
@@ -65,14 +66,45 @@ public class Submenu extends Menu{
             getChildren().add(P_menu);
             getChildren().add(H);
 
-            LAUNCH_BUTTON.setOnAction(event ->
-                    {
-
-                        launch_simulation(M);
-                        //System.out.println(P_menu.get_players_names() + " " + P_menu.get_players_URL() + " "+ P_map.get_map_data());
-                    });
+            H.setAlignment(Pos.CENTER_LEFT);
 
 
+            LAUNCH_BUTTON.setOnAction(event -> launch_simulation(M));
+
+
+            /* COMMENT HERE TO  CANCEL THE DEFAULT BUTTON */
+            Button DEFAULT = new Button();
+            DEFAULT.setText("LAUNCH with DEFAULT parameters");
+            H.getChildren().add(DEFAULT);
+
+            DEFAULT.setOnAction(event -> launch_default(M));
+
+
+        }
+
+
+        private void launch_default(Submenu M) {
+
+            var FAKE_NAMES = new ArrayList<String>();
+            FAKE_NAMES.add("ROBERTUCCIO");
+            FAKE_NAMES.add("FILIBERTA");
+
+            var FAKE_URLS = new ArrayList<String>();
+            FAKE_URLS.add("warrior.png");
+            FAKE_URLS.add("astrologer.png");
+
+            var FAKE_MAP = new ArrayList<String>();
+            FAKE_MAP.add("map_islands.csv");
+
+
+            M.setGameInstance(new Simulation(FAKE_NAMES,FAKE_URLS, FAKE_MAP));
+            try {
+                M.getStage().close();
+                getGameInstance().start(getStage());
+                getStage().setAlwaysOnTop(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
 
