@@ -1,18 +1,21 @@
 package units.shooter_developers;
 
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.layout.HBox;
+import javafx.geometry.Pos;
+import javafx.scene.layout.*;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-public class Map_selection_menu extends HBox {
+public class Map_selection_menu extends GridPane {
     double _width, _height;
     Choice_Box CB_MAP;
     Map<String, String> Map_URL;
     Map<String, String> Map_CSV;
+
+
 
     SimpleBooleanProperty all_set = new SimpleBooleanProperty(false);
 
@@ -42,9 +45,9 @@ public class Map_selection_menu extends HBox {
 
         CB_MAP = new Choice_Box(Map_URL,1,1);
 
-        all_set.bind(CB_MAP.comboBox.getSelectionModel().selectedItemProperty().isNull());
+        all_set.bind(CB_MAP.getComboBox().getSelectionModel().selectedItemProperty().isNull());
 
-        getChildren().add(CB_MAP);
+        add(CB_MAP,1,1);
     }
 
 
@@ -60,6 +63,8 @@ public class Map_selection_menu extends HBox {
         return L;
 
     }
+
+
 
 
 

@@ -280,7 +280,6 @@ public class Simulation extends Application {
                         game_menu.start(_stage);
                         startSimulation();
                     }
-                    /********** temporal controls added to check the effects of the simulation stopping */
                     /*          remove where are not necessary any more                                 */
                     case P -> {
                         var game_menu = new GameMenu(this);
@@ -289,7 +288,6 @@ public class Simulation extends Application {
                         var game_menu = new GameMenu(this);
                         startSimulation();
                     }
-                    /************************************************************************************/
                 }
             }
         });}
