@@ -10,7 +10,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import units.shooter_developers.menu.GameMenu;
-import units.shooter_developers.menu.WinnerWindow;
+
 import units.shooter_developers.settings.Custom_Settings;
 
 import java.io.IOException;
@@ -26,26 +26,60 @@ public class Simulation extends Application {
     private final Pane root = new Pane();
     private  Stage _stage;
 
-
-    /* Create a rectangle */
+    /* Sprites */
     private Sprite Player_1 ;
     private Sprite Player_2;
 
+    /* Timers and scene */
     private Scene _scene;
     private AnimationTimer _timer;
 
-
-
+    /* Window dimensions */
     double HEIGHT;
     double WIDTH;
 
+    /* Scaling */
     Pair<Double,Double> scaling_factors;
+
+    /* Map */
     Map R;
 
+    /* Map */
+    List<String> _players_names;
+    List<String> _players_urls_sprite;
+    List<String> _map_url;
+
+
+    public Simulation(List<String> players_names ,  List<String> players_urls_sprite,List<String> map_url )
+    {
+        this._players_names = players_names;
+        this._players_urls_sprite = players_urls_sprite;
+        this._map_url = map_url;
+
+        System.out.println(get_i_player_name(0) + get_i_player_name(1) + get_map_url() );
+    }
+
+    public String get_i_player_name(int index)
+    {
+        System.out.println(_players_names.get(index));
+        return _players_names.get(index);
+    }
+
+    public String get_i_urls_sprite(int index)
+    {
+        System.out.println(_players_urls_sprite.get(index));
+        return _players_urls_sprite.get(index);
+    }
+
+    public String get_map_url()
+    {
+        System.out.println(_map_url.get(0));
+        return _map_url.get(0);
+    }
 
 
     private void createContent() throws IOException{
-        create_frame(false);
+        create_frame();
         create_map();
         create_players();
         create_teleports();
@@ -59,7 +93,7 @@ public class Simulation extends Application {
     private void create_teleports() {
 
         var T1  = new Teleport(root,  Custom_Settings.URL_TELEPORT,  R, scaling_factors, "T1");
-        var T2  = new Teleport(root,  Custom_Settings.URL_TELEPORT,  R, scaling_factors,"T2");
+        var T2  = new Teleport(root,  Custom_Settings.URL_TELEPORT,  R, scaling_factors, "T2");
 
 
         T1.setDestination(T2);
@@ -68,25 +102,19 @@ public class Simulation extends Application {
     }
 
     private void create_map() throws IOException {
-        R = new Map(root, "map_islands.csv", WIDTH,HEIGHT);
+        R = new Map(root, get_map_url(), WIDTH,HEIGHT);
     }
 
 
 
     private void create_players() {
-        Player_1 = new Sprite(root,R , scaling_factors, "astrologer.png",4, 1 , "P1", Direction.RIGHT);
-        Player_2 = new Sprite(root,R, scaling_factors, "artist.png",    4, 1,  "P2", Direction.LEFT);
+        Player_1 = new Sprite(root,R , scaling_factors, get_i_urls_sprite(0),4, 1 , "P1", Direction.RIGHT, get_i_player_name(0));
+        Player_2 = new Sprite(root,R, scaling_factors, get_i_urls_sprite(1),    4, 1,   "P2", Direction.LEFT, get_i_player_name(1));
     }
 
-    private void create_frame(boolean full_screen) {
+    private void create_frame() {
 
-        /* Compute the bounds of the screen to set the dimension of the window */
-        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 
-        /* Set the window dimension accordingly to the boolean variable full_screen
-        WIDTH =  full_screen?   (int) screenBounds.getWidth() : Custom_Settings.DEFAULT_X;
-        HEIGHT = full_screen?   (int) screenBounds.getHeight() : Custom_Settings.DEFAULT_Y;
-        */
         WIDTH =  _stage.getWidth();
         HEIGHT = _stage.getHeight();
 
@@ -207,17 +235,15 @@ public class Simulation extends Application {
     private void remove_dead_objects() {
         root.getChildren().removeIf(node -> (node instanceof Pictured_Object) && ((Pictured_Object)node)._isDead.getValue());
 
-        if (Player_1._isDead.getValue() || Player_1._isDead.getValue())
+        if (Player_1._isDead.getValue() || Player_2._isDead.getValue())
         {
-            System.out.println("GIOCO FINITO!");
+            //System.out.println("GIOCO FINITO!");
 
-
-
-
-            // System.out.println("One of the player is dead");
-            // LANCIA UN'ALTRA "SCENA"
             this.stopSimulation();
-            var win_screen = new WinnerWindow(WIDTH, HEIGHT, "player", "warrior.png");
+
+            var win_screen =  Player_2._isDead.getValue() ? new WinnerWindow(WIDTH, HEIGHT,  Player_1) :
+                                                                         new WinnerWindow(WIDTH, HEIGHT, Player_2);
+
             win_screen.start(_stage);
         }
     }
