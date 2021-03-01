@@ -1,4 +1,4 @@
-package units.shooter_developers;
+package units.shooter_developers.menu;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.Transition;
@@ -18,7 +18,6 @@ import javafx.scene.text.Text;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import units.shooter_developers.menu.GameMenu;
 
 public class WinnerWindow extends Application{
     WinnerScreenObject _content;
