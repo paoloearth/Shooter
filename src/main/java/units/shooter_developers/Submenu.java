@@ -59,6 +59,8 @@ public class Submenu extends Menu{
 
 
             P_buttons.getLaunch_simulation().disableProperty().bind(P_map.all_setProperty().or(P_menu.all_setProperty()));
+
+            P_buttons.getLaunch_simulation().setOnAction(event -> launch_simulation(M));
             P_buttons.getLaunch_default().setOnAction(event -> launch_default(M));
 
 

@@ -177,7 +177,6 @@ public class Simulation extends Application {
 
                                     p.translate(R);
 
-
                                     if (p.intersect(Player_1)) p.update(R, Player_1);
                                     if (p.intersect(Player_2)) p.update(R, Player_2);
                                 }
@@ -280,7 +279,7 @@ public class Simulation extends Application {
                         game_menu.start(_stage);
                         startSimulation();
                     }
-                    /*          remove where are not necessary any more                                 */
+                    /*  remove where are not necessary any more                                 */
                     case P -> {
                         var game_menu = new GameMenu(this);
                     }
