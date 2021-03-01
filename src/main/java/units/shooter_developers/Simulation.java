@@ -232,7 +232,6 @@ public class Simulation extends Application {
 
         if (Player_1._isDead.getValue() || Player_2._isDead.getValue())
         {
-            //System.out.println("GIOCO FINITO!");
 
             this.stopSimulation();
 
@@ -259,17 +258,17 @@ public class Simulation extends Application {
         scene.addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
             {
                 switch (ke.getCode()) {
-                    case UP    ->  s.setGoNorth(true);
-                    case DOWN  ->  s.setGoSouth(true);
-                    case LEFT  ->  s.setGoWest(true);
-                    case RIGHT ->  s.setGoEast(true);
-                    case ENTER ->  s.shoot(root);
+                    case UP    ->  p.setGoNorth(true);
+                    case DOWN  ->  p.setGoSouth(true);
+                    case LEFT  ->  p.setGoWest(true);
+                    case RIGHT ->  p.setGoEast(true);
+                    case ENTER ->  p.shoot(root);
 
-                    case W    ->  p.setGoNorth(true);
-                    case S    ->  p.setGoSouth(true);
-                    case A    ->  p.setGoWest(true);
-                    case D    ->  p.setGoEast(true);
-                    case SPACE -> p.shoot(root);
+                    case W    ->  s.setGoNorth(true);
+                    case S    ->  s.setGoSouth(true);
+                    case A    ->  s.setGoWest(true);
+                    case D    ->  s.setGoEast(true);
+                    case SPACE -> s.shoot(root);
 
                     case ESCAPE -> {
                         var game_menu = new GameMenu(this);
@@ -300,7 +299,7 @@ public class Simulation extends Application {
 
 
 
-    private void addKeyHandler_RELEASED(Scene scene, Sprite s, Sprite p)
+    private void addKeyHandler_RELEASED(Scene scene, Sprite p, Sprite s)
     {
         scene.addEventHandler(KeyEvent.KEY_RELEASED, ke -> {
             {
