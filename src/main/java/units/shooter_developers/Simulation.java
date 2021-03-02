@@ -159,53 +159,58 @@ public class Simulation extends Application {
 
         /* Create timer */
         AnimationTimer timer = new AnimationTimer() {
+            private long last_update = 0;
             @Override
             public void handle(long now) {
 
-                all_sprites().forEach(
-                        s ->{
-                            switch (s._type)
-                            {
-                                case "SPRITE" -> {
+                if(now-last_update >= 4_000_000) {
 
-                                    ((Sprite) s).move(R);
+                    all_sprites().forEach(
+                            s -> {
+                                switch (s._type) {
+                                    case "SPRITE" -> {
+
+                                        ((Sprite) s).move(R);
+                                    }
+
+                                    case "PROJECTILE" -> {
+
+                                        var p = (Projectile) s;
+
+                                        p.translate(R);
+
+                                        if (p.intersect(Player_1)) p.update(R, Player_1);
+                                        if (p.intersect(Player_2)) p.update(R, Player_2);
+                                    }
+
+                                    case "TELEPORT" -> {
+                                        var t = (Teleport) s;
+
+                                        if (t.intersect(Player_1)) t.update(R, Player_1);
+                                        if (t.intersect(Player_2)) t.update(R, Player_2);
+                                    }
+
+
+                                    case "BONUS" -> {
+
+                                        var b = (Bonus_Generator) s;
+
+                                        if (b.intersect(Player_1)) b.update(R, Player_1);
+                                        if (b.intersect(Player_2)) b.update(R, Player_2);
+
+                                    }
+
+
                                 }
-
-                                case "PROJECTILE" -> {
-
-                                    var p = (Projectile) s;
-
-                                    p.translate(R);
-
-                                    if (p.intersect(Player_1)) p.update(R, Player_1);
-                                    if (p.intersect(Player_2)) p.update(R, Player_2);
-                                }
-
-                                case "TELEPORT" -> {
-                                    var t = (Teleport) s;
-
-                                    if(t.intersect(Player_1)) t.update(R,Player_1);
-                                    if(t.intersect(Player_2)) t.update(R,Player_2);
-                                }
-
-
-                                case "BONUS" -> {
-
-                                    var b = (Bonus_Generator) s;
-
-                                    if(b.intersect(Player_1)) b.update(R,Player_1);
-                                    if(b.intersect(Player_2)) b.update(R,Player_2);
-
-                                }
-
-
                             }
-                        }
-                );
-                try {
-                    remove_dead_objects();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    );
+                    try {
+                        remove_dead_objects();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    last_update = now;
                 }
 
             }
