@@ -52,7 +52,7 @@ public class Custom_Settings {
     public static final String URL_MAP_DESERT_CSV     = "map_desert.csv";
 
     public static final String URL_COMMANDS_P1     = "WASD.png";
-    public static final String URL_COMMANDS_P2     = "WASD.png";
+    public static final String URL_COMMANDS_P2     = "arrows.png";
 
 
 
