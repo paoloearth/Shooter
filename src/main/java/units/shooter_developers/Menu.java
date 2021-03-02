@@ -18,6 +18,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -338,17 +339,25 @@ public abstract class Menu extends Application {
     /************************ TITLE ****************************************/
     private class Title extends StackPane {
         public Title(String name) {
-            Rectangle bg = new Rectangle(0.357*getMenuWidth(), 0.1*getMenuHeight());
-            bg.setStroke(Color.WHITE);
-            bg.setStrokeWidth(2);
-            bg.setFill(null);
+            Rectangle box = new Rectangle(0.357*getMenuWidth(), 0.1*getMenuHeight());
+            box.setStroke(Color.WHITE);
+            box.setStrokeWidth(2);
+            box.setFill(null);
 
             Text text = new Text(name);
             text.setFill(Color.WHITE);
             text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, 0.0833*getMenuHeight()));
 
             setAlignment(Pos.CENTER);
-            getChildren().addAll(bg, text);
+
+            //Text is transformed into an image and redimensionated
+            var params = new SnapshotParameters();
+            params.setFill(Color.TRANSPARENT);
+            var textImage = new ImageView(text.snapshot(params, null));
+            if(textImage.getBoundsInLocal().getWidth() > box.getWidth())
+                textImage.setFitWidth(box.getWidth());
+
+            getChildren().addAll(box, textImage);
         }
     }
 
@@ -452,34 +461,42 @@ public abstract class Menu extends Application {
                     new Stop(0.9, item_background_color),
                     new Stop(1, item_selected_color_lateral));
 
-            Rectangle bg = new Rectangle(effective_item_width*getMenuWidth(),effective_item_height*getMenuHeight());
-            bg.setOpacity(0.4);
+            Rectangle box = new Rectangle(effective_item_width*getMenuWidth(),effective_item_height*getMenuHeight());
+            box.setOpacity(0.4);
 
             Text text = new Text(name);
             text.setFill(text_color);
             text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333* _stage_height *_height_ratio));
 
+            //Text is transformed into an image and redimensioned
+            var params = new SnapshotParameters();
+            params.setFill(Color.TRANSPARENT);
+            var textImage = new ImageView(text.snapshot(params, null));
+            if(textImage.getBoundsInLocal().getWidth() > box.getWidth()) {
+                textImage.setFitWidth(box.getWidth());
+            }
+
             setAlignment(Pos.CENTER_LEFT);
 
             setOnMouseEntered(event -> {
-                bg.setFill(gradient);
+                box.setFill(gradient);
                 text.setFill(text_selected_color);
             });
 
             setOnMouseExited(event -> {
-                bg.setFill(item_background_color);
+                box.setFill(item_background_color);
                 text.setFill(text_color);
             });
 
             setOnMousePressed(event -> {
-                bg.setFill(item_clicked_color);
+                box.setFill(item_clicked_color);
             });
 
             setOnMouseReleased(event -> {
-                bg.setFill(gradient);
+                box.setFill(gradient);
             });
 
-            getChildren().addAll(bg, text);
+            getChildren().addAll(box, textImage);
 
         }
 
@@ -610,16 +627,23 @@ public abstract class Menu extends Application {
             Color text_color = Color.DARKGREY;
             Color background_color = Color.BLACK;
 
-            Rectangle bg = new Rectangle(effective_width_ratio*getMenuWidth(),effective_height_ratio*getMenuHeight());
-            bg.setOpacity(0.3);
-            bg.setFill(background_color);
+            Rectangle box = new Rectangle(effective_width_ratio*getMenuWidth(),effective_height_ratio*getMenuHeight());
+            box.setOpacity(0.3);
+            box.setFill(background_color);
 
             Text text = new Text(name);
             text.setFill(text_color);
             text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333*getMenuHeight()));
 
+            //Text is transformed into an image and redimensioned
+            var params = new SnapshotParameters();
+            params.setFill(Color.TRANSPARENT);
+            var textImage = new ImageView(text.snapshot(params, null));
+            if(textImage.getBoundsInLocal().getWidth() > box.getWidth())
+                textImage.setFitWidth(box.getWidth());
+
             setAlignment(Pos.CENTER_LEFT);
-            getChildren().addAll(bg, text);
+            getChildren().addAll(box, textImage);
         }
     }
 
