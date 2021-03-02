@@ -108,8 +108,6 @@ public abstract class Menu extends Application {
         title.setTranslateX(0.0476*getMenuWidth() + getPositionX());
         title.setTranslateY(0.333*getMenuHeight() + getPositionY());
 
-        generateMenuBoxIfNotExist();
-
         root.getChildren().addAll(title);
 
     }
@@ -146,14 +144,17 @@ public abstract class Menu extends Application {
     /************************** ELEMENTS MANAGEMENT *****************************/
 
     public void addItem(String new_menu_item){
+        generateMenuBoxIfNotExist();
         getItemsBox().addItem(new_menu_item);
     }
 
     public void addUnanimatedItem(String new_menu_item){
+        generateMenuBoxIfNotExist();
         getItemsBox().addUnanimatedItem(new_menu_item);
     }
 
     public void addSelectableItem(String item_name, String ... selection_tags){
+        generateMenuBoxIfNotExist();
         ArrayList<String> tag_list= new ArrayList<String>();
         for(var tag:selection_tags){ tag_list.add(tag); }
 
