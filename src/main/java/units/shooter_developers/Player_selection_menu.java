@@ -1,6 +1,7 @@
 package units.shooter_developers;
 
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.geometry.Pos;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.RowConstraints;
 
@@ -23,6 +24,8 @@ public class Player_selection_menu extends Submenu_component {
     {
         super(width, height);
 
+        setAlignment(Pos.CENTER);
+
         create_2_columns_layout();
 
         create_menu();
@@ -30,10 +33,6 @@ public class Player_selection_menu extends Submenu_component {
         set_bindings();
     }
 
-
-    public SimpleBooleanProperty get_AllSetProperty() {
-        return all_set;
-    }
 
     private void create_menu() {
 
@@ -56,8 +55,8 @@ public class Player_selection_menu extends Submenu_component {
 
     private void create_textboxes() {
         /* TEXT BOX & ADD them to GRIDPANE in right position*/
-        TB_P1 = new Text_Box();
-        TB_P2 = new Text_Box();
+        TB_P1 = new Text_Box(Custom_Settings.URL_COMMANDS_P1);
+        TB_P2 = new Text_Box(Custom_Settings.URL_COMMANDS_P2);
         add(TB_P1, 0,0);
         add(TB_P2, 1,0);
     }
@@ -99,10 +98,10 @@ public class Player_selection_menu extends Submenu_component {
 
     private void set_row_costraints() {
         RowConstraints row1 = new RowConstraints();
-        row1.setPercentHeight(35);
+        row1.setPercentHeight(50);
 
         RowConstraints row2 = new RowConstraints();
-        row2.setPercentHeight(75);
+        row2.setPercentHeight(50);
 
         getRowConstraints().addAll(row1, row2);
     }
