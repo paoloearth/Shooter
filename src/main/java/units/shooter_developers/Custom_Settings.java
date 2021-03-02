@@ -57,5 +57,9 @@ public class Custom_Settings {
     public static final String WARRIOR     = "Warrior";
     public static final String ASTROLOGER     = "Astrologer";
 
+    public static final String DESERT     = "Desert";
+    public static final String ISLAND     = "Islands";
+
+
 
 }
