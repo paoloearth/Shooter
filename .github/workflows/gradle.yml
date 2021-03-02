@@ -13,16 +13,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      _JAVA_OPTIONS: ':-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw'
+      DISPLAY: ':99.0'
 
     steps:
     - uses: actions/checkout@v2
     - name: Set the correct JDK(15.0.1)
       uses: actions/setup-java@v1
       with:
+        services: xvfb
         java-version: 15.0.1
-    - name: Set headless configuration
-      run:  sudo apt install xvfb; export DISPLAY=:99.0; export _JAVA_OPTIONS="-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw"
     - name: Grant execute permission for gradlew
       run:  chmod +x gradlew
     - name: Build with Gradle
-      run: xvfb-run ./gradlew check
+      run: ./gradlew check
