@@ -1,15 +1,16 @@
 package units.shooter_developers;
 
+import javafx.scene.input.KeyCode;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.testfx.api.FxRobot;
 import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -56,6 +57,35 @@ class Simulation_Tests {
     void width_is_correct_width(FxRobot robot) {
       Assertions.assertThat(SIMULATION.WIDTH).isEqualTo(1000);
     }
+
+    @Test
+    void height_is_correct_height(FxRobot robot) {
+        Assertions.assertThat(SIMULATION.HEIGHT).isEqualTo(600);
+    }
+
+    @Test
+    void movement(FxRobot robot) {
+
+
+        for (int i = 0; i < 10; i++) {
+            robot.push(KeyCode.DOWN);
+        }
+
+
+
+    }
+
+
+
+
+
+    @ParameterizedTest
+    @ValueSource(ints = {4,6,24})
+    void Test_if_tests_works(int number) {
+        assertEquals(number, number);
+    }
+
+
 
 
 
