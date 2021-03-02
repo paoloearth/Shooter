@@ -165,15 +165,6 @@ public abstract class Menu extends Application {
         _root.getChildren().add(generic_node);
     }
 
-    public void removeTitle(){
-        Title title_object = (Title)_root.getChildren().stream()
-                .filter(e -> e instanceof Title)
-                .findFirst()
-                .orElse(null);
-
-        _root.getChildren().remove(title_object);
-    }
-
     private void generateMenuBoxIfNotExist(){
         MenuBox menu_box = (MenuBox) _root.getChildren().stream()
                 .filter(e -> e instanceof MenuBox)
@@ -187,7 +178,6 @@ public abstract class Menu extends Application {
 
             _root.getChildren().addAll(vbox);
         }
-
     }
 
     public void removeMenuBox(){
@@ -200,17 +190,25 @@ public abstract class Menu extends Application {
     }
 
     public void setTitle(String title){
+        removeTitle();
+
         Menu.Title new_title = new Menu.Title(title);
-        Title old_title = getTitle();
 
         new_title.setTranslateX(0.0476*getMenuWidth() + getPositionX());
         new_title.setTranslateY(0.333*getMenuHeight() + getPositionY());
 
-        var index = _root.getChildren().indexOf(old_title);
-        _root.getChildren().remove(old_title);
-        _root.getChildren().add(index, new_title);
+        _root.getChildren().add(new_title);
     }
 
+    public void removeTitle(){
+        var title_object = _root.getChildren().stream()
+                .filter(e -> e instanceof Title)
+                .findFirst()
+                .orElse(null);
+
+        if(title_object != null)
+            _root.getChildren().remove(title_object);
+    }
 
     /************************** SET/GET METHODS *****************************/
 
