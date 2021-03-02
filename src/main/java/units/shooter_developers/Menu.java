@@ -195,10 +195,7 @@ public abstract class Menu extends Application {
     }
 
     public void removeTitle(){
-        var title_object = _root.getChildren().stream()
-                .filter(e -> e instanceof Title)
-                .findFirst()
-                .orElse(null);
+        var title_object = getTitle();
 
         if(title_object != null)
             _root.getChildren().remove(title_object);
@@ -289,17 +286,27 @@ public abstract class Menu extends Application {
     }
 
     private Title getTitle() {
-        return (Title) _root.getChildren().stream()
+        var title_object = _root.getChildren().stream()
                 .filter(e -> e instanceof Title)
                 .findFirst()
                 .orElse(null);
+
+        if(title_object == null)
+            return null;
+        else
+            return (Title)title_object;
     }
 
-        public MenuBox getItemsBox() {
-        return (MenuBox) _root.getChildren().parallelStream()
+    public MenuBox getItemsBox() {
+        var menubox_object = _root.getChildren().parallelStream()
                 .filter(e -> e instanceof MenuBox)
                 .findFirst()
                 .orElse(null);
+
+        if(menubox_object == null)
+            return null;
+        else
+            return (MenuBox) menubox_object;
     }
 
 
@@ -312,10 +319,15 @@ public abstract class Menu extends Application {
     }
 
     public SelectableItem getSelectableItem(String name){
-        return getSelectableItems().stream()
+        var selectableitem_object = getSelectableItems().stream()
                 .filter(e -> e.getName().equals(name))
                 .findFirst()
                 .orElse(null);
+
+        if(selectableitem_object == null)
+            return null;
+        else
+            return (SelectableItem)selectableitem_object;
     }
 
     /** GAME INSTANCE **/
