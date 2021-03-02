@@ -62,7 +62,7 @@ public abstract class Menu extends Application {
     /************************** CONSTRUCTORS *****************************/
 
     public Menu() {
-        this(tryReadWidth(), tryReadHeight());
+        this(tryReadingWidth(), tryReadingHeight());
     }
 
     public Menu(double stage_width, double stage_height) {
@@ -87,6 +87,7 @@ public abstract class Menu extends Application {
 
     private void createContent(double stage_width, double stage_height) {
         Pane root = new Pane();
+        _root = root;
 
         setStageDimensions(stage_width, stage_height);
 
@@ -107,17 +108,13 @@ public abstract class Menu extends Application {
         title.setTranslateX(0.0476*getMenuWidth() + getPositionX());
         title.setTranslateY(0.333*getMenuHeight() + getPositionY());
 
-        Menu.MenuBox vbox = new Menu.MenuBox();
-        vbox.setTranslateX(0.0952*getMenuWidth() + getPositionX());
-        vbox.setTranslateY(0.5*getMenuHeight() + getPositionY());
+        generateMenuBoxIfNotExist();
 
-        root.getChildren().addAll(title, vbox);
-
-        _root = root;
+        root.getChildren().addAll(title);
 
     }
 
-    private static double tryReadWidth(){
+    private static double tryReadingWidth(){
         File configFile = new File("config.ini");
         Properties config = new Properties();
 
@@ -131,7 +128,7 @@ public abstract class Menu extends Application {
         }
     }
 
-    private static double tryReadHeight(){
+    private static double tryReadingHeight(){
         File configFile = new File("config.ini");
         Properties config = new Properties();
 
@@ -174,6 +171,22 @@ public abstract class Menu extends Application {
                 .orElse(null);
 
         _root.getChildren().remove(title_object);
+    }
+
+    private void generateMenuBoxIfNotExist(){
+        MenuBox menu_box = (MenuBox) _root.getChildren().stream()
+                .filter(e -> e instanceof MenuBox)
+                .findFirst()
+                .orElse(null);
+
+        if(menu_box == null){
+            Menu.MenuBox vbox = new Menu.MenuBox();
+            vbox.setTranslateX(0.0952*getMenuWidth() + getPositionX());
+            vbox.setTranslateY(0.5*getMenuHeight() + getPositionY());
+
+            _root.getChildren().addAll(vbox);
+        }
+
     }
 
     public void removeMenuBox(){
