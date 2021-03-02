@@ -31,12 +31,12 @@ public class Map_selection_menu extends Submenu_component {
         /* DOUBLE MAP in order to store both the name-> csv mapping & name -> png mapping */
 
         Map_URL = new Hashtable<>();
-        Map_URL.put("Map Island","map_island.png");
-        Map_URL.put("Map Desert","map_desert.png");
+        Map_URL.put(Custom_Settings.ISLAND,Custom_Settings.URL_MAP_ISLAND_PNG);
+        Map_URL.put(Custom_Settings.DESERT,Custom_Settings.URL_MAP_DESERT_PNG);
 
         Map_CSV = new Hashtable<>();
-        Map_CSV.put("Map Island","map_islands.csv");
-        Map_CSV.put("Map Desert","map_desert.csv");
+        Map_CSV.put(Custom_Settings.ISLAND,Custom_Settings.URL_MAP_ISLAND_CSV);
+        Map_CSV.put(Custom_Settings.DESERT,Custom_Settings.URL_MAP_DESERT_CSV);
 
         CB_MAP = new Choice_Box(Map_URL,1,1);
 

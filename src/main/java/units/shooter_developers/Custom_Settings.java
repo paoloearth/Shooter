@@ -39,4 +39,27 @@ public class Custom_Settings {
     public static final String URL_TELEPORT   = "teleport.png";
     public static final String URL_PROJECTILE = "cannon_ball.png";
     public static final String URL_HEART      = "bonus.png";
+
+    public static final String URL_ARTIST       = "artist.png";
+    public static final String URL_WARRIOR      = "warrior.png";
+    public static final String URL_ASTROLOGER   = "astrologer.png";
+
+
+    public static final String URL_MAP_ISLAND_PNG      =  "map_island.png";
+    public static final String URL_MAP_DESERT_PNG      =  "map_desert.png";
+
+    public static final String URL_MAP_ISLAND_CSV     = "map_islands.csv";
+    public static final String URL_MAP_DESERT_CSV     = "map_desert.csv";
+
+    /*  DISPLAYED NAMES */
+
+    public static final String ARTIST     = "Artist";
+    public static final String WARRIOR     = "Warrior";
+    public static final String ASTROLOGER     = "Astrologer";
+
+    public static final String DESERT     = "Desert";
+    public static final String ISLAND     = "Islands";
+
+
+
 }

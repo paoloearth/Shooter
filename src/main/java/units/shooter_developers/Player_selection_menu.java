@@ -1,9 +1,7 @@
 package units.shooter_developers;
 
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.geometry.Insets;
 import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
 import java.util.ArrayList;
@@ -74,9 +72,9 @@ public class Player_selection_menu extends Submenu_component {
     private Map<String, String> initialize_dictionary() {
         Name_URL = new Hashtable<>();
 
-        Name_URL.put("Artist","artist.png");
-        Name_URL.put("Astrologer","astrologer.png");
-        Name_URL.put("Warrior","warrior.png");
+        Name_URL.put(Custom_Settings.ARTIST,Custom_Settings.URL_ARTIST);
+        Name_URL.put(Custom_Settings.ASTROLOGER,Custom_Settings.URL_ASTROLOGER);
+        Name_URL.put(Custom_Settings.WARRIOR,Custom_Settings.URL_WARRIOR);
 
         return Name_URL;
     }

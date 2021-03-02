@@ -45,9 +45,9 @@ public class Submenu extends Menu{
 
             this.setPrefSize(width, height);
 
-            P_menu     = new Player_selection_menu( _width,         _height / 2);
-            P_map      = new Map_selection_menu(_width * .8,   _height / 2);
-            P_buttons  = new Button_selection_menu(_width * .2,   _height / 2);
+            P_menu     = new Player_selection_menu( _width,         _height / 2);    // THE TOP WILL OCCUPY HALF THE HEIGHT
+            P_map      = new Map_selection_menu(_width * .7,   _height / 2);   // THE BOTTOM HALF WILL BE SPLIT 70% for MAP & 25% w
+            P_buttons  = new Button_selection_menu(_width * .25,   _height / 2);
 
             P_map.setAlignment(Pos.TOP_CENTER);
             P_buttons.setAlignment(Pos.CENTER_LEFT);
@@ -75,15 +75,15 @@ public class Submenu extends Menu{
         private void launch_default(Submenu M) {
 
             var FAKE_NAMES = new ArrayList<String>();
-            FAKE_NAMES.add("ROBERTUCCIO");
-            FAKE_NAMES.add("FILIBERTA");
+            FAKE_NAMES.add("FIZZ");
+            FAKE_NAMES.add("BUZZ");
 
             var FAKE_URLS = new ArrayList<String>();
-            FAKE_URLS.add("warrior.png");
-            FAKE_URLS.add("astrologer.png");
+            FAKE_URLS.add(Custom_Settings.URL_ARTIST);
+            FAKE_URLS.add(Custom_Settings.URL_WARRIOR);
 
             var FAKE_MAP = new ArrayList<String>();
-            FAKE_MAP.add("map_islands.csv");
+            FAKE_MAP.add(Custom_Settings.URL_MAP_ISLAND_CSV);
 
 
             M.setGameInstance(new Simulation(FAKE_NAMES,FAKE_URLS, FAKE_MAP));

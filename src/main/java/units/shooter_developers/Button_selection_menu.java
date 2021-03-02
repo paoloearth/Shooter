@@ -14,14 +14,13 @@ public class Button_selection_menu extends StackPane {
 
     public Button_selection_menu(double width, double height)
     {
-        setPrefSize(_width * .2,   _height / 2);
-
         this._width = width;
-        this._height = height;
+        this._height =height;
 
-        this.setMinSize(_width,_height);
-        this.setPrefSize(_width,_height);
-        this.setMaxSize(_width,_height);
+        setMinSize(_width,_height);
+        setPrefSize(_width,_height);
+        setMaxSize(_width,_height);
+
 
         setAlignment(Pos.CENTER_LEFT);
 
@@ -35,8 +34,8 @@ public class Button_selection_menu extends StackPane {
         launch_simulation.setAlignment(Pos.TOP_LEFT);
 
         launch_default = new Button();
-        launch_default.setText("LAUNCH with launch_default parameters");
-        launch_default.setAlignment(Pos.TOP_LEFT);
+        launch_default.setText("DEFAULT");
+       launch_default.setAlignment(Pos.TOP_LEFT);
 
         V.getChildren().add(launch_simulation);
         V.getChildren().add(launch_default);
