@@ -32,7 +32,7 @@ public class Object_Animation extends Transition {
         this.height    = height;
         setCycleDuration(duration);
         setInterpolator(Interpolator.LINEAR);
-        setAutoReverse(true);
+        setAutoReverse(false);
     }
 
 
