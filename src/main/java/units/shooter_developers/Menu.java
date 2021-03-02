@@ -104,12 +104,6 @@ public abstract class Menu extends Application {
             System.out.println("Menu background image not found");
         }
 
-        Menu.Title title = new Menu.Title("title_not_found");
-        title.setTranslateX(0.0476*getMenuWidth() + getPositionX());
-        title.setTranslateY(0.333*getMenuHeight() + getPositionY());
-
-        root.getChildren().addAll(title);
-
     }
 
     private static double tryReadingWidth(){
