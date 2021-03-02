@@ -1,20 +1,62 @@
 package units.shooter_developers;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.testfx.api.FxRobot;
+import org.testfx.assertions.api.Assertions;
+import org.testfx.framework.junit5.ApplicationExtension;
+import org.testfx.framework.junit5.Start;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.io.IOException;
+import java.util.ArrayList;
+
+@ExtendWith(ApplicationExtension.class)
+class Simulation_Tests {
+
+    private Simulation SIMULATION;
+    private Stage STAGE;
+
+    /**
+     * Will be called with {@code @Before} semantics, i. e. before each test method.
+     *
+     * @param stage - Will be injected by the test runner.
+     */
+
+    @Start
+    private void start(Stage stage) throws IOException {
+
+        STAGE = stage;
+
+        var FAKE_NAMES = new ArrayList<String>();
+        FAKE_NAMES.add("ROBERTUCCIO");
+        FAKE_NAMES.add("FILIBERTA");
+
+        var FAKE_URLS = new ArrayList<String>();
+        FAKE_URLS.add("warrior.png");
+        FAKE_URLS.add("astrologer.png");
+
+        var FAKE_MAP = new ArrayList<String>();
+        FAKE_MAP.add("map_islands.csv");
+
+        STAGE.setWidth(1000);
+        STAGE.setHeight(600);
 
 
-public class Simulation_Tests   {
+        SIMULATION = new Simulation(FAKE_NAMES,FAKE_URLS, FAKE_MAP);
+        SIMULATION.start(STAGE);
 
-    @ParameterizedTest
-    @ValueSource(ints = {4})
-    void Test_if_tests_works(int number) {
-
-        assertEquals(number, number);
     }
+
+    @Test
+    void width_is_correct_width(FxRobot robot) {
+      Assertions.assertThat(SIMULATION.WIDTH).isEqualTo(1000);
+    }
+
 
 
 
