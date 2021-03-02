@@ -16,6 +16,7 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
+[![Build Status](https://travis-ci.com/paoloearth/Shooter.svg?token=s5s6Ee4HHvKbox1jnEF9&branch=main)](https://travis-ci.com/paoloearth/Shooter)
 
 <!-- PROJECT LOGO -->
 <br />
