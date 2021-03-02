@@ -4,15 +4,14 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-public class Player_selection_menu extends GridPane {
-    private double _width;
-    private double _height;
+public class Player_selection_menu extends Submenu_component {
 
     Choice_Box CB_P1;
     Choice_Box CB_P2;
@@ -20,26 +19,21 @@ public class Player_selection_menu extends GridPane {
     Text_Box TB_P1;
     Text_Box TB_P2;
 
-    SimpleBooleanProperty all_set = new SimpleBooleanProperty(false);
-
     Map<String, String> Name_URL;
 
     Player_selection_menu(double width, double height)
     {
-        set_height(height);
-        set_width(width);
-
-        set_padding();
-
-        fix_submenu_size_to_width_and_height();
+        super(width, height);
 
         create_2_columns_layout();
 
         create_menu();
+
+        set_bindings();
     }
 
 
-    public SimpleBooleanProperty all_setProperty() {
+    public SimpleBooleanProperty get_AllSetProperty() {
         return all_set;
     }
 
@@ -47,32 +41,39 @@ public class Player_selection_menu extends GridPane {
 
         Name_URL = initialize_dictionary();
 
-        /* CHOICE BOX  & ADD them to GRIDPANE in right position*/
+        create_choiceboxes();
 
+        create_textboxes();
+
+
+    }
+
+    private void create_choiceboxes() {
         CB_P1 = new Choice_Box( Name_URL,4,1);
         CB_P2 = new Choice_Box(Name_URL,4,1);
 
         add(CB_P1, 0,1);
         add(CB_P2, 1,1);
+    }
 
+    private void create_textboxes() {
         /* TEXT BOX & ADD them to GRIDPANE in right position*/
         TB_P1 = new Text_Box();
         TB_P2 = new Text_Box();
         add(TB_P1, 0,0);
         add(TB_P2, 1,0);
+    }
 
-
-        /* BINDINGS */
+    private void set_bindings() {
         all_set.bind( TB_P1.textField.textProperty().isEmpty()
                 .or(TB_P2.textField.textProperty().isEmpty())
                 .or(CB_P1.getComboBox().getSelectionModel().selectedItemProperty().isNull())
                 .or(CB_P2.getComboBox().getSelectionModel().selectedItemProperty().isNull()));
-
-
     }
 
     private Map<String, String> initialize_dictionary() {
         Name_URL = new Hashtable<>();
+
         Name_URL.put("Artist","artist.png");
         Name_URL.put("Astrologer","astrologer.png");
         Name_URL.put("Warrior","warrior.png");
@@ -81,22 +82,14 @@ public class Player_selection_menu extends GridPane {
     }
 
 
-    public void set_width(double _width)   { this._width = _width; }
-    public void set_height(double _height) { this._height = _height; }
 
-    private void fix_submenu_size_to_width_and_height() {
-        this.setMinSize(get_width(), get_height());
-        this.setPrefSize(get_width(), get_height());
-        this.setMaxSize(get_width(), get_height());
-    }
-
-    private void set_padding() {
-        setHgap(10);                                                //horizontal gap in pixels
-        setVgap(10);                                                //vertical gap in pixels
-        setPadding(new Insets(10, 10, 10, 10));  //margins around the whole grid
-    }
 
     private void create_2_columns_layout() {
+        set_column_costraints();
+        set_row_costraints();
+    }
+
+    private void set_column_costraints() {
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setPercentWidth(50);
 
@@ -105,37 +98,36 @@ public class Player_selection_menu extends GridPane {
 
         getColumnConstraints().addAll(column1, column2);
     }
-    public double get_width() {
-        return _width;
+
+    private void set_row_costraints() {
+        RowConstraints row1 = new RowConstraints();
+        row1.setPercentHeight(35);
+
+        RowConstraints row2 = new RowConstraints();
+        row2.setPercentHeight(75);
+
+        getRowConstraints().addAll(row1, row2);
     }
 
-    public double get_height() {
-        return _height;
-    }
 
 
     public List<String> get_players_names()
         {
-
                 var NAMES = new ArrayList<String>();
-
                 NAMES.add(TB_P1.get_value());
                 NAMES.add(TB_P2.get_value());
-
-
                 return NAMES;
-
         }
 
     public List<String> get_players_URL() {
-        var URL = new ArrayList<String>();
 
-
-        URL.add(Name_URL.get(CB_P1.get_value()));
-        URL.add(Name_URL.get(CB_P2.get_value()));
-
-        return URL;
+                var URL = new ArrayList<String>();
+                URL.add(Name_URL.get(CB_P1.get_value()));
+                URL.add(Name_URL.get(CB_P2.get_value()));
+                return URL;
     }
+
+
 
 
 

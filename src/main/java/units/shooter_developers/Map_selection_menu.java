@@ -9,8 +9,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-public class Map_selection_menu extends GridPane {
-    double _width, _height;
+public class Map_selection_menu extends Submenu_component {
+
     Choice_Box CB_MAP;
     Map<String, String> Map_URL;
     Map<String, String> Map_CSV;
@@ -21,23 +21,18 @@ public class Map_selection_menu extends GridPane {
 
     Map_selection_menu(double width, double height)
     {
-        this._width = width;
-        this._height = height;
-
-        this.setMinSize(_width,_height);
-        this.setPrefSize(_width,_height);
-        this.setMaxSize(_width,_height);
-
+        super(width,height);
         create_menu();
     }
 
 
     private void create_menu() {
 
+        /* DOUBLE MAP in order to store both the name-> csv mapping & name -> png mapping */
+
         Map_URL = new Hashtable<>();
         Map_URL.put("Map Island","map_island.png");
         Map_URL.put("Map Desert","map_desert.png");
-
 
         Map_CSV = new Hashtable<>();
         Map_CSV.put("Map Island","map_islands.csv");
@@ -51,9 +46,6 @@ public class Map_selection_menu extends GridPane {
     }
 
 
-    public SimpleBooleanProperty all_setProperty() {
-        return all_set;
-    }
 
     public List<String> get_map_data()
     {

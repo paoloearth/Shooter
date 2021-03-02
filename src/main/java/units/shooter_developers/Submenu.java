@@ -1,14 +1,13 @@
 package units.shooter_developers;
 
+import javafx.beans.binding.BooleanBinding;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.Flow;
 
 public class Submenu extends Menu{
     Submenu(Menu other_menu){
@@ -46,8 +45,8 @@ public class Submenu extends Menu{
 
             this.setPrefSize(width, height);
 
-            P_menu = new Player_selection_menu(  _width,         _height / 2);
-            P_map  = new Map_selection_menu(_width * .8,   _height / 2);
+            P_menu     = new Player_selection_menu( _width,         _height / 2);
+            P_map      = new Map_selection_menu(_width * .8,   _height / 2);
             P_buttons  = new Button_selection_menu(_width * .2,   _height / 2);
 
             P_map.setAlignment(Pos.TOP_CENTER);
@@ -57,16 +56,22 @@ public class Submenu extends Menu{
             getChildren().add(P_map);
             getChildren().add(P_buttons);
 
+            BooleanBinding property = P_map.get_AllSetProperty().or(P_menu.get_AllSetProperty());
 
-            P_buttons.getLaunch_simulation().disableProperty().bind(P_map.all_setProperty().or(P_menu.all_setProperty()));
+            disable_button_until_property_is_verified(property);
 
+            add_actions_to_buttons(M);
+        }
+
+        private void add_actions_to_buttons(Submenu M) {
             P_buttons.getLaunch_simulation().setOnAction(event -> launch_simulation(M));
             P_buttons.getLaunch_default().setOnAction(event -> launch_default(M));
-
-
-
-
         }
+
+        private void disable_button_until_property_is_verified(BooleanBinding property) {
+            P_buttons.getLaunch_simulation().disableProperty().bind(property);
+        }
+
         private void launch_default(Submenu M) {
 
             var FAKE_NAMES = new ArrayList<String>();
