@@ -25,5 +25,4 @@ jobs:
     - name: Grant execute permission for gradlew
       run:  chmod +x gradlew
     - name: Build with Gradle
-      uses: GabrielBB/xvfb-action@v1
       run:  ./gradlew check
