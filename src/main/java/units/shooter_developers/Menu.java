@@ -627,16 +627,23 @@ public abstract class Menu extends Application {
             Color text_color = Color.DARKGREY;
             Color background_color = Color.BLACK;
 
-            Rectangle bg = new Rectangle(effective_width_ratio*getMenuWidth(),effective_height_ratio*getMenuHeight());
-            bg.setOpacity(0.3);
-            bg.setFill(background_color);
+            Rectangle box = new Rectangle(effective_width_ratio*getMenuWidth(),effective_height_ratio*getMenuHeight());
+            box.setOpacity(0.3);
+            box.setFill(background_color);
 
             Text text = new Text(name);
             text.setFill(text_color);
             text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333*getMenuHeight()));
 
+            //Text is transformed into an image and redimensioned
+            var params = new SnapshotParameters();
+            params.setFill(Color.TRANSPARENT);
+            var textImage = new ImageView(text.snapshot(params, null));
+            if(textImage.getBoundsInLocal().getWidth() > box.getWidth())
+                textImage.setFitWidth(box.getWidth());
+
             setAlignment(Pos.CENTER_LEFT);
-            getChildren().addAll(bg, text);
+            getChildren().addAll(box, textImage);
         }
     }
 
