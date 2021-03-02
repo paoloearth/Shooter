@@ -20,7 +20,13 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 15.0.1
+    - name: Set headless configuration
+      run:  export DISPLAY=:99.0; export _JAVA_OPTIONS="-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw"
     - name: Grant execute permission for gradlew
       run:  chmod +x gradlew
     - name: Build with Gradle
+      run: |
+      sudo apt-get install -y xvfb libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0 libxcb-xinput0 libxcb-xfixes0
+      sudo /usr/bin/Xvfb $DISPLAY -screen 0 1280x1024x24 &
+    - name: RUN GRADLE
       run: ./gradlew check
