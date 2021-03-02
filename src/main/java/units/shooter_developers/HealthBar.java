@@ -14,12 +14,13 @@ public class HealthBar extends Map_Object{
 
     public HealthBar(Sprite S)
     {
-        this._width  =  S.get_actual_width();                                             // Width of HB is = to width of Sprite
+        this._width  =  S.get_actual_width();                                                    // Width of HB is = to width of Sprite
         this._height =  (int) (S.get_actual_height() * Custom_Settings.HB_PROPORTIONAL_WIDTH);   // Height of HB is 10%  of the height of Sprite
 
         // Create the 2 overlapping rectangles
         Red_rectangle = new Rectangle( 0, 0, _width, _height);
         Red_rectangle.setFill(Color.RED);
+        Red_rectangle.setStroke(Color.BLACK);
 
         Green_rectangle = new Rectangle( 0, 0, _width, _height);
         Green_rectangle.setFill(Color.LIMEGREEN);
