@@ -87,7 +87,11 @@ class Simulation_Tests {
 
 
 
-
+    @ParameterizedTest
+    @ValueSource(strings = "PER ME E LA CIPOLLA")
+    void Test_if_tests_works(String s) {
+        assertEquals(s, "PER ME E LA CIPOLLA");
+    }
 
 
 
