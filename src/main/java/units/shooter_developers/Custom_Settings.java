@@ -38,5 +38,5 @@ public class Custom_Settings {
     /*  URLS */
     public static final String URL_TELEPORT   = "teleport.png";
     public static final String URL_PROJECTILE = "cannon_ball.png";
-    public static final String URL_HEART      = "heart.png";
+    public static final String URL_HEART      = "bonus.png";
 }
