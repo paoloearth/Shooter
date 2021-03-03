@@ -50,25 +50,21 @@ public class Simulation extends Application {
         this._players_names = players_names;
         this._players_urls_sprite = players_urls_sprite;
         this._map_url = map_url;
-
      //   System.out.println(get_i_player_name(0) + get_i_player_name(1) + get_map_url() );
     }
 
     public String get_i_player_name(int index)
     {
-        System.out.println(_players_names.get(index));
         return _players_names.get(index);
     }
 
     public String get_i_urls_sprite(int index)
     {
-        System.out.println(_players_urls_sprite.get(index));
         return _players_urls_sprite.get(index);
     }
 
     public String get_map_url()
     {
-        System.out.println(_map_url.get(0));
         return _map_url.get(0);
     }
 
@@ -115,7 +111,7 @@ public class Simulation extends Application {
 
 
         /* Compute the scaling factor that will be used to update some parameters at RUNTIME*/
-        scaling_factors = new Pair<>( (double) WIDTH / Custom_Settings.DEFAULT_X, (double) HEIGHT / Custom_Settings.DEFAULT_Y);
+        scaling_factors = new Pair<>(  WIDTH / Custom_Settings.DEFAULT_X,  HEIGHT / Custom_Settings.DEFAULT_Y);
 
 
     }
@@ -128,8 +124,6 @@ public class Simulation extends Application {
     /* ---------------------------------- FIRST THINGS EXECUTED ---------------------------------- */
     public void start(Stage stage) throws  IOException{
         this._stage = stage;;
-
-
 
         /* Set the stage title of the game */
         _stage.setTitle("Shooter");

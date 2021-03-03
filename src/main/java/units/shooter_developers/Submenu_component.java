@@ -21,7 +21,7 @@ public class Submenu_component extends GridPane {
 
     }
 
-    private void fix_submenu_size_to_width_and_height() {
+    protected void fix_submenu_size_to_width_and_height() {
         this.setMinSize(get_width(), get_height());
         this.setPrefSize(get_width(), get_height());
         this.setMaxSize(get_width(), get_height());

@@ -2,47 +2,47 @@ package units.shooter_developers;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+
 import javafx.scene.layout.VBox;
 
 
-public class Button_selection_menu extends StackPane {
+public class Button_selection_menu extends Submenu_component {
 
-    double _width, _height;
     Button launch_simulation;
     Button launch_default;
 
     public Button_selection_menu(double width, double height)
     {
-        this._width = width;
-        this._height =height;
+        super(width, height);
 
-        setMinSize(_width,_height);
-        setPrefSize(_width,_height);
-        setMaxSize(_width,_height);
-
+        fix_submenu_size_to_width_and_height();
 
         setAlignment(Pos.CENTER_LEFT);
 
+        VBox V = create_custom_VBOX();
+
+        launch_simulation = create_custom_button("LAUNCH SIMULATION");
+        launch_default    = create_custom_button("LAUNCH DEFAULT");
+
+        V.getChildren().addAll(launch_simulation,launch_default);
+        getChildren().add(V);
+
+    }
+
+
+    private VBox create_custom_VBOX() {
         VBox V = new VBox();
         V.setFillWidth(true);
         V.setAlignment(Pos.CENTER_LEFT);
         V.setSpacing(10);
+        return V;
+    }
 
-        launch_simulation = new Button();
-        launch_simulation.setText("LAUNCH SIMULATION");
-        launch_simulation.setAlignment(Pos.TOP_LEFT);
-
-        launch_default = new Button();
-        launch_default.setText("DEFAULT");
-       launch_default.setAlignment(Pos.TOP_LEFT);
-
-        V.getChildren().add(launch_simulation);
-        V.getChildren().add(launch_default);
-
-        getChildren().add(V);
-
-
+    private Button create_custom_button(String text) {
+        var B = new Button();
+        B.setText(text);
+        B.setAlignment(Pos.TOP_LEFT);
+        return B;
     }
 
 

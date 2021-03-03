@@ -46,12 +46,13 @@ public class Choice_Box extends VBox{
         });
     }
 
-    private void fill_HBox_with_image(HBox h, ImageView i) {
-            h.getChildren().add(i);
-    }
+
 
     private String retrieve_selected_value_from_dict(String selected) {
         return get_dict().get(selected);
+    }
+    private void fill_HBox_with_image(HBox h, ImageView i) {
+        h.getChildren().add(i);
     }
 
 
