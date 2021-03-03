@@ -10,9 +10,9 @@ public class Tile extends ImageView {
 
     private final Coordinates block_pixel_position;
 
-    /* Properties to encode the "walkability" for a player and for a projectile*/
-    BooleanProperty is_passable = new SimpleBooleanProperty(true);
-    BooleanProperty not_passable_for_p = new SimpleBooleanProperty(true);
+    /* encode the "walkability" for a player and for a projectile*/
+    boolean is_passable;
+    boolean not_passable_for_p;
 
     Tile(double pos_x, double pos_y, double width, double height, boolean passable, boolean not_passable_p, Image img, Rectangle2D r2)
     {
@@ -27,8 +27,8 @@ public class Tile extends ImageView {
         this.block_pixel_position = new Coordinates(pos_x,pos_y);
 
         /* Set passability parameters */
-        this.is_passable.setValue(passable);
-        this.not_passable_for_p.setValue(not_passable_p);
+        this.is_passable = passable;
+        this.not_passable_for_p = not_passable_p;
 
         /* Set image property of the figure */
         this.setImage(img);
