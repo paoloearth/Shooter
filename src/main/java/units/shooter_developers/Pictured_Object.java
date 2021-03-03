@@ -89,7 +89,8 @@ public abstract class Pictured_Object extends Map_Object {
     //Abstract method to be implemented that defines the bounds of a map object used to check collision
     public Rectangle2D get_bounds(){
         return new Rectangle2D(get_current_X_position(), get_current_Y_position(), get_actual_width(), get_actual_height());
-    };
+    }
+
 
     public boolean intersect(Pictured_Object P2)
     {
