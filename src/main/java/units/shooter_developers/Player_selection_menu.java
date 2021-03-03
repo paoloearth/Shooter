@@ -1,6 +1,5 @@
 package units.shooter_developers;
 
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.RowConstraints;
@@ -24,8 +23,6 @@ public class Player_selection_menu extends Submenu_component {
     {
         super(width, height);
 
-        setAlignment(Pos.CENTER);
-
         create_2_columns_layout();
 
         create_menu();
@@ -46,8 +43,10 @@ public class Player_selection_menu extends Submenu_component {
     }
 
     private void create_choiceboxes() {
-        CB_P1 = new Choice_Box( Name_URL,4,1);
-        CB_P2 = new Choice_Box(Name_URL,4,1);
+        CB_P1 = new Choice_Box( Name_URL,TypeImage.SPRITE);
+        CB_P2 = new Choice_Box(Name_URL,TypeImage.SPRITE);
+
+
 
         add(CB_P1, 0,1);
         add(CB_P2, 1,1);
@@ -55,8 +54,12 @@ public class Player_selection_menu extends Submenu_component {
 
     private void create_textboxes() {
         /* TEXT BOX & ADD them to GRIDPANE in right position*/
-        TB_P1 = new Text_Box(Custom_Settings.URL_COMMANDS_P1);
-        TB_P2 = new Text_Box(Custom_Settings.URL_COMMANDS_P2);
+        TB_P1 = new Text_Box(Custom_Settings.URL_COMMANDS_P1, TypeImage.WASD);
+        TB_P2 = new Text_Box(Custom_Settings.URL_COMMANDS_P2, TypeImage.ARROW);
+
+        TB_P1.setAlignment(Pos.CENTER);
+        TB_P1.setAlignment(Pos.CENTER);
+
         add(TB_P1, 0,0);
         add(TB_P2, 1,0);
     }
