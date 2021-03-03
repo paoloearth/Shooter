@@ -22,7 +22,7 @@ public class Custom_Settings {
 
     /* SPEEDS */
     public static final int PLAYER_SPEED  = 2;
-    public static final int PROJECTILE_SPEED  = 3;
+    public static final int PROJECTILE_SPEED  = 5;
 
     /*  SCALES */
     public static final double PLAYER_SCALE  = 1.0/20;

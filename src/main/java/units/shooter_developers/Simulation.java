@@ -51,7 +51,7 @@ public class Simulation extends Application {
         this._players_urls_sprite = players_urls_sprite;
         this._map_url = map_url;
 
-        System.out.println(get_i_player_name(0) + get_i_player_name(1) + get_map_url() );
+     //   System.out.println(get_i_player_name(0) + get_i_player_name(1) + get_map_url() );
     }
 
     public String get_i_player_name(int index)

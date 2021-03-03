@@ -37,8 +37,8 @@ public class Bonus_Generator extends Pictured_Object{
     {
         move_to(M.get_random_location());
         push_inside_border(M);
-        empty_Pane(this);
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(4), event -> {
+            empty_Pane(this);
             this.getChildren().add(_view);
         }));
         timeline.setCycleCount(1);
