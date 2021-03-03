@@ -4,12 +4,12 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import javafx.util.Pair;
 
 public class Bonus_Generator extends Pictured_Object{
-    BooleanProperty is_waiting = new SimpleBooleanProperty(true);
     Object_Animation anim;
 
 
@@ -22,10 +22,7 @@ public class Bonus_Generator extends Pictured_Object{
 
         update_view();
         create_and_start_animation();
-
         generate(M);
-
-
         root.getChildren().add(this);
 
     }
@@ -40,10 +37,13 @@ public class Bonus_Generator extends Pictured_Object{
     {
         move_to(M.get_random_location());
         push_inside_border(M);
+        empty_Pane(this);
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(4), event -> {
             this.getChildren().add(_view);
         }));
+        timeline.setCycleCount(1);
         timeline.play();
+
     }
 
     //relocate heart inside the map taking into account the size of heart.png
@@ -62,6 +62,10 @@ public class Bonus_Generator extends Pictured_Object{
         this.getChildren().remove(_view);
         S.H.restore_life();
         generate(M);
+    }
+
+    private void empty_Pane(Pane P) {
+        P.getChildren().removeIf(i -> i instanceof ImageView);
     }
 
 
