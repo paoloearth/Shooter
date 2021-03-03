@@ -20,12 +20,8 @@ public class Submenu extends Menu{
         SubmenuObject content = new SubmenuObject(getMenuWidth(), getMenuHeight(), this);
 
         addGenericNode(content);
-        removeTitle();
-        removeMenuBox();
-        Scene scene = new Scene(getRoot());
-        getStage().setScene(scene);
         getStage().close();
-        getStage().show();
+        show();
         getStage().setAlwaysOnTop(true);
     }
 

@@ -1,10 +1,7 @@
 package units.shooter_developers;
 
 import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.animation.Transition;
-import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -12,13 +9,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -42,7 +37,7 @@ public class WinnerWindow extends Menu{
 
        // time_before_read_input(stage, scene);
 
-        getScene().addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
+        getSceneFromStage().addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
 
             GameMenu new_menu = new GameMenu(this);
             new_menu.start(stage);

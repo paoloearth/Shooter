@@ -276,8 +276,14 @@ public abstract class Menu extends Application {
         return _position_height_ratio*getMenuHeight();
     }
 
-    public Scene getScene(){
+    public Scene getSceneFromStage(){
         return getStage().getScene();
+    }
+
+    public void show(){
+        Scene menu_scene = new Scene(_root);
+        _stage.setScene(menu_scene);
+        _stage.show();
     }
 
     /** MENU ELEMENTS **/
