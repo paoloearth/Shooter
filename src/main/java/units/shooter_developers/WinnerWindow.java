@@ -33,6 +33,7 @@ public class WinnerWindow extends Menu{
         setStage(stage);
         getStage().centerOnScreen();
         this.addGenericNode(_content);
+        addFlashDisclaimer("<press a key to continue>", 0.32, 0.93);
         show();
 
         //time_before_read_input(stage, getSceneFromStage());
@@ -90,7 +91,6 @@ class WinnerScreenObject extends BorderPane {
 
         addCentralComposition(fireworks,winner_image);
         addCustomTitle(P._player_name);
-        addDisclaimer();
     }
 
     private void addCustomTitle(String winner){
@@ -99,24 +99,6 @@ class WinnerScreenObject extends BorderPane {
         top.setFill(Color.SILVER);
         setAlignment(top,Pos.TOP_CENTER);
         setTop(top);
-    }
-
-    public  void addDisclaimer(){
-        Text bottom = new Text("<press a key to continue>");
-        bottom.setFont(Font.font("Times New Roman", FontWeight.BOLD,_width*0.025));
-        bottom.setFill(Color.SILVER);
-        textAnimation(bottom);
-        setAlignment(bottom,Pos.TOP_CENTER);
-        setBottom(bottom);
-    }
-
-    private void textAnimation(Text bottom) {
-        FadeTransition textTransition = new FadeTransition(Duration.seconds(1.0), bottom);
-        textTransition.setAutoReverse(true);
-        textTransition.setFromValue(0);
-        textTransition.setToValue(1);
-        textTransition.setCycleCount(Transition.INDEFINITE);
-        textTransition.play();
     }
 
     private ImageView retrieve_image(String URL, int n_rows, int n_cols)

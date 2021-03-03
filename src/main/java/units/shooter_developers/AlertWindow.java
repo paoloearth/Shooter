@@ -42,7 +42,7 @@ public class AlertWindow extends Menu{
         this.addGenericNode(_content);
         addFreeItem("BACK", 0.05, 0.2);
         addFreeItem("CONTINUE", 0.76, 0.2);
-        addFlashDisclaimer("Game will be reset. Do you want to confirm?", 0.2, 0.93);
+        addFlashDisclaimer("Game will be reset. Do you want to confirm?", 0.185, 0.93);
         show();
 
         var menu_items = getItems();
@@ -99,7 +99,6 @@ public class AlertWindow extends Menu{
 
             addCentralComposition(fireworks);
             addCustomTitle("WARNING!");
-            //addDisclaimer("Game will be reset. Do you want to confirm?");
         }
 
         private void addCustomTitle(String title_text){
@@ -108,25 +107,6 @@ public class AlertWindow extends Menu{
             top.setFill(Color.SILVER);
             setAlignment(top,Pos.TOP_CENTER);
             setTop(top);
-        }
-
-        public void addDisclaimer(String disclaimer_text){
-            Text disclaimer = new Text(disclaimer_text);
-            disclaimer.setFont(Font.font("Times New Roman", FontWeight.BOLD,_width*0.025));
-            disclaimer.setFill(Color.SILVER);
-            textAnimation(disclaimer);
-            setAlignment(disclaimer,Pos.TOP_CENTER);
-            setBottom(disclaimer);
-            disclaimer.setTranslateY(-0.05*getMenuHeight());
-        }
-
-        private void textAnimation(Text bottom) {
-            FadeTransition textTransition = new FadeTransition(Duration.seconds(1.0), bottom);
-            textTransition.setAutoReverse(true);
-            textTransition.setFromValue(0);
-            textTransition.setToValue(1);
-            textTransition.setCycleCount(Transition.INDEFINITE);
-            textTransition.play();
         }
 
         private ImageView retrieveImage(String URL, int n_rows, int n_cols)
