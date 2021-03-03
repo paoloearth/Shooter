@@ -44,14 +44,6 @@ public class AlertWindow extends Menu{
         addFreeItem("CONTINUE", 0.76, 0.2);
         show();
 
-
-        getSceneFromStage().addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
-
-            OptionsMenu new_menu = new OptionsMenu(this);
-            new_menu.start(stage);
-
-        });
-
         var menu_items = getItems();
         for(var item:menu_items)
         {
