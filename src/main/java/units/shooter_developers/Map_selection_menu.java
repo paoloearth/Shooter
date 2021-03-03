@@ -15,7 +15,6 @@ public class Map_selection_menu extends Submenu_component {
     Map<String, String> Map_URL;
     Map<String, String> Map_CSV;
 
-    SimpleBooleanProperty all_set = new SimpleBooleanProperty(false);
 
     Map_selection_menu(double width, double height)
     {

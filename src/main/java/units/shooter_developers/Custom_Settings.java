@@ -33,8 +33,8 @@ public class Custom_Settings {
     /* MENU SCALES */
     public static final double WASD_SCALE =.5 ;
     public static final double ARROWS_SCALE = .4 ;
-    public static final double SPRITE_SCALE = 1;
-    public static final double MAP_SCALE = 1;
+    public static final double SPRITE_SCALE = .9;
+    public static final double MAP_SCALE = .8;
 
 
     /* HEALTHBAR */

@@ -33,15 +33,12 @@ public abstract  class Submenu_leaf extends VBox {
             }
             case WASD -> {
                 custom_scale = Custom_Settings.WASD_SCALE;
-                System.out.println("WASD IS SCALED BY " + custom_scale);
             }
             case ARROW -> {
                 custom_scale = Custom_Settings.ARROWS_SCALE;
-                System.out.println("ARROW IS SCALED BY " + custom_scale);
             }
             case MAP -> {
                 custom_scale = Custom_Settings.MAP_SCALE;
-                System.out.println("MAP IS SCALED BY " + custom_scale);
             }
         }
     }
