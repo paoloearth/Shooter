@@ -115,6 +115,7 @@ public abstract class Menu extends Application {
             FileReader reader = new FileReader(configFile);
             config.load(reader);
             double width = Double.parseDouble(config.getProperty("WIDTH"));
+            reader.close();
             return width;
         } catch(Exception e){
             return getScreenWidth();
@@ -128,6 +129,7 @@ public abstract class Menu extends Application {
         try{
             FileReader reader = new FileReader(configFile);
             config.load(reader);
+            reader.close();
             double width = Double.parseDouble(config.getProperty("HEIGHT"));
             return width;
         } catch(Exception e){

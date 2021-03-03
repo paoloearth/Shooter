@@ -14,13 +14,12 @@ public class Submenu extends Menu{
         super(other_menu);
     }
 
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage){
         setStage(stage);
 
         SubmenuObject content = new SubmenuObject(getMenuWidth(), getMenuHeight(), this);
 
         addGenericNode(content);
-        getStage().close();
         show();
         getStage().setAlwaysOnTop(true);
     }

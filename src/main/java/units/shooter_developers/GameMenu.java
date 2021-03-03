@@ -1,11 +1,9 @@
 package units.shooter_developers;
 
 import javafx.stage.*;
-import javafx.scene.*;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.Properties;
 
 public class GameMenu extends Menu{
@@ -30,7 +28,7 @@ public class GameMenu extends Menu{
     public void start(Stage menu_stage){
         setStage(menu_stage);
 
-        readSettings();
+        readDimensions();
         menu_stage.centerOnScreen();
 
         if(isGameRunning()) {
@@ -52,13 +50,9 @@ public class GameMenu extends Menu{
         {
             item.setOnMouseReleased(event -> {
                 if (item.getName().equals("NEW GAME")) {
-
                     Submenu submenu_launch_game = new Submenu(this);
-                    try {
-                        submenu_launch_game.start(menu_stage);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    getStage().close();
+                    submenu_launch_game.start(menu_stage);
                 }
                 if (item.getName().equals("CONTINUE")) {
                     menu_stage.close();
@@ -77,13 +71,14 @@ public class GameMenu extends Menu{
         }
     }
 
-    private void readSettings(){
+    private void readDimensions(){
         File configFile = new File("config.ini");
         Properties config = new Properties();
 
         try{
             FileReader reader = new FileReader(configFile);
             config.load(reader);
+            reader.close();
             double width = Double.parseDouble(config.getProperty("WIDTH"));
             double height = Double.parseDouble(config.getProperty("HEIGHT"));
             setStageDimensions(width, height);

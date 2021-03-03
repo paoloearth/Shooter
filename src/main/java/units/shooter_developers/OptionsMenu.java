@@ -98,7 +98,7 @@ public class OptionsMenu extends Menu{
 
     private void askConfirmChanges(double width_candidate, double height_candidate){
         AlertWindow alert_window = new AlertWindow(this, width_candidate, height_candidate);
-        getStage().close();
+        //getStage().close();
         alert_window.start(getStage());
     }
 
