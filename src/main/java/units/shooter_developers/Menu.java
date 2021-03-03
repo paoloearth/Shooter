@@ -115,8 +115,9 @@ public abstract class Menu extends Application {
             FileReader reader = new FileReader(configFile);
             config.load(reader);
             double width = Double.parseDouble(config.getProperty("WIDTH"));
+            reader.close();
             return width;
-        } catch(IOException e){
+        } catch(Exception e){
             return getScreenWidth();
         }
     }
@@ -128,9 +129,10 @@ public abstract class Menu extends Application {
         try{
             FileReader reader = new FileReader(configFile);
             config.load(reader);
+            reader.close();
             double width = Double.parseDouble(config.getProperty("HEIGHT"));
             return width;
-        } catch(IOException e){
+        } catch(Exception e){
             return getScreenHeight();
         }
     }
@@ -141,6 +143,14 @@ public abstract class Menu extends Application {
     public void addItem(String new_menu_item){
         generateMenuBoxIfNotExist();
         getItemsBox().addItem(new_menu_item);
+    }
+
+    public void addFreeItem(String new_menu_item, double position_ratio_X, double position_ratio_Y){
+        MenuItem new_item = new Menu.MenuItem(new_menu_item);
+        new_item.setTranslateX(position_ratio_X*getMenuWidth());
+        new_item.setTranslateY(position_ratio_Y*getMenuWidth());
+
+        _root.getChildren().addAll(new_item);
     }
 
     public void addUnanimatedItem(String new_menu_item){
@@ -276,8 +286,14 @@ public abstract class Menu extends Application {
         return _position_height_ratio*getMenuHeight();
     }
 
-    public Scene getScene(){
+    public Scene getSceneFromStage(){
         return getStage().getScene();
+    }
+
+    public void show(){
+        Scene menu_scene = new Scene(_root);
+        _stage.setScene(menu_scene);
+        _stage.show();
     }
 
     /** MENU ELEMENTS **/
@@ -312,7 +328,16 @@ public abstract class Menu extends Application {
 
 
     public ArrayList<MenuItem> getItems(){
-        return getItemsBox().getItems();
+        var item_list = new ArrayList<Menu.MenuItem>();
+        if(getItemsBox() != null)
+            item_list = getItemsBox().getItems();
+
+        ArrayList<MenuItem> finalItem_list = item_list;
+        _root.getChildren().stream()
+                .filter(e -> e instanceof MenuItem)
+                .forEach(e -> finalItem_list.add((MenuItem)e));
+
+        return item_list;
     }
 
     public ArrayList<SelectableItem> getSelectableItems(){

@@ -1,10 +1,7 @@
 package units.shooter_developers;
 
 import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.animation.Transition;
-import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -12,13 +9,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -37,17 +32,18 @@ public class WinnerWindow extends Menu{
     public void start(Stage stage){
         setStage(stage);
         this.addGenericNode(_content);
-        //getStage().close();
-        getStage().show();
+        show();
 
        // time_before_read_input(stage, scene);
 
-        getScene().addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
+
+        getSceneFromStage().addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
 
             GameMenu new_menu = new GameMenu(this);
             new_menu.start(stage);
 
         });
+
 
     }
 
@@ -91,13 +87,12 @@ class WinnerScreenObject extends BorderPane {
         var winner_image = retrieve_image(P.get_url(),4,1);
         var fireworks = retrieve_image("fireworks.png", 1,1);
 
-        //addBackgroundImage(this, "menu.jpeg");
         addCentralComposition(fireworks,winner_image);
-        addTitle(P._player_name);
+        addCustomTitle(P._player_name);
         addDisclaimer();
     }
 
-    private void addTitle(String winner){
+    private void addCustomTitle(String winner){
         Text top = new Text("The winner is "+ winner);
         top.setFont(Font.font("Times New Roman", FontWeight.BOLD,_width*0.06));
         top.setFill(Color.SILVER);
@@ -105,18 +100,6 @@ class WinnerScreenObject extends BorderPane {
         setTop(top);
     }
 
-    /*
-        private void addDisclaimer(StackPane sp){
-            Text bottom = new Text("<press a key to continue>");
-            bottom.setFont(Font.font("Times New Roman", FontWeight.BOLD,_width*0.02));
-            bottom.setFill(Color.WHITE);
-            textAnimation(bottom);
-            setAlignment(bottom,Pos.TOP_CENTER);
-            bottom.setTranslateY(_height*0.4);
-            sp.getChildren().add(bottom);
-        }
-
-       */
     public  void addDisclaimer(){
         Text bottom = new Text("<press a key to continue>");
         bottom.setFont(Font.font("Times New Roman", FontWeight.BOLD,_width*0.025));
@@ -149,17 +132,10 @@ class WinnerScreenObject extends BorderPane {
         sp.setMinSize(_width/2, _height/2);
         addProportionalImageToStackPane(background_sprite,sp);
         addProportionalImageToStackPane(player_sprite,sp);
-        // addDisclaimer(sp);
         setCenter(sp);
     }
 
-    private void addBackgroundImage(BorderPane bp, String image_url){
-        ImageView background = new ImageView(image_url);
-        background.setFitWidth(_width);
-        background.setFitHeight(_height);
-        background.resize(_width, _height);
-        bp.getChildren().add(background);
-    }
+
     private void addProportionalImageToStackPane(ImageView image, StackPane sp){
         image.fitHeightProperty().bind(sp.heightProperty());
         image.setPreserveRatio(true);

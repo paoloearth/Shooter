@@ -5,7 +5,7 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.stage.*;
-import javafx.scene.*;
+import javafx.util.Pair;
 
 public class OptionsMenu extends Menu{
 
@@ -28,32 +28,26 @@ public class OptionsMenu extends Menu{
     public void start(Stage menu_stage){
         setStage(menu_stage);
         setStageDimensions(getStageWidth(), getStageHeight());
+        getStage().centerOnScreen();
 
         setTitle("O P T I O N S");
         this.addSelectableItem("INTERFACE MODE", "light", "dark");
 
-        if(!isGameRunning()) {
-            this.addSelectableItem("RESOLUTION",
-                    (int) getStageWidth() + "x" + (int) getStageHeight() + " (current)",
-                    ((int) getScreenWidth()) + "x" + (int) getScreenHeight() + " (native)",
-                    "640x360 (widescreen)",
-                    "1000x600",
-                    "1024x768",
-                    "1280x720 (widescreen)",
-                    "1536x864 (widescreen)",
-                    "1600x900 (widescreen)",
-                    "1920x1080 (widescreen)");
-        } else {
-            this.addUnanimatedItem("RESOLUTION");
-        }
+        this.addSelectableItem("RESOLUTION",
+                (int) getStageWidth() + "x" + (int) getStageHeight() + " (current)",
+                ((int) getScreenWidth()) + "x" + (int) getScreenHeight() + " (native)",
+                "640x360 (widescreen)",
+                "1000x600",
+                "1024x768",
+                "1280x720 (widescreen)",
+                "1536x864 (widescreen)",
+                "1600x900 (widescreen)",
+                "1920x1080 (widescreen)");
         this.addItem("APPLY");
         this.addItem("BACK");
 
-        Scene scene = new Scene(this.getRoot());
         menu_stage.setTitle("VIDEO GAME");
-        menu_stage.setScene(scene);
-        menu_stage.centerOnScreen();
-        menu_stage.show();
+        show();
 
         var menu_items = getItems();
         for(var item:menu_items)
@@ -79,41 +73,56 @@ public class OptionsMenu extends Menu{
 
 
 
-    private void updateResolution(){
+    private Pair<Double, Double> ParseSelectedResolution(){
         String width_string;
         String height_string;
 
-        String regex = "\\d+";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(getSelectableItem("RESOLUTION").getText());
-        matcher.find();
-        width_string = matcher.group();
-        matcher.find();
-        height_string = matcher.group();
+        try {
+            String regex = "\\d+";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(getSelectableItem("RESOLUTION").getText());
+            matcher.find();
+            width_string = matcher.group();
+            matcher.find();
+            height_string = matcher.group();
 
-        double width = Integer.parseInt(width_string);
-        double height = Integer.parseInt(height_string);
+            double width = Integer.parseInt(width_string);
+            double height = Integer.parseInt(height_string);
 
-        var stage = getStage();
-
-        stage.setMaximized(false);
-        setStageDimensions(width, height);
-
-        OptionsMenu options_menu = new OptionsMenu(this);
-        options_menu.start(stage);
+            return new Pair<Double, Double>(width, height);
+        }catch(Exception e){
+            return new Pair<Double, Double>(null, null);
+        }
 
     }
 
+    private void askConfirmChanges(double width_candidate, double height_candidate){
+        AlertWindow alert_window = new AlertWindow(this, width_candidate, height_candidate);
+        //getStage().close();
+        alert_window.start(getStage());
+    }
+
     private void applyCurrentSettings(){
-        updateResolution();
         writeSettings();
+        var selected_resolution = ParseSelectedResolution();
+        var current_resolution = new Pair<Double, Double>(getStageWidth(), getStageHeight());
+
+        if(!selected_resolution.equals(current_resolution))
+            if(isGameRunning())
+                askConfirmChanges(selected_resolution.getKey(), selected_resolution.getValue());
+            else{
+                setStageDimensions(selected_resolution.getKey(), selected_resolution.getValue());
+                writeSettings();
+                OptionsMenu options_menu = new OptionsMenu(this);
+                options_menu.start(getStage());
+            }
     }
 
     private void writeSettings() {
         Properties config = new Properties();
+        config.setProperty("INTERFACE MODE", getSelectableItem("INTERFACE MODE").getText());
         config.setProperty("WIDTH", String.valueOf(getStageWidth()));
         config.setProperty("HEIGHT", String.valueOf(getStageHeight()));
-        config.setProperty("INTERFACE MODE", getSelectableItem("INTERFACE MODE").getText());
 
         File configFile = new File("config.ini");
         try{
