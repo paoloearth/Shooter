@@ -15,8 +15,6 @@ public class Map_selection_menu extends Submenu_component {
     Map<String, String> Map_URL;
     Map<String, String> Map_CSV;
 
-
-
     SimpleBooleanProperty all_set = new SimpleBooleanProperty(false);
 
     Map_selection_menu(double width, double height)
@@ -29,14 +27,8 @@ public class Map_selection_menu extends Submenu_component {
     private void create_menu() {
 
         /* DOUBLE MAP in order to store both the name-> csv mapping & name -> png mapping */
-
-        Map_URL = new Hashtable<>();
-        Map_URL.put(Custom_Settings.ISLAND,Custom_Settings.URL_MAP_ISLAND_PNG);
-        Map_URL.put(Custom_Settings.DESERT,Custom_Settings.URL_MAP_DESERT_PNG);
-
-        Map_CSV = new Hashtable<>();
-        Map_CSV.put(Custom_Settings.ISLAND,Custom_Settings.URL_MAP_ISLAND_CSV);
-        Map_CSV.put(Custom_Settings.DESERT,Custom_Settings.URL_MAP_DESERT_CSV);
+        set_name_png_dictionary();
+        set_name_csv_dictionary();
 
         CB_MAP = new Choice_Box(Map_URL,1,1);
 
@@ -45,6 +37,17 @@ public class Map_selection_menu extends Submenu_component {
         add(CB_MAP,1,1);
     }
 
+    private void set_name_csv_dictionary() {
+        Map_CSV = new Hashtable<>();
+        Map_CSV.put(Custom_Settings.ISLAND,Custom_Settings.URL_MAP_ISLAND_CSV);
+        Map_CSV.put(Custom_Settings.DESERT,Custom_Settings.URL_MAP_DESERT_CSV);
+    }
+
+    private void set_name_png_dictionary() {
+        Map_URL = new Hashtable<>();
+        Map_URL.put(Custom_Settings.ISLAND,Custom_Settings.URL_MAP_ISLAND_PNG);
+        Map_URL.put(Custom_Settings.DESERT,Custom_Settings.URL_MAP_DESERT_PNG);
+    }
 
 
     public List<String> get_map_data()

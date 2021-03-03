@@ -19,6 +19,7 @@ public class Text_Box extends HBox {
     {
 
         setAlignment(Pos.CENTER);
+
         setPadding(new Insets(10));
 
 
@@ -29,8 +30,6 @@ public class Text_Box extends HBox {
         textField.setAlignment(Pos.CENTER);
 
         getChildren().add(textField);
-
-
 
         HBox H = createCustomHbox();
         var I = retrieve_image(commands_url,1,1);
@@ -69,8 +68,8 @@ public class Text_Box extends HBox {
     private void scale_image_to_fit_box(HBox H, ImageView I) {
         I.fitHeightProperty().bind(H.heightProperty());
         I.fitWidthProperty().bind(H.widthProperty());
-        I.setScaleX(.5);
-        I.setScaleY(.5);
+        I.setScaleX(.4);
+        I.setScaleY(.4);
     }
 
     // Create an image given an URL

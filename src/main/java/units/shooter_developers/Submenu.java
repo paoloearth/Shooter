@@ -35,7 +35,7 @@ public class Submenu extends Menu{
         Player_selection_menu P_menu;
         Map_selection_menu P_map;
         Button_selection_menu P_buttons;
-        Submenu M;
+        Submenu M; // Necessary in order to change the scene
 
         SubmenuObject(double width, double height, Submenu M)  {
 
@@ -45,16 +45,15 @@ public class Submenu extends Menu{
 
             this.setPrefSize(width, height);
 
-            P_menu     = new Player_selection_menu( _width,         _height / 2);    // THE TOP WILL OCCUPY HALF THE HEIGHT
-            P_map      = new Map_selection_menu(_width * .7,   _height / 2);   // THE BOTTOM HALF WILL BE SPLIT 70% for MAP & 25% w
+            P_menu     = new Player_selection_menu( _width,             _height / 2);    // THE TOP WILL OCCUPY HALF THE HEIGHT
+
+            P_map      = new Map_selection_menu(_width * .7,       _height / 2);    // THE BOTTOM HALF WILL BE SPLIT 70% for MAP & 25%
             P_buttons  = new Button_selection_menu(_width * .25,   _height / 2);
 
             P_map.setAlignment(Pos.TOP_CENTER);
             P_buttons.setAlignment(Pos.CENTER_LEFT);
 
-            getChildren().add(P_menu);
-            getChildren().add(P_map);
-            getChildren().add(P_buttons);
+            getChildren().addAll(P_menu,P_map,P_buttons);
 
             BooleanBinding property = P_map.get_AllSetProperty().or(P_menu.get_AllSetProperty());
 
