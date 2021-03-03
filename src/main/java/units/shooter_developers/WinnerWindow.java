@@ -32,10 +32,10 @@ public class WinnerWindow extends Menu{
     public void start(Stage stage){
         setStage(stage);
         this.addGenericNode(_content);
-        //getStage().close();
-        getStage().show();
+        show();
 
        // time_before_read_input(stage, scene);
+
 
         getSceneFromStage().addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
 
@@ -43,6 +43,7 @@ public class WinnerWindow extends Menu{
             new_menu.start(stage);
 
         });
+
 
     }
 
