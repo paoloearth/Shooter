@@ -121,6 +121,8 @@ public class OptionsMenu extends Menu{
     private void writeSettings() {
         Properties config = new Properties();
         config.setProperty("INTERFACE MODE", getSelectableItem("INTERFACE MODE").getText());
+        config.setProperty("WIDTH", String.valueOf(getStageWidth()));
+        config.setProperty("HEIGHT", String.valueOf(getStageHeight()));
 
         File configFile = new File("config.ini");
         try{

@@ -4,7 +4,6 @@ import javafx.animation.FadeTransition;
 import javafx.animation.Transition;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -18,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
@@ -57,7 +57,6 @@ public class AlertWindow extends Menu{
         {
             item.setOnMouseReleased(event -> {
                 if (item.getName().equals("BACK")) {
-                    writeSettings();
                     OptionsMenu options_menu = new OptionsMenu(this);
                     options_menu.start(stage);
                 }
@@ -65,7 +64,7 @@ public class AlertWindow extends Menu{
                 {
                     stage.setMaximized(false);
                     setStageDimensions(_candidate_width, _candidate_height);
-                    writeSettings();
+                    writeModifyingSettings();
                     OptionsMenu options_menu = new OptionsMenu();
                     options_menu.start(stage);
                 }
@@ -75,17 +74,19 @@ public class AlertWindow extends Menu{
 
     }
 
-    private void writeSettings() {
+    private void writeModifyingSettings() {
         Properties config = new Properties();
-        config.setProperty("WIDTH", String.valueOf(getStageWidth()));
-        config.setProperty("HEIGHT", String.valueOf(getStageHeight()));
 
         File configFile = new File("config.ini");
         try{
             FileWriter writer = new FileWriter(configFile);
+            FileReader reader = new FileReader(configFile);
+            config.load(reader);
+            config.put("WIDTH", String.valueOf(getStageWidth()));
+            config.put("HEIGHT", String.valueOf(getStageHeight()));
             config.store(writer, "Game settings");
             writer.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -101,7 +102,7 @@ public class AlertWindow extends Menu{
             this.setPrefSize(width,height);
 
 
-            var fireworks = retrieve_image("alert.png", 1,1);
+            var fireworks = retrieveImage("alert.png", 1,1);
 
             addCentralComposition(fireworks);
             addCustomTitle("WARNING!");
@@ -134,7 +135,7 @@ public class AlertWindow extends Menu{
             textTransition.play();
         }
 
-        private ImageView retrieve_image(String URL, int n_rows, int n_cols)
+        private ImageView retrieveImage(String URL, int n_rows, int n_cols)
         {
             var I = new Image(URL);
             var IM =  new ImageView(I);
