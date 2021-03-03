@@ -19,23 +19,30 @@ public abstract  class Submenu_leaf extends VBox {
 
         set_padding_and_spacing();
 
+        System.out.println(T);
+
         set_custom_scale_on_T(T);
 
     }
 
     private void set_custom_scale_on_T(TypeImage T) {
-        switch (T)
-        {
-            case SPRITE:
+        switch (T) {
+            case SPRITE -> {
                 n_rows = 4;
                 custom_scale = Custom_Settings.SPRITE_SCALE;
-            case WASD:
+            }
+            case WASD -> {
                 custom_scale = Custom_Settings.WASD_SCALE;
-            case ARROW:
+                System.out.println("WASD IS SCALED BY " + custom_scale);
+            }
+            case ARROW -> {
                 custom_scale = Custom_Settings.ARROWS_SCALE;
-            case MAP:
+                System.out.println("ARROW IS SCALED BY " + custom_scale);
+            }
+            case MAP -> {
                 custom_scale = Custom_Settings.MAP_SCALE;
-
+                System.out.println("MAP IS SCALED BY " + custom_scale);
+            }
         }
     }
 
@@ -60,8 +67,9 @@ public abstract  class Submenu_leaf extends VBox {
 
     void scale_image_to_fit_box(HBox H, ImageView I) {
         I.fitHeightProperty().bind(H.heightProperty());
-        I.setScaleX(custom_scale);
         I.setScaleY(custom_scale);
+        I.setScaleX(custom_scale);
+
     }
 
     void empty_HBox(HBox H) {

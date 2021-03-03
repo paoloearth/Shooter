@@ -14,7 +14,6 @@ public class Text_Box extends Submenu_leaf {
 
         super(T);
 
-
         setFillWidth(false);
 
         textField.setPromptText("Enter your first name.");
@@ -29,6 +28,8 @@ public class Text_Box extends Submenu_leaf {
 
         scale_image_to_fit_box(H, I);
         fill_HBox_with_image(H,I);
+
+
 
         add_generic_child_node_to_parent_node(this,H);
 

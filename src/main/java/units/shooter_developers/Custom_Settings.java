@@ -31,10 +31,10 @@ public class Custom_Settings {
     public static final double HEART_SCALE = 1.0/6;
 
     /* MENU SCALES */
-    public static final double WASD_SCALE = 1 ;
-    public static final double ARROWS_SCALE = .01 ;
-    public static final double SPRITE_SCALE = 1 ;
-    public static final double MAP_SCALE = .8;
+    public static final double WASD_SCALE =.5 ;
+    public static final double ARROWS_SCALE = .4 ;
+    public static final double SPRITE_SCALE = 1;
+    public static final double MAP_SCALE = 1;
 
 
     /* HEALTHBAR */
