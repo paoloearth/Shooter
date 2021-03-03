@@ -33,6 +33,12 @@ public abstract class Dynamic_Object extends Pictured_Object {
         return this.get_current_Y_position() + _deltaY;
     }
 
+    public Box get_full_collision_box(){
+        return new Box(get_future_y(), get_future_x(), get_actual_width() ,get_actual_height()  );
+    }
+
+
+
     protected abstract  boolean illegal_move(Map M);
 
     //Check if an element of the map is out of it

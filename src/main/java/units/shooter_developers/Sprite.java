@@ -120,42 +120,16 @@ public class Sprite extends Dynamic_Object {
 
     @Override
     protected  boolean illegal_move(Map M) {
-        var left = get_future_x();
-        double top = get_future_y();
+        /* Compute the collision box*/
+        var collision_box =  get_full_collision_box();
 
-        // Bounds da controllare
-        var bottom = top +get_actual_height() ;
-        var right  = left+get_actual_width() ;
+        /* Reduce impact area of the object*/
+        collision_box.shrink_height_by(2.00/3.00);
 
-        top += get_actual_height() * 2.0/3.0;
+        /* Get tiles  */
+        collision_box.compute_tiles_bounds(M);
 
-        int left_tile = (int) (left/M.getTileWidth());
-        int rigth_tile = (int) (right/M.getTileWidth());
-
-        int top_tile = (int) (top/M.getTileHeight());
-        int bottom_tile = (int) (bottom/M.getTileHeight());
-
-        //System.out.println("left "+left+"top "+top+ " bottom "+bottom+ " rigth "+ right + " l_t "+left_tile);
-        if(left_tile < 0) left_tile = 0;
-        if(rigth_tile > M.get_width()) rigth_tile = (int) M.get_width();
-        if(top_tile < 0) top_tile = 0;
-        if(bottom_tile>M.get_height()) bottom_tile = (int) M.get_height();
-
-
-
-        for (int i = left_tile; i<= rigth_tile; i++)
-        {
-            for (int j=top_tile; j<= bottom_tile; j++)
-            {
-               // System.out.println("Ispezione posizione "+ i + " " + j +" at pos " + M.single_index(i,j));
-                Tile b = M.get_tile_matrix().get(M.single_index(i,j));
-                if(!b.is_passable) {
-                  //  System.out.println("Tile with code "+ b.get_pixel_of_block_position() + "is NOT passable" );
-                    return true;
-                }
-            }
-        }
-        return  false;
+        return collision_box.performs_check(M,this._type);
 
     }
 
