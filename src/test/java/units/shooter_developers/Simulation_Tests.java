@@ -22,11 +22,6 @@ class Simulation_Tests {
     private Simulation SIMULATION;
     private Stage STAGE;
 
-    /**
-     * Will be called with {@code @Before} semantics, i. e. before each test method.
-     *
-     * @param stage - Will be injected by the test runner.
-     */
 
     @Start
     private void start(Stage stage) throws IOException {
@@ -69,6 +64,9 @@ class Simulation_Tests {
 
         for (int i = 0; i < 10; i++) {
             robot.push(KeyCode.DOWN);
+        }
+        for (int i = 0; i < 10; i++) {
+            robot.push(KeyCode.UP);
         }
 
 
