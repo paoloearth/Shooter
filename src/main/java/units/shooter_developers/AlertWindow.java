@@ -42,6 +42,7 @@ public class AlertWindow extends Menu{
         this.addGenericNode(_content);
         addFreeItem("BACK", 0.05, 0.2);
         addFreeItem("CONTINUE", 0.76, 0.2);
+        addFlashDisclaimer("Game will be reset. Do you want to confirm?", 0.2, 0.93);
         show();
 
         var menu_items = getItems();
@@ -98,7 +99,7 @@ public class AlertWindow extends Menu{
 
             addCentralComposition(fireworks);
             addCustomTitle("WARNING!");
-            addDisclaimer("Game will be reset. Do you want to confirm?");
+            //addDisclaimer("Game will be reset. Do you want to confirm?");
         }
 
         private void addCustomTitle(String title_text){
@@ -109,13 +110,14 @@ public class AlertWindow extends Menu{
             setTop(top);
         }
 
-        public  void addDisclaimer(String disclaimer_text){
-            Text bottom = new Text(disclaimer_text);
-            bottom.setFont(Font.font("Times New Roman", FontWeight.BOLD,_width*0.025));
-            bottom.setFill(Color.SILVER);
-            textAnimation(bottom);
-            setAlignment(bottom,Pos.TOP_CENTER);
-            setBottom(bottom);
+        public void addDisclaimer(String disclaimer_text){
+            Text disclaimer = new Text(disclaimer_text);
+            disclaimer.setFont(Font.font("Times New Roman", FontWeight.BOLD,_width*0.025));
+            disclaimer.setFill(Color.SILVER);
+            textAnimation(disclaimer);
+            setAlignment(disclaimer,Pos.TOP_CENTER);
+            setBottom(disclaimer);
+            disclaimer.setTranslateY(-0.05*getMenuHeight());
         }
 
         private void textAnimation(Text bottom) {

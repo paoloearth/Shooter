@@ -12,6 +12,8 @@ package units.shooter_developers;
  *  https://github.com/Siderim/video-game-menu/
  */
 
+import javafx.animation.FadeTransition;
+import javafx.animation.Transition;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -36,6 +38,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.FileReader;
@@ -210,6 +213,11 @@ public abstract class Menu extends Application {
 
         if(title_object != null)
             _root.getChildren().remove(title_object);
+    }
+
+    public void addFlashDisclaimer(String disclaimer_text, double position_ratio_X, double position_ratio_Y){
+        var disclaimer_object = new FlashDisclaimer(disclaimer_text, position_ratio_X, position_ratio_Y);
+        _root.getChildren().add(disclaimer_object);
     }
 
     /************************** SET/GET METHODS *****************************/
@@ -688,6 +696,36 @@ public abstract class Menu extends Application {
             setAlignment(Pos.CENTER_LEFT);
             getChildren().addAll(box, textImage);
         }
+    }
+
+
+    /************************ UNANIMATED ITEM ****************************************/
+
+    private class FlashDisclaimer extends StackPane{
+
+        private FlashDisclaimer(String disclaimer_text, double position_ratio_X, double position_ratio_Y){
+            Text disclaimer = new Text(disclaimer_text);
+            disclaimer.setFont(Font.font("Times New Roman", FontWeight.BOLD,getMenuWidth()*0.025));
+            disclaimer.setFill(Color.SILVER);
+            textAnimation(disclaimer);
+            setAlignment(disclaimer,Pos.TOP_CENTER);
+            //setBottom(disclaimer);
+            //disclaimer.setTranslateY(-0.05*getMenuHeight());
+            this.setTranslateX(position_ratio_X*getMenuWidth());
+            this.setTranslateY(position_ratio_Y*getMenuHeight());
+            getChildren().add(disclaimer);
+        }
+
+        private void textAnimation(Text bottom) {
+            FadeTransition textTransition = new FadeTransition(Duration.seconds(1.0), bottom);
+            textTransition.setAutoReverse(true);
+            textTransition.setFromValue(0);
+            textTransition.setToValue(1);
+            textTransition.setCycleCount(Transition.INDEFINITE);
+            textTransition.play();
+        }
+
+
     }
 
     public static void main(String[] args) {
