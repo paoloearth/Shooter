@@ -76,7 +76,7 @@ public class Projectile extends Dynamic_Object{
             for (int j=top_tile; j<= bottom_tile; j++)
             {
                 Tile t = M.get_tile_matrix().get(M.single_index(i,j));
-                if(t.not_passable_for_p.getValue()) return true;
+                if(t.not_passable_for_p) return true;
             }
         }
         return false;

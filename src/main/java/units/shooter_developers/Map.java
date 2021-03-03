@@ -49,7 +49,7 @@ public class Map {
         this.populateCells();
 
 
-        _passable_tiles = _tiles.stream().filter(b-> b.is_passable.getValue()).collect(Collectors.toList());
+        _passable_tiles = _tiles.stream().filter(b-> b.is_passable).collect(Collectors.toList());
 
 
         root.getChildren().add(_cells);
@@ -131,7 +131,7 @@ public class Map {
     {
         int i = single_index(x,y);
         Tile n = (Tile) _cells.getChildren().get(i);
-        n.is_passable.set(false);
+        n.is_passable = false;
         _cells.getChildren().set(i,n);
     }
 

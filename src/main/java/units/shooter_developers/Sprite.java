@@ -149,7 +149,7 @@ public class Sprite extends Dynamic_Object {
             {
                // System.out.println("Ispezione posizione "+ i + " " + j +" at pos " + M.single_index(i,j));
                 Tile b = M.get_tile_matrix().get(M.single_index(i,j));
-                if(!b.is_passable.getValue()) {
+                if(!b.is_passable) {
                   //  System.out.println("Tile with code "+ b.get_pixel_of_block_position() + "is NOT passable" );
                     return true;
                 }
