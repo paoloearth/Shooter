@@ -25,30 +25,30 @@ import javafx.util.Duration;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class WinnerWindow extends Application{
+public class WinnerWindow extends Menu{
     WinnerScreenObject _content;
 
     WinnerWindow(double width, double height, Sprite player ){
+        super(width, height);
         _content = new WinnerScreenObject(width, height, player);
     }
 
+    @Override
     public void start(Stage stage){
-        Pane root = new Pane();
-        root.getChildren().add(_content);
-        Scene scene = new Scene(root);
+        setStage(stage);
+        this.addGenericNode(_content);
+        //getStage().close();
+        getStage().show();
 
        // time_before_read_input(stage, scene);
 
-        scene.addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
+        getScene().addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
 
-            GameMenu new_menu = new GameMenu();
+            GameMenu new_menu = new GameMenu(this);
             new_menu.start(stage);
 
         });
 
-        stage.setScene(scene);
-        stage.close();
-        stage.show();
     }
 
     private void time_before_read_input(Stage stage, Scene scene) {
@@ -91,7 +91,7 @@ class WinnerScreenObject extends BorderPane {
         var winner_image = retrieve_image(P.get_url(),4,1);
         var fireworks = retrieve_image("fireworks.png", 1,1);
 
-        addBackgroundImage(this, "menu.jpeg");
+        //addBackgroundImage(this, "menu.jpeg");
         addCentralComposition(fireworks,winner_image);
         addTitle(P._player_name);
         addDisclaimer();

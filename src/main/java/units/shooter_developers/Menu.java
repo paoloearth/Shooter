@@ -63,7 +63,7 @@ public abstract class Menu extends Application {
     /************************** CONSTRUCTORS *****************************/
 
     public Menu() {
-        this(tryReadWidth(), tryReadHeight());
+        this(tryReadingWidth(), tryReadingHeight());
     }
 
     public Menu(double stage_width, double stage_height) {
@@ -88,6 +88,7 @@ public abstract class Menu extends Application {
 
     private void createContent(double stage_width, double stage_height) {
         Pane root = new Pane();
+        _root = root;
 
         setStageDimensions(stage_width, stage_height);
 
@@ -104,21 +105,9 @@ public abstract class Menu extends Application {
             System.out.println("Menu background image not found");
         }
 
-        Menu.Title title = new Menu.Title("title_not_found");
-        title.setTranslateX(0.0476*getMenuWidth() + getPositionX());
-        title.setTranslateY(0.333*getMenuHeight() + getPositionY());
-
-        Menu.MenuBox vbox = new Menu.MenuBox();
-        vbox.setTranslateX(0.0952*getMenuWidth() + getPositionX());
-        vbox.setTranslateY(0.5*getMenuHeight() + getPositionY());
-
-        root.getChildren().addAll(title, vbox);
-
-        _root = root;
-
     }
 
-    private static double tryReadWidth(){
+    private static double tryReadingWidth(){
         File configFile = new File("config.ini");
         Properties config = new Properties();
 
@@ -132,7 +121,7 @@ public abstract class Menu extends Application {
         }
     }
 
-    private static double tryReadHeight(){
+    private static double tryReadingHeight(){
         File configFile = new File("config.ini");
         Properties config = new Properties();
 
@@ -150,14 +139,17 @@ public abstract class Menu extends Application {
     /************************** ELEMENTS MANAGEMENT *****************************/
 
     public void addItem(String new_menu_item){
+        generateMenuBoxIfNotExist();
         getItemsBox().addItem(new_menu_item);
     }
 
     public void addUnanimatedItem(String new_menu_item){
+        generateMenuBoxIfNotExist();
         getItemsBox().addUnanimatedItem(new_menu_item);
     }
 
     public void addSelectableItem(String item_name, String ... selection_tags){
+        generateMenuBoxIfNotExist();
         ArrayList<String> tag_list= new ArrayList<String>();
         for(var tag:selection_tags){ tag_list.add(tag); }
 
@@ -168,13 +160,19 @@ public abstract class Menu extends Application {
         _root.getChildren().add(generic_node);
     }
 
-    public void removeTitle(){
-        Title title_object = (Title)_root.getChildren().stream()
-                .filter(e -> e instanceof Title)
+    private void generateMenuBoxIfNotExist(){
+        MenuBox menu_box = (MenuBox) _root.getChildren().stream()
+                .filter(e -> e instanceof MenuBox)
                 .findFirst()
                 .orElse(null);
 
-        _root.getChildren().remove(title_object);
+        if(menu_box == null){
+            Menu.MenuBox vbox = new Menu.MenuBox();
+            vbox.setTranslateX(0.0952*getMenuWidth() + getPositionX());
+            vbox.setTranslateY(0.5*getMenuHeight() + getPositionY());
+
+            _root.getChildren().addAll(vbox);
+        }
     }
 
     public void removeMenuBox(){
@@ -187,17 +185,22 @@ public abstract class Menu extends Application {
     }
 
     public void setTitle(String title){
+        removeTitle();
+
         Menu.Title new_title = new Menu.Title(title);
-        Title old_title = getTitle();
 
         new_title.setTranslateX(0.0476*getMenuWidth() + getPositionX());
         new_title.setTranslateY(0.333*getMenuHeight() + getPositionY());
 
-        var index = _root.getChildren().indexOf(old_title);
-        _root.getChildren().remove(old_title);
-        _root.getChildren().add(index, new_title);
+        _root.getChildren().add(new_title);
     }
 
+    public void removeTitle(){
+        var title_object = getTitle();
+
+        if(title_object != null)
+            _root.getChildren().remove(title_object);
+    }
 
     /************************** SET/GET METHODS *****************************/
 
@@ -284,17 +287,27 @@ public abstract class Menu extends Application {
     }
 
     private Title getTitle() {
-        return (Title) _root.getChildren().stream()
+        var title_object = _root.getChildren().stream()
                 .filter(e -> e instanceof Title)
                 .findFirst()
                 .orElse(null);
+
+        if(title_object == null)
+            return null;
+        else
+            return (Title)title_object;
     }
 
-        public MenuBox getItemsBox() {
-        return (MenuBox) _root.getChildren().parallelStream()
+    public MenuBox getItemsBox() {
+        var menubox_object = _root.getChildren().parallelStream()
                 .filter(e -> e instanceof MenuBox)
                 .findFirst()
                 .orElse(null);
+
+        if(menubox_object == null)
+            return null;
+        else
+            return (MenuBox) menubox_object;
     }
 
 
@@ -307,10 +320,15 @@ public abstract class Menu extends Application {
     }
 
     public SelectableItem getSelectableItem(String name){
-        return getSelectableItems().stream()
+        var selectableitem_object = getSelectableItems().stream()
                 .filter(e -> e.getName().equals(name))
                 .findFirst()
                 .orElse(null);
+
+        if(selectableitem_object == null)
+            return null;
+        else
+            return (SelectableItem)selectableitem_object;
     }
 
     /** GAME INSTANCE **/
