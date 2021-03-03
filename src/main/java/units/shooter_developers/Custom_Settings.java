@@ -30,6 +30,11 @@ public class Custom_Settings {
     public static final double  TELEPORT_SCALE  = 1.0/18;
     public static final double HEART_SCALE = 1.0/6;
 
+    /* MENU SCALES */
+    public static final double WASD_SCALE = 1 ;
+    public static final double ARROWS_SCALE = .01 ;
+    public static final double SPRITE_SCALE = 1 ;
+    public static final double MAP_SCALE = .8;
 
 
     /* HEALTHBAR */
