@@ -31,6 +31,7 @@ public class WinnerWindow extends Menu{
     @Override
     public void start(Stage stage){
         setStage(stage);
+        getStage().centerOnScreen();
         this.addGenericNode(_content);
         show();
 

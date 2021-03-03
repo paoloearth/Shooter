@@ -123,7 +123,8 @@ public class Simulation extends Application {
 
     /* ---------------------------------- FIRST THINGS EXECUTED ---------------------------------- */
     public void start(Stage stage) throws  IOException{
-        this._stage = stage;;
+        this._stage = stage;
+        stage.centerOnScreen();
 
         /* Set the stage title of the game */
         _stage.setTitle("Shooter");
