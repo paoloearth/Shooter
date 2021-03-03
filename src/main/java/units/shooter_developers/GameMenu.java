@@ -29,7 +29,9 @@ public class GameMenu extends Menu{
     @Override
     public void start(Stage menu_stage){
         setStage(menu_stage);
+
         readSettings();
+        menu_stage.centerOnScreen();
 
         if(isGameRunning()) {
             this.addItem("CONTINUE");
@@ -85,8 +87,7 @@ public class GameMenu extends Menu{
             double width = Double.parseDouble(config.getProperty("WIDTH"));
             double height = Double.parseDouble(config.getProperty("HEIGHT"));
             setStageDimensions(width, height);
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             return;
         }
     }

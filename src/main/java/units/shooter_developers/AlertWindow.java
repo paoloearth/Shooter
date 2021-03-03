@@ -17,25 +17,32 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Properties;
 
 public class AlertWindow extends Menu{
     AlertObject _content;
+    double _candidate_width;
+    double _candidate_height;
 
-    AlertWindow(Menu other_menu){
+    AlertWindow(Menu other_menu, double candidate_width, double candidate_height){
         super(other_menu);
         _content = new AlertObject(getMenuWidth(), getMenuHeight());
+        _candidate_width = candidate_width;
+        _candidate_height = candidate_height;
     }
 
     @Override
     public void start(Stage stage){
         setStage(stage);
-        this.addGenericNode(_content);
-        show();
-        getStage().toFront();
+        getStage().centerOnScreen();
 
-        // time_before_read_input(stage, scene);
+        this.addGenericNode(_content);
+        addFreeItem("BACK", 0.05, 0.2);
+        addFreeItem("CONTINUE", 0.76, 0.2);
+        show();
 
 
         getSceneFromStage().addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
@@ -45,7 +52,42 @@ public class AlertWindow extends Menu{
 
         });
 
+        var menu_items = getItems();
+        for(var item:menu_items)
+        {
+            item.setOnMouseReleased(event -> {
+                if (item.getName().equals("BACK")) {
+                    writeSettings();
+                    OptionsMenu options_menu = new OptionsMenu(this);
+                    options_menu.start(stage);
+                }
+                if (item.getName().equals("CONTINUE"))
+                {
+                    stage.setMaximized(false);
+                    setStageDimensions(_candidate_width, _candidate_height);
+                    writeSettings();
+                    OptionsMenu options_menu = new OptionsMenu();
+                    options_menu.start(stage);
+                }
+            });
+        }
 
+
+    }
+
+    private void writeSettings() {
+        Properties config = new Properties();
+        config.setProperty("WIDTH", String.valueOf(getStageWidth()));
+        config.setProperty("HEIGHT", String.valueOf(getStageHeight()));
+
+        File configFile = new File("config.ini");
+        try{
+            FileWriter writer = new FileWriter(configFile);
+            config.store(writer, "Game settings");
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private class AlertObject extends BorderPane {
@@ -62,8 +104,8 @@ public class AlertWindow extends Menu{
             var fireworks = retrieve_image("alert.png", 1,1);
 
             addCentralComposition(fireworks);
-            addCustomTitle("¡ALERTA!");
-            addDisclaimer("soy un texto inocente");
+            addCustomTitle("WARNING!");
+            addDisclaimer("Game will be reset. Do you want to confirm?");
         }
 
         private void addCustomTitle(String title_text){
