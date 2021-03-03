@@ -50,7 +50,6 @@ public class GameMenu extends Menu{
         {
             item.setOnMouseReleased(event -> {
                 if (item.getName().equals("NEW GAME")) {
-                    //------------------------------------------------------------------------------------
 
                     Submenu submenu_launch_game = new Submenu(this);
                     try {
@@ -58,19 +57,6 @@ public class GameMenu extends Menu{
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
-                    /*
-                    setGameInstance(new Simulation());
-                    try {
-                        menu_stage.close();
-                        getGameInstance().start(getStage());
-                        getStage().setAlwaysOnTop(true);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    /***/
-
-                    //----------------------------------------------------------------------------------------------
                 }
                 if (item.getName().equals("CONTINUE")) {
                     menu_stage.close();

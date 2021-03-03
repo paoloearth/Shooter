@@ -103,8 +103,14 @@ public class OptionsMenu extends Menu{
     }
 
     private void applyCurrentSettings(){
+        AlertWindow alert_window = new AlertWindow(this);
+        getStage().close();
+        alert_window.start(getStage());
+        /*
         updateResolution();
         writeSettings();
+
+         */
     }
 
     private void writeSettings() {
