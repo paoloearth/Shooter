@@ -42,6 +42,7 @@ public class AlertWindow extends Menu{
         this.addGenericNode(_content);
         addFreeItem("BACK", 0.05, 0.2);
         addFreeItem("CONTINUE", 0.76, 0.2);
+        addFlashDisclaimer("Game will be reset. Do you want to confirm?", 0.185, 0.93);
         show();
 
         var menu_items = getItems();
@@ -93,12 +94,17 @@ public class AlertWindow extends Menu{
             _height = height;
             this.setPrefSize(width,height);
 
+            var alert_image = retrieveImage("alert.png", 1,1);
+            //WORKING HERE!
+            /*
+            alert_image.resize(getMenuWidth()/2, getMenuHeight()/2);
+            //setAlignment(alert_image, Pos.TOP_CENTER);
+            alert_image.setTranslateX(getMenuWidth()/2.-alert_image.getFitWidth());
+            getChildren().add(alert_image);
+             */
 
-            var fireworks = retrieveImage("alert.png", 1,1);
-
-            addCentralComposition(fireworks);
+            addCentralComposition(alert_image);
             addCustomTitle("WARNING!");
-            addDisclaimer("Game will be reset. Do you want to confirm?");
         }
 
         private void addCustomTitle(String title_text){
@@ -107,24 +113,6 @@ public class AlertWindow extends Menu{
             top.setFill(Color.SILVER);
             setAlignment(top,Pos.TOP_CENTER);
             setTop(top);
-        }
-
-        public  void addDisclaimer(String disclaimer_text){
-            Text bottom = new Text(disclaimer_text);
-            bottom.setFont(Font.font("Times New Roman", FontWeight.BOLD,_width*0.025));
-            bottom.setFill(Color.SILVER);
-            textAnimation(bottom);
-            setAlignment(bottom,Pos.TOP_CENTER);
-            setBottom(bottom);
-        }
-
-        private void textAnimation(Text bottom) {
-            FadeTransition textTransition = new FadeTransition(Duration.seconds(1.0), bottom);
-            textTransition.setAutoReverse(true);
-            textTransition.setFromValue(0);
-            textTransition.setToValue(1);
-            textTransition.setCycleCount(Transition.INDEFINITE);
-            textTransition.play();
         }
 
         private ImageView retrieveImage(String URL, int n_rows, int n_cols)
