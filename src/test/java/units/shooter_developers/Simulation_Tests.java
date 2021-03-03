@@ -69,6 +69,7 @@ class Simulation_Tests {
 
         for (int i = 0; i < 10; i++) {
             robot.push(KeyCode.DOWN);
+            robot.push(KeyCode.UP);
         }
 
 
