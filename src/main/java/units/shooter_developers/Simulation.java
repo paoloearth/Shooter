@@ -238,7 +238,6 @@ public class Simulation extends Application {
 
 
             stopSimulation();
-            _stage.close();
             win_screen.start(_stage);
 
 
