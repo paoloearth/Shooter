@@ -1,7 +1,5 @@
 package units.shooter_developers;
 
-import javafx.animation.FadeTransition;
-import javafx.animation.Transition;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -15,29 +13,29 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class WinnerWindow extends Menu{
-    WinnerScreenObject _content;
+    Sprite _player;
 
     WinnerWindow(double width, double height, Sprite player ){
         super(width, height);
-        _content = new WinnerScreenObject(width, height, player);
+        _player = player;
     }
 
     @Override
     public void start(Stage stage){
         setStage(stage);
         getStage().centerOnScreen();
-        this.addGenericNode(_content);
+
+        var central_image = new CentralComposition(getMenuWidth(), getMenuHeight(), _player);
+        this.addGenericNode(central_image);
         addFlashDisclaimer("<press a key to continue>", 0.32, 0.93);
         show();
 
         //time_before_read_input(stage, getSceneFromStage());
-
 
         getSceneFromStage().addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
 
@@ -75,11 +73,11 @@ public class WinnerWindow extends Menu{
 
 }
 
-class WinnerScreenObject extends BorderPane {
+class CentralComposition extends BorderPane {
 
      double  _width, _height;
 
-    WinnerScreenObject(double width, double height, Sprite P)
+    CentralComposition(double width, double height, Sprite P)
     {
         _width = width;
         _height = height;
@@ -90,6 +88,7 @@ class WinnerScreenObject extends BorderPane {
         var fireworks = retrieve_image("fireworks.png", 1,1);
 
         addCentralComposition(fireworks,winner_image);
+
         addCustomTitle(P._player_name);
     }
 
@@ -117,7 +116,6 @@ class WinnerScreenObject extends BorderPane {
         addProportionalImageToStackPane(player_sprite,sp);
         setCenter(sp);
     }
-
 
     private void addProportionalImageToStackPane(ImageView image, StackPane sp){
         image.fitHeightProperty().bind(sp.heightProperty());
