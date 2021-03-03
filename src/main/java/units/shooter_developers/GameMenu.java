@@ -27,7 +27,7 @@ public class GameMenu extends Menu{
     @Override
     public void start(Stage menu_stage){
         setStage(menu_stage);
-
+        getStage().centerOnScreen();
         readDimensions();
         menu_stage.centerOnScreen();
 
@@ -51,7 +51,6 @@ public class GameMenu extends Menu{
             item.setOnMouseReleased(event -> {
                 if (item.getName().equals("NEW GAME")) {
                     Submenu submenu_launch_game = new Submenu(this);
-                    getStage().close();
                     submenu_launch_game.start(menu_stage);
                 }
                 if (item.getName().equals("CONTINUE")) {

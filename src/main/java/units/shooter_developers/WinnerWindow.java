@@ -31,10 +31,11 @@ public class WinnerWindow extends Menu{
     @Override
     public void start(Stage stage){
         setStage(stage);
+        getStage().centerOnScreen();
         this.addGenericNode(_content);
         show();
 
-       // time_before_read_input(stage, scene);
+        //time_before_read_input(stage, getSceneFromStage());
 
 
         getSceneFromStage().addEventHandler(KeyEvent.KEY_PRESSED, ke -> {

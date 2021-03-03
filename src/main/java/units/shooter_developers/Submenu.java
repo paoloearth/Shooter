@@ -16,12 +16,12 @@ public class Submenu extends Menu{
 
     public void start(Stage stage){
         setStage(stage);
+        getStage().centerOnScreen();
 
         SubmenuObject content = new SubmenuObject(getMenuWidth(), getMenuHeight(), this);
-
         addGenericNode(content);
+
         show();
-        getStage().setAlwaysOnTop(true);
     }
 
     private  class SubmenuObject extends FlowPane {
@@ -82,9 +82,7 @@ public class Submenu extends Menu{
 
             M.setGameInstance(new Simulation(FAKE_NAMES,FAKE_URLS, FAKE_MAP));
             try {
-                M.getStage().close();
                 getGameInstance().start(getStage());
-                getStage().setAlwaysOnTop(true);
             } catch (Exception e) {
                 e.printStackTrace();
             }
