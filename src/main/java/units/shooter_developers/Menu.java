@@ -234,6 +234,18 @@ public abstract class Menu extends Application {
         //sp.setAlignment(Pos.CENTER);
     }
 
+    public void addSecondaryTitle(String secondary_title){
+        var bp = new BorderPane();
+        bp.setPrefSize(getMenuWidth(), getMenuHeight());
+        Text top = new Text(secondary_title);
+        top.setFont(Font.font("Times New Roman", FontWeight.BOLD,getMenuWidth()*0.06));
+        top.setFill(Color.SILVER);
+        bp.setAlignment(top,Pos.TOP_CENTER);
+        bp.setTop(top);
+
+        _root.getChildren().add(bp);
+    }
+
     /************************** SET/GET METHODS *****************************/
 
     /** SCREEN **/

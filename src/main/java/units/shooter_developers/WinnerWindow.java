@@ -34,6 +34,7 @@ public class WinnerWindow extends Menu{
         var fireworks = retrieve_image("fireworks.png", 1,1);
         addCentralImageView(fireworks, 0.9, 0.9);
         addCentralImageView(winner_image, 0.9, 0.9);
+        addSecondaryTitle("The winner is "+ _player._player_name);
 
         var central_image = new CentralComposition(getMenuWidth(), getMenuHeight(), _player);
         //this.addGenericNode(central_image);
