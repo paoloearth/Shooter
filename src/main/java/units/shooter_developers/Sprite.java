@@ -105,9 +105,14 @@ public class Sprite extends Dynamic_Object {
 
             update_get_direction(destination);
 
-            if (!(illegal_move(M, 2.0 / 3.0))) move_to(destination);
+            if (!(illegal_move(M, 2.0 / 3.0, this))) move_to(destination);
         }
 
+    }
+
+    public boolean get_property_to_check(Tile t)
+    {
+        return t.is_passable;
     }
 
     private boolean has_moved() {

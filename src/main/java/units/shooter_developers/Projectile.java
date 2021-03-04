@@ -29,7 +29,7 @@ public class Projectile extends Dynamic_Object{
 
     public void translate(Map M)
     {
-        if( illegal_move(M,0)) _isDead.setValue(true);
+        if( illegal_move(M,0, this)) _isDead.setValue(true);
         else move_to(new Coordinates(get_future_x(), get_future_y()));
     }
 
@@ -83,5 +83,10 @@ public class Projectile extends Dynamic_Object{
 
     public void setBiasY(int biasY) {
         this.biasY = biasY;
+    }
+
+    @Override
+    public boolean get_property_to_check(Tile t) {
+        return t.is_passable_for_projectile;
     }
 }

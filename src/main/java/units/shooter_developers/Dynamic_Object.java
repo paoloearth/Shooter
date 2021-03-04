@@ -49,7 +49,7 @@ public abstract class Dynamic_Object extends Pictured_Object {
 
 
    // protected abstract  boolean illegal_move(Map M);
-   protected  boolean illegal_move(Map M, double multiplier) {
+   protected  boolean illegal_move(Map M, double multiplier, Dynamic_Object D) {
 
        /* Compute the collision box*/
        var collision_box =  get_move_box();
@@ -62,9 +62,11 @@ public abstract class Dynamic_Object extends Pictured_Object {
        /* Get tiles  */
        collision_box.compute_tiles_bounds(M);
 
-       return collision_box.performs_check(M,_type);
+       return collision_box.performs_check(M,D);
 
    }
+
+    public abstract  boolean get_property_to_check(Tile t);
 
 
 

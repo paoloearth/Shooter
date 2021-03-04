@@ -50,7 +50,7 @@ public class Teleport extends Pictured_Object{
 
     @Override
     public Box get_hitbox(){
-        return new Box(get_current_Y_position() + get_actual_height()*.5, get_current_X_position()+get_actual_width()*.5,  get_actual_width()*.5 ,get_actual_height()*.5 );
+        return new Box(get_current_Y_position() + (get_actual_height()*.25), get_current_X_position()+(get_actual_width()*.25),  get_actual_width()*.5 ,get_actual_height()*.5 );
     }
 
 

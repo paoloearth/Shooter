@@ -70,15 +70,15 @@ public class Box{
 
 
 
-    public boolean  performs_check(Map M, String type)
+    public boolean  performs_check(Map M, Dynamic_Object O)
     {
         for (int i =tile[BOUNDS.LEFT.ordinal()]; i<= tile[BOUNDS.RIGHT.ordinal()]; i++)
         {
             for (int j=tile[BOUNDS.TOP.ordinal()]; j<= tile[BOUNDS.BOTTOM.ordinal()]; j++)
             {
                 Tile t =M.get_tile_matrix().get(M.single_index(i, j));
-                var b = type.equals("PROJECTILE")? !t.is_passable_for_projectile : !t.is_passable;
-                if(b) return true;
+                var v = O.get_property_to_check(t);
+                if(!v) return true;
             }
         }
         return false;
