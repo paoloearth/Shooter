@@ -1,6 +1,5 @@
 package units.shooter_developers;
 
-
 public class Box{
 
 
@@ -14,7 +13,7 @@ public class Box{
     }
 
     public void shrink_height_by(double v) {
-        box[BOUNDS.TOP.ordinal()] += get_height() * v;
+        set_top(get_top_box()+get_height() * v);
     }
 
     public double get_height()
@@ -28,17 +27,17 @@ public class Box{
 
     public  void  compute_tiles_bounds(Map M) {
 
-        int top_tile = (int) (box[BOUNDS.TOP.ordinal()] / M.getTileHeight());
+        int top_tile = (int) (get_top_box() / M.getTileHeight());
         if (top_tile < 0) top_tile = 0;
 
-        int bottom_tile = (int) (box[BOUNDS.BOTTOM.ordinal()] / M.getTileHeight());
+        int bottom_tile = (int) (get_bottom_box() / M.getTileHeight());
         if (bottom_tile > M.get_height()) bottom_tile = (int) M.get_height();
 
-        int left_tile = (int) (box[BOUNDS.LEFT.ordinal()] / M.getTileWidth());
+        int left_tile = (int) (get_left_box() / M.getTileWidth());
         if (left_tile < 0) left_tile = 0;
 
 
-        int right_tile = (int) (box[BOUNDS.RIGHT.ordinal()] / M.getTileWidth());
+        int right_tile = (int) (get_right_box()/ M.getTileWidth());
         if (right_tile > M.get_width()) right_tile = (int) M.get_width();
 
 
@@ -53,7 +52,7 @@ public class Box{
 
     boolean intersect(Box B)
     {
-        return B.get_right() > get_left()&& B.get_bottom() > get_top() && B.get_left() < get_right() && B.get_top() < get_bottom();
+        return B.get_right_box() > get_left_box()&& B.get_bottom_box() > get_top_box() && B.get_left_box() < get_right_box() && B.get_top_box() < get_bottom_box();
     }
 
 
@@ -61,24 +60,24 @@ public class Box{
 
 
     private boolean check_top_and_left() {
-        return box[BOUNDS.TOP.ordinal()] <= 0 ||  box[BOUNDS.LEFT.ordinal()] <= 0;
+        return get_top_box()<= 0 ||  get_left_box() <= 0;
     }
 
     private boolean check_bottom_and_right(Map M) {
-        return box[BOUNDS.RIGHT.ordinal()] >= M.get_width() || box[BOUNDS.BOTTOM.ordinal()] >= M.get_height();
+        return get_right_box() >= M.get_width() || get_bottom_box() >= M.get_height();
     }
 
 
 
-    public boolean  performs_check(Map M, Dynamic_Object O)
+    public boolean  performs_check(Map M, Dynamic_Object D)
     {
-        for (int i =tile[BOUNDS.LEFT.ordinal()]; i<= tile[BOUNDS.RIGHT.ordinal()]; i++)
+        for (int i =get_left_tile(); i<= get_right_tile(); i++)
         {
-            for (int j=tile[BOUNDS.TOP.ordinal()]; j<= tile[BOUNDS.BOTTOM.ordinal()]; j++)
+            for (int j=get_top_tile(); j<= get_bottom_tile(); j++)
             {
                 Tile t =M.get_tile_matrix().get(M.single_index(i, j));
-                var v = O.get_property_to_check(t);
-                if(!v) return true;
+                var passable = D.get_property_to_check(t);
+                if(!passable) return true;
             }
         }
         return false;
@@ -102,22 +101,40 @@ public class Box{
         box[BOUNDS.RIGHT.ordinal()] = right;
     }
 
-    public double get_top()
+    public double get_top_box()
     {
         return box[BOUNDS.TOP.ordinal()];
     }
 
-    public double get_bottom()
+    public double get_bottom_box()
     {
         return box[BOUNDS.BOTTOM.ordinal()];
     }
-    public double get_left()
+    public double get_left_box()
     {
         return box[BOUNDS.LEFT.ordinal()];
     }
-    public double get_right()
+    public double get_right_box()
     {
         return box[BOUNDS.RIGHT.ordinal()];
+    }
+
+    public int get_top_tile()
+    {
+        return tile[BOUNDS.TOP.ordinal()];
+    }
+
+    public int get_bottom_tile()
+    {
+        return tile[BOUNDS.BOTTOM.ordinal()];
+    }
+    public int get_left_tile()
+    {
+        return tile[BOUNDS.LEFT.ordinal()];
+    }
+    public int get_right_tile()
+    {
+        return tile[BOUNDS.RIGHT.ordinal()];
     }
 
 
