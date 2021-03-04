@@ -37,7 +37,7 @@ public class AlertWindow extends Menu{
         setStage(stage);
         getStage().centerOnScreen();
 
-        var alert_image = retrieveImage("alert.png", 1,1);
+        var alert_image = Menu.retrieveImage("alert.png", 1,1);
 
         addCentralImageView(alert_image, 0.7, 0.7);
         addSecondaryTitle("CAUTION!");
@@ -83,13 +83,5 @@ public class AlertWindow extends Menu{
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private ImageView retrieveImage(String URL, int n_rows, int n_cols)
-    {
-        var I = new Image(URL);
-        var IM =  new ImageView(I);
-        IM.setViewport(new Rectangle2D( 0, 0, I.getWidth()/n_cols, I.getHeight()/n_rows));
-        return IM;
     }
 }

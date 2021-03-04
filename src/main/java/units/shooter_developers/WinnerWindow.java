@@ -1,17 +1,7 @@
 package units.shooter_developers;
 
-import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Timer;
@@ -30,51 +20,30 @@ public class WinnerWindow extends Menu{
         setStage(stage);
         getStage().centerOnScreen();
 
-        var winner_image = retrieve_image(_player.get_url(),4,1);
-        var fireworks = retrieve_image("fireworks.png", 1,1);
+        var winner_image = Menu.retrieveImage(_player.get_url(),4,1);
+        var fireworks = Menu.retrieveImage("fireworks.png", 1,1);
         addCentralImageView(fireworks, 0.9, 0.9);
         addCentralImageView(winner_image, 0.9, 0.9);
         addSecondaryTitle("The winner is "+ _player._player_name);
         addFlashDisclaimer("<press a key to continue>", 0.32, 0.93);
         show();
 
-        //time_before_read_input(stage, getSceneFromStage());
-
-        getSceneFromStage().addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
-
-            GameMenu new_menu = new GameMenu(this);
-            new_menu.start(stage);
-
-        });
-
-
+        waitAndPressToContinue(1);
     }
 
-    private void time_before_read_input(Stage stage, Scene scene) {
+    private void waitAndPressToContinue(double seconds) {
         Timer timer = new Timer();
 
         TimerTask task_2 = new TimerTask()
         {
             public void run()
             {
-
-                    scene.addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
-
+                    getSceneFromStage().addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
                     GameMenu new_menu = new GameMenu();
-                    new_menu.start(stage);
-
+                    new_menu.start(getStage());
                 });
             }
         };
-
-        timer.schedule(task_2,2000);
-    }
-
-    private ImageView retrieve_image(String URL, int n_rows, int n_cols)
-    {
-        var I = new Image(URL);
-        var IM =  new ImageView(I);
-        IM.setViewport(new Rectangle2D( 0, 0, I.getWidth()/n_cols, I.getHeight()/n_rows));
-        return IM;
+        timer.schedule(task_2,1000*(int)seconds);
     }
 }

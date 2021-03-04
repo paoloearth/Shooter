@@ -408,6 +408,16 @@ public abstract class Menu extends Application {
         _game_running = is_game_running;
     }
 
+    /** other **/
+
+    public static ImageView retrieveImage(String URL, int n_rows, int n_cols)
+    {
+        var I = new Image(URL);
+        var IM =  new ImageView(I);
+        IM.setViewport(new Rectangle2D( 0, 0, I.getWidth()/n_cols, I.getHeight()/n_rows));
+        return IM;
+    }
+
     /*******************************************************************************/
     /*                          MENU ELEMENTS                                      */
     /*******************************************************************************/
