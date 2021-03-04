@@ -23,10 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -220,6 +217,35 @@ public abstract class Menu extends Application {
         _root.getChildren().add(disclaimer_object);
     }
 
+    public void addCentralImageView(ImageView image, double scale_width, double scale_height){
+        var sp = new StackPane();
+        //sp.setPrefSize(getMenuWidth(), getMenuHeight());
+        image.fitHeightProperty().bind(sp.heightProperty());
+        image.setPreserveRatio(true);
+        sp.setMaxSize(scale_width*getMenuWidth(), scale_height*getMenuHeight());
+        sp.getChildren().add(image);
+        sp.setAlignment(Pos.CENTER);
+
+        var bp = new BorderPane();
+        bp.setPrefSize(getMenuWidth(), getMenuHeight());
+        bp.setCenter(sp);
+
+        _root.getChildren().add(bp);
+        //sp.setAlignment(Pos.CENTER);
+    }
+
+    public void addSecondaryTitle(String secondary_title){
+        var bp = new BorderPane();
+        bp.setPrefSize(getMenuWidth(), getMenuHeight());
+        Text top = new Text(secondary_title);
+        top.setFont(Font.font("Times New Roman", FontWeight.BOLD,getMenuWidth()*0.06));
+        top.setFill(Color.SILVER);
+        bp.setAlignment(top,Pos.TOP_CENTER);
+        bp.setTop(top);
+
+        _root.getChildren().add(bp);
+    }
+
     /************************** SET/GET METHODS *****************************/
 
     /** SCREEN **/
@@ -380,6 +406,16 @@ public abstract class Menu extends Application {
 
     public void setGameRunning(boolean is_game_running){
         _game_running = is_game_running;
+    }
+
+    /** other **/
+
+    public static ImageView retrieveImage(String URL, int n_rows, int n_cols)
+    {
+        var I = new Image(URL);
+        var IM =  new ImageView(I);
+        IM.setViewport(new Rectangle2D( 0, 0, I.getWidth()/n_cols, I.getHeight()/n_rows));
+        return IM;
     }
 
     /*******************************************************************************/
@@ -699,7 +735,7 @@ public abstract class Menu extends Application {
     }
 
 
-    /************************ UNANIMATED ITEM ****************************************/
+    /************************ FLASH DISCLAIMER ITEM ****************************************/
 
     private class FlashDisclaimer extends StackPane{
 
@@ -709,8 +745,6 @@ public abstract class Menu extends Application {
             disclaimer.setFill(Color.SILVER);
             textAnimation(disclaimer);
             setAlignment(disclaimer,Pos.TOP_CENTER);
-            //setBottom(disclaimer);
-            //disclaimer.setTranslateY(-0.05*getMenuHeight());
             this.setTranslateX(position_ratio_X*getMenuWidth());
             this.setTranslateY(position_ratio_Y*getMenuHeight());
             getChildren().add(disclaimer);
