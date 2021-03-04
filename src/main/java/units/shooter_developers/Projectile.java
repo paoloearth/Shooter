@@ -64,47 +64,6 @@ public class Projectile extends Dynamic_Object{
         return collision_box.performs_check(M, this._type);
 
     }
-        /* --------------- SPLIT HERE ------------------ */
-
-           /* These values depends on dynamic object
-                double left = get_future_x();
-                double top = get_future_y();
-                var bottom = top+get_actual_height() ;
-                var right = left+get_actual_width() ;
-       */
-
-
-        // QUI CAMBIANO IN QUANTO LA MOVEBOX DI SPRITE E' PIU PICCOLA
-        // top += get_actual_height() * 2.0/3.0;
-
-        /* These values depends also can be pushed above ... the problem is that for sprite we need to add an extra operation */
-        /* Maybe we can declare the methon in dynamic and change the little thing
-
-        int left_tile = (int) (left/M.getTileWidth());
-        int rigth_tile = (int) (right/M.getTileWidth());
-
-        int top_tile = (int) (top/M.getTileHeight());
-        int bottom_tile = (int) (bottom/M.getTileHeight());*/
-
-
-        /* These values also depends only on the previous
-        if(left_tile < 0) left_tile = 0;
-        if(rigth_tile > M.get_width()) rigth_tile = (int) M.get_width();
-        if(top_tile < 0) top_tile = 0;
-        if(bottom_tile>M.get_height()) bottom_tile = (int) M.get_height();
-*/
-        /* --------------- SPLIT HERE ------------------
-
-        for (int i =left_tile; i<= rigth_tile; i++)
-        {
-            for (int j=top_tile; j<= bottom_tile; j++)
-            {
-                Tile t = M.get_tile_matrix().get(M.single_index(i,j));
-                if(t.not_passable_for_p) return true;
-            }
-        }
-        return false;
- */
 
 
 
