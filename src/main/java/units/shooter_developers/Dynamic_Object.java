@@ -40,16 +40,19 @@ public abstract class Dynamic_Object extends Pictured_Object {
         return this.get_current_Y_position() + _deltaY;
     }
 
-    public Box get_full_collision_box(){
-        return new Box(get_future_y(), get_future_x(), get_actual_width() ,get_actual_height()  );
+    public Box get_move_box(){
+        return new Box( get_future_y() ,get_future_x(), get_actual_width() ,get_actual_height());
     }
+
+
+
 
 
    // protected abstract  boolean illegal_move(Map M);
    protected  boolean illegal_move(Map M, double multiplier) {
 
        /* Compute the collision box*/
-       var collision_box =  get_full_collision_box();
+       var collision_box =  get_move_box();
 
        if(collision_box.is_out_of_map(M)) return true;
 

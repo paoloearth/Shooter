@@ -45,15 +45,14 @@ public class Teleport extends Pictured_Object{
 
     public void setDestination(Teleport T)
     {
-        destination = new Coordinates(T.get_current_X_position() + get_actual_width()/4 ,T.get_current_Y_position()+get_actual_height());
+        destination = new Coordinates(T.get_current_X_position() + get_actual_width()/4.0 ,T.get_current_Y_position()+get_actual_height());
     }
 
     @Override
-    public Rectangle2D get_bounds() {
-        return new Rectangle2D(get_current_X_position() +  (get_actual_width()/4),
-                get_current_Y_position() +  (get_actual_height()/4),
-                get_actual_width()/2, get_actual_height()/2);
+    public Box get_hitbox(){
+        return new Box(get_current_Y_position() + get_actual_height()*.5, get_current_X_position()+get_actual_width()*.5,  get_actual_width()*.5 ,get_actual_height()*.5 );
     }
+
 
     @Override
     public void update(Map M, Sprite S) {
