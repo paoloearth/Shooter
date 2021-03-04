@@ -45,13 +45,13 @@ public abstract class Dynamic_Object extends Pictured_Object {
     }
 
 
-
-
-
    // protected abstract  boolean illegal_move(Map M);
    protected  boolean illegal_move(Map M, double multiplier) {
+
        /* Compute the collision box*/
        var collision_box =  get_full_collision_box();
+
+       if(collision_box.is_out_of_map(M)) return true;
 
        /* Reduce impact area of the object*/
        collision_box.shrink_height_by(multiplier);
@@ -59,18 +59,10 @@ public abstract class Dynamic_Object extends Pictured_Object {
        /* Get tiles  */
        collision_box.compute_tiles_bounds(M);
 
-       return collision_box.performs_check(M,this._type);
+       return collision_box.performs_check(M,_type);
 
    }
 
-    //Check if an element of the map is out of it
-    protected boolean is_out_of_map(Map M) {
-        return  this.get_future_x() <= 0 ||
-                this.get_future_y() <= 0 ||
-                this.get_future_x()  + get_actual_width() >= M.get_width() ||
-                this.get_future_y()  + get_actual_height() >= M.get_height();
-
-    }
 
 
 }

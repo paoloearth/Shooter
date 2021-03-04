@@ -1,13 +1,6 @@
 package units.shooter_developers;
 
-public class Custom_Settings {
 
-
-    /* DIMENSIONS */
-    public static final int DEFAULT_X  = 1000;
-    public static final int DEFAULT_Y  = 600;
-
-    /*  METADATA IN MAP */
 
     /* TEMPLATE
        0. URL_spritesheet_mappa
@@ -17,6 +10,16 @@ public class Custom_Settings {
        4. sprite_1_blocco_x, sprite_1_blocco_y,sprite_2_blocco_x, sprite_2_blocco_y
        5. teleport positions
     */
+
+
+public class Custom_Settings {
+
+
+    /* DIMENSIONS */
+    public static final int DEFAULT_X  = 1000;
+    public static final int DEFAULT_Y  = 600;
+
+    /*  METADATA IN MAP */
 
     public static final int NUMBER_OF_METADATA_LINES  = 6;
 
