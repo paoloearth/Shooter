@@ -1,9 +1,7 @@
 package units.shooter_developers;
 
-import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
