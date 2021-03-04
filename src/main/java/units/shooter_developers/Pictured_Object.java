@@ -50,9 +50,7 @@ public abstract class Pictured_Object extends Map_Object {
 
     }
 
-    /*
-    Custom constructor for SpriteSheet with multiple views
-      */
+    /* Custom constructor for SpriteSheet with multiple views*/
     public Pictured_Object(Pair<Double,Double> scaling_factors, String url, int n_rows, int n_cols )
     {
         this(scaling_factors,url);
@@ -87,15 +85,14 @@ public abstract class Pictured_Object extends Map_Object {
         return (int) this._view.getFitWidth();
     }
 
-    //Abstract method to be implemented that defines the bounds of a map object used to check collision
-    public Rectangle2D get_bounds(){
-        return new Rectangle2D(get_current_X_position(), get_current_Y_position(), get_actual_width(), get_actual_height());
-    }
 
+    public Box get_hitbox(){
+        return new Box(get_current_Y_position(), get_current_X_position(),  get_actual_width() ,get_actual_height() );
+    }
 
     public boolean intersect(Pictured_Object P2)
     {
-        return this.get_bounds().intersects(P2.get_bounds());
+        return this.get_hitbox().intersect(P2.get_hitbox());
     }
 
     public abstract void update(Map M, Sprite S);

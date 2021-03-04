@@ -13,7 +13,7 @@ public class Projectile extends Dynamic_Object{
         super(scaling_factor, url);
 
         this._type ="PROJECTILE";        // Set the type
-        this.Owner = S._id;             // Save the shooter's ID
+        this.Owner = S._id;              // Save the shooter's ID
         this._scale = Custom_Settings.PROJECTILE_SCALE;
 
         set_speed(Custom_Settings.PROJECTILE_SPEED);
@@ -29,7 +29,7 @@ public class Projectile extends Dynamic_Object{
 
     public void translate(Map M)
     {
-        if( illegal_move(M,0)) _isDead.setValue(true);
+        if( illegal_move(M,0, this)) _isDead.setValue(true);
         else move_to(new Coordinates(get_future_x(), get_future_y()));
     }
 
@@ -83,5 +83,10 @@ public class Projectile extends Dynamic_Object{
 
     public void setBiasY(int biasY) {
         this.biasY = biasY;
+    }
+
+    @Override
+    public boolean get_property_to_check(Tile t) {
+        return t.is_passable_for_projectile;
     }
 }

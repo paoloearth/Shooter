@@ -105,9 +105,14 @@ public class Sprite extends Dynamic_Object {
 
             update_get_direction(destination);
 
-            if (!(illegal_move(M, 2.0 / 3.0))) move_to(destination);
+            if (!(illegal_move(M, 2.0 / 3.0, this))) move_to(destination);
         }
 
+    }
+
+    public boolean get_property_to_check(Tile t)
+    {
+        return t.is_passable;
     }
 
     private boolean has_moved() {
@@ -122,16 +127,9 @@ public class Sprite extends Dynamic_Object {
 
     }
 
-
-
-    //Return the bounds of the player used to check collision
     @Override
-    public Rectangle2D get_bounds()
-    {
-        return new Rectangle2D(get_current_X_position(),
-                get_current_Y_position() +get_actual_height() * 0.15 ,
-                get_actual_width(),
-                get_actual_height() * 3.0/4);
+    public Box get_hitbox(){
+        return new Box(get_current_Y_position() , get_current_X_position() +get_actual_width() * 0.15,  get_actual_width() ,get_actual_height()*.75 );
     }
 
     @Override
