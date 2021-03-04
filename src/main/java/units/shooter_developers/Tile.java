@@ -1,7 +1,5 @@
 package units.shooter_developers;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,7 +10,7 @@ public class Tile extends ImageView {
 
     /* encode the "walkability" for a player and for a projectile*/
     boolean is_passable;
-    boolean not_passable_for_p;
+    boolean is_passable_for_projectile;
 
     Tile(double pos_x, double pos_y, double width, double height, boolean passable, boolean not_passable_p, Image img, Rectangle2D r2)
     {
@@ -28,7 +26,7 @@ public class Tile extends ImageView {
 
         /* Set passability parameters */
         this.is_passable = passable;
-        this.not_passable_for_p = not_passable_p;
+        this.is_passable_for_projectile = !not_passable_p;
 
         /* Set image property of the figure */
         this.setImage(img);
