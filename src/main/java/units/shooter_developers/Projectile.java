@@ -17,8 +17,7 @@ public class Projectile extends Dynamic_Object{
         this._scale = Custom_Settings.PROJECTILE_SCALE;
         this._speed = (int) (Custom_Settings.PROJECTILE_SPEED*scaling_factor.getKey());    // Set characteristics of the projectile
 
-        _width   = (int)   (this._picture.getWidth()  /  _n_cols);
-        _height =  (int)   (this._picture.getHeight() / _n_rows);
+
 
         update_view();
 
@@ -28,6 +27,12 @@ public class Projectile extends Dynamic_Object{
         move_to(new Coordinates(S.get_future_x() + this.biasX, S.get_future_y() + this.biasY));
 
         this.getChildren().add(this._view);
+    }
+
+    public void translate(Map M)
+    {
+        if(is_out_of_map(M) || illegal_move(M)) _isDead.setValue(true);
+        else move_to(new Coordinates(get_future_x(), get_future_y()));
     }
 
     private void update_deltas(Sprite s) {
@@ -65,19 +70,13 @@ public class Projectile extends Dynamic_Object{
 
     }
 
-
-
     @Override
     public void update(Map M, Sprite S) {
         hit(S);
     }
 
 
-    public void translate(Map M)
-    {
-        if(is_out_of_map(M) || illegal_move(M)) _isDead.setValue(true);
-        else move_to(new Coordinates(get_future_x(), get_future_y()));
-    }
+
 
 
     public void hit(Sprite S)

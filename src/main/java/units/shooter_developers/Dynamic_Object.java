@@ -9,6 +9,7 @@ public abstract class Dynamic_Object extends Pictured_Object {
     int _speed;
     int _deltaX, _deltaY;
 
+
     //Custom Constructor
     public Dynamic_Object(Pair<Double,Double> scaling_factors, String url)
     {
