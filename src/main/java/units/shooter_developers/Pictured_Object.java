@@ -62,6 +62,7 @@ public abstract class Pictured_Object extends Map_Object {
 
         _width   = _width /  _n_cols;
         _height =  _height/ _n_rows;
+
     }
 
     // Create an image given an URL

@@ -1,6 +1,8 @@
 package units.shooter_developers;
 
 
+import java.util.stream.IntStream;
+
 public class Box{
 
 
@@ -40,30 +42,18 @@ public class Box{
 
     }
 
-        /* These values also depends only on the previous
-        if(left_tile < 0) left_tile = 0;
-        if(rigth_tile > M.get_width()) rigth_tile = (int) M.get_width();
-        if(top_tile < 0) top_tile = 0;
-        if(bottom_tile>M.get_height()) bottom_tile = (int) M.get_height();*/
-
-
 
 
 
     public boolean  performs_check(Map M, String type)
     {
-
         for (int i =tile[BOUNDS.LEFT.ordinal()]; i<= tile[BOUNDS.RIGHT.ordinal()]; i++)
         {
-            for (int j=tile[BOUNDS.TOP.ordinal()]; j<= tile[BOUNDS.BOTTOM.ordinal()]; j++) {
-
+            for (int j=tile[BOUNDS.TOP.ordinal()]; j<= tile[BOUNDS.BOTTOM.ordinal()]; j++)
+            {
                 Tile t =M.get_tile_matrix().get(M.single_index(i, j));
-                if(type.equals("PROJECTILE")) {
-                    if(t.not_passable_for_p) return true;
-                }
-                else {
-                    if(!t.is_passable) return  true;
-                }
+                var b = type.equals("PROJECTILE")? !t.is_passable_for_projectile : !t.is_passable;
+                if(b) return true;
             }
         }
         return false;

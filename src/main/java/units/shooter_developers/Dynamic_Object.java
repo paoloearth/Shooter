@@ -9,6 +9,7 @@ public abstract class Dynamic_Object extends Pictured_Object {
     int _speed;
     int _deltaX, _deltaY;
 
+
     //Custom Constructor
     public Dynamic_Object(Pair<Double,Double> scaling_factors, String url)
     {
@@ -19,6 +20,12 @@ public abstract class Dynamic_Object extends Pictured_Object {
     public Dynamic_Object( Pair<Double,Double> scaling_factors, String url, int _n_rows, int _n_cols)
     {
         super(scaling_factors, url, _n_rows, _n_cols);
+
+    }
+
+    public  void set_speed(double speed)
+    {
+        this._speed = (int) (speed*_scaling_factors.getKey());    // Set characteristics of the projectile
     }
 
     //Compute future x-component of the position
@@ -39,7 +46,22 @@ public abstract class Dynamic_Object extends Pictured_Object {
 
 
 
-    protected abstract  boolean illegal_move(Map M);
+
+
+   // protected abstract  boolean illegal_move(Map M);
+   protected  boolean illegal_move(Map M, double multiplier) {
+       /* Compute the collision box*/
+       var collision_box =  get_full_collision_box();
+
+       /* Reduce impact area of the object*/
+       collision_box.shrink_height_by(multiplier);
+
+       /* Get tiles  */
+       collision_box.compute_tiles_bounds(M);
+
+       return collision_box.performs_check(M,this._type);
+
+   }
 
     //Check if an element of the map is out of it
     protected boolean is_out_of_map(Map M) {

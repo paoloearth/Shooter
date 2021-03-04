@@ -35,12 +35,11 @@ public class Sprite extends Dynamic_Object {
 
         this._player_name = player_name;
         this._id = id;
-        this._speed = (int) (Custom_Settings.PLAYER_SPEED*scaling_factor.getKey());
+
+        set_speed(Custom_Settings.PLAYER_SPEED);
+
         this._scale = Custom_Settings.PLAYER_SCALE;
         this._type = "SPRITE";
-
-        _width   = (int)   (this._picture.getWidth()  /  _n_cols);
-        _height =  (int)   (this._picture.getHeight() / _n_rows);
 
         update_view();
 
@@ -73,7 +72,7 @@ public class Sprite extends Dynamic_Object {
     }
 
     //Update the movement in the right direction
-    public void update_delta() {
+    public void update_speed() {
         _deltaX = _deltaY = 0;
         if (goNorth) _deltaY -= _speed;
         if (goSouth) _deltaY += _speed;
@@ -82,56 +81,47 @@ public class Sprite extends Dynamic_Object {
     }
 
     // HERE I TRY TO INFER THE DIRECTION SO THAT I CAN PICK THE RIGHT SPRITE
-    public void update_get_direction(double destination_x, double destination_y)
+    public void update_get_direction(Coordinates destination)
     {
         Direction D;
+        if (Math.abs(_deltaX) > Math.abs(_deltaY))
+                D = (destination.getX()  < get_current_X_position())? Direction.LEFT : Direction.RIGHT;
+        else
+                D = (destination.getY()  < get_current_Y_position())? Direction.UP:Direction.DOWN;
 
-        if(Math.abs(_deltaX) >0 || Math.abs(_deltaY)  > 0)
-        {
-            if (Math.abs(_deltaX) > Math.abs(_deltaY))      // NEED TO CHOOSE BETWEEN RIGHT OR LEFT
-            {
-                if (destination_x  < get_current_X_position()) D=Direction.LEFT;
-                else                                           D=Direction.RIGHT;
-
-            } else {                  // NEED TO CHOOSE BETWEEN UP OR DOWN
-                if (destination_y  < get_current_Y_position()) D = Direction.UP;
-                else                                           D= Direction.DOWN;
-            }
-
-            _current_direction.set(D);
-        }
+        _current_direction.set(D);
     }
+
 
 
 
     public void move(Map M) {
-        update_delta();
+        update_speed();
 
-        if (this._deltaX == 0 && this._deltaY == 0) return;
+        if (has_moved()) {
 
+            var destination = get_destination();
+
+            update_get_direction(destination);
+
+            if (!(is_out_of_map(M) || illegal_move(M, 2.0 / 3.0))) move_to(destination);
+        }
+
+    }
+
+    private boolean has_moved() {
+        return (Math.abs(this._deltaX) > 0 || Math.abs(this._deltaY) > 0);
+    }
+
+    Coordinates get_destination()
+    {
         double future_x = get_current_X_position() + _deltaX;
         double future_y = get_current_Y_position() + _deltaY;
-
-        update_get_direction(future_x, future_y);
-
-        if(!(is_out_of_map(M) || illegal_move(M))) move_to(new Coordinates(future_x, future_y));
+        return new Coordinates(future_x, future_y);
 
     }
 
-    @Override
-    protected  boolean illegal_move(Map M) {
-        /* Compute the collision box*/
-        var collision_box =  get_full_collision_box();
 
-        /* Reduce impact area of the object*/
-        collision_box.shrink_height_by(2.00/3.00);
-
-        /* Get tiles  */
-        collision_box.compute_tiles_bounds(M);
-
-        return collision_box.performs_check(M,this._type);
-
-    }
 
     //Return the bounds of the player used to check collision
     @Override
@@ -174,6 +164,19 @@ public class Sprite extends Dynamic_Object {
         this.goWest = goWest;
     }
 
+    public boolean isGoNorth() {
+        return goNorth;
+    }
 
+    public boolean isGoSouth() {
+        return goSouth;
+    }
 
+    public boolean isGoEast() {
+        return goEast;
+    }
+
+    public boolean isGoWest() {
+        return goWest;
+    }
 }
