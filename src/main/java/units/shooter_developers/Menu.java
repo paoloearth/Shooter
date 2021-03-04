@@ -699,7 +699,7 @@ public abstract class Menu extends Application {
     }
 
 
-    /************************ UNANIMATED ITEM ****************************************/
+    /************************ FLASH DISCLAIMER ITEM ****************************************/
 
     private class FlashDisclaimer extends StackPane{
 

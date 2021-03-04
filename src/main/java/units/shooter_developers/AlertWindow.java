@@ -96,14 +96,15 @@ public class AlertWindow extends Menu{
 
             var alert_image = retrieveImage("alert.png", 1,1);
             //WORKING HERE!
-            /*
+
             alert_image.resize(getMenuWidth()/2, getMenuHeight()/2);
             //setAlignment(alert_image, Pos.TOP_CENTER);
-            alert_image.setTranslateX(getMenuWidth()/2.-alert_image.getFitWidth());
+            alert_image.setTranslateX(getMenuWidth()/2-alert_image.getImage().getWidth()/2);
+            alert_image.setTranslateY(getMenuHeight()/2-alert_image.getImage().getHeight()/2);
             getChildren().add(alert_image);
-             */
 
-            addCentralComposition(alert_image);
+
+            //addCentralComposition(alert_image);
             addCustomTitle("WARNING!");
         }
 
