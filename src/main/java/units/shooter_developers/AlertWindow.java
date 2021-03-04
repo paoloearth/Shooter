@@ -39,10 +39,13 @@ public class AlertWindow extends Menu{
         setStage(stage);
         getStage().centerOnScreen();
 
+        var alert_image = retrieveImage("alert.png", 1,1);
+
         this.addGenericNode(_content);
         addFreeItem("BACK", 0.05, 0.2);
         addFreeItem("CONTINUE", 0.76, 0.2);
         addFlashDisclaimer("Game will be reset. Do you want to confirm?", 0.185, 0.93);
+        addCentralImageView(alert_image);
         show();
 
         var menu_items = getItems();
@@ -84,6 +87,14 @@ public class AlertWindow extends Menu{
         }
     }
 
+    private ImageView retrieveImage(String URL, int n_rows, int n_cols)
+    {
+        var I = new Image(URL);
+        var IM =  new ImageView(I);
+        IM.setViewport(new Rectangle2D( 0, 0, I.getWidth()/n_cols, I.getHeight()/n_rows));
+        return IM;
+    }
+
     private class AlertObject extends BorderPane {
 
         double  _width, _height;
@@ -93,18 +104,7 @@ public class AlertWindow extends Menu{
             _width = width;
             _height = height;
             this.setPrefSize(width,height);
-
-            var alert_image = retrieveImage("alert.png", 1,1);
-            //WORKING HERE!
-
-            alert_image.resize(getMenuWidth()/2, getMenuHeight()/2);
-            //setAlignment(alert_image, Pos.TOP_CENTER);
-            alert_image.setTranslateX(getMenuWidth()/2-alert_image.getImage().getWidth()/2);
-            alert_image.setTranslateY(getMenuHeight()/2-alert_image.getImage().getHeight()/2);
-            getChildren().add(alert_image);
-
-
-            //addCentralComposition(alert_image);
+            
             addCustomTitle("WARNING!");
         }
 
@@ -116,13 +116,6 @@ public class AlertWindow extends Menu{
             setTop(top);
         }
 
-        private ImageView retrieveImage(String URL, int n_rows, int n_cols)
-        {
-            var I = new Image(URL);
-            var IM =  new ImageView(I);
-            IM.setViewport(new Rectangle2D( 0, 0, I.getWidth()/n_cols, I.getHeight()/n_rows));
-            return IM;
-        }
 
         private void addCentralComposition(ImageView background_sprite)
         {

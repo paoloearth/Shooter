@@ -220,6 +220,14 @@ public abstract class Menu extends Application {
         _root.getChildren().add(disclaimer_object);
     }
 
+    public void addCentralImageView(ImageView image){
+        image.resize(getMenuWidth()/2, getMenuHeight()/2);
+        //setAlignment(alert_image, Pos.TOP_CENTER);
+        image.setTranslateX(getMenuWidth()/2-image.getImage().getWidth()/2);
+        image.setTranslateY(getMenuHeight()/2-image.getImage().getHeight()/2);
+        _root.getChildren().add(image);
+    }
+
     /************************** SET/GET METHODS *****************************/
 
     /** SCREEN **/
@@ -709,8 +717,6 @@ public abstract class Menu extends Application {
             disclaimer.setFill(Color.SILVER);
             textAnimation(disclaimer);
             setAlignment(disclaimer,Pos.TOP_CENTER);
-            //setBottom(disclaimer);
-            //disclaimer.setTranslateY(-0.05*getMenuHeight());
             this.setTranslateX(position_ratio_X*getMenuWidth());
             this.setTranslateY(position_ratio_Y*getMenuHeight());
             getChildren().add(disclaimer);
