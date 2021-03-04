@@ -42,10 +42,10 @@ public class AlertWindow extends Menu{
         var alert_image = retrieveImage("alert.png", 1,1);
 
         this.addGenericNode(_content);
+        addCentralImageView(alert_image, 0.7, 0.7);
         addFreeItem("BACK", 0.05, 0.2);
         addFreeItem("CONTINUE", 0.76, 0.2);
         addFlashDisclaimer("Game will be reset. Do you want to confirm?", 0.185, 0.93);
-        addCentralImageView(alert_image);
         show();
 
         var menu_items = getItems();
@@ -104,7 +104,7 @@ public class AlertWindow extends Menu{
             _width = width;
             _height = height;
             this.setPrefSize(width,height);
-            
+
             addCustomTitle("WARNING!");
         }
 
@@ -114,23 +114,6 @@ public class AlertWindow extends Menu{
             top.setFill(Color.SILVER);
             setAlignment(top,Pos.TOP_CENTER);
             setTop(top);
-        }
-
-
-        private void addCentralComposition(ImageView background_sprite)
-        {
-            StackPane sp = new StackPane();
-            sp.setMinSize(_width/2, _height/2);
-            addProportionalImageToStackPane(background_sprite,sp);
-            setCenter(sp);
-        }
-
-
-        private void addProportionalImageToStackPane(ImageView image, StackPane sp){
-            image.fitHeightProperty().bind(sp.heightProperty());
-            image.setPreserveRatio(true);
-            sp.getChildren().add(image);
-            sp.setAlignment(Pos.CENTER);
         }
     }
 }

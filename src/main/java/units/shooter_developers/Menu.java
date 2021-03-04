@@ -23,10 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -220,12 +217,21 @@ public abstract class Menu extends Application {
         _root.getChildren().add(disclaimer_object);
     }
 
-    public void addCentralImageView(ImageView image){
-        image.resize(getMenuWidth()/2, getMenuHeight()/2);
-        //setAlignment(alert_image, Pos.TOP_CENTER);
-        image.setTranslateX(getMenuWidth()/2-image.getImage().getWidth()/2);
-        image.setTranslateY(getMenuHeight()/2-image.getImage().getHeight()/2);
-        _root.getChildren().add(image);
+    public void addCentralImageView(ImageView image, double scale_width, double scale_height){
+        var sp = new StackPane();
+        //sp.setPrefSize(getMenuWidth(), getMenuHeight());
+        image.fitHeightProperty().bind(sp.heightProperty());
+        image.setPreserveRatio(true);
+        sp.setMaxSize(scale_width*getMenuWidth(), scale_height*getMenuHeight());
+        sp.getChildren().add(image);
+        sp.setAlignment(Pos.CENTER);
+
+        var bp = new BorderPane();
+        bp.setPrefSize(getMenuWidth(), getMenuHeight());
+        bp.setCenter(sp);
+
+        _root.getChildren().add(bp);
+        //sp.setAlignment(Pos.CENTER);
     }
 
     /************************** SET/GET METHODS *****************************/

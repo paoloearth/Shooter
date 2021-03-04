@@ -30,8 +30,13 @@ public class WinnerWindow extends Menu{
         setStage(stage);
         getStage().centerOnScreen();
 
+        var winner_image = retrieve_image(_player.get_url(),4,1);
+        var fireworks = retrieve_image("fireworks.png", 1,1);
+        addCentralImageView(fireworks, 0.9, 0.9);
+        addCentralImageView(winner_image, 0.9, 0.9);
+
         var central_image = new CentralComposition(getMenuWidth(), getMenuHeight(), _player);
-        this.addGenericNode(central_image);
+        //this.addGenericNode(central_image);
         addFlashDisclaimer("<press a key to continue>", 0.32, 0.93);
         show();
 
@@ -67,7 +72,13 @@ public class WinnerWindow extends Menu{
         timer.schedule(task_2,2000);
     }
 
-
+    private ImageView retrieve_image(String URL, int n_rows, int n_cols)
+    {
+        var I = new Image(URL);
+        var IM =  new ImageView(I);
+        IM.setViewport(new Rectangle2D( 0, 0, I.getWidth()/n_cols, I.getHeight()/n_rows));
+        return IM;
+    }
 
 
 
@@ -100,14 +111,6 @@ class CentralComposition extends BorderPane {
         setTop(top);
     }
 
-    private ImageView retrieve_image(String URL, int n_rows, int n_cols)
-    {
-        var I = new Image(URL);
-        var IM =  new ImageView(I);
-        IM.setViewport(new Rectangle2D( 0, 0, I.getWidth()/n_cols, I.getHeight()/n_rows));
-        return IM;
-    }
-
     private void addCentralComposition(ImageView background_sprite, ImageView player_sprite)
     {
         StackPane sp = new StackPane();
@@ -124,6 +127,12 @@ class CentralComposition extends BorderPane {
         sp.setAlignment(Pos.CENTER);
     }
 
-
+    private ImageView retrieve_image(String URL, int n_rows, int n_cols)
+    {
+        var I = new Image(URL);
+        var IM =  new ImageView(I);
+        IM.setViewport(new Rectangle2D( 0, 0, I.getWidth()/n_cols, I.getHeight()/n_rows));
+        return IM;
+    }
 
 }
