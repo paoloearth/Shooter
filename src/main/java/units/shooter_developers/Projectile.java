@@ -15,8 +15,9 @@ public class Projectile extends Dynamic_Object{
         this._type ="PROJECTILE";        // Set the type
         this.Owner = S._id;             // Save the shooter's ID
         this._scale = Custom_Settings.PROJECTILE_SCALE;
-        this._speed = (int) (Custom_Settings.PROJECTILE_SPEED*scaling_factor.getKey());    // Set characteristics of the projectile
 
+
+        set_speed(Custom_Settings.PROJECTILE_SPEED);
 
 
         update_view();

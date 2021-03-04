@@ -35,12 +35,11 @@ public class Sprite extends Dynamic_Object {
 
         this._player_name = player_name;
         this._id = id;
-        this._speed = (int) (Custom_Settings.PLAYER_SPEED*scaling_factor.getKey());
+
+        set_speed(Custom_Settings.PLAYER_SPEED);
+
         this._scale = Custom_Settings.PLAYER_SCALE;
         this._type = "SPRITE";
-
-        _width   = (int)   (this._picture.getWidth()  /  _n_cols);
-        _height =  (int)   (this._picture.getHeight() / _n_rows);
 
         update_view();
 

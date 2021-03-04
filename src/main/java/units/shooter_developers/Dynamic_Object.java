@@ -20,6 +20,12 @@ public abstract class Dynamic_Object extends Pictured_Object {
     public Dynamic_Object( Pair<Double,Double> scaling_factors, String url, int _n_rows, int _n_cols)
     {
         super(scaling_factors, url, _n_rows, _n_cols);
+
+    }
+
+    public  void set_speed(double speed)
+    {
+        this._speed = (int) (speed*_scaling_factors.getKey());    // Set characteristics of the projectile
     }
 
     //Compute future x-component of the position
@@ -37,6 +43,8 @@ public abstract class Dynamic_Object extends Pictured_Object {
     public Box get_full_collision_box(){
         return new Box(get_future_y(), get_future_x(), get_actual_width() ,get_actual_height()  );
     }
+
+
 
 
 
