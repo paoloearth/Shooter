@@ -23,13 +23,11 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class AlertWindow extends Menu{
-    AlertObject _content;
     double _candidate_width;
     double _candidate_height;
 
     AlertWindow(Menu other_menu, double candidate_width, double candidate_height){
         super(other_menu);
-        _content = new AlertObject(getMenuWidth(), getMenuHeight());
         _candidate_width = candidate_width;
         _candidate_height = candidate_height;
     }
@@ -41,8 +39,8 @@ public class AlertWindow extends Menu{
 
         var alert_image = retrieveImage("alert.png", 1,1);
 
-        this.addGenericNode(_content);
         addCentralImageView(alert_image, 0.7, 0.7);
+        addSecondaryTitle("CAUTION!");
         addFreeItem("BACK", 0.05, 0.2);
         addFreeItem("CONTINUE", 0.76, 0.2);
         addFlashDisclaimer("Game will be reset. Do you want to confirm?", 0.185, 0.93);
@@ -93,27 +91,5 @@ public class AlertWindow extends Menu{
         var IM =  new ImageView(I);
         IM.setViewport(new Rectangle2D( 0, 0, I.getWidth()/n_cols, I.getHeight()/n_rows));
         return IM;
-    }
-
-    private class AlertObject extends BorderPane {
-
-        double  _width, _height;
-
-        AlertObject(double width, double height)
-        {
-            _width = width;
-            _height = height;
-            this.setPrefSize(width,height);
-
-            addCustomTitle("WARNING!");
-        }
-
-        private void addCustomTitle(String title_text){
-            Text top = new Text(title_text);
-            top.setFont(Font.font("Times New Roman", FontWeight.BOLD,_width*0.06));
-            top.setFill(Color.SILVER);
-            setAlignment(top,Pos.TOP_CENTER);
-            setTop(top);
-        }
     }
 }
