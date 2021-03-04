@@ -1,8 +1,6 @@
 package units.shooter_developers;
 
 
-import java.util.stream.IntStream;
-
 public class Box{
 
 
@@ -23,6 +21,10 @@ public class Box{
     {
         return box[BOUNDS.BOTTOM.ordinal()]- box[BOUNDS.TOP.ordinal()];
     }
+    public double get_width()
+    {
+        return box[BOUNDS.RIGHT.ordinal()]- box[BOUNDS.LEFT.ordinal()];
+    }
 
     public  void  compute_tiles_bounds(Map M) {
 
@@ -42,6 +44,20 @@ public class Box{
 
     }
 
+    /*Check if an element of the map is out of it*/
+    protected boolean is_out_of_map(Map M) {
+        return  check_top_and_left() || check_bottom_and_right(M);
+
+
+    }
+
+    private boolean check_top_and_left() {
+        return box[BOUNDS.TOP.ordinal()] <= 0 ||  box[BOUNDS.LEFT.ordinal()] <= 0;
+    }
+
+    private boolean check_bottom_and_right(Map M) {
+        return box[BOUNDS.RIGHT.ordinal()] >= M.get_width() || box[BOUNDS.BOTTOM.ordinal()] >= M.get_height();
+    }
 
 
 

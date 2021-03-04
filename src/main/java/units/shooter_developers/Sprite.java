@@ -49,6 +49,7 @@ public class Sprite extends Dynamic_Object {
         _current_direction.setValue(D);
 
 
+
         H = getHealthBar();
 
         this._isDead.bind(H.Health.lessThanOrEqualTo(0));
@@ -104,7 +105,7 @@ public class Sprite extends Dynamic_Object {
 
             update_get_direction(destination);
 
-            if (!(is_out_of_map(M) || illegal_move(M, 2.0 / 3.0))) move_to(destination);
+            if (!(illegal_move(M, 2.0 / 3.0))) move_to(destination);
         }
 
     }
