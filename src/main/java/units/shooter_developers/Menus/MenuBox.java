@@ -39,7 +39,7 @@ class MenuBox extends VBox {
     }
 
     protected void addNonAnimatedItem(String new_menu_item) {
-        Menu.NonAnimatedItem new_item = new Menu.NonAnimatedItem(new_menu_item);
+        NonAnimatedItem new_item = new NonAnimatedItem(new_menu_item);
         new_item.setTranslateX(0.005 * menu.getMenuWidth());
 
         getChildren().addAll(new_item, createSeparator());

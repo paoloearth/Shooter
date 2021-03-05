@@ -480,48 +480,6 @@ public abstract class Menu extends Application {
     }
 
 
-    /************************ NON-ANIMATED ITEM ****************************************/
-
-    public static class NonAnimatedItem extends StackPane {
-
-        public NonAnimatedItem(String name){
-            this(name, -1, -1);
-        }
-
-        protected NonAnimatedItem(String name, double item_width_ratio, double item_height_ratio) {
-            var effective_width_ratio = 0.19;
-            var effective_height_ratio = 0.05;
-            if(item_width_ratio >= 0){
-                effective_width_ratio = item_width_ratio;
-            }
-            if(item_height_ratio >= 0){
-                effective_height_ratio = item_height_ratio;
-            }
-
-            Color text_color = Color.DARKGREY;
-            Color background_color = Color.BLACK;
-
-            Rectangle box = new Rectangle(effective_width_ratio*getMenuWidth(),effective_height_ratio*getMenuHeight());
-            box.setOpacity(0.3);
-            box.setFill(background_color);
-
-            Text text = new Text(name);
-            text.setFill(text_color);
-            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333*getMenuHeight()));
-
-            //Text is transformed into an image and resized
-            var params = new SnapshotParameters();
-            params.setFill(Color.TRANSPARENT);
-            var textImage = new ImageView(text.snapshot(params, null));
-            if(textImage.getBoundsInLocal().getWidth() > box.getWidth())
-                textImage.setFitWidth(box.getWidth());
-
-            setAlignment(Pos.CENTER_LEFT);
-            getChildren().addAll(box, textImage);
-        }
-    }
-
-
     public static void main(String[] args) {
         launch(args);
     }

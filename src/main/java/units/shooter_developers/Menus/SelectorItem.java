@@ -23,7 +23,7 @@ public class SelectorItem extends HBox {
 
 
         setAlignment(Pos.CENTER_LEFT);
-        Menu.NonAnimatedItem name_text_box = new Menu.NonAnimatedItem(name);
+        NonAnimatedItem name_text_box = new NonAnimatedItem(name);
 
         Menu.MenuItem left_arrow_button = new Menu.MenuItem("<", 0.04, -1);
         left_arrow_button.setTranslateX(_selection_section_translation * Menu.getMenuWidth());
@@ -31,8 +31,8 @@ public class SelectorItem extends HBox {
             previous();
         });
 
-        Menu.NonAnimatedItem selection_text_box;
-        selection_text_box = new Menu.NonAnimatedItem("not_found", _width_selection_item, -1);
+        NonAnimatedItem selection_text_box;
+        selection_text_box = new NonAnimatedItem("not_found", _width_selection_item, -1);
         selection_text_box.setTranslateX((_selection_section_translation + 0.01) * Menu.getMenuWidth());
 
         Menu.MenuItem right_arrow_button = new Menu.MenuItem(">", 0.04, -1);
@@ -69,8 +69,8 @@ public class SelectorItem extends HBox {
     }
 
     private void updateTagText() {
-        var selection_item = (Menu.NonAnimatedItem) getChildren().stream()
-                .filter(e -> e instanceof Menu.NonAnimatedItem)
+        var selection_item = (NonAnimatedItem) getChildren().stream()
+                .filter(e -> e instanceof NonAnimatedItem)
                 .skip(1)
                 .findFirst()
                 .orElse(null);
@@ -78,7 +78,7 @@ public class SelectorItem extends HBox {
         var index = getChildren().indexOf(selection_item);
         getChildren().remove(selection_item);
         if (!_selection_list.isEmpty()) {
-            selection_item = new Menu.NonAnimatedItem(_selection_list.get(_selection_index),
+            selection_item = new NonAnimatedItem(_selection_list.get(_selection_index),
                     _width_selection_item, -1);
             selection_item.setTranslateX((_selection_section_translation + 0.01) * Menu.getMenuWidth());
         }
