@@ -24,7 +24,7 @@ public class Projectile extends Dynamic_Object{
 
         move_to(new Coordinates(S.get_future_x() + this.biasX, S.get_future_y() + this.biasY));
 
-        this.getChildren().add(this._view);
+        this.getChildren().add(get_view());
     }
 
     public void translate(Map M)

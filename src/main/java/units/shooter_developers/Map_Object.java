@@ -12,7 +12,7 @@ public abstract class Map_Object extends Pane {
 
     /* Constructors */
     Map_Object(Pair<Double,Double> scaling_factors) { set_scaling_factors(scaling_factors); }
-    Map_Object(int width, int height) { this.set_width(width); this.set_height(height); }
+    Map_Object(int width, int height) { set_dimensions(width,height);}
 
     void move_to(Coordinates coordinates) { this.relocate(coordinates.getX(),coordinates.getY()); }
 
@@ -21,6 +21,11 @@ public abstract class Map_Object extends Pane {
     public double get_current_Y_position() { return this.getLayoutY(); }
 
     public void add_nodes(Node ... nodes) { this.getChildren().addAll(nodes); }
+
+    public void set_dimensions(int width, int height)
+    {
+        this.set_width(width); this.set_height(height);
+    }
 
     /* Getters */
     public int get_width() { return _width; }

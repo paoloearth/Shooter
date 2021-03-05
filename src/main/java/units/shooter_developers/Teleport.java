@@ -22,7 +22,7 @@ public class Teleport extends Pictured_Object{
 
         update_view();
 
-        this.getChildren().add(_view);
+        this.getChildren().add(get_view());
 
         rotation_animation();
 

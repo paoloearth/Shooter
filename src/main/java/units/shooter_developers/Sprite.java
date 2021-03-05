@@ -56,7 +56,7 @@ public class Sprite extends Dynamic_Object {
         move_to(M.get_player_pixel_position(id));
 
 
-        this.getChildren().addAll(H, _view);
+        this.getChildren().addAll(H, get_view());
         root.getChildren().add(this);
     }
 
@@ -67,7 +67,7 @@ public class Sprite extends Dynamic_Object {
     //Change the picture of the Sprite in the SpriteSheet according to the direction
     private ChangeListener<Object> getListener() {
 
-        return (ov, o, o2) -> this._view.setViewport(new Rectangle2D( _frame.get()*get_width(), _current_direction.get().getOffset() * get_height(), get_width(), get_height()));
+        return (ov, o, o2) -> get_view().setViewport(new Rectangle2D( _frame.get()*get_width(), _current_direction.get().getOffset() * get_height(), get_width(), get_height()));
 
     }
 
