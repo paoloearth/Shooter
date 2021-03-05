@@ -164,7 +164,7 @@ public abstract class Menu extends Application {
         ArrayList<String> tag_list= new ArrayList<String>();
         Collections.addAll(tag_list, selection_tags);
 
-        getItemsBox().addSelectableItem(name, tag_list);
+        getItemsBox().addSelectorItem(name, tag_list);
     }
 
     public void addGenericNode(Node generic_node){
@@ -390,12 +390,12 @@ public abstract class Menu extends Application {
 
     /** other **/
 
-    public static ImageView retrieveImage(String URL, int n_rows, int n_cols)
+    public static ImageView retrieveImage(String URL, int number_of_rows, int number_of_columns)
     {
-        var I = new Image(URL);
-        var IM =  new ImageView(I);
-        IM.setViewport(new Rectangle2D( 0, 0, I.getWidth()/n_cols, I.getHeight()/n_rows));
-        return IM;
+        var image = new Image(URL);
+        var image_wrapped =  new ImageView(image);
+        image_wrapped.setViewport(new Rectangle2D( 0, 0, image.getWidth()/number_of_columns, image.getHeight()/number_of_rows));
+        return image_wrapped;
     }
 
     /*******************************************************************************/
@@ -433,7 +433,7 @@ public abstract class Menu extends Application {
 
     private class MenuBox extends VBox {
 
-        public MenuBox(Menu.MenuItem... items) {
+        private MenuBox(Menu.MenuItem... items) {
             getChildren().add(createSeparator());
 
             for (Menu.MenuItem item : items) {
@@ -450,22 +450,22 @@ public abstract class Menu extends Application {
             return separator_line;
         }
 
-        public void addItem(String new_menu_item){
+        private void addItem(String new_menu_item){
             MenuItem new_item = new Menu.MenuItem(new_menu_item);
             new_item.setTranslateX(0.005*getMenuWidth());
 
             getChildren().addAll(new_item, createSeparator());
         }
 
-        public void addNonAnimatedItem(String new_menu_item){
-            UnanimatedItem new_item = new UnanimatedItem(new_menu_item);
+        private void addNonAnimatedItem(String new_menu_item){
+            NonAnimatedItem new_item = new NonAnimatedItem(new_menu_item);
             new_item.setTranslateX(0.005*getMenuWidth());
 
             getChildren().addAll(new_item, createSeparator());
         }
 
-        public void addSelectableItem(String selectable_name, ArrayList<String> tag_list){
-            SelectorItem new_item = new SelectorItem(selectable_name);
+        private void addSelectorItem(String name, ArrayList<String> tag_list){
+            SelectorItem new_item = new SelectorItem(name);
             new_item.setTranslateX(0.005*getMenuWidth());
 
             for(var tag:tag_list){
@@ -475,16 +475,14 @@ public abstract class Menu extends Application {
             getChildren().addAll(new_item, createSeparator());
         }
 
-        public ArrayList<MenuItem> getItems(){
-
-            return getChildren().stream()
+        private ArrayList<MenuItem> getItems(){
+            return getChildren().parallelStream()
                     .filter(e -> e instanceof MenuItem)
                     .map(e -> (MenuItem) e)
                     .collect(Collectors.toCollection(ArrayList::new));
         }
 
-        public ArrayList<SelectorItem> getSelectorItems(){
-
+        private ArrayList<SelectorItem> getSelectorItems(){
             return getChildren().stream()
                     .filter(e -> e instanceof SelectorItem)
                     .map(e -> (SelectorItem) e)
@@ -503,7 +501,7 @@ public abstract class Menu extends Application {
             this(name, -1, -1);
         }
 
-        private MenuItem(String name, double item_width_ratio, double item_height_ratio) {
+        public MenuItem(String name, double item_width_ratio, double item_height_ratio) {
             var effective_item_width = item_width_ratio;
             var effective_item_height = item_height_ratio;
             if(item_width_ratio < 0){
@@ -521,6 +519,7 @@ public abstract class Menu extends Application {
             Color text_selected_color = Color.WHITE;
 
             _name = name;
+
             this.setMaxWidth(effective_item_width*getMenuWidth());
             this.setMaxHeight(effective_item_height*getMenuHeight());
 
@@ -536,7 +535,7 @@ public abstract class Menu extends Application {
             text.setFill(text_color);
             text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333* _stage_height * _height_scale));
 
-            //Text is transformed into an image and redimensioned
+            //Text is transformed into an image and resized
             var params = new SnapshotParameters();
             params.setFill(Color.TRANSPARENT);
             var textImage = new ImageView(text.snapshot(params, null));
@@ -574,52 +573,46 @@ public abstract class Menu extends Application {
     }
 
 
-    /************************ SELECTABLE ITEM ****************************************/
+    /************************ SELECTOR ITEM ****************************************/
 
     public class SelectorItem extends HBox{
         private final ArrayList<String> _selection_list;
         private int _selection_index;
         private final double _width_selection_item;
         private final String _name;
+        private final double _selection_section_translation;
 
         public SelectorItem(String name){
             _selection_index = 0;
             _selection_list = new ArrayList<>();
             _width_selection_item = 0.25;
+            _selection_section_translation = 0.10;
             _name = name;
 
 
-            UnanimatedItem selection_item;
-            selection_item = new UnanimatedItem("not_found", _width_selection_item, 0.05);
-
             setAlignment(Pos.CENTER_LEFT);
-            UnanimatedItem name_item = new UnanimatedItem(name);
-            MenuItem left_arrow = new MenuItem("<", 0.04, -1);
-            left_arrow.setOnMouseReleased(event -> {
+            NonAnimatedItem name_text_box = new NonAnimatedItem(name);
+
+            MenuItem left_arrow_button = new MenuItem("<", 0.04, -1);
+            left_arrow_button.setTranslateX(_selection_section_translation*getMenuWidth());
+            left_arrow_button.setOnMouseReleased(event -> {
                 previous();
             });
 
-            MenuItem right_arrow = new MenuItem(">", 0.04, -1);
-            right_arrow.setOnMouseReleased(event -> {
+            NonAnimatedItem selection_text_box;
+            selection_text_box = new NonAnimatedItem("not_found", _width_selection_item, -1);
+            selection_text_box.setTranslateX((_selection_section_translation+0.01)*getMenuWidth());
+
+            MenuItem right_arrow_button = new MenuItem(">", 0.04, -1);
+            right_arrow_button.setTranslateX((_selection_section_translation+0.02)*getMenuWidth());
+            right_arrow_button.setOnMouseReleased(event -> {
                 next();
             });
 
-            Rectangle long_space = new Rectangle(0.10*getMenuWidth(), 0.05*getMenuHeight());
-            long_space.setOpacity(0);
-
-            Rectangle short_space_1 = new Rectangle(0.005*getMenuWidth(), 0.05*getMenuHeight());
-            short_space_1.setOpacity(0);
-
-            Rectangle short_space_2 = new Rectangle(0.005*getMenuWidth(), 0.05*getMenuHeight());
-            short_space_2.setOpacity(0);
-
-            this.getChildren().addAll(name_item,
-                    long_space,
-                    left_arrow,
-                    short_space_1,
-                    selection_item,
-                    short_space_2,
-                    right_arrow);
+            this.getChildren().addAll(name_text_box,
+                    left_arrow_button,
+                    selection_text_box,
+                    right_arrow_button);
         }
 
         private void next(){
@@ -644,18 +637,18 @@ public abstract class Menu extends Application {
         }
 
         private void updateTagText(){
-            var selection_item = (UnanimatedItem)getChildren().stream()
-                    .filter(e -> e instanceof UnanimatedItem)
+            var selection_item = (NonAnimatedItem)getChildren().stream()
+                    .filter(e -> e instanceof NonAnimatedItem)
                     .skip(1)
                     .findFirst()
                     .orElse(null);
 
             var index = getChildren().indexOf(selection_item);
             getChildren().remove(selection_item);
-            if(_selection_list.isEmpty()){
-                selection_item = new UnanimatedItem("not_found", _width_selection_item, -1);
-            } else {
-                selection_item = new UnanimatedItem(_selection_list.get(_selection_index), _width_selection_item, -1);
+            if(!_selection_list.isEmpty()){
+                selection_item = new NonAnimatedItem(_selection_list.get(_selection_index),
+                        _width_selection_item, -1);
+                selection_item.setTranslateX((_selection_section_translation+0.01)*getMenuWidth());
             }
             getChildren().add(index, selection_item);
         }
@@ -672,14 +665,14 @@ public abstract class Menu extends Application {
 
     /************************ UNANIMATED ITEM ****************************************/
 
-    public class UnanimatedItem extends StackPane {
+    public class NonAnimatedItem extends StackPane {
         private final String _name;
 
-        public UnanimatedItem(String name){
+        public NonAnimatedItem(String name){
             this(name, -1, -1);
         }
 
-        private UnanimatedItem(String name, double item_width_ratio, double item_height_ratio) {
+        private NonAnimatedItem(String name, double item_width_ratio, double item_height_ratio) {
             var effective_width_ratio = 0.19;
             var effective_height_ratio = 0.05;
             if(item_width_ratio >= 0){
