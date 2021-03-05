@@ -51,8 +51,7 @@ public class Sprite extends Dynamic_Object {
 
 
         H = getHealthBar();
-
-        this._isDead.bind(H.Health.lessThanOrEqualTo(0));
+        _isDead.bind(H.is_remaining_life_zero());
 
         move_to(M.get_player_pixel_position(id));
 
@@ -68,7 +67,7 @@ public class Sprite extends Dynamic_Object {
     //Change the picture of the Sprite in the SpriteSheet according to the direction
     private ChangeListener<Object> getListener() {
 
-        return (ov, o, o2) -> this._view.setViewport(new Rectangle2D( _frame.get()*_width, _current_direction.get().getOffset() * _height, _width, _height));
+        return (ov, o, o2) -> this._view.setViewport(new Rectangle2D( _frame.get()*get_width(), _current_direction.get().getOffset() * get_height(), get_width(), get_height()));
 
     }
 
@@ -141,7 +140,7 @@ public class Sprite extends Dynamic_Object {
 
         if(_can_shoot.getValue())
         {
-            root.getChildren().add(new Projectile( _scaling_factors, Custom_Settings.URL_PROJECTILE,this));
+            root.getChildren().add(new Projectile( get_scaling_factors(), Custom_Settings.URL_PROJECTILE,this));
             shooting_cooldown.play();
         }
     }

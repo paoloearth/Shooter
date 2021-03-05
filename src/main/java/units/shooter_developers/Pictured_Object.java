@@ -44,8 +44,8 @@ public abstract class Pictured_Object extends Map_Object {
         // Set the view
         this._view = new ImageView(_picture);
 
-        this._width   = (int) _picture.getWidth();
-        this._height =  (int) _picture.getHeight();
+        set_width( (int) _picture.getWidth());
+        set_height((int) _picture.getHeight());
 
 
     }
@@ -58,8 +58,8 @@ public abstract class Pictured_Object extends Map_Object {
         this._n_rows = n_rows;
         this._n_cols = n_cols;
 
-        _width   = _width /  _n_cols;
-        _height =  _height/ _n_rows;
+        set_width(get_width()/_n_cols);
+        set_height(get_height()/_n_rows);
 
     }
 
@@ -71,8 +71,8 @@ public abstract class Pictured_Object extends Map_Object {
 
     // Scaling on x-axis and y-axis of images according to the resolution of the window
     void update_view() {
-        this._view.setFitWidth( _scale * _scaling_factors.getKey()  * _width);
-        this._view.setFitHeight(_scale * _scaling_factors.getValue() * _height);
+        this._view.setFitWidth( _scale * get_scaling_factors().getKey()  * get_width());
+        this._view.setFitHeight(_scale * get_scaling_factors().getValue() * get_height());
         this._view.setPreserveRatio(false);
     }
 

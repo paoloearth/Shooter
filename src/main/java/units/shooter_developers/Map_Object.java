@@ -1,22 +1,20 @@
 package units.shooter_developers;
 
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
 
 public abstract class Map_Object extends Pane {
 
-    int _width, _height;                          // Width & Height of the sprite
-    Pair<Double,Double> _scaling_factors;         // Scale to adapt to the screen resolution
-    Pair<Integer, Integer> _coordinates;          // Location on which to put the object
+    private  int _width, _height;
+    private  Pair<Double,Double> _scaling_factors;
 
-    Map_Object()
-    {
 
-    }
-
-    //Custom constructor
-    Map_Object(Pair<Double,Double> scaling_factors) { this._scaling_factors = scaling_factors; }
+    /* Constructors */
+    Map_Object() { }
+    Map_Object(Pair<Double,Double> scaling_factors) { set_scaling_factors(scaling_factors); }
+    Map_Object(int width, int height) { this.set_width(width); this.set_height(height); }
 
     void move_to(Coordinates coordinates)
     {
@@ -27,4 +25,32 @@ public abstract class Map_Object extends Pane {
 
     public double get_current_Y_position() { return this.getLayoutY(); }
 
+    public void add_nodes(Node ... nodes)
+    {
+       this.getChildren().addAll(nodes);
+    }
+
+    /* Getters */
+    public int get_width() {
+        return _width;
+    }
+    public int get_height() {
+        return _height;
+    }
+    public Pair<Double, Double> get_scaling_factors() {
+        return _scaling_factors;
+    }
+
+    /* Setters */
+    public void set_width(int _width) {
+        this._width = _width;
+    }
+
+    public void set_height(int _height) {
+        this._height = _height;
+    }
+
+    public void set_scaling_factors(Pair<Double, Double> _scaling_factors) {
+        this._scaling_factors = _scaling_factors;
+    }
 }
