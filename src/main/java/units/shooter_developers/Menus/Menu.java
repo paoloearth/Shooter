@@ -48,8 +48,8 @@ public abstract class Menu extends Application {
     private Stage _stage;
     private double _position_width_ratio;
     private double _position_height_ratio;
-    private Simulation _simulation_instance;
-    private boolean _simulation_running;
+    private static Simulation _simulation_instance;
+    private static boolean _simulation_running;
 
     /************************** CONSTRUCTORS *****************************/
 
@@ -68,14 +68,8 @@ public abstract class Menu extends Application {
     }
 
     public Menu(Menu other_menu){
-        _width_scale = other_menu._width_scale;
-        _height_scale = other_menu._height_scale;
-        _stage_width = other_menu._stage_width;
-        _stage_height = other_menu._stage_height;
         _position_width_ratio = other_menu._position_width_ratio;
         _position_height_ratio = other_menu._position_height_ratio;
-        _simulation_instance = other_menu._simulation_instance;
-        _simulation_running = other_menu._simulation_running;
         this.createRootAndBackground(_stage_width, _stage_height);
     }
 
@@ -351,7 +345,7 @@ public abstract class Menu extends Application {
         return full_item_list;
     }
 
-    public ArrayList<SelectorItem> getSelectorItems(){
+    protected ArrayList<SelectorItem> getSelectorItems(){
         return getItemsBox().getSelectorItems();
     }
 
