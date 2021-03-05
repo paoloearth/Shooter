@@ -12,14 +12,13 @@ public class HealthBar extends Map_Object{
 
     public HealthBar(Sprite S)
     {
-        super(S.get_actual_width(), get_Hbar_height_proportional_to_S_height(S.get_actual_height()));
+        super(S.get_actual_width(), get_HBar_height_proportional_to_S_height(S.get_actual_height()));
 
         Rectangle lost_life_rectangle = create_custom_outer_rectangle();
         remaining_life_rectangle = create_custom_inner_rectangle();
 
         Health = new SimpleDoubleProperty(get_width());
         remaining_life_rectangle.widthProperty().bind(Health);
-
 
         move_to(get_default_HBar_position(S));
 
@@ -81,7 +80,7 @@ public class HealthBar extends Map_Object{
         return R;
     }
 
-    private static int get_Hbar_height_proportional_to_S_height(double sprite_height) {
+    private static int get_HBar_height_proportional_to_S_height(double sprite_height) {
         return (int) (sprite_height * Custom_Settings.HB_PROPORTIONAL_WIDTH);
     }
 
