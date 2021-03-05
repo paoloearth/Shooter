@@ -18,7 +18,6 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
@@ -54,40 +53,42 @@ public abstract class Menu extends Application {
     private Stage _stage;
     private double _stage_width;
     private double _stage_height;
-    private double _width_ratio;
-    private double _height_ratio;
+    private double _width_scale;
+    private double _height_scale;
     private double _position_width_ratio;
     private double _position_height_ratio;
-    private Simulation _gameInstance;
-    private boolean _game_running;
+    private Simulation _simulation_instance;
+    private boolean _simulation_running;
 
     /************************** CONSTRUCTORS *****************************/
 
     public Menu() {
-        this(tryReadingWidth(), tryReadingHeight());
+        this(tryToReadWidth(), tryToReadHeight());
     }
 
     public Menu(double stage_width, double stage_height) {
-        _width_ratio = 1;
-        _height_ratio = 1;
+        _width_scale = 1;
+        _height_scale = 1;
         _position_width_ratio = 0;
         _position_height_ratio = 0;
-        this.createContent(stage_width, stage_height);
+        _simulation_running = false;
+        _simulation_instance = null;
+        this.createRootAndBackground(stage_width, stage_height);
     }
 
     public Menu(Menu other_menu){
-        _width_ratio = other_menu._width_ratio;
-        _height_ratio = other_menu._height_ratio;
+        _width_scale = other_menu._width_scale;
+        _height_scale = other_menu._height_scale;
         _stage_width = other_menu._stage_width;
         _stage_height = other_menu._stage_height;
         _position_width_ratio = other_menu._position_width_ratio;
         _position_height_ratio = other_menu._position_height_ratio;
-        _gameInstance = other_menu._gameInstance;
-        _game_running = other_menu._game_running;
-        this.createContent(_stage_width, _stage_height);
+        _simulation_instance = other_menu._simulation_instance;
+        _simulation_running = other_menu._simulation_running;
+        this.createRootAndBackground(_stage_width, _stage_height);
     }
 
-    private void createContent(double stage_width, double stage_height) {
+    private void createRootAndBackground(double stage_width, double stage_height) {
         Pane root = new Pane();
         _root = root;
 
@@ -95,20 +96,19 @@ public abstract class Menu extends Application {
 
         root.setPrefSize(getMenuWidth(), getMenuHeight());
 
-        try (InputStream is = Files.newInputStream(Paths.get("src/main/resources/menu.jpeg"))) {
-            ImageView img = new ImageView(new Image(is));
-            img.setFitWidth(getMenuWidth());
-            img.setFitHeight(getMenuHeight());
-            img.setX(getPositionX());
-            img.setY(getPositionY());
-            root.getChildren().add(img);
+        try (InputStream background_input_stream = Files.newInputStream(Paths.get("src/main/resources/menu.jpeg"))) {
+            ImageView background_img = new ImageView(new Image(background_input_stream));
+            background_img.setFitWidth(getMenuWidth());
+            background_img.setFitHeight(getMenuHeight());
+            background_img.setX(getPositionX());
+            background_img.setY(getPositionY());
+            root.getChildren().add(background_img);
         } catch (IOException e) {
             System.out.println("Menu background image not found");
         }
-
     }
 
-    private static double tryReadingWidth(){
+    private static double tryToReadWidth(){
         File configFile = new File("config.ini");
         Properties config = new Properties();
 
@@ -123,7 +123,7 @@ public abstract class Menu extends Application {
         }
     }
 
-    private static double tryReadingHeight(){
+    private static double tryToReadHeight(){
         File configFile = new File("config.ini");
         Properties config = new Properties();
 
@@ -154,17 +154,17 @@ public abstract class Menu extends Application {
         _root.getChildren().addAll(new_item);
     }
 
-    public void addUnanimatedItem(String new_menu_item){
+    public void addNonAnimatedItem(String name){
         generateMenuBoxIfNotExist();
-        getItemsBox().addUnanimatedItem(new_menu_item);
+        getItemsBox().addNonAnimatedItem(name);
     }
 
-    public void addSelectableItem(String item_name, String ... selection_tags){
+    public void addSelectorItem(String name, String ... selection_tags){
         generateMenuBoxIfNotExist();
         ArrayList<String> tag_list= new ArrayList<String>();
-        Collections.addAll(tag_list, selection_tags); // Changed loop with functional
+        Collections.addAll(tag_list, selection_tags);
 
-        getItemsBox().addSelectableItem(item_name, tag_list);
+        getItemsBox().addSelectorItem(name, tag_list);
     }
 
     public void addGenericNode(Node generic_node){
@@ -172,7 +172,7 @@ public abstract class Menu extends Application {
     }
 
     private void generateMenuBoxIfNotExist(){
-        MenuBox menu_box = (MenuBox) _root.getChildren().stream()
+        MenuBox menu_box = (MenuBox) _root.getChildren().parallelStream()
                 .filter(e -> e instanceof MenuBox)
                 .findFirst()
                 .orElse(null);
@@ -186,65 +186,54 @@ public abstract class Menu extends Application {
         }
     }
 
-    public void removeMenuBox(){
-        MenuBox menu_box = (MenuBox) _root.getChildren().stream()
-                .filter(e -> e instanceof MenuBox)
-                .findFirst()
-                .orElse(null);
-
-        _root.getChildren().remove(menu_box);
-    }
-
     public void setTitle(String title){
         removeTitle();
 
-        Menu.Title new_title = new Menu.Title(title);
+        Menu.Title title_object = new Menu.Title(title);
 
-        new_title.setTranslateX(0.0476*getMenuWidth() + getPositionX());
-        new_title.setTranslateY(0.333*getMenuHeight() + getPositionY());
+        title_object.setTranslateX(0.0476*getMenuWidth() + getPositionX());
+        title_object.setTranslateY(0.333*getMenuHeight() + getPositionY());
 
-        _root.getChildren().add(new_title);
+        _root.getChildren().add(title_object);
     }
 
     public void removeTitle(){
-        var title_object = getTitle();
+        var title_object = getTitleObject();
 
         if(title_object != null)
             _root.getChildren().remove(title_object);
     }
 
-    public void addFlashDisclaimer(String disclaimer_text, double position_ratio_X, double position_ratio_Y){
-        var disclaimer_object = new FlashDisclaimer(disclaimer_text, position_ratio_X, position_ratio_Y);
+    public void addFlashDisclaimer(String disclaimer_text, double scaled_position_X, double scaled_position_Y){
+        var disclaimer_object = new FlashDisclaimer(disclaimer_text, scaled_position_X, scaled_position_Y);
         _root.getChildren().add(disclaimer_object);
     }
 
     public void addCentralImageView(ImageView image, double scale_width, double scale_height){
-        var sp = new StackPane();
-        //sp.setPrefSize(getMenuWidth(), getMenuHeight());
-        image.fitHeightProperty().bind(sp.heightProperty());
+        var image_frame = new StackPane();
+        image.fitHeightProperty().bind(image_frame.heightProperty());
         image.setPreserveRatio(true);
-        sp.setMaxSize(scale_width*getMenuWidth(), scale_height*getMenuHeight());
-        sp.getChildren().add(image);
-        sp.setAlignment(Pos.CENTER);
+        image_frame.setMaxSize(scale_width*getMenuWidth(), scale_height*getMenuHeight());
+        image_frame.getChildren().add(image);
+        image_frame.setAlignment(Pos.CENTER);
 
-        var bp = new BorderPane();
-        bp.setPrefSize(getMenuWidth(), getMenuHeight());
-        bp.setCenter(sp);
+        var menu_frame = new BorderPane();
+        menu_frame.setPrefSize(getMenuWidth(), getMenuHeight());
+        menu_frame.setCenter(image_frame);
 
-        _root.getChildren().add(bp);
-        //sp.setAlignment(Pos.CENTER);
+        _root.getChildren().add(menu_frame);
     }
 
-    public void addSecondaryTitle(String secondary_title){
-        var bp = new BorderPane();
-        bp.setPrefSize(getMenuWidth(), getMenuHeight());
-        Text top = new Text(secondary_title);
+    public void addSecondaryTitle(String title){
+        var menu_frame = new BorderPane();
+        menu_frame.setPrefSize(getMenuWidth(), getMenuHeight());
+        Text top = new Text(title);
         top.setFont(Font.font("Times New Roman", FontWeight.BOLD,getMenuWidth()*0.06));
         top.setFill(Color.SILVER);
-        bp.setAlignment(top,Pos.TOP_CENTER);
-        bp.setTop(top);
+        menu_frame.setAlignment(top,Pos.TOP_CENTER);
+        menu_frame.setTop(top);
 
-        _root.getChildren().add(bp);
+        _root.getChildren().add(menu_frame);
     }
 
     /************************** SET/GET METHODS *****************************/
@@ -252,16 +241,16 @@ public abstract class Menu extends Application {
     /** SCREEN **/
     public static double getScreenWidth(){
         Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
+        Rectangle2D screen_bounds = screen.getVisualBounds();
 
-        return bounds.getWidth();
+        return screen_bounds.getWidth();
     }
 
     public static double getScreenHeight(){
         Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
+        Rectangle2D screen_bounds = screen.getVisualBounds();
 
-        return bounds.getHeight();
+        return screen_bounds.getHeight();
     }
 
     /** STAGE **/
@@ -282,7 +271,6 @@ public abstract class Menu extends Application {
             getStage().setWidth(width);
             getStage().setHeight(height);
         }
-        //PUT HERE THE SIMULATION (if it procceed) REDIMENSIONING
     }
 
     public double getStageHeight() {
@@ -295,22 +283,22 @@ public abstract class Menu extends Application {
 
     /** MENU **/
 
-    public void resize(double width_ratio, double height_ratio){
-        _width_ratio = width_ratio;
-        _height_ratio = height_ratio;
+    public void scaleMenu(double width_scale, double height_scale){
+        _width_scale = width_scale;
+        _height_scale = height_scale;
     }
 
     public double getMenuHeight() {
-        return _height_ratio*_stage_height;
+        return _height_scale * getStageHeight();
     }
 
     public double getMenuWidth() {
-        return _width_ratio*_stage_width;
+        return _width_scale * getStageWidth();
     }
 
-    public void setPositionRatio(double position_width_ratio, double position_height_ratio){
-        _position_width_ratio = position_width_ratio;
-        _position_height_ratio = position_height_ratio;
+    public void setScaledPosition(double scaled_position_X, double scaled_position_Y){
+        _position_width_ratio = scaled_position_X;
+        _position_height_ratio = scaled_position_Y;
     }
 
     public double getPositionX(){
@@ -333,11 +321,7 @@ public abstract class Menu extends Application {
 
     /** MENU ELEMENTS **/
 
-    public Parent getRoot(){
-        return _root;
-    }
-
-    private Title getTitle() {
+    private Title getTitleObject() {
         var title_object = _root.getChildren().stream()
                 .filter(e -> e instanceof Title)
                 .findFirst()
@@ -349,74 +333,69 @@ public abstract class Menu extends Application {
             return (Title)title_object;
     }
 
-    public MenuBox getItemsBox() {
-        var menubox_object = _root.getChildren().parallelStream()
+    private MenuBox getItemsBox() {
+        var menu_box_object = _root.getChildren().parallelStream()
                 .filter(e -> e instanceof MenuBox)
                 .findFirst()
                 .orElse(null);
 
-        if(menubox_object == null)
+        if(menu_box_object == null)
             return null;
         else
-            return (MenuBox) menubox_object;
+            return (MenuBox) menu_box_object;
     }
 
 
     public ArrayList<MenuItem> getItems(){
-        var item_list = new ArrayList<Menu.MenuItem>();
+        var item_list_from_box = new ArrayList<Menu.MenuItem>();
         if(getItemsBox() != null)
-            item_list = getItemsBox().getItems();
+            item_list_from_box = getItemsBox().getItems();
 
-        ArrayList<MenuItem> finalItem_list = item_list;
+        //add items not contained in items box to the list
+        ArrayList<MenuItem> full_item_list = item_list_from_box;
         _root.getChildren().stream()
                 .filter(e -> e instanceof MenuItem)
-                .forEach(e -> finalItem_list.add((MenuItem)e));
+                .forEach(e -> full_item_list.add((MenuItem)e));
 
-        return item_list;
+        return full_item_list;
     }
 
-    public ArrayList<SelectableItem> getSelectableItems(){
-        return getItemsBox().getSelectableItems();
+    public ArrayList<SelectorItem> getSelectorItems(){
+        return getItemsBox().getSelectorItems();
     }
 
-    public SelectableItem getSelectableItem(String name){
-        var selectableitem_object = getSelectableItems().stream()
+    public SelectorItem getSelectorItem(String name){
+        var selector_object = getSelectorItems().stream()
                 .filter(e -> e.getName().equals(name))
                 .findFirst()
                 .orElse(null);
 
-        if(selectableitem_object == null)
-            return null;
-        else
-            return (SelectableItem)selectableitem_object;
+        return selector_object;
     }
 
     /** GAME INSTANCE **/
 
-    public Simulation getGameInstance(){
-        return _gameInstance;
+    public Simulation getSimulationInstance(){
+        return _simulation_instance;
     }
 
-    public void setGameInstance(Simulation game_instance){
-        _gameInstance = game_instance;
+    public void setSimulationInstance(Simulation simulation_instance){
+        _simulation_instance = simulation_instance;
+        _simulation_running = true;
     }
 
-    public boolean isGameRunning(){
-        return _game_running;
-    }
-
-    public void setGameRunning(boolean is_game_running){
-        _game_running = is_game_running;
+    public boolean isSimulationRunning(){
+        return _simulation_running;
     }
 
     /** other **/
 
-    public static ImageView retrieveImage(String URL, int n_rows, int n_cols)
+    public static ImageView retrieveImage(String URL, int number_of_rows, int number_of_columns)
     {
-        var I = new Image(URL);
-        var IM =  new ImageView(I);
-        IM.setViewport(new Rectangle2D( 0, 0, I.getWidth()/n_cols, I.getHeight()/n_rows));
-        return IM;
+        var image = new Image(URL);
+        var image_wrapped =  new ImageView(image);
+        image_wrapped.setViewport(new Rectangle2D( 0, 0, image.getWidth()/number_of_columns, image.getHeight()/number_of_rows));
+        return image_wrapped;
     }
 
     /*******************************************************************************/
@@ -454,7 +433,7 @@ public abstract class Menu extends Application {
 
     private class MenuBox extends VBox {
 
-        public MenuBox(Menu.MenuItem... items) {
+        private MenuBox(Menu.MenuItem... items) {
             getChildren().add(createSeparator());
 
             for (Menu.MenuItem item : items) {
@@ -471,22 +450,22 @@ public abstract class Menu extends Application {
             return separator_line;
         }
 
-        public void addItem(String new_menu_item){
+        private void addItem(String new_menu_item){
             MenuItem new_item = new Menu.MenuItem(new_menu_item);
             new_item.setTranslateX(0.005*getMenuWidth());
 
             getChildren().addAll(new_item, createSeparator());
         }
 
-        public void addUnanimatedItem(String new_menu_item){
-            UnanimatedItem new_item = new UnanimatedItem(new_menu_item);
+        private void addNonAnimatedItem(String new_menu_item){
+            NonAnimatedItem new_item = new NonAnimatedItem(new_menu_item);
             new_item.setTranslateX(0.005*getMenuWidth());
 
             getChildren().addAll(new_item, createSeparator());
         }
 
-        public void addSelectableItem(String selectable_name, ArrayList<String> tag_list){
-            SelectableItem new_item = new Menu.SelectableItem(selectable_name);
+        private void addSelectorItem(String name, ArrayList<String> tag_list){
+            SelectorItem new_item = new SelectorItem(name);
             new_item.setTranslateX(0.005*getMenuWidth());
 
             for(var tag:tag_list){
@@ -496,19 +475,17 @@ public abstract class Menu extends Application {
             getChildren().addAll(new_item, createSeparator());
         }
 
-        public ArrayList<MenuItem> getItems(){
-
-            return getChildren().stream()
+        private ArrayList<MenuItem> getItems(){
+            return getChildren().parallelStream()
                     .filter(e -> e instanceof MenuItem)
                     .map(e -> (MenuItem) e)
                     .collect(Collectors.toCollection(ArrayList::new));
         }
 
-        public ArrayList<SelectableItem> getSelectableItems(){
-
+        private ArrayList<SelectorItem> getSelectorItems(){
             return getChildren().stream()
-                    .filter(e -> e instanceof SelectableItem)
-                    .map(e -> (SelectableItem) e)
+                    .filter(e -> e instanceof SelectorItem)
+                    .map(e -> (SelectorItem) e)
                     .collect(Collectors.toCollection(ArrayList::new));
         }
 
@@ -524,7 +501,7 @@ public abstract class Menu extends Application {
             this(name, -1, -1);
         }
 
-        private MenuItem(String name, double item_width_ratio, double item_height_ratio) {
+        public MenuItem(String name, double item_width_ratio, double item_height_ratio) {
             var effective_item_width = item_width_ratio;
             var effective_item_height = item_height_ratio;
             if(item_width_ratio < 0){
@@ -542,6 +519,7 @@ public abstract class Menu extends Application {
             Color text_selected_color = Color.WHITE;
 
             _name = name;
+
             this.setMaxWidth(effective_item_width*getMenuWidth());
             this.setMaxHeight(effective_item_height*getMenuHeight());
 
@@ -555,9 +533,9 @@ public abstract class Menu extends Application {
 
             Text text = new Text(name);
             text.setFill(text_color);
-            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333* _stage_height *_height_ratio));
+            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333* _stage_height * _height_scale));
 
-            //Text is transformed into an image and redimensioned
+            //Text is transformed into an image and resized
             var params = new SnapshotParameters();
             params.setFill(Color.TRANSPARENT);
             var textImage = new ImageView(text.snapshot(params, null));
@@ -595,52 +573,46 @@ public abstract class Menu extends Application {
     }
 
 
-    /************************ SELECTABLE ITEM ****************************************/
+    /************************ SELECTOR ITEM ****************************************/
 
-    public class SelectableItem extends HBox{
+    public class SelectorItem extends HBox{
         private final ArrayList<String> _selection_list;
         private int _selection_index;
         private final double _width_selection_item;
         private final String _name;
+        private final double _selection_section_translation;
 
-        public SelectableItem(String name){
+        public SelectorItem(String name){
             _selection_index = 0;
             _selection_list = new ArrayList<>();
             _width_selection_item = 0.25;
+            _selection_section_translation = 0.10;
             _name = name;
 
 
-            UnanimatedItem selection_item;
-            selection_item = new UnanimatedItem("not_found", _width_selection_item, 0.05);
-
             setAlignment(Pos.CENTER_LEFT);
-            UnanimatedItem name_item = new UnanimatedItem(name);
-            MenuItem left_arrow = new MenuItem("<", 0.04, -1);
-            left_arrow.setOnMouseReleased(event -> {
+            NonAnimatedItem name_text_box = new NonAnimatedItem(name);
+
+            MenuItem left_arrow_button = new MenuItem("<", 0.04, -1);
+            left_arrow_button.setTranslateX(_selection_section_translation*getMenuWidth());
+            left_arrow_button.setOnMouseReleased(event -> {
                 previous();
             });
 
-            MenuItem right_arrow = new MenuItem(">", 0.04, -1);
-            right_arrow.setOnMouseReleased(event -> {
+            NonAnimatedItem selection_text_box;
+            selection_text_box = new NonAnimatedItem("not_found", _width_selection_item, -1);
+            selection_text_box.setTranslateX((_selection_section_translation+0.01)*getMenuWidth());
+
+            MenuItem right_arrow_button = new MenuItem(">", 0.04, -1);
+            right_arrow_button.setTranslateX((_selection_section_translation+0.02)*getMenuWidth());
+            right_arrow_button.setOnMouseReleased(event -> {
                 next();
             });
 
-            Rectangle long_space = new Rectangle(0.10*getMenuWidth(), 0.05*getMenuHeight());
-            long_space.setOpacity(0);
-
-            Rectangle short_space_1 = new Rectangle(0.005*getMenuWidth(), 0.05*getMenuHeight());
-            short_space_1.setOpacity(0);
-
-            Rectangle short_space_2 = new Rectangle(0.005*getMenuWidth(), 0.05*getMenuHeight());
-            short_space_2.setOpacity(0);
-
-            this.getChildren().addAll(name_item,
-                    long_space,
-                    left_arrow,
-                    short_space_1,
-                    selection_item,
-                    short_space_2,
-                    right_arrow);
+            this.getChildren().addAll(name_text_box,
+                    left_arrow_button,
+                    selection_text_box,
+                    right_arrow_button);
         }
 
         private void next(){
@@ -665,18 +637,18 @@ public abstract class Menu extends Application {
         }
 
         private void updateTagText(){
-            var selection_item = (UnanimatedItem)getChildren().stream()
-                    .filter(e -> e instanceof UnanimatedItem)
+            var selection_item = (NonAnimatedItem)getChildren().stream()
+                    .filter(e -> e instanceof NonAnimatedItem)
                     .skip(1)
                     .findFirst()
                     .orElse(null);
 
             var index = getChildren().indexOf(selection_item);
             getChildren().remove(selection_item);
-            if(_selection_list.isEmpty()){
-                selection_item = new UnanimatedItem("not_found", _width_selection_item, -1);
-            } else {
-                selection_item = new UnanimatedItem(_selection_list.get(_selection_index), _width_selection_item, -1);
+            if(!_selection_list.isEmpty()){
+                selection_item = new NonAnimatedItem(_selection_list.get(_selection_index),
+                        _width_selection_item, -1);
+                selection_item.setTranslateX((_selection_section_translation+0.01)*getMenuWidth());
             }
             getChildren().add(index, selection_item);
         }
@@ -691,16 +663,15 @@ public abstract class Menu extends Application {
     }
 
 
-    /************************ UNANIMATED ITEM ****************************************/
+    /************************ NON-ANIMATED ITEM ****************************************/
 
-    public class UnanimatedItem extends StackPane {
-        private final String _name;
+    public class NonAnimatedItem extends StackPane {
 
-        public UnanimatedItem(String name){
+        public NonAnimatedItem(String name){
             this(name, -1, -1);
         }
 
-        private UnanimatedItem(String name, double item_width_ratio, double item_height_ratio) {
+        private NonAnimatedItem(String name, double item_width_ratio, double item_height_ratio) {
             var effective_width_ratio = 0.19;
             var effective_height_ratio = 0.05;
             if(item_width_ratio >= 0){
@@ -709,9 +680,6 @@ public abstract class Menu extends Application {
             if(item_height_ratio >= 0){
                 effective_height_ratio = item_height_ratio;
             }
-
-
-            _name = name;
 
             Color text_color = Color.DARKGREY;
             Color background_color = Color.BLACK;
@@ -724,7 +692,7 @@ public abstract class Menu extends Application {
             text.setFill(text_color);
             text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333*getMenuHeight()));
 
-            //Text is transformed into an image and redimensioned
+            //Text is transformed into an image and resized
             var params = new SnapshotParameters();
             params.setFill(Color.TRANSPARENT);
             var textImage = new ImageView(text.snapshot(params, null));
@@ -741,15 +709,16 @@ public abstract class Menu extends Application {
 
     private class FlashDisclaimer extends StackPane{
 
-        private FlashDisclaimer(String disclaimer_text, double position_ratio_X, double position_ratio_Y){
-            Text disclaimer = new Text(disclaimer_text);
-            disclaimer.setFont(Font.font("Times New Roman", FontWeight.BOLD,getMenuWidth()*0.025));
-            disclaimer.setFill(Color.SILVER);
-            textAnimation(disclaimer);
-            setAlignment(disclaimer,Pos.TOP_CENTER);
-            this.setTranslateX(position_ratio_X*getMenuWidth());
-            this.setTranslateY(position_ratio_Y*getMenuHeight());
-            getChildren().add(disclaimer);
+        private FlashDisclaimer(String text, double position_ratio_X, double position_ratio_Y){
+            Text disclaimer_text = new Text(text);
+            disclaimer_text.setFont(Font.font("Times New Roman", FontWeight.BOLD,getMenuWidth()*0.025));
+            disclaimer_text.setFill(Color.SILVER);
+            textAnimation(disclaimer_text);
+            setAlignment(disclaimer_text,Pos.TOP_CENTER);
+
+            setTranslateX(position_ratio_X*getMenuWidth());
+            setTranslateY(position_ratio_Y*getMenuHeight());
+            getChildren().add(disclaimer_text);
         }
 
         private void textAnimation(Text bottom) {

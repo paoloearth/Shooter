@@ -11,7 +11,6 @@ public class OptionsMenu extends Menu{
 
     public OptionsMenu(){
         super();
-        setGameRunning(false);
     }
 
     public OptionsMenu(Menu other_menu){
@@ -20,8 +19,7 @@ public class OptionsMenu extends Menu{
 
     public OptionsMenu(Simulation game_instance){
         this();
-        setGameInstance(game_instance);
-        setGameRunning(true);
+        setSimulationInstance(game_instance);
     }
 
     @Override
@@ -31,9 +29,9 @@ public class OptionsMenu extends Menu{
         getStage().centerOnScreen();
 
         setTitle("O P T I O N S");
-        this.addSelectableItem("INTERFACE MODE", "light", "dark");
+        this.addSelectorItem("INTERFACE MODE", "light", "dark");
 
-        this.addSelectableItem("RESOLUTION",
+        this.addSelectorItem("RESOLUTION",
                 (int) getStageWidth() + "x" + (int) getStageHeight() + " (current)",
                 ((int) getScreenWidth()) + "x" + (int) getScreenHeight() + " (native)",
                 "640x360 (widescreen)",
@@ -80,7 +78,7 @@ public class OptionsMenu extends Menu{
         try {
             String regex = "\\d+";
             Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(getSelectableItem("RESOLUTION").getText());
+            Matcher matcher = pattern.matcher(getSelectorItem("RESOLUTION").getText());
             matcher.find();
             width_string = matcher.group();
             matcher.find();
@@ -108,7 +106,7 @@ public class OptionsMenu extends Menu{
         var current_resolution = new Pair<Double, Double>(getStageWidth(), getStageHeight());
 
         if(!selected_resolution.equals(current_resolution))
-            if(isGameRunning())
+            if(isSimulationRunning())
                 askConfirmChanges(selected_resolution.getKey(), selected_resolution.getValue());
             else{
                 setStageDimensions(selected_resolution.getKey(), selected_resolution.getValue());
@@ -120,7 +118,7 @@ public class OptionsMenu extends Menu{
 
     private void writeSettings() {
         Properties config = new Properties();
-        config.setProperty("INTERFACE MODE", getSelectableItem("INTERFACE MODE").getText());
+        config.setProperty("INTERFACE MODE", getSelectorItem("INTERFACE MODE").getText());
         config.setProperty("WIDTH", String.valueOf(getStageWidth()));
         config.setProperty("HEIGHT", String.valueOf(getStageHeight()));
 

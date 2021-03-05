@@ -2,11 +2,9 @@ package units.shooter_developers;
 
 import javafx.beans.binding.BooleanBinding;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Submenu extends Menu{
@@ -80,9 +78,9 @@ public class Submenu extends Menu{
             FAKE_MAP.add(Custom_Settings.URL_MAP_ISLAND_CSV);
 
 
-            M.setGameInstance(new Simulation(FAKE_NAMES,FAKE_URLS, FAKE_MAP));
+            M.setSimulationInstance(new Simulation(FAKE_NAMES,FAKE_URLS, FAKE_MAP));
             try {
-                getGameInstance().start(getStage());
+                getSimulationInstance().start(getStage());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -91,10 +89,10 @@ public class Submenu extends Menu{
 
 
         private void launch_simulation(Submenu M) {
-            M.setGameInstance(new Simulation(P_menu.get_players_names(),P_menu.get_players_URL(), P_map.get_map_data()));
+            M.setSimulationInstance(new Simulation(P_menu.get_players_names(),P_menu.get_players_URL(), P_map.get_map_data()));
             try {
                 M.getStage().close();
-                getGameInstance().start(getStage());
+                getSimulationInstance().start(getStage());
                 getStage().setAlwaysOnTop(true);
             } catch (Exception e) {
                 e.printStackTrace();
