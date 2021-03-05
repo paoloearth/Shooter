@@ -80,7 +80,7 @@ public class OptionsMenu extends Menu {
         try {
             String regex = "\\d+";
             Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(getSelectorItem("RESOLUTION").getText());
+            Matcher matcher = pattern.matcher(getSelectionFor("RESOLUTION"));
             matcher.find();
             width_string = matcher.group();
             matcher.find();
@@ -120,7 +120,7 @@ public class OptionsMenu extends Menu {
 
     private void writeSettings() {
         Properties config = new Properties();
-        config.setProperty("INTERFACE MODE", getSelectorItem("INTERFACE MODE").getText());
+        config.setProperty("INTERFACE MODE", getSelectionFor("INTERFACE MODE"));
         config.setProperty("WIDTH", String.valueOf(getStageWidth()));
         config.setProperty("HEIGHT", String.valueOf(getStageHeight()));
 

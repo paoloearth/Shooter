@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 /************************ SELECTOR ITEM ****************************************/
 
-public class SelectorItem extends HBox {
+class SelectorItem extends HBox {
     private final ArrayList<String> _selection_list;
     private int _selection_index;
     private final double _width_selection_item;

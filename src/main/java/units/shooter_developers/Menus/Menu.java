@@ -355,13 +355,23 @@ public abstract class Menu extends Application {
         return getItemsBox().getSelectorItems();
     }
 
-    public SelectorItem getSelectorItem(String name){
+    protected SelectorItem getSelectorItem(String name){
         var selector_object = getSelectorItems().stream()
                 .filter(e -> e.getName().equals(name))
                 .findFirst()
                 .orElse(null);
 
         return selector_object;
+    }
+
+    public String getSelectionFor(String name){
+        var selector_object = getSelectorItem(name);
+
+        if(selector_object != null){
+            return selector_object.getText();
+        } else {
+            return null;
+        }
     }
 
     /** GAME INSTANCE **/
@@ -389,12 +399,4 @@ public abstract class Menu extends Application {
         return image_wrapped;
     }
 
-    /*******************************************************************************/
-    /*                          MENU ELEMENTS                                      */
-    /*******************************************************************************/
-
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 }

@@ -12,7 +12,7 @@ import javafx.scene.text.Text;
 
 /************************ NON-ANIMATED ITEM ****************************************/
 
-public class NonAnimatedItem extends StackPane {
+class NonAnimatedItem extends StackPane {
 
     public NonAnimatedItem(String name) {
         this(name, -1, -1);
