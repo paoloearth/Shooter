@@ -31,9 +31,9 @@ public class OptionsMenu extends Menu{
         getStage().centerOnScreen();
 
         setTitle("O P T I O N S");
-        this.addSelectableItem("INTERFACE MODE", "light", "dark");
+        this.addSelectorItem("INTERFACE MODE", "light", "dark");
 
-        this.addSelectableItem("RESOLUTION",
+        this.addSelectorItem("RESOLUTION",
                 (int) getStageWidth() + "x" + (int) getStageHeight() + " (current)",
                 ((int) getScreenWidth()) + "x" + (int) getScreenHeight() + " (native)",
                 "640x360 (widescreen)",

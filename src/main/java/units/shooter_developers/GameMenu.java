@@ -34,7 +34,7 @@ public class GameMenu extends Menu{
         if(isGameRunning()) {
             this.addItem("CONTINUE");
         } else {
-            this.addUnanimatedItem("CONTINUE");
+            this.addNonAnimatedItem("CONTINUE");
         }
 
         this.addItem("NEW GAME");

@@ -64,7 +64,7 @@ public abstract class Menu extends Application {
     /************************** CONSTRUCTORS *****************************/
 
     public Menu() {
-        this(tryReadingWidth(), tryReadingHeight());
+        this(tryToReadWidth(), tryToReadHeight());
     }
 
     public Menu(double stage_width, double stage_height) {
@@ -72,7 +72,7 @@ public abstract class Menu extends Application {
         _height_ratio = 1;
         _position_width_ratio = 0;
         _position_height_ratio = 0;
-        this.createContent(stage_width, stage_height);
+        this.createRootAndBackground(stage_width, stage_height);
     }
 
     public Menu(Menu other_menu){
@@ -84,10 +84,10 @@ public abstract class Menu extends Application {
         _position_height_ratio = other_menu._position_height_ratio;
         _gameInstance = other_menu._gameInstance;
         _game_running = other_menu._game_running;
-        this.createContent(_stage_width, _stage_height);
+        this.createRootAndBackground(_stage_width, _stage_height);
     }
 
-    private void createContent(double stage_width, double stage_height) {
+    private void createRootAndBackground(double stage_width, double stage_height) {
         Pane root = new Pane();
         _root = root;
 
@@ -95,20 +95,19 @@ public abstract class Menu extends Application {
 
         root.setPrefSize(getMenuWidth(), getMenuHeight());
 
-        try (InputStream is = Files.newInputStream(Paths.get("src/main/resources/menu.jpeg"))) {
-            ImageView img = new ImageView(new Image(is));
-            img.setFitWidth(getMenuWidth());
-            img.setFitHeight(getMenuHeight());
-            img.setX(getPositionX());
-            img.setY(getPositionY());
-            root.getChildren().add(img);
+        try (InputStream background_input_stream = Files.newInputStream(Paths.get("src/main/resources/menu.jpeg"))) {
+            ImageView background_img = new ImageView(new Image(background_input_stream));
+            background_img.setFitWidth(getMenuWidth());
+            background_img.setFitHeight(getMenuHeight());
+            background_img.setX(getPositionX());
+            background_img.setY(getPositionY());
+            root.getChildren().add(background_img);
         } catch (IOException e) {
             System.out.println("Menu background image not found");
         }
-
     }
 
-    private static double tryReadingWidth(){
+    private static double tryToReadWidth(){
         File configFile = new File("config.ini");
         Properties config = new Properties();
 
@@ -123,7 +122,7 @@ public abstract class Menu extends Application {
         }
     }
 
-    private static double tryReadingHeight(){
+    private static double tryToReadHeight(){
         File configFile = new File("config.ini");
         Properties config = new Properties();
 
@@ -154,17 +153,17 @@ public abstract class Menu extends Application {
         _root.getChildren().addAll(new_item);
     }
 
-    public void addUnanimatedItem(String new_menu_item){
+    public void addNonAnimatedItem(String name){
         generateMenuBoxIfNotExist();
-        getItemsBox().addUnanimatedItem(new_menu_item);
+        getItemsBox().addNonAnimatedItem(name);
     }
 
-    public void addSelectableItem(String item_name, String ... selection_tags){
+    public void addSelectorItem(String name, String ... selection_tags){
         generateMenuBoxIfNotExist();
         ArrayList<String> tag_list= new ArrayList<String>();
-        Collections.addAll(tag_list, selection_tags); // Changed loop with functional
+        Collections.addAll(tag_list, selection_tags);
 
-        getItemsBox().addSelectableItem(item_name, tag_list);
+        getItemsBox().addSelectableItem(name, tag_list);
     }
 
     public void addGenericNode(Node generic_node){
@@ -172,7 +171,7 @@ public abstract class Menu extends Application {
     }
 
     private void generateMenuBoxIfNotExist(){
-        MenuBox menu_box = (MenuBox) _root.getChildren().stream()
+        MenuBox menu_box = (MenuBox) _root.getChildren().parallelStream()
                 .filter(e -> e instanceof MenuBox)
                 .findFirst()
                 .orElse(null);
@@ -184,15 +183,6 @@ public abstract class Menu extends Application {
 
             _root.getChildren().addAll(vbox);
         }
-    }
-
-    public void removeMenuBox(){
-        MenuBox menu_box = (MenuBox) _root.getChildren().stream()
-                .filter(e -> e instanceof MenuBox)
-                .findFirst()
-                .orElse(null);
-
-        _root.getChildren().remove(menu_box);
     }
 
     public void setTitle(String title){
@@ -478,7 +468,7 @@ public abstract class Menu extends Application {
             getChildren().addAll(new_item, createSeparator());
         }
 
-        public void addUnanimatedItem(String new_menu_item){
+        public void addNonAnimatedItem(String new_menu_item){
             UnanimatedItem new_item = new UnanimatedItem(new_menu_item);
             new_item.setTranslateX(0.005*getMenuWidth());
 
