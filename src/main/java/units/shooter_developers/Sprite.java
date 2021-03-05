@@ -45,8 +45,8 @@ public class Sprite extends Dynamic_Object {
 
         /* Add a triggered event to changes of locations, set the default direction*/
         ChangeListener<Object> updateImage = getListener();
-        _current_direction.addListener(updateImage);
-        _current_direction.setValue(D);
+        _current_directionProperty().addListener(updateImage);
+        _current_directionProperty().setValue(D);
 
 
 
@@ -67,29 +67,29 @@ public class Sprite extends Dynamic_Object {
     //Change the picture of the Sprite in the SpriteSheet according to the direction
     private ChangeListener<Object> getListener() {
 
-        return (ov, o, o2) -> get_view().setViewport(new Rectangle2D( _frame.get()*get_width(), _current_direction.get().getOffset() * get_height(), get_width(), get_height()));
+        return (ov, o, o2) -> get_view().setViewport(new Rectangle2D( _frame.get()*get_width(), get_current_direction().getOffset() * get_height(), get_width(), get_height()));
 
     }
 
     //Update the movement in the right direction
     public void update_speed() {
-        _deltaX = _deltaY = 0;
-        if (goNorth) _deltaY -= _speed;
-        if (goSouth) _deltaY += _speed;
-        if (goEast)  _deltaX += _speed;
-        if (goWest)  _deltaX -= _speed;
+        set_deltaX(0);set_deltaY(0);
+        if (goNorth) set_deltaY(get_deltaY()- get_speed());
+        if (goSouth) set_deltaY(get_deltaY()+get_speed());
+        if (goEast)  set_deltaX(get_deltaX()+ get_speed());
+        if (goWest)  set_deltaX(get_deltaX()-get_speed());
     }
 
     // HERE I TRY TO INFER THE DIRECTION SO THAT I CAN PICK THE RIGHT SPRITE
     public void update_get_direction(Coordinates destination)
     {
         Direction D;
-        if (Math.abs(_deltaX) > Math.abs(_deltaY))
+        if (Math.abs(get_deltaX()) > Math.abs(get_deltaY()))
                 D = (destination.getX()  < get_current_X_position())? Direction.LEFT : Direction.RIGHT;
         else
                 D = (destination.getY()  < get_current_Y_position())? Direction.UP:Direction.DOWN;
 
-        _current_direction.set(D);
+        set_current_direction(D);
     }
 
 
@@ -115,13 +115,13 @@ public class Sprite extends Dynamic_Object {
     }
 
     private boolean has_moved() {
-        return (Math.abs(this._deltaX) > 0 || Math.abs(this._deltaY) > 0);
+        return (Math.abs(get_deltaX()) > 0 || Math.abs(get_deltaY()) > 0);
     }
 
     Coordinates get_destination()
     {
-        double future_x = get_current_X_position() + _deltaX;
-        double future_y = get_current_Y_position() + _deltaY;
+        double future_x = get_current_X_position() + get_deltaX();
+        double future_y = get_current_Y_position() + get_deltaY();
         return new Coordinates(future_x, future_y);
 
     }

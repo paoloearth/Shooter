@@ -21,7 +21,7 @@ public class Projectile extends Dynamic_Object{
 
         update_view();
 
-        set_initial_and_translate_direction(S._current_direction.get());
+        set_initial_and_translate_direction(S.get_current_direction());
 
         move_to(new Coordinates(S.get_future_x() + this.biasX, S.get_future_y() + this.biasY));
 
@@ -39,10 +39,10 @@ public class Projectile extends Dynamic_Object{
     private void set_initial_and_translate_direction(Direction D) {
         biasX=biasY=0;
         switch (D) {
-            case UP    ->  { set_biases(+(int)(get_actual_width()),-(int) (get_actual_height()/2)); _deltaY -= _speed; }
-            case DOWN  ->  { set_biases(+(int)(get_actual_width()),+ (int)(get_actual_height()*2)); _deltaY += _speed;}
-            case LEFT  ->  { set_biases(( 0), +(int)get_actual_height()/2);_deltaX -= _speed;}
-            case RIGHT ->  { set_biases((+(int)(get_actual_width()*2)), (int)get_actual_height()/2);_deltaX += _speed;}
+            case UP    ->  { set_biases(+(int)(get_actual_width()),-(int) (get_actual_height()/2)); set_deltaY(get_deltaY()- get_speed());}
+            case DOWN  ->  { set_biases(+(int)(get_actual_width()),+ (int)(get_actual_height()*2)); set_deltaY(get_deltaY()+ get_speed());}
+            case LEFT  ->  { set_biases(( 0), +(int)get_actual_height()/2);set_deltaX(get_deltaX()-get_speed());}
+            case RIGHT ->  { set_biases((+(int)(get_actual_width()*2)), get_actual_height()/2);set_deltaX(get_deltaX()+get_speed());}
         }
     }
 
