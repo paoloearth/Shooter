@@ -185,7 +185,7 @@ public abstract class Menu extends Application {
     public void setTitle(String title){
         removeTitle();
 
-        Menu.Title title_object = new Menu.Title(title);
+        Title title_object = new Title(title);
 
         title_object.setTranslateX(0.0476*getMenuWidth() + getPositionX());
         title_object.setTranslateY(0.333*getMenuHeight() + getPositionY());
@@ -397,32 +397,6 @@ public abstract class Menu extends Application {
     /*******************************************************************************/
     /*                          MENU ELEMENTS                                      */
     /*******************************************************************************/
-
-
-    /************************ TITLE ****************************************/
-    private class Title extends StackPane {
-        public Title(String name) {
-            Rectangle box = new Rectangle(0.357*getMenuWidth(), 0.1*getMenuHeight());
-            box.setStroke(Color.WHITE);
-            box.setStrokeWidth(2);
-            box.setFill(null);
-
-            Text text = new Text(name);
-            text.setFill(Color.WHITE);
-            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, 0.0833*getMenuHeight()));
-
-            setAlignment(Pos.CENTER);
-
-            //Text is transformed into an image and redimensionated
-            var params = new SnapshotParameters();
-            params.setFill(Color.TRANSPARENT);
-            var textImage = new ImageView(text.snapshot(params, null));
-            if(textImage.getBoundsInLocal().getWidth() > box.getWidth())
-                textImage.setFitWidth(box.getWidth());
-
-            getChildren().addAll(box, textImage);
-        }
-    }
 
 
     /************************ MENU ITEM ****************************************/
