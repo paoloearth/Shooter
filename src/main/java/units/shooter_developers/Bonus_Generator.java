@@ -2,8 +2,6 @@ package units.shooter_developers;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
@@ -40,7 +38,7 @@ public class Bonus_Generator extends Pictured_Object{
         if (get_hitbox().is_out_of_map(M))  push_inside_border();
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(4), event -> {
-            empty_Pane(this);
+            empty_Pane_from_ImageView(this);
             this.getChildren().add(_view);
         }));
 
@@ -67,12 +65,13 @@ public class Bonus_Generator extends Pictured_Object{
 
     //If player intersects bonus, player's life is restored
     public void bonus_effect(Sprite S, Map M) {
-        this.getChildren().remove(_view);
+        empty_Pane_from_ImageView(this);
+       // this.getChildren().remove(_view);
         S.H.restore_life();
         generate(M);
     }
 
-    private void empty_Pane(Pane P) {
+    private void empty_Pane_from_ImageView(Pane P) {
         P.getChildren().removeIf(i -> i instanceof ImageView);
     }
 
