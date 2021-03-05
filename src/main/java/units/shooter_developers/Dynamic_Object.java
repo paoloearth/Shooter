@@ -25,7 +25,7 @@ public abstract class Dynamic_Object extends Pictured_Object {
 
     public  void set_speed(double speed)
     {
-        this._speed = (int) (speed*_scaling_factors.getKey());    // Set characteristics of the projectile
+        this._speed = (int) (speed*get_scaling_factors().getKey());    // Set characteristics of the projectile
     }
 
     //Compute future x-component of the position

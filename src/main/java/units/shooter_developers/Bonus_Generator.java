@@ -26,7 +26,7 @@ public class Bonus_Generator extends Pictured_Object{
     }
 
     private void create_and_start_animation() {
-        anim = new Object_Animation(_view, Duration.seconds(1),10,10,0,0,_width, _height);
+        anim = new Object_Animation(_view, Duration.seconds(1),10,10,0,0,get_width(), get_height());
         anim.setCycleCount(Animation.INDEFINITE);
         anim.play();
     }
