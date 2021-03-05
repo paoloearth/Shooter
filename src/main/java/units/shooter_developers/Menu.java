@@ -663,10 +663,9 @@ public abstract class Menu extends Application {
     }
 
 
-    /************************ UNANIMATED ITEM ****************************************/
+    /************************ NON-ANIMATED ITEM ****************************************/
 
     public class NonAnimatedItem extends StackPane {
-        private final String _name;
 
         public NonAnimatedItem(String name){
             this(name, -1, -1);
@@ -682,9 +681,6 @@ public abstract class Menu extends Application {
                 effective_height_ratio = item_height_ratio;
             }
 
-
-            _name = name;
-
             Color text_color = Color.DARKGREY;
             Color background_color = Color.BLACK;
 
@@ -696,7 +692,7 @@ public abstract class Menu extends Application {
             text.setFill(text_color);
             text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333*getMenuHeight()));
 
-            //Text is transformed into an image and redimensioned
+            //Text is transformed into an image and resized
             var params = new SnapshotParameters();
             params.setFill(Color.TRANSPARENT);
             var textImage = new ImageView(text.snapshot(params, null));
@@ -713,15 +709,16 @@ public abstract class Menu extends Application {
 
     private class FlashDisclaimer extends StackPane{
 
-        private FlashDisclaimer(String disclaimer_text, double position_ratio_X, double position_ratio_Y){
-            Text disclaimer = new Text(disclaimer_text);
-            disclaimer.setFont(Font.font("Times New Roman", FontWeight.BOLD,getMenuWidth()*0.025));
-            disclaimer.setFill(Color.SILVER);
-            textAnimation(disclaimer);
-            setAlignment(disclaimer,Pos.TOP_CENTER);
-            this.setTranslateX(position_ratio_X*getMenuWidth());
-            this.setTranslateY(position_ratio_Y*getMenuHeight());
-            getChildren().add(disclaimer);
+        private FlashDisclaimer(String text, double position_ratio_X, double position_ratio_Y){
+            Text disclaimer_text = new Text(text);
+            disclaimer_text.setFont(Font.font("Times New Roman", FontWeight.BOLD,getMenuWidth()*0.025));
+            disclaimer_text.setFill(Color.SILVER);
+            textAnimation(disclaimer_text);
+            setAlignment(disclaimer_text,Pos.TOP_CENTER);
+
+            setTranslateX(position_ratio_X*getMenuWidth());
+            setTranslateY(position_ratio_Y*getMenuHeight());
+            getChildren().add(disclaimer_text);
         }
 
         private void textAnimation(Text bottom) {
