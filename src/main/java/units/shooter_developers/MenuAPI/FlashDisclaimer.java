@@ -1,4 +1,4 @@
-package units.shooter_developers.Menus;
+package units.shooter_developers.MenuAPI;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.Transition;

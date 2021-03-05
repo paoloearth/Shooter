@@ -3,11 +3,13 @@ package units.shooter_developers;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
+import units.shooter_developers.Menu_pages.Submenu_leaf;
+
 import java.util.Map;
 
 
 
-public class Choice_Box extends Submenu_leaf{
+public class Choice_Box extends Submenu_leaf {
 
         private ComboBox<String> comboBox;
         private Map<String, String> _dict;

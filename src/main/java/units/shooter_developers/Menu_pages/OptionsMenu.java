@@ -1,4 +1,4 @@
-package units.shooter_developers;
+package units.shooter_developers.Menu_pages;
 
 import java.io.*;
 import java.util.Properties;
@@ -6,8 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.stage.*;
 import javafx.util.Pair;
-import units.shooter_developers.Menus.Menu;
-import units.shooter_developers.Menus.MenuItem;
+import units.shooter_developers.MenuAPI.Menu;
+import units.shooter_developers.MenuAPI.MenuItem;
+import units.shooter_developers.Simulation;
 
 public class OptionsMenu extends Menu {
 

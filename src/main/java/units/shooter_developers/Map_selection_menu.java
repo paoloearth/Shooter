@@ -1,8 +1,6 @@
 package units.shooter_developers;
 
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.geometry.Pos;
-import javafx.scene.layout.*;
+import units.shooter_developers.Menu_pages.Submenu_component;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -16,7 +14,7 @@ public class Map_selection_menu extends Submenu_component {
     Map<String, String> Map_CSV;
 
 
-    Map_selection_menu(double width, double height)
+    public Map_selection_menu(double width, double height)
     {
         super(width,height);
         create_menu();
