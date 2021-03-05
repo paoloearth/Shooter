@@ -2,7 +2,6 @@ package units.shooter_developers;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Pair;
@@ -79,7 +78,7 @@ public abstract class Pictured_Object extends Map_Object {
         return this.get_hitbox().intersect(P2.get_hitbox());
     }
 
-    public abstract void update(Map M, Sprite S);
+    public abstract void update(GameMap M, Sprite S);
 
     public String get_url() {
         return _url;

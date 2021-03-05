@@ -5,9 +5,8 @@ import javafx.util.Pair;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -21,34 +20,28 @@ import java.util.stream.Collectors;
 */
 public class Map_Reader {
 
-    Image _tileset;
-    private final List<String[]> _lines;
-    Integer _cell_side;
-    Pair<Integer,Integer> _num_tiles;                              //number of tiles of the map
-    final Set<Integer> _set_of_passable;                           //set of passable tiles for the Player
-    final Set<Integer> _set_of_NOT_passable_for_projectile;
-    //Array or map<String,Coordinates>?
-    Coordinates[] _players_positions; //position of the player in the corresponding map
-    Coordinates[] _teleport_positions; //positon of teleports in the corresponding map
-    List<String[]> _map;                                           // List of tiles composing the map
+    private  List<String[]> _lines;
 
 
     // Constructor
-    Map_Reader(String URL) throws IOException {
+    Map_Reader() throws IOException {
 
+
+    }
+
+    public GameMap read_Map(String URL, double width, double height) throws IOException {
+        var M = new GameMap(width,height, get_tileset(),get_cell_side(),get_num_of_tiles(),
+                            get_tiles_at_row_index(2),get_tiles_at_row_index(3),retrieve_map_without_metadata());
         _lines = extract_lines(URL);
-        _tileset = get_tileset();
-        _cell_side = get_cell_side();
-        _num_tiles = get_num_of_tiles();
-        _set_of_passable = get_tiles_at_row_index(2);
-        _set_of_NOT_passable_for_projectile = get_tiles_at_row_index(3);
-        _players_positions = get_positions(4);
-        _teleport_positions = get_positions(5);
 
+        create_dictionary_position('P', 4, M.getDictionary_position());
+        create_dictionary_position('T', 5, M.getDictionary_position());
+        M._passable_tiles= M._tiles.stream().filter(b-> b.is_passable).collect(Collectors.toList());
+        return M;
+    }
 
-        //Lines representing the map skipping the first 5 rows
-        _map = _lines.stream().skip(Custom_Settings.NUMBER_OF_METADATA_LINES).collect(Collectors.toList());
-
+    private List<String[]> retrieve_map_without_metadata() {
+        return _lines.stream().skip(Custom_Settings.NUMBER_OF_METADATA_LINES).collect(Collectors.toList());
     }
 
     private Image get_tileset() {
@@ -68,10 +61,7 @@ public class Map_Reader {
     }
 
 
-    // Return the number of tiles in a row of the tileset image
-    public int get_tiles_per_row() {
-        return (int) (_tileset.getWidth() / _cell_side);
-    }
+
 
     // Return the number of tiles in the rows and columns in the map
     private Pair<Integer, Integer> get_num_of_tiles() {
@@ -95,6 +85,24 @@ public class Map_Reader {
         var values = Arrays.stream(_lines.get(index)).parallel().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
         return new Coordinates[]{new Coordinates(values.get(0), values.get(1)),new Coordinates(values.get(2), values.get(3))};
     }
+
+    public void create_dictionary_position(char ID, int index, Map<String, Coordinates> dict){
+        var l = Arrays.stream(_lines.get(index)).parallel().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());;
+        //IntStream.range(1,l.size()).mapToObj(i -> new Coordinates(l.get(i-1), l.get(i))).forEach();
+        for(int i= 0; i < l.size(); i+=2){
+            Coordinates coord = new Coordinates(l.get(i), l.get(i+1));
+            String key = ID+ String.valueOf(i/2);
+           dict.put(key, coord);
+        }
+
+    }
+
+
+
+
+
+
+
 
 
 

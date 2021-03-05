@@ -25,7 +25,7 @@ public class Box{
         return box[BOUNDS.RIGHT.ordinal()]- box[BOUNDS.LEFT.ordinal()];
     }
 
-    public  void  compute_tiles_bounds(Map M) {
+    public  void  compute_tiles_bounds(GameMap M) {
 
         int top_tile = (int) (get_top_box() / M.getTileHeight());
         if (top_tile < 0) top_tile = 0;
@@ -46,7 +46,7 @@ public class Box{
     }
 
 
-    protected boolean is_out_of_map(Map M) {
+    protected boolean is_out_of_map(GameMap M) {
         return  check_top_and_left() || check_bottom_and_right(M);
     }
 
@@ -63,13 +63,13 @@ public class Box{
         return get_top_box()<= 0 ||  get_left_box() <= 0;
     }
 
-    private boolean check_bottom_and_right(Map M) {
+    private boolean check_bottom_and_right(GameMap M) {
         return get_right_box() >= M.get_width() || get_bottom_box() >= M.get_height();
     }
 
 
 
-    public boolean  performs_check(Map M, Dynamic_Object D)
+    public boolean  performs_check(GameMap M, Dynamic_Object D)
     {
         for (int i =get_left_tile(); i<= get_right_tile(); i++)
         {
