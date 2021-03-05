@@ -46,7 +46,7 @@ class MenuBox extends VBox {
     }
 
     protected void addSelectorItem(String name, ArrayList<String> tag_list) {
-        Menu.SelectorItem new_item = new Menu.SelectorItem(name);
+        SelectorItem new_item = new SelectorItem(name);
         new_item.setTranslateX(0.005 * menu.getMenuWidth());
 
         for (var tag : tag_list) {
@@ -63,10 +63,10 @@ class MenuBox extends VBox {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    protected ArrayList<Menu.SelectorItem> getSelectorItems() {
+    protected ArrayList<SelectorItem> getSelectorItems() {
         return getChildren().stream()
-                .filter(e -> e instanceof Menu.SelectorItem)
-                .map(e -> (Menu.SelectorItem) e)
+                .filter(e -> e instanceof SelectorItem)
+                .map(e -> (SelectorItem) e)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
