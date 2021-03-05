@@ -17,8 +17,8 @@ public class Teleport extends Pictured_Object{
         super(scaling_factor, url);
 
 
-        this._type ="TELEPORT";
-        this._scale = Custom_Settings.TELEPORT_SCALE;
+        set_type(Custom_Settings.TELEPORT);
+        set_scale(Custom_Settings.TELEPORT_SCALE);
 
         update_view();
 

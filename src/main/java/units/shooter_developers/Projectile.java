@@ -12,9 +12,10 @@ public class Projectile extends Dynamic_Object{
     {
         super(scaling_factor, url);
 
-        this._type ="PROJECTILE";        // Set the type
         this.Owner = S._id;              // Save the shooter's ID
-        this._scale = Custom_Settings.PROJECTILE_SCALE;
+
+        set_type(Custom_Settings.PROJECTILE);        // Set the type
+        set_scale(Custom_Settings.PROJECTILE_SCALE);
 
         set_speed(Custom_Settings.PROJECTILE_SPEED);
 

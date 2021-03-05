@@ -74,6 +74,12 @@ public class Custom_Settings {
     public static final String DESERT     = "Desert";
     public static final String ISLAND     = "Islands";
 
+    public static final String BONUS  = "BONUS";
+    public static final String PROJECTILE  ="PROJECTILE";
+    public static final String SPRITE  ="SPRITE";
+    public static final String TELEPORT  ="TELEPORT";
+
+
 
 
 }

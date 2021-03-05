@@ -162,13 +162,13 @@ public class Simulation extends Application {
 
                     all_sprites().forEach(
                             s -> {
-                                switch (s._type) {
-                                    case "SPRITE" -> {
+                                switch (s.get_type()) {
+                                    case Custom_Settings.SPRITE -> {
 
                                         ((Sprite) s).move(R);
                                     }
 
-                                    case "PROJECTILE" -> {
+                                    case Custom_Settings.PROJECTILE -> {
 
                                         var p = (Projectile) s;
 
@@ -178,7 +178,7 @@ public class Simulation extends Application {
                                         if (p.intersect(Player_2)) p.update(R, Player_2);
                                     }
 
-                                    case "TELEPORT" -> {
+                                    case Custom_Settings.TELEPORT -> {
                                         var t = (Teleport) s;
 
                                         if (t.intersect(Player_1)) t.update(R, Player_1);
@@ -186,7 +186,7 @@ public class Simulation extends Application {
                                     }
 
 
-                                    case "BONUS" -> {
+                                    case Custom_Settings.BONUS -> {
 
                                         var b = (Bonus_Generator) s;
 
@@ -194,7 +194,6 @@ public class Simulation extends Application {
                                         if (b.intersect(Player_2)) b.update(R, Player_2);
 
                                     }
-
 
                                 }
                             }

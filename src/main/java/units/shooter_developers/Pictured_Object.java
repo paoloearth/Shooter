@@ -13,19 +13,19 @@ public abstract class Pictured_Object extends Map_Object {
     private final String _url;
     private final ImageView _view;
 
-    protected int _n_rows;                // Number of rows  of the sprite-sheet
-    protected int _n_cols;                // Number of columns of the sprite-sheet
+    private int _n_rows;                // Number of rows  of the sprite-sheet
+    private int _n_cols;                // Number of columns of the sprite-sheet
 
     // Scale to make the loaded image of desired size
-    protected double _scale;
+    private double _scale;
 
     // Will store the type of the object
-    protected String _type;
+    private String _type;
 
     // Boolean dead;
     BooleanProperty _isDead = new SimpleBooleanProperty(false);
 
-    //Custom constructor
+
     public Pictured_Object(Pair<Double,Double> scaling_factors, String url )
     {
         super(scaling_factors);
@@ -35,10 +35,9 @@ public abstract class Pictured_Object extends Map_Object {
 
         this._url = url;
         Image _picture = retrieve_image(_url);
-        this._view = new ImageView(_picture);
-
         set_dimensions((int) _picture.getWidth(),(int) _picture.getHeight());
 
+        this._view = new ImageView(_picture);
     }
 
     /* Custom constructor for SpriteSheet with multiple views*/
@@ -92,4 +91,31 @@ public abstract class Pictured_Object extends Map_Object {
     public ImageView get_view() { return _view; }
 
 
+    public double get_scale() {
+        return _scale;
+    }
+
+    public void set_scale(double _scale) {
+        this._scale = _scale;
+    }
+
+    public String get_type() {
+        return _type;
+    }
+
+    public void set_type(String _type) {
+        this._type = _type;
+    }
+
+    public boolean is_isDead() {
+        return _isDead.get();
+    }
+
+    public BooleanProperty _isDeadProperty() {
+        return _isDead;
+    }
+
+    public void set_isDead(boolean _isDead) {
+        this._isDead.set(_isDead);
+    }
 }

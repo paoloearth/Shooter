@@ -15,8 +15,8 @@ public class Bonus_Generator extends Pictured_Object{
     {
         super(scaling_factor,url,_n_rows,_n_cols);
 
-        this._type = "BONUS";
-        this._scale = Custom_Settings.HEART_SCALE;
+        set_type(Custom_Settings.BONUS);
+        set_scale(Custom_Settings.HEART_SCALE);
 
         update_view();
         create_and_start_animation();
