@@ -15,8 +15,8 @@ public class Bonus_Generator extends Pictured_Object{
     {
         super(scaling_factor,url,_n_rows,_n_cols);
 
-        this._type = "BONUS";
-        this._scale = Custom_Settings.HEART_SCALE;
+        set_type(Custom_Settings.BONUS);
+        set_scale(Custom_Settings.HEART_SCALE);
 
         update_view();
         create_and_start_animation();
@@ -26,7 +26,7 @@ public class Bonus_Generator extends Pictured_Object{
     }
 
     private void create_and_start_animation() {
-        anim = new Object_Animation(_view, Duration.seconds(1),10,10,0,0,get_width(), get_height());
+        anim = new Object_Animation(get_view(), Duration.seconds(1),10,10,0,0,get_width(), get_height());
         anim.setCycleCount(Animation.INDEFINITE);
         anim.play();
     }
@@ -39,7 +39,7 @@ public class Bonus_Generator extends Pictured_Object{
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(4), event -> {
             empty_Pane_from_ImageView(this);
-            this.getChildren().add(_view);
+            this.getChildren().add(get_view());
         }));
 
         timeline.setCycleCount(1);

@@ -10,44 +10,31 @@ import javafx.util.Pair;
 public abstract class Pictured_Object extends Map_Object {
 
 
-    protected String _url;                // URL path to locate the spritesheet containing the pictures
-    protected Image _picture;             // Store reference file for the image to render
-    protected ImageView _view;            // Will store the current view
+    private final String _url;
+    private final ImageView _view;
 
-    protected int _n_rows;                // Number of rows  of the sprite-sheet
-    protected int _n_cols;                // Number of columns of the sprite-sheet
+    private int _n_rows;                // Number of rows  of the sprite-sheet
+    private int _n_cols;                // Number of columns of the sprite-sheet
 
 
-    protected double _scale;              // Scale to make the loaded image of desired size
+    private double _scale;             // Scale to make the loaded image of desired size
+    private String _type;               // Will store the type of the object
 
-    // Will store the type of the object
-    protected String _type;
+    private final BooleanProperty _isDead = new SimpleBooleanProperty(false);
 
-    // Boolean dead;
-    BooleanProperty _isDead = new SimpleBooleanProperty(false);
 
-    //Custom constructor
     public Pictured_Object(Pair<Double,Double> scaling_factors, String url )
     {
         super(scaling_factors);
 
-        // Setting the number of rows and columns
         this._n_rows = 1;
         this._n_cols = 1;
 
-        // Setting the URL  of the image
         this._url = url;
+        Image _picture = retrieve_image(_url);
+        set_dimensions((int) _picture.getWidth(),(int) _picture.getHeight());
 
-        // Read the picture into the variable
-        this._picture = retrieve_image(_url);
-
-        // Set the view
         this._view = new ImageView(_picture);
-
-        set_width( (int) _picture.getWidth());
-        set_height((int) _picture.getHeight());
-
-
     }
 
     /* Custom constructor for SpriteSheet with multiple views*/
@@ -58,8 +45,7 @@ public abstract class Pictured_Object extends Map_Object {
         this._n_rows = n_rows;
         this._n_cols = n_cols;
 
-        set_width(get_width()/_n_cols);
-        set_height(get_height()/_n_rows);
+        set_dimensions(get_width()/_n_cols,get_height()/_n_rows);
 
     }
 
@@ -86,9 +72,7 @@ public abstract class Pictured_Object extends Map_Object {
     }
 
 
-    public Box get_hitbox(){
-        return new Box(get_current_Y_position(), get_current_X_position(),  get_actual_width() ,get_actual_height() );
-    }
+    public Box get_hitbox(){ return new Box(get_current_Y_position(), get_current_X_position(),  get_actual_width() ,get_actual_height() );}
 
     public boolean intersect(Pictured_Object P2)
     {
@@ -96,9 +80,35 @@ public abstract class Pictured_Object extends Map_Object {
     }
 
     public abstract void update(Map M, Sprite S);
+
     public String get_url() {
         return _url;
     }
 
+    public ImageView get_view() { return _view; }
 
+    /* Getters */
+    public double get_scale() {
+        return _scale;
+    }
+    public boolean is_dead() {
+        return _isDead.get();
+    }
+    public BooleanProperty get_is_dead_property() {
+        return _isDead;
+    }
+    public String get_type() {
+        return _type;
+    }
+
+    /* Setters */
+    public void set_type(String _type) {
+        this._type = _type;
+    }
+    public void set_scale(double _scale) {
+        this._scale = _scale;
+    }
+    public void set_is_dead_property(boolean _isDead) {
+        this._isDead.set(_isDead);
+    }
 }

@@ -38,8 +38,8 @@ public class Sprite extends Dynamic_Object {
 
         set_speed(Custom_Settings.PLAYER_SPEED);
 
-        this._scale = Custom_Settings.PLAYER_SCALE;
-        this._type = "SPRITE";
+        set_scale(Custom_Settings.PLAYER_SCALE);
+        set_type(Custom_Settings.SPRITE);
 
         update_view();
 
@@ -51,12 +51,12 @@ public class Sprite extends Dynamic_Object {
 
 
         H = getHealthBar();
-        _isDead.bind(H.is_remaining_life_zero());
+        get_is_dead_property().bind(H.is_remaining_life_zero());
 
         move_to(M.get_player_pixel_position(id));
 
 
-        this.getChildren().addAll(H, _view);
+        this.getChildren().addAll(H, get_view());
         root.getChildren().add(this);
     }
 
@@ -67,7 +67,7 @@ public class Sprite extends Dynamic_Object {
     //Change the picture of the Sprite in the SpriteSheet according to the direction
     private ChangeListener<Object> getListener() {
 
-        return (ov, o, o2) -> this._view.setViewport(new Rectangle2D( _frame.get()*get_width(), _current_direction.get().getOffset() * get_height(), get_width(), get_height()));
+        return (ov, o, o2) -> get_view().setViewport(new Rectangle2D( _frame.get()*get_width(), _current_direction.get().getOffset() * get_height(), get_width(), get_height()));
 
     }
 

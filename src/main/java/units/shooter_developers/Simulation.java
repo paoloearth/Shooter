@@ -50,7 +50,6 @@ public class Simulation extends Application {
         this._players_names = players_names;
         this._players_urls_sprite = players_urls_sprite;
         this._map_url = map_url;
-     //   System.out.println(get_i_player_name(0) + get_i_player_name(1) + get_map_url() );
     }
 
     public String get_i_player_name(int index)
@@ -162,13 +161,13 @@ public class Simulation extends Application {
 
                     all_sprites().forEach(
                             s -> {
-                                switch (s._type) {
-                                    case "SPRITE" -> {
+                                switch (s.get_type()) {
+                                    case Custom_Settings.SPRITE -> {
 
                                         ((Sprite) s).move(R);
                                     }
 
-                                    case "PROJECTILE" -> {
+                                    case Custom_Settings.PROJECTILE -> {
 
                                         var p = (Projectile) s;
 
@@ -178,7 +177,7 @@ public class Simulation extends Application {
                                         if (p.intersect(Player_2)) p.update(R, Player_2);
                                     }
 
-                                    case "TELEPORT" -> {
+                                    case Custom_Settings.TELEPORT -> {
                                         var t = (Teleport) s;
 
                                         if (t.intersect(Player_1)) t.update(R, Player_1);
@@ -186,7 +185,7 @@ public class Simulation extends Application {
                                     }
 
 
-                                    case "BONUS" -> {
+                                    case Custom_Settings.BONUS -> {
 
                                         var b = (Bonus_Generator) s;
 
@@ -194,7 +193,6 @@ public class Simulation extends Application {
                                         if (b.intersect(Player_2)) b.update(R, Player_2);
 
                                     }
-
 
                                 }
                             }
@@ -227,12 +225,12 @@ public class Simulation extends Application {
 
 
     private void remove_dead_objects() {
-        root.getChildren().removeIf(node -> (node instanceof Pictured_Object) && ((Pictured_Object)node)._isDead.getValue());
+        root.getChildren().removeIf(node -> (node instanceof Pictured_Object) && ((Pictured_Object)node).is_dead());
 
-        if (Player_1._isDead.getValue() || Player_2._isDead.getValue())
+        if (Player_1.is_dead() || Player_2.is_dead())
         {
 
-            var win_screen =  Player_2._isDead.getValue() ?
+            var win_screen =  Player_2.is_dead()?
                     new WinnerWindow(WIDTH, HEIGHT,  Player_1) :
                     new WinnerWindow(WIDTH, HEIGHT, Player_2);
 
