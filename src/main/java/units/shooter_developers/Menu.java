@@ -57,8 +57,8 @@ public abstract class Menu extends Application {
     private double _height_scale;
     private double _position_width_ratio;
     private double _position_height_ratio;
-    private Simulation _gameInstance;
-    private boolean _game_running;
+    private Simulation _simulation_instance;
+    private boolean _simulation_running;
 
     /************************** CONSTRUCTORS *****************************/
 
@@ -71,6 +71,8 @@ public abstract class Menu extends Application {
         _height_scale = 1;
         _position_width_ratio = 0;
         _position_height_ratio = 0;
+        _simulation_running = false;
+        _simulation_instance = null;
         this.createRootAndBackground(stage_width, stage_height);
     }
 
@@ -81,8 +83,8 @@ public abstract class Menu extends Application {
         _stage_height = other_menu._stage_height;
         _position_width_ratio = other_menu._position_width_ratio;
         _position_height_ratio = other_menu._position_height_ratio;
-        _gameInstance = other_menu._gameInstance;
-        _game_running = other_menu._game_running;
+        _simulation_instance = other_menu._simulation_instance;
+        _simulation_running = other_menu._simulation_running;
         this.createRootAndBackground(_stage_width, _stage_height);
     }
 
@@ -373,20 +375,17 @@ public abstract class Menu extends Application {
 
     /** GAME INSTANCE **/
 
-    public Simulation getGameInstance(){
-        return _gameInstance;
+    public Simulation getSimulationInstance(){
+        return _simulation_instance;
     }
 
-    public void setGameInstance(Simulation game_instance){
-        _gameInstance = game_instance;
+    public void setSimulationInstance(Simulation simulation_instance){
+        _simulation_instance = simulation_instance;
+        _simulation_running = true;
     }
 
-    public boolean isGameRunning(){
-        return _game_running;
-    }
-
-    public void setGameRunning(boolean is_game_running){
-        _game_running = is_game_running;
+    public boolean isSimulationRunning(){
+        return _simulation_running;
     }
 
     /** other **/

@@ -11,7 +11,6 @@ public class GameMenu extends Menu{
 
     public GameMenu(){
         super();
-        setGameRunning(false);
     }
 
     public GameMenu(Menu other_menu){
@@ -20,8 +19,7 @@ public class GameMenu extends Menu{
 
     public GameMenu(Simulation game_instance){
         super();
-        setGameInstance(game_instance);
-        setGameRunning(true);
+        setSimulationInstance(game_instance);
     }
 
     @Override
@@ -31,7 +29,7 @@ public class GameMenu extends Menu{
         readDimensions();
         menu_stage.centerOnScreen();
 
-        if(isGameRunning()) {
+        if(isSimulationRunning()) {
             this.addItem("CONTINUE");
         } else {
             this.addNonAnimatedItem("CONTINUE");
@@ -55,7 +53,7 @@ public class GameMenu extends Menu{
                 }
                 if (item.getName().equals("CONTINUE")) {
                     menu_stage.close();
-                    menu_stage.setScene(getGameInstance().getScene());
+                    menu_stage.setScene(getSimulationInstance().getScene());
                     menu_stage.show();
                     menu_stage.toFront();
                 }
