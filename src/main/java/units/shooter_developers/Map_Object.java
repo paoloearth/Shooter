@@ -1,5 +1,6 @@
 package units.shooter_developers;
 
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
@@ -13,6 +14,7 @@ public abstract class Map_Object extends Pane {
     /* Constructors */
     Map_Object() { }
     Map_Object(Pair<Double,Double> scaling_factors) { set_scaling_factors(scaling_factors); }
+    Map_Object(int width, int height) { this.set_width(width); this.set_height(height); }
 
     void move_to(Coordinates coordinates)
     {
@@ -23,6 +25,10 @@ public abstract class Map_Object extends Pane {
 
     public double get_current_Y_position() { return this.getLayoutY(); }
 
+    public void add_nodes(Node ... nodes)
+    {
+       this.getChildren().addAll(nodes);
+    }
 
     /* Getters */
     public int get_width() {
@@ -35,7 +41,7 @@ public abstract class Map_Object extends Pane {
         return _scaling_factors;
     }
 
-    /* Getters */
+    /* Setters */
     public void set_width(int _width) {
         this._width = _width;
     }

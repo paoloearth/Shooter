@@ -1,67 +1,97 @@
 package units.shooter_developers;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 
 public class HealthBar extends Map_Object{
-    Rectangle Red_rectangle;     // Lost life
-    Rectangle Green_rectangle;   // Remaining life
 
-    DoubleProperty Health;       // Bindings
+    private final Rectangle remaining_life_rectangle;
+    private final DoubleProperty Health;
 
 
     public HealthBar(Sprite S)
     {
-        set_width(S.get_actual_width());                                                   // Width of HB is = to width of Sprite
-        set_height((int) (S.get_actual_height() * Custom_Settings.HB_PROPORTIONAL_WIDTH));   // Height of HB is 10%  of the height of Sprite
+        super(S.get_actual_width(), get_Hbar_height_proportional_to_S_height(S.get_actual_height()));
 
-        // Create the 2 overlapping rectangles
-        Red_rectangle = new Rectangle( 0, 0, get_width(), get_height());
-        Red_rectangle.setFill(Color.RED);
-        Red_rectangle.setStroke(Color.BLACK);
+        Rectangle lost_life_rectangle = create_custom_outer_rectangle();
+        remaining_life_rectangle = create_custom_inner_rectangle();
 
-        Green_rectangle = new Rectangle( 0, 0, get_width(), get_height());
-        Green_rectangle.setFill(Color.LIMEGREEN);
-
-        // Initialize Binding
         Health = new SimpleDoubleProperty(get_width());
+        remaining_life_rectangle.widthProperty().bind(Health);
 
-        // Make the binding
-        Green_rectangle.widthProperty().bind(Health);
 
-        move_to( new Coordinates(0, (S.get_actual_height() * 1.1)));
+        move_to(get_default_HBar_position(S));
 
-        this.getChildren().addAll(Red_rectangle, Green_rectangle);
+        add_nodes(lost_life_rectangle, remaining_life_rectangle);
 
     }
 
-    public void  restore_life(){
-        Health.set(get_max_health());
-        // When health goes below half, change bar colour to orange
-        this.Green_rectangle.setFill(Color.LIMEGREEN);
+    public BooleanBinding is_remaining_life_zero() {
+        return Health.lessThanOrEqualTo(0);
     }
 
 
     public void damage()
     {
-        Health.set(Health.getValue() - get_relative_damage());
+        set_remaining_life_to(get_current_health() - get_relative_damage());
+        if (less_thant_half_life_remain()) this.remaining_life_rectangle.setFill(Custom_Colors.HALF_LIFE);
+    }
 
-        if (Health.getValue() <= get_max_health()/2)  // When health goes below half, change bar colour to orange
-            this.Green_rectangle.setFill(Color.ORANGE);
+    private boolean less_thant_half_life_remain() {
+        return get_current_health() <= get_max_health() / 2;
+    }
+    public void  restore_life(){
+        set_remaining_life_to(get_max_health());
+        this.remaining_life_rectangle.setFill(Custom_Colors.INNER_RECTANGLE);
+    }
 
+
+
+    private double get_current_health() {
+        return Health.get();
     }
 
     public double get_relative_damage()
     {
-        return get_max_health() * 0.25;
+        return get_max_health() * Custom_Settings.PERCENTAGE_DAMAGE_PER_SHOOT;
     }
 
     public double get_max_health()
     {
         return  get_width();
     }
+
+    public void set_remaining_life_to( double d)
+    {
+        Health.set(d);
+    }
+
+
+    private Rectangle create_custom_inner_rectangle() {
+        final Rectangle remaining_life_rectangle;
+        remaining_life_rectangle = new Rectangle( 0, 0, get_width(), get_height());
+        remaining_life_rectangle.setFill(Custom_Colors.INNER_RECTANGLE);
+        return remaining_life_rectangle;
+    }
+
+    private Rectangle create_custom_outer_rectangle() {
+        var R = new Rectangle(0, 0, get_width(), get_height());
+        R.setFill(Custom_Colors.OUTER_RECTANGLE);
+        R.setStroke(Custom_Colors.OUTER_RECTANGLE_STROKE);
+        return R;
+    }
+
+    private static int get_Hbar_height_proportional_to_S_height(double sprite_height) {
+        return (int) (sprite_height * Custom_Settings.HB_PROPORTIONAL_WIDTH);
+    }
+
+
+    private Coordinates get_default_HBar_position(Sprite S) {
+        return new Coordinates(0, (S.get_actual_height() * 1.1));
+    }
+
 
 
 
