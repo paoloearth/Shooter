@@ -30,6 +30,10 @@ public class AlertWindow extends Menu{
         addFlashDisclaimer("Game will be reset. Do you want to confirm?", 0.185, 0.93);
         show();
 
+        /* THIS LOOP CAN MAKE USE OF STREAMS?
+        menu_items.forEach(item -> etc etc)
+         */
+
         var menu_items = getItems();
         for(var item:menu_items)
         {

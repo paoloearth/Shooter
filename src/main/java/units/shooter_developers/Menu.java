@@ -44,6 +44,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
@@ -161,7 +162,7 @@ public abstract class Menu extends Application {
     public void addSelectableItem(String item_name, String ... selection_tags){
         generateMenuBoxIfNotExist();
         ArrayList<String> tag_list= new ArrayList<String>();
-        for(var tag:selection_tags){ tag_list.add(tag); }
+        Collections.addAll(tag_list, selection_tags); // Changed loop with functional
 
         getItemsBox().addSelectableItem(item_name, tag_list);
     }
@@ -533,6 +534,7 @@ public abstract class Menu extends Application {
                 effective_item_height = 0.05;
             }
 
+            /* COLORS SHOULD BE PUT in a different file, eg Custom_colors */
             Color text_color = Color.SILVER;
             Color item_clicked_color = Color.DARKVIOLET;
             Color item_selected_color_lateral = Color.DARKBLUE;
