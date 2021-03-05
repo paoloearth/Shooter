@@ -54,8 +54,8 @@ public abstract class Menu extends Application {
     private Stage _stage;
     private double _stage_width;
     private double _stage_height;
-    private double _width_ratio;
-    private double _height_ratio;
+    private double _width_scale;
+    private double _height_scale;
     private double _position_width_ratio;
     private double _position_height_ratio;
     private Simulation _gameInstance;
@@ -68,16 +68,16 @@ public abstract class Menu extends Application {
     }
 
     public Menu(double stage_width, double stage_height) {
-        _width_ratio = 1;
-        _height_ratio = 1;
+        _width_scale = 1;
+        _height_scale = 1;
         _position_width_ratio = 0;
         _position_height_ratio = 0;
         this.createRootAndBackground(stage_width, stage_height);
     }
 
     public Menu(Menu other_menu){
-        _width_ratio = other_menu._width_ratio;
-        _height_ratio = other_menu._height_ratio;
+        _width_scale = other_menu._width_scale;
+        _height_scale = other_menu._height_scale;
         _stage_width = other_menu._stage_width;
         _stage_height = other_menu._stage_height;
         _position_width_ratio = other_menu._position_width_ratio;
@@ -188,12 +188,12 @@ public abstract class Menu extends Application {
     public void setTitle(String title){
         removeTitle();
 
-        Menu.Title new_title = new Menu.Title(title);
+        Menu.Title title_object = new Menu.Title(title);
 
-        new_title.setTranslateX(0.0476*getMenuWidth() + getPositionX());
-        new_title.setTranslateY(0.333*getMenuHeight() + getPositionY());
+        title_object.setTranslateX(0.0476*getMenuWidth() + getPositionX());
+        title_object.setTranslateY(0.333*getMenuHeight() + getPositionY());
 
-        _root.getChildren().add(new_title);
+        _root.getChildren().add(title_object);
     }
 
     public void removeTitle(){
@@ -203,38 +203,36 @@ public abstract class Menu extends Application {
             _root.getChildren().remove(title_object);
     }
 
-    public void addFlashDisclaimer(String disclaimer_text, double position_ratio_X, double position_ratio_Y){
-        var disclaimer_object = new FlashDisclaimer(disclaimer_text, position_ratio_X, position_ratio_Y);
+    public void addFlashDisclaimer(String disclaimer_text, double scaled_position_X, double scaled_position_Y){
+        var disclaimer_object = new FlashDisclaimer(disclaimer_text, scaled_position_X, scaled_position_Y);
         _root.getChildren().add(disclaimer_object);
     }
 
     public void addCentralImageView(ImageView image, double scale_width, double scale_height){
-        var sp = new StackPane();
-        //sp.setPrefSize(getMenuWidth(), getMenuHeight());
-        image.fitHeightProperty().bind(sp.heightProperty());
+        var image_frame = new StackPane();
+        image.fitHeightProperty().bind(image_frame.heightProperty());
         image.setPreserveRatio(true);
-        sp.setMaxSize(scale_width*getMenuWidth(), scale_height*getMenuHeight());
-        sp.getChildren().add(image);
-        sp.setAlignment(Pos.CENTER);
+        image_frame.setMaxSize(scale_width*getMenuWidth(), scale_height*getMenuHeight());
+        image_frame.getChildren().add(image);
+        image_frame.setAlignment(Pos.CENTER);
 
-        var bp = new BorderPane();
-        bp.setPrefSize(getMenuWidth(), getMenuHeight());
-        bp.setCenter(sp);
+        var menu_frame = new BorderPane();
+        menu_frame.setPrefSize(getMenuWidth(), getMenuHeight());
+        menu_frame.setCenter(image_frame);
 
-        _root.getChildren().add(bp);
-        //sp.setAlignment(Pos.CENTER);
+        _root.getChildren().add(menu_frame);
     }
 
-    public void addSecondaryTitle(String secondary_title){
-        var bp = new BorderPane();
-        bp.setPrefSize(getMenuWidth(), getMenuHeight());
-        Text top = new Text(secondary_title);
+    public void addSecondaryTitle(String title){
+        var menu_frame = new BorderPane();
+        menu_frame.setPrefSize(getMenuWidth(), getMenuHeight());
+        Text top = new Text(title);
         top.setFont(Font.font("Times New Roman", FontWeight.BOLD,getMenuWidth()*0.06));
         top.setFill(Color.SILVER);
-        bp.setAlignment(top,Pos.TOP_CENTER);
-        bp.setTop(top);
+        menu_frame.setAlignment(top,Pos.TOP_CENTER);
+        menu_frame.setTop(top);
 
-        _root.getChildren().add(bp);
+        _root.getChildren().add(menu_frame);
     }
 
     /************************** SET/GET METHODS *****************************/
@@ -242,16 +240,16 @@ public abstract class Menu extends Application {
     /** SCREEN **/
     public static double getScreenWidth(){
         Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
+        Rectangle2D screen_bounds = screen.getVisualBounds();
 
-        return bounds.getWidth();
+        return screen_bounds.getWidth();
     }
 
     public static double getScreenHeight(){
         Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
+        Rectangle2D screen_bounds = screen.getVisualBounds();
 
-        return bounds.getHeight();
+        return screen_bounds.getHeight();
     }
 
     /** STAGE **/
@@ -272,7 +270,6 @@ public abstract class Menu extends Application {
             getStage().setWidth(width);
             getStage().setHeight(height);
         }
-        //PUT HERE THE SIMULATION (if it procceed) REDIMENSIONING
     }
 
     public double getStageHeight() {
@@ -285,22 +282,22 @@ public abstract class Menu extends Application {
 
     /** MENU **/
 
-    public void resize(double width_ratio, double height_ratio){
-        _width_ratio = width_ratio;
-        _height_ratio = height_ratio;
+    public void scaleMenu(double width_scale, double height_scale){
+        _width_scale = width_scale;
+        _height_scale = height_scale;
     }
 
     public double getMenuHeight() {
-        return _height_ratio*_stage_height;
+        return _height_scale * getStageHeight();
     }
 
     public double getMenuWidth() {
-        return _width_ratio*_stage_width;
+        return _width_scale * getStageWidth();
     }
 
-    public void setPositionRatio(double position_width_ratio, double position_height_ratio){
-        _position_width_ratio = position_width_ratio;
-        _position_height_ratio = position_height_ratio;
+    public void setScaledPosition(double scaled_position_X, double scaled_position_Y){
+        _position_width_ratio = scaled_position_X;
+        _position_height_ratio = scaled_position_Y;
     }
 
     public double getPositionX(){
@@ -322,10 +319,6 @@ public abstract class Menu extends Application {
     }
 
     /** MENU ELEMENTS **/
-
-    public Parent getRoot(){
-        return _root;
-    }
 
     private Title getTitle() {
         var title_object = _root.getChildren().stream()
@@ -545,7 +538,7 @@ public abstract class Menu extends Application {
 
             Text text = new Text(name);
             text.setFill(text_color);
-            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333* _stage_height *_height_ratio));
+            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333* _stage_height * _height_scale));
 
             //Text is transformed into an image and redimensioned
             var params = new SnapshotParameters();

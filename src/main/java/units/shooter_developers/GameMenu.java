@@ -87,15 +87,15 @@ public class GameMenu extends Menu{
     }
 
     @Override
-    public void resize(double width_ratio, double height_ratio){
-        super.resize(width_ratio, height_ratio);
+    public void scaleMenu(double width_scale, double height_scale){
+        super.scaleMenu(width_scale, height_scale);
         GameMenu new_menu = new GameMenu(this);
         new_menu.start(getStage());
     }
 
     @Override
-    public void setPositionRatio(double position_width_ratio, double position_height_ratio){
-        super.setPositionRatio(position_width_ratio, position_height_ratio);
+    public void setScaledPosition(double scaled_position_X, double scaled_position_Y){
+        super.setScaledPosition(scaled_position_X, scaled_position_Y);
         GameMenu new_menu = new GameMenu(this);
         new_menu.start(getStage());
     }
