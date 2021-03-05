@@ -9,8 +9,6 @@ import javafx.util.Duration;
 import javafx.util.Pair;
 
 public class Teleport extends Pictured_Object{
-
-    RotateTransition rotation;
     Coordinates destination;
 
     public Teleport(Pane root, String url, Map M, Pair<Double, Double> scaling_factor, String ID) {
@@ -36,7 +34,7 @@ public class Teleport extends Pictured_Object{
     }
 
     private void rotation_animation() {
-        rotation = new RotateTransition(Duration.millis(3000), this);
+        var rotation = new RotateTransition(Duration.millis(3000), this);
         rotation.setByAngle(360);
         rotation.setInterpolator(Interpolator.LINEAR);
         rotation.setCycleCount(Animation.INDEFINITE);
