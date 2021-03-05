@@ -10,7 +10,6 @@ public class HealthBar extends Map_Object{
     private final Rectangle remaining_life_rectangle;
     private final DoubleProperty Health;
 
-
     public HealthBar(Sprite S)
     {
         super(S.get_actual_width(), get_Hbar_height_proportional_to_S_height(S.get_actual_height()));
@@ -42,11 +41,11 @@ public class HealthBar extends Map_Object{
     private boolean less_thant_half_life_remain() {
         return get_current_health() <= get_max_health() / 2;
     }
+
     public void  restore_life(){
         set_remaining_life_to(get_max_health());
         this.remaining_life_rectangle.setFill(Custom_Colors.INNER_RECTANGLE);
     }
-
 
 
     private double get_current_health() {
@@ -63,11 +62,10 @@ public class HealthBar extends Map_Object{
         return  get_width();
     }
 
-    public void set_remaining_life_to( double d)
+    private void set_remaining_life_to( double d)
     {
         Health.set(d);
     }
-
 
     private Rectangle create_custom_inner_rectangle() {
         final Rectangle remaining_life_rectangle;
