@@ -1,12 +1,14 @@
-package units.shooter_developers;
+package units.shooter_developers.Menu_pages;
 
 import javafx.stage.*;
+import units.shooter_developers.MenuAPI.Menu;
+import units.shooter_developers.Simulation;
 
 import java.io.File;
 import java.io.FileReader;
 import java.util.Properties;
 
-public class GameMenu extends Menu{
+public class GameMenu extends Menu {
 
 
     public GameMenu(){

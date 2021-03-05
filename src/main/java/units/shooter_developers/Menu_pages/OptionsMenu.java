@@ -1,4 +1,4 @@
-package units.shooter_developers;
+package units.shooter_developers.Menu_pages;
 
 import java.io.*;
 import java.util.Properties;
@@ -6,8 +6,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.stage.*;
 import javafx.util.Pair;
+import units.shooter_developers.MenuAPI.Menu;
+import units.shooter_developers.MenuAPI.MenuItem;
+import units.shooter_developers.Simulation;
 
-public class OptionsMenu extends Menu{
+public class OptionsMenu extends Menu {
 
     public OptionsMenu(){
         super();
@@ -78,7 +81,7 @@ public class OptionsMenu extends Menu{
         try {
             String regex = "\\d+";
             Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(getSelectorItem("RESOLUTION").getText());
+            Matcher matcher = pattern.matcher(getSelectionFor("RESOLUTION"));
             matcher.find();
             width_string = matcher.group();
             matcher.find();
@@ -118,7 +121,7 @@ public class OptionsMenu extends Menu{
 
     private void writeSettings() {
         Properties config = new Properties();
-        config.setProperty("INTERFACE MODE", getSelectorItem("INTERFACE MODE").getText());
+        config.setProperty("INTERFACE MODE", getSelectionFor("INTERFACE MODE"));
         config.setProperty("WIDTH", String.valueOf(getStageWidth()));
         config.setProperty("HEIGHT", String.valueOf(getStageHeight()));
 

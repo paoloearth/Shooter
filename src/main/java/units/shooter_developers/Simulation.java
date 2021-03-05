@@ -7,6 +7,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import units.shooter_developers.Menu_pages.GameMenu;
+import units.shooter_developers.Menu_pages.WinnerWindow;
 
 import java.io.IOException;
 import java.util.List;

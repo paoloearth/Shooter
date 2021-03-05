@@ -3,6 +3,7 @@ package units.shooter_developers;
 import javafx.geometry.Pos;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.RowConstraints;
+import units.shooter_developers.Menu_pages.Submenu_component;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -19,7 +20,7 @@ public class Player_selection_menu extends Submenu_component {
 
     Map<String, String> Name_URL;
 
-    Player_selection_menu(double width, double height)
+    public Player_selection_menu(double width, double height)
     {
         super(width, height);
 

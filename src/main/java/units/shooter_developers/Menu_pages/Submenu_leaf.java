@@ -1,4 +1,4 @@
-package units.shooter_developers;
+package units.shooter_developers.Menu_pages;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -8,13 +8,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import units.shooter_developers.Custom_Settings;
+import units.shooter_developers.TypeImage;
 
 public abstract  class Submenu_leaf extends VBox {
 
-    int n_rows=1;
+    protected int n_rows=1;
     double custom_scale;
 
-    Submenu_leaf(TypeImage T)
+    protected Submenu_leaf(TypeImage T)
     {
 
         set_padding_and_spacing();
@@ -50,31 +52,31 @@ public abstract  class Submenu_leaf extends VBox {
         setSpacing(10);
     }
 
-    void fill_HBox_with_image(HBox h, ImageView i) {
+    protected void fill_HBox_with_image(HBox h, ImageView i) {
         h.getChildren().add(i);
     }
 
 
-    HBox createCustomHbox() {
+    protected HBox createCustomHbox() {
         HBox H = new HBox();
         H.setMinHeight(0);
         H.setAlignment(Pos.BOTTOM_CENTER);
         return H;
     }
 
-    void scale_image_to_fit_box(HBox H, ImageView I) {
+    protected void scale_image_to_fit_box(HBox H, ImageView I) {
         I.fitHeightProperty().bind(H.heightProperty());
         I.setScaleY(custom_scale);
         I.setScaleX(custom_scale);
 
     }
 
-    void empty_HBox(HBox H) {
+    protected void empty_HBox(HBox H) {
         H.getChildren().removeIf(i -> i instanceof ImageView);
     }
 
 
-    ImageView retrieve_image(String URL, int n_rows)
+    protected ImageView retrieve_image(String URL, int n_rows)
     {
         var I = new Image(URL);
         var IM =  new ImageView(I);
@@ -83,7 +85,7 @@ public abstract  class Submenu_leaf extends VBox {
         return IM;
     }
 
-    void add_generic_child_node_to_parent_node(Pane parent, Pane children) {
+    protected void add_generic_child_node_to_parent_node(Pane parent, Pane children) {
         parent.getChildren().add(children);
     }
 

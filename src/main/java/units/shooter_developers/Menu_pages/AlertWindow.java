@@ -1,12 +1,14 @@
-package units.shooter_developers;
+package units.shooter_developers.Menu_pages;
 
 import javafx.stage.Stage;
+import units.shooter_developers.MenuAPI.Menu;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Properties;
 
-public class AlertWindow extends Menu{
+public class AlertWindow extends Menu {
     double _candidate_width;
     double _candidate_height;
 
