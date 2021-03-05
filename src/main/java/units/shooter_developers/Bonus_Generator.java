@@ -36,20 +36,28 @@ public class Bonus_Generator extends Pictured_Object{
     public void generate(Map M)
     {
         move_to(M.get_random_location());
-        push_inside_border(M);
+
+        if (get_hitbox().is_out_of_map(M))  push_inside_border();
+
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(4), event -> {
             empty_Pane(this);
             this.getChildren().add(_view);
         }));
+
         timeline.setCycleCount(1);
         timeline.play();
 
     }
 
-    //relocate heart inside the map taking into account the size of heart.png
-    private void push_inside_border(Map M) {
-        if(this.get_current_X_position()+get_actual_width() >= M.get_width()) this.setLayoutX(get_current_X_position()-get_actual_width());
-        if(this.get_current_Y_position()+get_actual_height() >= M.get_height()) this.setLayoutY(get_current_Y_position()-get_actual_height());
+    // The commented part is the older one. I put (get_hitbox().is_out_of_map(M) in generate, and here I only do the pushing
+    // Not completely satisfied since it could potentially push the heart in unreachable places(?)
+    // Stick with it and se if it causes problems
+    private void push_inside_border() {
+
+            move_to(new Coordinates( get_current_X_position()-get_actual_width(),get_current_Y_position()-get_actual_height()));
+
+       // if(this.get_current_X_position()+get_actual_width() >= M.get_width()) this.setLayoutX(get_current_X_position()-get_actual_width());
+       // if(this.get_current_Y_position()+get_actual_height() >= M.get_height()) this.setLayoutY(get_current_Y_position()-get_actual_height());
     }
 
     @Override
