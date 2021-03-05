@@ -18,7 +18,6 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
@@ -197,7 +196,7 @@ public abstract class Menu extends Application {
     }
 
     public void removeTitle(){
-        var title_object = getTitle();
+        var title_object = getTitleObject();
 
         if(title_object != null)
             _root.getChildren().remove(title_object);
@@ -320,7 +319,7 @@ public abstract class Menu extends Application {
 
     /** MENU ELEMENTS **/
 
-    private Title getTitle() {
+    private Title getTitleObject() {
         var title_object = _root.getChildren().stream()
                 .filter(e -> e instanceof Title)
                 .findFirst()
@@ -332,7 +331,7 @@ public abstract class Menu extends Application {
             return (Title)title_object;
     }
 
-    public MenuBox getItemsBox() {
+    private MenuBox getItemsBox() {
         var menubox_object = _root.getChildren().parallelStream()
                 .filter(e -> e instanceof MenuBox)
                 .findFirst()
