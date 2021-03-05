@@ -50,7 +50,6 @@ public class Simulation extends Application {
         this._players_names = players_names;
         this._players_urls_sprite = players_urls_sprite;
         this._map_url = map_url;
-     //   System.out.println(get_i_player_name(0) + get_i_player_name(1) + get_map_url() );
     }
 
     public String get_i_player_name(int index)
@@ -226,12 +225,12 @@ public class Simulation extends Application {
 
 
     private void remove_dead_objects() {
-        root.getChildren().removeIf(node -> (node instanceof Pictured_Object) && ((Pictured_Object)node)._isDead.getValue());
+        root.getChildren().removeIf(node -> (node instanceof Pictured_Object) && ((Pictured_Object)node).is_dead());
 
-        if (Player_1._isDead.getValue() || Player_2._isDead.getValue())
+        if (Player_1.is_dead() || Player_2.is_dead())
         {
 
-            var win_screen =  Player_2._isDead.getValue() ?
+            var win_screen =  Player_2.is_dead()?
                     new WinnerWindow(WIDTH, HEIGHT,  Player_1) :
                     new WinnerWindow(WIDTH, HEIGHT, Player_2);
 

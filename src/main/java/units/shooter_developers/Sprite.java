@@ -51,7 +51,7 @@ public class Sprite extends Dynamic_Object {
 
 
         H = getHealthBar();
-        _isDead.bind(H.is_remaining_life_zero());
+        get_is_dead_property().bind(H.is_remaining_life_zero());
 
         move_to(M.get_player_pixel_position(id));
 
