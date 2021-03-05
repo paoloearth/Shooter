@@ -332,29 +332,30 @@ public abstract class Menu extends Application {
     }
 
     private MenuBox getItemsBox() {
-        var menubox_object = _root.getChildren().parallelStream()
+        var menu_box_object = _root.getChildren().parallelStream()
                 .filter(e -> e instanceof MenuBox)
                 .findFirst()
                 .orElse(null);
 
-        if(menubox_object == null)
+        if(menu_box_object == null)
             return null;
         else
-            return (MenuBox) menubox_object;
+            return (MenuBox) menu_box_object;
     }
 
 
     public ArrayList<MenuItem> getItems(){
-        var item_list = new ArrayList<Menu.MenuItem>();
+        var item_list_from_box = new ArrayList<Menu.MenuItem>();
         if(getItemsBox() != null)
-            item_list = getItemsBox().getItems();
+            item_list_from_box = getItemsBox().getItems();
 
-        ArrayList<MenuItem> finalItem_list = item_list;
+        //add items not contained in items box to the list
+        ArrayList<MenuItem> full_item_list = item_list_from_box;
         _root.getChildren().stream()
                 .filter(e -> e instanceof MenuItem)
-                .forEach(e -> finalItem_list.add((MenuItem)e));
+                .forEach(e -> full_item_list.add((MenuItem)e));
 
-        return item_list;
+        return full_item_list;
     }
 
     public ArrayList<SelectableItem> getSelectableItems(){
