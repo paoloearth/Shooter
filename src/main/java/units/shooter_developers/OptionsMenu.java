@@ -6,8 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.stage.*;
 import javafx.util.Pair;
+import units.shooter_developers.Menus.Menu;
 
-public class OptionsMenu extends Menu{
+public class OptionsMenu extends Menu {
 
     public OptionsMenu(){
         super();

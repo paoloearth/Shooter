@@ -4,10 +4,11 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import units.shooter_developers.Menus.Menu;
 
 import java.util.ArrayList;
 
-public class Submenu extends Menu{
+public class Submenu extends Menu {
     Submenu(Menu other_menu){
         super(other_menu);
     }

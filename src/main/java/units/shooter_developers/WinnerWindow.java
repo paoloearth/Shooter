@@ -2,10 +2,12 @@ package units.shooter_developers;
 
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import units.shooter_developers.Menus.Menu;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class WinnerWindow extends Menu{
+public class WinnerWindow extends Menu {
     Sprite _player;
 
     WinnerWindow(double width, double height, Sprite player ){

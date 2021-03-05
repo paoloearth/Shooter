@@ -1,4 +1,4 @@
-package units.shooter_developers;
+package units.shooter_developers.Menus;
 
 /*
  *
@@ -12,8 +12,6 @@ package units.shooter_developers;
  *  https://github.com/Siderim/video-game-menu/
  */
 
-import javafx.animation.FadeTransition;
-import javafx.animation.Transition;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -34,7 +32,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.util.Duration;
+import units.shooter_developers.Simulation;
 
 import java.io.File;
 import java.io.FileReader;
@@ -205,7 +203,7 @@ public abstract class Menu extends Application {
     }
 
     public void addFlashDisclaimer(String disclaimer_text, double scaled_position_X, double scaled_position_Y){
-        var disclaimer_object = new FlashDisclaimer(disclaimer_text, scaled_position_X, scaled_position_Y);
+        var disclaimer_object = new FlashDisclaimer(this, disclaimer_text, scaled_position_X, scaled_position_Y);
         _root.getChildren().add(disclaimer_object);
     }
 
@@ -450,21 +448,21 @@ public abstract class Menu extends Application {
             return separator_line;
         }
 
-        private void addItem(String new_menu_item){
+        protected void addItem(String new_menu_item){
             MenuItem new_item = new Menu.MenuItem(new_menu_item);
             new_item.setTranslateX(0.005*getMenuWidth());
 
             getChildren().addAll(new_item, createSeparator());
         }
 
-        private void addNonAnimatedItem(String new_menu_item){
+        protected void addNonAnimatedItem(String new_menu_item){
             NonAnimatedItem new_item = new NonAnimatedItem(new_menu_item);
             new_item.setTranslateX(0.005*getMenuWidth());
 
             getChildren().addAll(new_item, createSeparator());
         }
 
-        private void addSelectorItem(String name, ArrayList<String> tag_list){
+        protected void addSelectorItem(String name, ArrayList<String> tag_list){
             SelectorItem new_item = new SelectorItem(name);
             new_item.setTranslateX(0.005*getMenuWidth());
 
@@ -475,14 +473,14 @@ public abstract class Menu extends Application {
             getChildren().addAll(new_item, createSeparator());
         }
 
-        private ArrayList<MenuItem> getItems(){
+        protected ArrayList<MenuItem> getItems(){
             return getChildren().parallelStream()
                     .filter(e -> e instanceof MenuItem)
                     .map(e -> (MenuItem) e)
                     .collect(Collectors.toCollection(ArrayList::new));
         }
 
-        private ArrayList<SelectorItem> getSelectorItems(){
+        protected ArrayList<SelectorItem> getSelectorItems(){
             return getChildren().stream()
                     .filter(e -> e instanceof SelectorItem)
                     .map(e -> (SelectorItem) e)
@@ -704,34 +702,6 @@ public abstract class Menu extends Application {
         }
     }
 
-
-    /************************ FLASH DISCLAIMER ITEM ****************************************/
-
-    private class FlashDisclaimer extends StackPane{
-
-        private FlashDisclaimer(String text, double position_ratio_X, double position_ratio_Y){
-            Text disclaimer_text = new Text(text);
-            disclaimer_text.setFont(Font.font("Times New Roman", FontWeight.BOLD,getMenuWidth()*0.025));
-            disclaimer_text.setFill(Color.SILVER);
-            textAnimation(disclaimer_text);
-            setAlignment(disclaimer_text,Pos.TOP_CENTER);
-
-            setTranslateX(position_ratio_X*getMenuWidth());
-            setTranslateY(position_ratio_Y*getMenuHeight());
-            getChildren().add(disclaimer_text);
-        }
-
-        private void textAnimation(Text bottom) {
-            FadeTransition textTransition = new FadeTransition(Duration.seconds(1.0), bottom);
-            textTransition.setAutoReverse(true);
-            textTransition.setFromValue(0);
-            textTransition.setToValue(1);
-            textTransition.setCycleCount(Transition.INDEFINITE);
-            textTransition.play();
-        }
-
-
-    }
 
     public static void main(String[] args) {
         launch(args);
