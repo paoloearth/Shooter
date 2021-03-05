@@ -3,17 +3,14 @@ package units.shooter_developers;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import javafx.util.Pair;
 
 public class Teleport extends Pictured_Object{
-
-    RotateTransition rotation;
     Coordinates destination;
 
-    public Teleport(Pane root, String url, Map M, Pair<Double, Double> scaling_factor, String ID) {
+    public Teleport(Pane root, String url, GameMap M, Pair<Double, Double> scaling_factor, String ID) {
         super(scaling_factor, url);
 
 
@@ -22,21 +19,15 @@ public class Teleport extends Pictured_Object{
 
         update_view();
 
-        this.getChildren().add(get_view());
+        add_nodes(get_view());
 
         rotation_animation();
-
-        if(ID.equals("T1"))
-            move_to(M.get_pixel_position( M._MR._teleport_positions[0]));
-        else
-            move_to(M.get_pixel_position(M._MR._teleport_positions[1]));
-
-
+        move_to(M.get_position_of(ID));
         root.getChildren().add(this);   // Add local pane to global root
     }
 
     private void rotation_animation() {
-        rotation = new RotateTransition(Duration.millis(3000), this);
+        var rotation = new RotateTransition(Duration.millis(3000), this);
         rotation.setByAngle(360);
         rotation.setInterpolator(Interpolator.LINEAR);
         rotation.setCycleCount(Animation.INDEFINITE);
@@ -55,7 +46,7 @@ public class Teleport extends Pictured_Object{
 
 
     @Override
-    public void update(Map M, Sprite S) {
+    public void update(GameMap M, Sprite S) {
         S.move_to(destination);
     }
 

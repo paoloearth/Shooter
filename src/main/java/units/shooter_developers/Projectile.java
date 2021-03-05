@@ -28,7 +28,7 @@ public class Projectile extends Dynamic_Object{
         this.getChildren().add(get_view());
     }
 
-    public void translate(Map M)
+    public void translate(GameMap M)
     {
         if( illegal_move(M,0, this)) set_is_dead_property(true);
         else move_to(new Coordinates(get_future_x(), get_future_y()));
@@ -56,7 +56,7 @@ public class Projectile extends Dynamic_Object{
 
 
     @Override
-    public void update(Map M, Sprite S) {
+    public void update(GameMap M, Sprite S) {
         hit(S);
     }
 

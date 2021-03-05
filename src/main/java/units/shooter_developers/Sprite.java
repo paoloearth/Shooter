@@ -29,7 +29,7 @@ public class Sprite extends Dynamic_Object {
     );
 
 
-    public Sprite(Pane root, Map M, Pair<Double, Double> scaling_factor, String url, int _n_rows, int _n_cols, String id, Direction D, String player_name)
+    public Sprite(Pane root, GameMap M, Pair<Double, Double> scaling_factor, String url, int _n_rows, int _n_cols, String id, Direction D, String player_name)
     {
         super(scaling_factor, url, _n_rows, _n_cols);
 
@@ -53,7 +53,7 @@ public class Sprite extends Dynamic_Object {
         H = getHealthBar();
         get_is_dead_property().bind(H.is_remaining_life_zero());
 
-        move_to(M.get_player_pixel_position(id));
+        move_to(M.get_position_of(id));
 
 
         this.getChildren().addAll(H, get_view());
@@ -95,7 +95,7 @@ public class Sprite extends Dynamic_Object {
 
 
 
-    public void move(Map M) {
+    public void move(GameMap M) {
         update_speed();
 
         if (has_moved()) {
@@ -132,7 +132,7 @@ public class Sprite extends Dynamic_Object {
     }
 
     @Override
-    public void update(Map M, Sprite S) {
+    public void update(GameMap M, Sprite S) {
         move(M);
     }
 

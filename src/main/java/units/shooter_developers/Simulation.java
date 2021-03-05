@@ -39,7 +39,7 @@ public class Simulation extends Application {
     Pair<Double,Double> scaling_factors;
 
     /* Map */
-    Map R;
+    GameMap R;
 
     /* Map */
     List<String> _players_names;
@@ -84,8 +84,8 @@ public class Simulation extends Application {
 
     private void create_teleports() {
 
-        var T1  = new Teleport(root,  Custom_Settings.URL_TELEPORT,  R, scaling_factors, "T1");
-        var T2  = new Teleport(root,  Custom_Settings.URL_TELEPORT,  R, scaling_factors, "T2");
+        var T1  = new Teleport(root,  Custom_Settings.URL_TELEPORT,  R, scaling_factors, "T0");
+        var T2  = new Teleport(root,  Custom_Settings.URL_TELEPORT,  R, scaling_factors, "T1");
 
 
         T1.setDestination(T2);
@@ -94,14 +94,16 @@ public class Simulation extends Application {
     }
 
     private void create_map() throws IOException {
-        R = new Map(root, get_map_url(), WIDTH,HEIGHT);
+        var MR = new Map_Reader();
+        R = MR.read_Map(get_map_url(), WIDTH,HEIGHT);
+        root.getChildren().add(R._cells);
     }
 
 
 
     private void create_players() {
-        Player_1 = new Sprite(root,R , scaling_factors, get_i_urls_sprite(0),4, 1 , "P1", Direction.RIGHT, get_i_player_name(0));
-        Player_2 = new Sprite(root,R, scaling_factors, get_i_urls_sprite(1),    4, 1,   "P2", Direction.LEFT, get_i_player_name(1));
+        Player_1 = new Sprite(root,R , scaling_factors, get_i_urls_sprite(0),4, 1 , "P0", Direction.RIGHT, get_i_player_name(0));
+        Player_2 = new Sprite(root,R, scaling_factors, get_i_urls_sprite(1),    4, 1,   "P1", Direction.LEFT, get_i_player_name(1));
     }
 
     private void create_frame() {

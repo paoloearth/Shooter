@@ -11,7 +11,7 @@ public class Bonus_Generator extends Pictured_Object{
 
     private final Timeline timeline;
 
-    public Bonus_Generator(Pane root, Map M, String url, int _n_rows, int _n_cols, Pair<Double, Double> scaling_factor)
+    public Bonus_Generator(Pane root, GameMap M, String url, int _n_rows, int _n_cols, Pair<Double, Double> scaling_factor)
     {
         super(scaling_factor,url,_n_rows,_n_cols);
 
@@ -31,7 +31,7 @@ public class Bonus_Generator extends Pictured_Object{
 
 
 
-    public void generate(Map M)
+    public void generate(GameMap M)
     {
         move_to(M.get_random_location());
 
@@ -46,11 +46,11 @@ public class Bonus_Generator extends Pictured_Object{
     private Coordinates compute_inmap_position_through_shifiting() { return new Coordinates(get_inmap_X_position(), get_inmap_Y_position()); }
 
     @Override
-    public void update(Map M, Sprite S) {
+    public void update(GameMap M, Sprite S) {
         bonus_effect(S,M);
     }
 
-    public void bonus_effect(Sprite S, Map M) {
+    public void bonus_effect(Sprite S, GameMap M) {
         empty_Pane_from_ImageView(this);
         S.H.restore_life();
         generate(M);

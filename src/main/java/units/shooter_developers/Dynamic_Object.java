@@ -49,7 +49,7 @@ public abstract class Dynamic_Object extends Pictured_Object {
 
 
    // protected abstract  boolean illegal_move(Map M);
-   protected  boolean illegal_move(Map M, double multiplier, Dynamic_Object D) {
+   protected  boolean illegal_move(GameMap M, double multiplier, Dynamic_Object D) {
 
        /* Compute the collision box*/
        var collision_box =  get_move_box();
