@@ -358,20 +358,17 @@ public abstract class Menu extends Application {
         return full_item_list;
     }
 
-    public ArrayList<SelectableItem> getSelectableItems(){
-        return getItemsBox().getSelectableItems();
+    public ArrayList<SelectorItem> getSelectorItems(){
+        return getItemsBox().getSelectorItems();
     }
 
-    public SelectableItem getSelectableItem(String name){
-        var selectableitem_object = getSelectableItems().stream()
+    public SelectorItem getSelectorItem(String name){
+        var selector_object = getSelectorItems().stream()
                 .filter(e -> e.getName().equals(name))
                 .findFirst()
                 .orElse(null);
 
-        if(selectableitem_object == null)
-            return null;
-        else
-            return (SelectableItem)selectableitem_object;
+        return selector_object;
     }
 
     /** GAME INSTANCE **/
@@ -469,7 +466,7 @@ public abstract class Menu extends Application {
         }
 
         public void addSelectableItem(String selectable_name, ArrayList<String> tag_list){
-            SelectableItem new_item = new Menu.SelectableItem(selectable_name);
+            SelectorItem new_item = new SelectorItem(selectable_name);
             new_item.setTranslateX(0.005*getMenuWidth());
 
             for(var tag:tag_list){
@@ -487,11 +484,11 @@ public abstract class Menu extends Application {
                     .collect(Collectors.toCollection(ArrayList::new));
         }
 
-        public ArrayList<SelectableItem> getSelectableItems(){
+        public ArrayList<SelectorItem> getSelectorItems(){
 
             return getChildren().stream()
-                    .filter(e -> e instanceof SelectableItem)
-                    .map(e -> (SelectableItem) e)
+                    .filter(e -> e instanceof SelectorItem)
+                    .map(e -> (SelectorItem) e)
                     .collect(Collectors.toCollection(ArrayList::new));
         }
 
@@ -580,13 +577,13 @@ public abstract class Menu extends Application {
 
     /************************ SELECTABLE ITEM ****************************************/
 
-    public class SelectableItem extends HBox{
+    public class SelectorItem extends HBox{
         private final ArrayList<String> _selection_list;
         private int _selection_index;
         private final double _width_selection_item;
         private final String _name;
 
-        public SelectableItem(String name){
+        public SelectorItem(String name){
             _selection_index = 0;
             _selection_list = new ArrayList<>();
             _width_selection_item = 0.25;
