@@ -25,7 +25,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -43,16 +42,15 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
 
 public abstract class Menu extends Application {
+    private static double _height_scale;
+    private static double _width_scale;
+    private static double _stage_height;
+    private static double _stage_width;
     private Pane _root;
     private Stage _stage;
-    private double _stage_width;
-    private double _stage_height;
-    private double _width_scale;
-    private double _height_scale;
     private double _position_width_ratio;
     private double _position_height_ratio;
     private Simulation _simulation_instance;
@@ -176,7 +174,7 @@ public abstract class Menu extends Application {
                 .orElse(null);
 
         if(menu_box == null){
-            Menu.MenuBox vbox = new Menu.MenuBox();
+            MenuBox vbox = new MenuBox(this);
             vbox.setTranslateX(0.0952*getMenuWidth() + getPositionX());
             vbox.setTranslateY(0.5*getMenuHeight() + getPositionY());
 
@@ -271,11 +269,11 @@ public abstract class Menu extends Application {
         }
     }
 
-    public double getStageHeight() {
+    public static double getStageHeight() {
         return _stage_height;
     }
 
-    public double getStageWidth() {
+    public static double getStageWidth() {
         return _stage_width;
     }
 
@@ -286,11 +284,11 @@ public abstract class Menu extends Application {
         _height_scale = height_scale;
     }
 
-    public double getMenuHeight() {
+    public static double getMenuHeight() {
         return _height_scale * getStageHeight();
     }
 
-    public double getMenuWidth() {
+    public static double getMenuWidth() {
         return _width_scale * getStageWidth();
     }
 
@@ -427,72 +425,9 @@ public abstract class Menu extends Application {
     }
 
 
-    /************************ MENU BOX ****************************************/
-
-    private class MenuBox extends VBox {
-
-        private MenuBox(Menu.MenuItem... items) {
-            getChildren().add(createSeparator());
-
-            for (Menu.MenuItem item : items) {
-                getChildren().addAll(item, createSeparator());
-            }
-        }
-
-        private Line createSeparator() {
-            Color separator_color = Color.DARKGREY;
-
-            Line separator_line = new Line();
-            separator_line.setEndX(0.2*getMenuWidth());
-            separator_line.setStroke(separator_color);
-            return separator_line;
-        }
-
-        protected void addItem(String new_menu_item){
-            MenuItem new_item = new Menu.MenuItem(new_menu_item);
-            new_item.setTranslateX(0.005*getMenuWidth());
-
-            getChildren().addAll(new_item, createSeparator());
-        }
-
-        protected void addNonAnimatedItem(String new_menu_item){
-            NonAnimatedItem new_item = new NonAnimatedItem(new_menu_item);
-            new_item.setTranslateX(0.005*getMenuWidth());
-
-            getChildren().addAll(new_item, createSeparator());
-        }
-
-        protected void addSelectorItem(String name, ArrayList<String> tag_list){
-            SelectorItem new_item = new SelectorItem(name);
-            new_item.setTranslateX(0.005*getMenuWidth());
-
-            for(var tag:tag_list){
-                new_item.addTag(tag);
-            }
-
-            getChildren().addAll(new_item, createSeparator());
-        }
-
-        protected ArrayList<MenuItem> getItems(){
-            return getChildren().parallelStream()
-                    .filter(e -> e instanceof MenuItem)
-                    .map(e -> (MenuItem) e)
-                    .collect(Collectors.toCollection(ArrayList::new));
-        }
-
-        protected ArrayList<SelectorItem> getSelectorItems(){
-            return getChildren().stream()
-                    .filter(e -> e instanceof SelectorItem)
-                    .map(e -> (SelectorItem) e)
-                    .collect(Collectors.toCollection(ArrayList::new));
-        }
-
-    }
-
-
     /************************ MENU ITEM ****************************************/
 
-    public class MenuItem extends StackPane {
+    public static class MenuItem extends StackPane {
         String _name;
 
         public MenuItem(String name) {
@@ -573,7 +508,7 @@ public abstract class Menu extends Application {
 
     /************************ SELECTOR ITEM ****************************************/
 
-    public class SelectorItem extends HBox{
+    public static class SelectorItem extends HBox{
         private final ArrayList<String> _selection_list;
         private int _selection_index;
         private final double _width_selection_item;
@@ -663,7 +598,7 @@ public abstract class Menu extends Application {
 
     /************************ NON-ANIMATED ITEM ****************************************/
 
-    public class NonAnimatedItem extends StackPane {
+    public static class NonAnimatedItem extends StackPane {
 
         public NonAnimatedItem(String name){
             this(name, -1, -1);
