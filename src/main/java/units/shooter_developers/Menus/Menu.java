@@ -440,7 +440,7 @@ public abstract class Menu extends Application {
 
             Text text = new Text(name);
             text.setFill(text_color);
-            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333* _stage_height * _height_scale));
+            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333* Menu.getMenuHeight()));
 
             //Text is transformed into an image and resized
             var params = new SnapshotParameters();
