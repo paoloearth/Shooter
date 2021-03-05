@@ -25,7 +25,7 @@ public class SelectorItem extends HBox {
         setAlignment(Pos.CENTER_LEFT);
         NonAnimatedItem name_text_box = new NonAnimatedItem(name);
 
-        Menu.MenuItem left_arrow_button = new Menu.MenuItem("<", 0.04, -1);
+        MenuItem left_arrow_button = new MenuItem("<", 0.04, -1);
         left_arrow_button.setTranslateX(_selection_section_translation * Menu.getMenuWidth());
         left_arrow_button.setOnMouseReleased(event -> {
             previous();
@@ -35,7 +35,7 @@ public class SelectorItem extends HBox {
         selection_text_box = new NonAnimatedItem("not_found", _width_selection_item, -1);
         selection_text_box.setTranslateX((_selection_section_translation + 0.01) * Menu.getMenuWidth());
 
-        Menu.MenuItem right_arrow_button = new Menu.MenuItem(">", 0.04, -1);
+        MenuItem right_arrow_button = new MenuItem(">", 0.04, -1);
         right_arrow_button.setTranslateX((_selection_section_translation + 0.02) * Menu.getMenuWidth());
         right_arrow_button.setOnMouseReleased(event -> {
             next();

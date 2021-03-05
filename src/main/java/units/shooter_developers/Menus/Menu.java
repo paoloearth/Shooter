@@ -17,15 +17,10 @@ import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -143,7 +138,7 @@ public abstract class Menu extends Application {
     }
 
     public void addFreeItem(String new_menu_item, double position_ratio_X, double position_ratio_Y){
-        MenuItem new_item = new Menu.MenuItem(new_menu_item);
+        MenuItem new_item = new MenuItem(new_menu_item);
         new_item.setTranslateX(position_ratio_X*getMenuWidth());
         new_item.setTranslateY(position_ratio_Y*getMenuWidth());
 
@@ -343,7 +338,7 @@ public abstract class Menu extends Application {
 
 
     public ArrayList<MenuItem> getItems(){
-        var item_list_from_box = new ArrayList<Menu.MenuItem>();
+        var item_list_from_box = new ArrayList<MenuItem>();
         if(getItemsBox() != null)
             item_list_from_box = getItemsBox().getItems();
 
@@ -397,87 +392,6 @@ public abstract class Menu extends Application {
     /*******************************************************************************/
     /*                          MENU ELEMENTS                                      */
     /*******************************************************************************/
-
-
-    /************************ MENU ITEM ****************************************/
-
-    public static class MenuItem extends StackPane {
-        String _name;
-
-        public MenuItem(String name) {
-            this(name, -1, -1);
-        }
-
-        public MenuItem(String name, double item_width_ratio, double item_height_ratio) {
-            var effective_item_width = item_width_ratio;
-            var effective_item_height = item_height_ratio;
-            if(item_width_ratio < 0){
-                effective_item_width = 0.19;
-            }
-            if(item_height_ratio < 0){
-                effective_item_height = 0.05;
-            }
-
-            /* COLORS SHOULD BE PUT in a different file, eg Custom_colors */
-            Color text_color = Color.SILVER;
-            Color item_clicked_color = Color.DARKVIOLET;
-            Color item_selected_color_lateral = Color.DARKBLUE;
-            Color item_background_color = Color.BLACK;
-            Color text_selected_color = Color.WHITE;
-
-            _name = name;
-
-            this.setMaxWidth(effective_item_width*getMenuWidth());
-            this.setMaxHeight(effective_item_height*getMenuHeight());
-
-            LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop(0, item_selected_color_lateral),
-                    new Stop(0.1, item_background_color),
-                    new Stop(0.9, item_background_color),
-                    new Stop(1, item_selected_color_lateral));
-
-            Rectangle box = new Rectangle(effective_item_width*getMenuWidth(),effective_item_height*getMenuHeight());
-            box.setOpacity(0.4);
-
-            Text text = new Text(name);
-            text.setFill(text_color);
-            text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,0.0333* Menu.getMenuHeight()));
-
-            //Text is transformed into an image and resized
-            var params = new SnapshotParameters();
-            params.setFill(Color.TRANSPARENT);
-            var textImage = new ImageView(text.snapshot(params, null));
-            if(textImage.getBoundsInLocal().getWidth() > box.getWidth()) {
-                textImage.setFitWidth(box.getWidth());
-            }
-
-            setAlignment(Pos.CENTER_LEFT);
-
-            setOnMouseEntered(event -> {
-                box.setFill(gradient);
-                text.setFill(text_selected_color);
-            });
-
-            setOnMouseExited(event -> {
-                box.setFill(item_background_color);
-                text.setFill(text_color);
-            });
-
-            setOnMousePressed(event -> {
-                box.setFill(item_clicked_color);
-            });
-
-            setOnMouseReleased(event -> {
-                box.setFill(gradient);
-            });
-
-            getChildren().addAll(box, textImage);
-
-        }
-
-        public String getName() {
-            return _name;
-        }
-    }
 
 
     public static void main(String[] args) {

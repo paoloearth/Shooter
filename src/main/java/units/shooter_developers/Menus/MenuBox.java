@@ -13,11 +13,11 @@ class MenuBox extends VBox {
 
     private final Menu menu;
 
-    MenuBox(Menu menu, Menu.MenuItem... items) {
+    MenuBox(Menu menu, MenuItem... items) {
         this.menu = menu;
         getChildren().add(createSeparator());
 
-        for (Menu.MenuItem item : items) {
+        for (MenuItem item : items) {
             getChildren().addAll(item, createSeparator());
         }
     }
@@ -32,7 +32,7 @@ class MenuBox extends VBox {
     }
 
     protected void addItem(String new_menu_item) {
-        Menu.MenuItem new_item = new Menu.MenuItem(new_menu_item);
+        MenuItem new_item = new MenuItem(new_menu_item);
         new_item.setTranslateX(0.005 * menu.getMenuWidth());
 
         getChildren().addAll(new_item, createSeparator());
@@ -56,10 +56,10 @@ class MenuBox extends VBox {
         getChildren().addAll(new_item, createSeparator());
     }
 
-    protected ArrayList<Menu.MenuItem> getItems() {
+    protected ArrayList<MenuItem> getItems() {
         return getChildren().parallelStream()
-                .filter(e -> e instanceof Menu.MenuItem)
-                .map(e -> (Menu.MenuItem) e)
+                .filter(e -> e instanceof MenuItem)
+                .map(e -> (MenuItem) e)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
