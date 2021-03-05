@@ -40,6 +40,10 @@ public class Custom_Settings {
     public static final double MAP_SCALE = .8;
 
 
+    /* BONUS */
+    public static final int BONUS_COOLDOWN = 5 ;
+
+
     /* HEALTHBAR */
     public static final double HB_PROPORTIONAL_WIDTH  = 0.1 ;   // HB height is 10 % of sprite's height
     public static final double PERCENTAGE_DAMAGE_PER_SHOOT = .25;
