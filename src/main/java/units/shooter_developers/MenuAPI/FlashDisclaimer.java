@@ -20,7 +20,7 @@ class FlashDisclaimer extends StackPane {
         this.menu = menu;
         Text disclaimer_text = new Text(text);
         disclaimer_text.setFont(Font.font("Times New Roman", FontWeight.BOLD, menu.getMenuWidth() * 0.025));
-        disclaimer_text.setFill(Color.SILVER);
+        disclaimer_text.setFill(Menu.getColorPalette().basic_text_color);
         textAnimation(disclaimer_text);
         setAlignment(disclaimer_text, Pos.TOP_CENTER);
 
