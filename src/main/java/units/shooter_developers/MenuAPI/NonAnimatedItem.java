@@ -28,8 +28,8 @@ class NonAnimatedItem extends StackPane {
             effective_height_ratio = item_height_ratio;
         }
 
-        Color text_color = Color.DARKGREY;
-        Color background_color = Color.BLACK;
+        Color text_color = Menu.getColorPalette().separator_color;
+        Color background_color = Menu.getColorPalette().base_background_color;
 
         Rectangle box = new Rectangle(effective_width_ratio * Menu.getMenuWidth(), effective_height_ratio * Menu.getMenuHeight());
         box.setOpacity(0.3);
