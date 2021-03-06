@@ -22,7 +22,7 @@ public class OptionsMenu extends Menu {
     public void createContent(){
 
         setTitle("O P T I O N S");
-        this.addSelectorItem("INTERFACE MODE", "light", "dark");
+        this.addSelectorItem("COLOR MODE", "light", "dark");
 
         this.addSelectorItem("RESOLUTION",
                 (int) getStageWidth() + "x" + (int) getStageHeight() + " (current)",
@@ -109,7 +109,8 @@ public class OptionsMenu extends Menu {
 
     private void writeSettings() {
         Properties config = new Properties();
-        config.setProperty("INTERFACE MODE", getSelectionFor("INTERFACE MODE"));
+        var hola = getSelectionFor("COLOR MODE");
+        config.setProperty("COLOR MODE", getSelectionFor("COLOR MODE"));
         config.setProperty("WIDTH", String.valueOf(getStageWidth()));
         config.setProperty("HEIGHT", String.valueOf(getStageHeight()));
 

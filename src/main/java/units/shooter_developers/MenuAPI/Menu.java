@@ -83,17 +83,27 @@ public abstract class Menu extends Application {
         setStageDimensions(stage_width, stage_height);
 
         root.setPrefSize(getMenuWidth(), getMenuHeight());
-
-        try (InputStream background_input_stream = Files.newInputStream(Paths.get("src/main/resources/menu.jpeg"))) {
+        try (InputStream background_input_stream = Files.newInputStream(Paths.get("src/main/resources/menu_dark.jpeg"))) {
             ImageView background_img = new ImageView(new Image(background_input_stream));
-            background_img.setFitWidth(getMenuWidth());
-            background_img.setFitHeight(getMenuHeight());
-            background_img.setX(getPositionX());
-            background_img.setY(getPositionY());
-            root.getChildren().add(background_img);
+            setBackground(background_img);
         } catch (IOException e) {
             System.out.println("Menu background image not found");
         }
+    }
+
+    private void setBackground(ImageView image){
+        var current_background = _root.getChildren().parallelStream()
+                .filter(e -> e instanceof ImageView)
+                .findFirst()
+                .orElse(null);
+        if(current_background != null)
+            _root.getChildren().remove(current_background);
+
+        image.setFitWidth(getMenuWidth());
+        image.setFitHeight(getMenuHeight());
+        image.setX(getPositionX());
+        image.setY(getPositionY());
+        _root.getChildren().add(image);
     }
 
     private static double tryToReadWidth(){
@@ -150,6 +160,23 @@ public abstract class Menu extends Application {
             double width = Double.parseDouble(config.getProperty("WIDTH"));
             double height = Double.parseDouble(config.getProperty("HEIGHT"));
             setStageDimensions(width, height);
+
+            String color_mode = config.getProperty("COLOR MODE");
+            if(color_mode.equals("light")){
+                try (InputStream background_input_stream = Files.newInputStream(Paths.get("src/main/resources/menu_light.jpg"))) {
+                    ImageView background_img = new ImageView(new Image(background_input_stream));
+                    setBackground(background_img);
+                } catch (IOException e) {
+                    System.out.println("Menu background image not found");
+                }
+
+                getColorPalette().basic_primary_color = Color.WHEAT;
+                getColorPalette().basic_secondary_color = Color.BLACK;
+                getColorPalette().dead_color = Color.SANDYBROWN;
+                getColorPalette().selected_primary_color = Color.DARKRED;
+                getColorPalette().selected_secondary_color = Color.WHITESMOKE;
+                getColorPalette().clicked_background_color = Color.ORANGERED;
+            }
         } catch (Exception e) {
             return;
         }
