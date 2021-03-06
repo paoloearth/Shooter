@@ -20,7 +20,7 @@ class MenuBox extends VBox {
     }
 
     private Line createSeparator() {
-        Color separator_color = Menu.getColorPalette().separator_color;
+        Color separator_color = Menu.getColorPalette().dead_color;
 
         Line separator_line = new Line();
         separator_line.setEndX(0.2 * Menu.getMenuWidth());

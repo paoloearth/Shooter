@@ -14,12 +14,12 @@ import javafx.scene.text.Text;
 class Title extends StackPane {
     public Title(String name) {
         Rectangle box = new Rectangle(0.357 * Menu.getMenuWidth(), 0.1 * Menu.getMenuHeight());
-        box.setStroke(Menu.getColorPalette().basic_text_color);
+        box.setStroke(Menu.getColorPalette().basic_primary_color);
         box.setStrokeWidth(2);
         box.setFill(null);
 
         Text text = new Text(name);
-        text.setFill(Menu.getColorPalette().basic_text_color);
+        text.setFill(Menu.getColorPalette().basic_primary_color);
         text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, 0.0833 * Menu.getMenuHeight()));
 
         setAlignment(Pos.CENTER);

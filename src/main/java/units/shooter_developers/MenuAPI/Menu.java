@@ -256,7 +256,7 @@ public abstract class Menu extends Application {
         menu_frame.setPrefSize(getMenuWidth(), getMenuHeight());
         Text title_object = new Text(title);
         title_object.setFont(Font.font("Times New Roman", FontWeight.BOLD,getMenuWidth()*0.06));
-        title_object.setFill(getColorPalette().basic_text_color);
+        title_object.setFill(getColorPalette().basic_primary_color);
         menu_frame.setAlignment(title_object,Pos.TOP_CENTER);
         menu_frame.setDisable(true);
         menu_frame.setTop(title_object);
@@ -446,20 +446,20 @@ public abstract class Menu extends Application {
 
 
     protected class ColorPalette {
-        Color basic_text_color;
-        Color selected_text_color;
-        Color base_background_color;
-        Color selected_background_color;
+        Color basic_primary_color;
+        Color selected_primary_color;
+        Color basic_secondary_color;
+        Color selected_secondary_color;
         Color clicked_background_color;
-        Color separator_color;
+        Color dead_color;
 
         protected ColorPalette(){
-            basic_text_color = Color.SILVER;
-            selected_text_color = Color.WHITE;
-            base_background_color = Color.BLACK;
-            selected_background_color = Color.DARKBLUE;
+            basic_primary_color = Color.SILVER;
+            selected_primary_color = Color.WHITE;
+            basic_secondary_color = Color.BLACK;
+            selected_secondary_color = Color.DARKBLUE;
             clicked_background_color = Color.DARKVIOLET;
-            separator_color = Color.DARKGREY;
+            dead_color = Color.DARKGREY;
         }
 
     }

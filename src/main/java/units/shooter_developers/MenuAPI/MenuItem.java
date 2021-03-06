@@ -34,11 +34,11 @@ public class MenuItem extends StackPane {
 
         /* COLORS SHOULD BE PUT in a different file, eg Custom_colors */
 
-        Color text_color = Menu.getColorPalette().basic_text_color;
+        Color text_color = Menu.getColorPalette().basic_primary_color;
         Color item_clicked_color = Menu.getColorPalette().clicked_background_color;
-        Color item_selected_color_lateral = Menu.getColorPalette().selected_background_color;
-        Color item_background_color = Menu.getColorPalette().base_background_color;
-        Color text_selected_color = Menu.getColorPalette().selected_text_color;
+        Color item_selected_color_lateral = Menu.getColorPalette().selected_secondary_color;
+        Color item_background_color = Menu.getColorPalette().basic_secondary_color;
+        Color text_selected_color = Menu.getColorPalette().selected_primary_color;
 
         _name = name;
 

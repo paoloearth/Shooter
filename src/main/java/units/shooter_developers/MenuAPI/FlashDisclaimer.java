@@ -4,7 +4,6 @@ import javafx.animation.FadeTransition;
 import javafx.animation.Transition;
 import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -20,7 +19,7 @@ class FlashDisclaimer extends StackPane {
         this.menu = menu;
         Text disclaimer_text = new Text(text);
         disclaimer_text.setFont(Font.font("Times New Roman", FontWeight.BOLD, menu.getMenuWidth() * 0.025));
-        disclaimer_text.setFill(Menu.getColorPalette().basic_text_color);
+        disclaimer_text.setFill(Menu.getColorPalette().basic_primary_color);
         textAnimation(disclaimer_text);
         setAlignment(disclaimer_text, Pos.TOP_CENTER);
 
