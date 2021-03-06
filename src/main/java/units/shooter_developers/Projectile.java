@@ -56,9 +56,14 @@ public class Projectile extends Dynamic_Object{
 
 
     @Override
-    public void update(GameMap M, Sprite S) {
-        hit(S);
+    public void update( Sprite S) {
+        if(intersect(S)) hit( S);
     }
+
+    @Override
+    public void default_movement(GameMap M){
+        translate(M);
+    };
 
 
     public void hit(Sprite S)

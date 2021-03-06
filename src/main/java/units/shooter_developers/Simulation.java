@@ -165,40 +165,8 @@ public class Simulation extends Application {
 
                     all_sprites().forEach(
                             s -> {
-                                switch (s.get_type()) {
-                                    case Custom_Settings.SPRITE -> {
-
-                                        ((Sprite) s).move(R);
-                                    }
-
-                                    case Custom_Settings.PROJECTILE -> {
-
-                                        var p = (Projectile) s;
-
-                                        p.translate(R);
-
-                                        if (p.intersect(Player_1)) p.update(R, Player_1);
-                                        if (p.intersect(Player_2)) p.update(R, Player_2);
-                                    }
-
-                                    case Custom_Settings.TELEPORT -> {
-                                        var t = (Teleport) s;
-
-                                        if (t.intersect(Player_1)) t.update(R, Player_1);
-                                        if (t.intersect(Player_2)) t.update(R, Player_2);
-                                    }
-
-
-                                    case Custom_Settings.BONUS -> {
-
-                                        var b = (Bonus_Generator) s;
-
-                                        if (b.intersect(Player_1)) b.update(R, Player_1);
-                                        if (b.intersect(Player_2)) b.update(R, Player_2);
-
-                                    }
-
-                                }
+                                s.default_movement(R);
+                                all_players().forEach(s::update);
                             }
                     );
                     try {
@@ -297,6 +265,13 @@ public class Simulation extends Application {
     {
         return root.getChildren().stream().parallel().filter(i -> i instanceof Pictured_Object).map(n->(Pictured_Object)n).collect(Collectors.toList());
     }
+
+    private List<Sprite> all_players()
+    {
+        return root.getChildren().stream().parallel().filter(i -> i instanceof Sprite).map(n->(Sprite)n).collect(Collectors.toList());
+    }
+
+
 
 
 
