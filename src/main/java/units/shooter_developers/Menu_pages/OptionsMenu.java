@@ -36,7 +36,7 @@ public class OptionsMenu extends Menu {
 
         this.addSelectorItem("RESOLUTION",
                 (int) getStageWidth() + "x" + (int) getStageHeight() + " (current)",
-                ((int) getScreenWidth()) + "x" + (int) getScreenHeight() + " (native)",
+                ((int) getScreenWidth()) + "x" + ((int) getScreenHeight()) + " (native)",
                 "640x360 (widescreen)",
                 "1000x600",
                 "1024x768",
@@ -99,7 +99,6 @@ public class OptionsMenu extends Menu {
 
     private void askConfirmChanges(double width_candidate, double height_candidate){
         AlertWindow alert_window = new AlertWindow(this, width_candidate, height_candidate);
-        //getStage().close();
         alert_window.start(getStage());
     }
 

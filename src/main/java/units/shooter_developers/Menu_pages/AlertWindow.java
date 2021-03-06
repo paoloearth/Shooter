@@ -29,7 +29,7 @@ public class AlertWindow extends Menu {
         addSecondaryTitle("CAUTION!");
         addFreeItem("BACK", 0.05, 0.2);
         addFreeItem("CONTINUE", 0.76, 0.2);
-        addFlashDisclaimer("Game will be reset. Do you want to confirm?", 0.185, 0.93);
+        addFlashDisclaimer("Game will be reset. Do you want to confirm?");
         show();
 
         /* THIS LOOP CAN MAKE USE OF STREAMS?
