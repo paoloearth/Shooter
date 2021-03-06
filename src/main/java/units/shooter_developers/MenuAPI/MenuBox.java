@@ -11,10 +11,7 @@ import java.util.stream.Collectors;
 
 class MenuBox extends VBox {
 
-    private final Menu menu;
-
-    MenuBox(Menu menu, MenuItem... items) {
-        this.menu = menu;
+    MenuBox(MenuItem... items) {
         getChildren().add(createSeparator());
 
         for (MenuItem item : items) {
@@ -23,31 +20,31 @@ class MenuBox extends VBox {
     }
 
     private Line createSeparator() {
-        Color separator_color = Color.DARKGREY;
+        Color separator_color = Menu.getColorPalette().separator_color;
 
         Line separator_line = new Line();
-        separator_line.setEndX(0.2 * menu.getMenuWidth());
+        separator_line.setEndX(0.2 * Menu.getMenuWidth());
         separator_line.setStroke(separator_color);
         return separator_line;
     }
 
     protected void addItem(String new_menu_item) {
         MenuItem new_item = new MenuItem(new_menu_item);
-        new_item.setTranslateX(0.005 * menu.getMenuWidth());
+        new_item.setTranslateX(0.005 * Menu.getMenuWidth());
 
         getChildren().addAll(new_item, createSeparator());
     }
 
     protected void addNonAnimatedItem(String new_menu_item) {
         NonAnimatedItem new_item = new NonAnimatedItem(new_menu_item);
-        new_item.setTranslateX(0.005 * menu.getMenuWidth());
+        new_item.setTranslateX(0.005 * Menu.getMenuWidth());
 
         getChildren().addAll(new_item, createSeparator());
     }
 
     protected void addSelectorItem(String name, ArrayList<String> tag_list) {
         SelectorItem new_item = new SelectorItem(name);
-        new_item.setTranslateX(0.005 * menu.getMenuWidth());
+        new_item.setTranslateX(0.005 * Menu.getMenuWidth());
 
         for (var tag : tag_list) {
             new_item.addTag(tag);

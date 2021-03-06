@@ -195,7 +195,7 @@ public abstract class Menu extends Application {
                 .orElse(null);
 
         if(menu_box == null){
-            MenuBox vbox = new MenuBox(this);
+            MenuBox vbox = new MenuBox();
             vbox.setTranslateX(0.0952*getMenuWidth() + getPositionX());
             vbox.setTranslateY(0.5*getMenuHeight() + getPositionY());
 
@@ -451,6 +451,7 @@ public abstract class Menu extends Application {
         Color base_background_color;
         Color selected_background_color;
         Color clicked_background_color;
+        Color separator_color;
 
         protected ColorPalette(){
             basic_text_color = Color.SILVER;
@@ -458,6 +459,7 @@ public abstract class Menu extends Application {
             base_background_color = Color.BLACK;
             selected_background_color = Color.DARKBLUE;
             clicked_background_color = Color.DARKVIOLET;
+            separator_color = Color.DARKGREY;
         }
 
     }
