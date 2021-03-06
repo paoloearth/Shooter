@@ -26,7 +26,7 @@ public class WinnerWindow extends Menu {
         addCentralImageView(fireworks, 0.9, 0.9);
         addCentralImageView(winner_image, 0.9, 0.9);
         addSecondaryTitle("The winner is "+ _player._player_name);
-        addFlashDisclaimer("<press a key to continue>", 0.32, 0.93);
+        addFlashDisclaimer("<press a key to continue>");
         show();
 
         waitAndPressToContinue(1);

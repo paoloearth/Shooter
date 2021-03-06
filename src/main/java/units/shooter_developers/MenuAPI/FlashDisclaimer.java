@@ -16,7 +16,7 @@ class FlashDisclaimer extends StackPane {
 
     private final Menu menu;
 
-    FlashDisclaimer(Menu menu, String text, double position_ratio_X, double position_ratio_Y) {
+    FlashDisclaimer(Menu menu, String text) {
         this.menu = menu;
         Text disclaimer_text = new Text(text);
         disclaimer_text.setFont(Font.font("Times New Roman", FontWeight.BOLD, menu.getMenuWidth() * 0.025));
@@ -24,8 +24,8 @@ class FlashDisclaimer extends StackPane {
         textAnimation(disclaimer_text);
         setAlignment(disclaimer_text, Pos.TOP_CENTER);
 
-        setTranslateX(position_ratio_X * menu.getMenuWidth());
-        setTranslateY(position_ratio_Y * menu.getMenuHeight());
+        //setTranslateX(position_ratio_X * menu.getMenuWidth());
+        //setTranslateY(position_ratio_Y * menu.getMenuHeight());
         getChildren().add(disclaimer_text);
     }
 
