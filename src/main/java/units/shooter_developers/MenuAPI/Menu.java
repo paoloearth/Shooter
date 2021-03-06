@@ -207,6 +207,7 @@ public abstract class Menu extends Application {
         image.fitHeightProperty().bind(image_frame.heightProperty());
         image.setPreserveRatio(true);
         image_frame.setMaxSize(scale_width*getMenuWidth(), scale_height*getMenuHeight());
+        image_frame.setMinSize(scale_width*getMenuWidth(), scale_height*getMenuHeight());
         image_frame.getChildren().add(image);
         image_frame.setAlignment(Pos.CENTER);
 
