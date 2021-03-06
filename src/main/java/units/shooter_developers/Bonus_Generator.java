@@ -17,7 +17,6 @@ public class Bonus_Generator extends Pictured_Object{
         super(scaling_factor,url,_n_rows,_n_cols);
         _M = M;
 
-        set_type(Custom_Settings.BONUS);
         set_scale(Custom_Settings.HEART_SCALE);
 
         update_view();

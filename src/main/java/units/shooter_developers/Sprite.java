@@ -39,7 +39,7 @@ public class Sprite extends Dynamic_Object {
         set_speed(Custom_Settings.PLAYER_SPEED);
 
         set_scale(Custom_Settings.PLAYER_SCALE);
-        set_type(Custom_Settings.SPRITE);
+
 
         update_view();
 

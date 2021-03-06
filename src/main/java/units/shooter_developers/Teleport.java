@@ -13,12 +13,8 @@ public class Teleport extends Pictured_Object{
     public Teleport(Pane root, String url, GameMap M, Pair<Double, Double> scaling_factor, String ID) {
         super(scaling_factor, url);
 
-
-        set_type(Custom_Settings.TELEPORT);
         set_scale(Custom_Settings.TELEPORT_SCALE);
-
         update_view();
-
         add_nodes(get_view());
 
         rotation_animation();

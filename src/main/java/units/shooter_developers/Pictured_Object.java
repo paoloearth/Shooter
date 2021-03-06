@@ -17,7 +17,7 @@ public abstract class Pictured_Object extends Map_Object {
 
 
     private double _scale;             // Scale to make the loaded image of desired size
-    private String _type;               // Will store the type of the object
+
 
     private final BooleanProperty _isDead = new SimpleBooleanProperty(false);
 
@@ -99,14 +99,9 @@ public abstract class Pictured_Object extends Map_Object {
     public BooleanProperty get_is_dead_property() {
         return _isDead;
     }
-    public String get_type() {
-        return _type;
-    }
 
-    /* Setters */
-    public void set_type(String _type) {
-        this._type = _type;
-    }
+
+
     public void set_scale(double _scale) {
         this._scale = _scale;
     }
