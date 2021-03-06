@@ -169,6 +169,8 @@ public abstract class Menu extends Application {
                 } catch (IOException e) {
                     System.out.println("Menu background image not found");
                 }
+                // REFACTOR THIS AND SET ONLY ONE READ METHOD FOR ONCE ON A TIME!!!!!!!
+                //  this is a message for the Jose of the future
 
                 getColorPalette().basic_primary_color = Color.WHEAT;
                 getColorPalette().basic_secondary_color = Color.BLACK;
@@ -176,6 +178,15 @@ public abstract class Menu extends Application {
                 getColorPalette().selected_primary_color = Color.DARKRED;
                 getColorPalette().selected_secondary_color = Color.WHITESMOKE;
                 getColorPalette().clicked_background_color = Color.ORANGERED;
+            } else {
+                try (InputStream background_input_stream = Files.newInputStream(Paths.get("src/main/resources/menu_dark.jpg"))) {
+                    ImageView background_img = new ImageView(new Image(background_input_stream));
+                    setBackground(background_img);
+                } catch (IOException e) {
+                    System.out.println("Menu background image not found");
+                }
+
+                setColorPalette(new ColorPalette());
             }
         } catch (Exception e) {
             return;
@@ -470,7 +481,6 @@ public abstract class Menu extends Application {
     public static void setColorPalette(ColorPalette new_color_palette){
         _color_palette = new_color_palette;
     }
-
 
     protected class ColorPalette {
         Color basic_primary_color;

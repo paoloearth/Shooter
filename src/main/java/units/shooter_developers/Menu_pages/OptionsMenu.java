@@ -96,15 +96,15 @@ public class OptionsMenu extends Menu {
         var selected_resolution = ParseSelectedResolution();
         var current_resolution = new Pair<Double, Double>(getStageWidth(), getStageHeight());
 
-        if(!selected_resolution.equals(current_resolution))
-            if(isSimulationRunning())
-                askConfirmChanges(selected_resolution.getKey(), selected_resolution.getValue());
-            else{
-                setStageDimensions(selected_resolution.getKey(), selected_resolution.getValue());
-                writeSettings();
-                OptionsMenu options_menu = new OptionsMenu(this);
-                options_menu.start(getStage());
-            }
+        if (isSimulationRunning())
+            askConfirmChanges(selected_resolution.getKey(), selected_resolution.getValue());
+        else {
+            setStageDimensions(selected_resolution.getKey(), selected_resolution.getValue());
+            writeSettings();
+            OptionsMenu options_menu = new OptionsMenu(this);
+            options_menu.start(getStage());
+        }
+
     }
 
     private void writeSettings() {
