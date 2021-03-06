@@ -256,7 +256,7 @@ public abstract class Menu extends Application {
         menu_frame.setPrefSize(getMenuWidth(), getMenuHeight());
         Text title_object = new Text(title);
         title_object.setFont(Font.font("Times New Roman", FontWeight.BOLD,getMenuWidth()*0.06));
-        title_object.setFill(Color.SILVER);
+        title_object.setFill(getColorPalette().basic_text_color);
         menu_frame.setAlignment(title_object,Pos.TOP_CENTER);
         menu_frame.setDisable(true);
         menu_frame.setTop(title_object);
