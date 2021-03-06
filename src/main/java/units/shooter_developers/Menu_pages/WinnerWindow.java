@@ -25,7 +25,8 @@ public class WinnerWindow extends Menu {
         var fireworks = Menu.retrieveImage("fireworks.png", 1,1);
         addCentralImageView(fireworks, 0.9, 0.9);
         addCentralImageView(winner_image, 0.9, 0.9);
-        addSecondaryTitle("The winner is "+ _player._player_name);
+
+        addSecondaryTitle("The winner is "+ _player.get_player_name());
         addFlashDisclaimer("<press a key to continue>");
         show();
 

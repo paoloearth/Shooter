@@ -10,14 +10,13 @@ import javafx.util.Pair;
 public class Bonus_Generator extends Pictured_Object{
 
     private final Timeline timeline;
-    private GameMap _M;
+    private final GameMap _M;
 
     public Bonus_Generator(Pane root, GameMap M, String url, int _n_rows, int _n_cols, Pair<Double, Double> scaling_factor)
     {
         super(scaling_factor,url,_n_rows,_n_cols);
         _M = M;
 
-        set_type(Custom_Settings.BONUS);
         set_scale(Custom_Settings.HEART_SCALE);
 
         update_view();
@@ -54,7 +53,7 @@ public class Bonus_Generator extends Pictured_Object{
 
     public void bonus_effect(Sprite S) {
         empty_Pane_from_ImageView(this);
-        S.H.restore_life();
+        S.getHBar().restore_life();
         generate(_M);
     }
 

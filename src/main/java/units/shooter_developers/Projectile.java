@@ -12,9 +12,8 @@ public class Projectile extends Dynamic_Object{
     {
         super(scaling_factor, url);
 
-        this.Owner = S._id;              // Save the shooter's ID
+        this.Owner = S.get_id();              // Save the shooter's ID
 
-        set_type(Custom_Settings.PROJECTILE);        // Set the type
         set_scale(Custom_Settings.PROJECTILE_SCALE);
 
         set_speed(Custom_Settings.PROJECTILE_SPEED);
@@ -68,10 +67,10 @@ public class Projectile extends Dynamic_Object{
 
     public void hit(Sprite S)
     {
-        if(!is_dead() && !Owner.equals(S._id)) // If player has not hit anything yet
+        if(!is_dead() && !Owner.equals(S.get_id())) // If player has not hit anything yet
         {
             set_is_dead_property(true);        // Now the projectile has hit something
-            S.H.damage();            //Compute damage
+            S.getHBar().damage();            //Compute damage
         }
     }
 
