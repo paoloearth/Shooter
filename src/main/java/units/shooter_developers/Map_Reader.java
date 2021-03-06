@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.util.*;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 /* TEMPLATE
@@ -66,12 +67,9 @@ public class Map_Reader {
 
     public void fill_dictionary_position(char ID, int index, Map<String, Coordinates> dict){
         var l = get_list_of_integer_from_String(index);
-        //IntStream.range(1,l.size()).mapToObj(i -> new Coordinates(l.get(i-1), l.get(i))).forEach();
-        for(int i= 0; i < l.size(); i+=2){
-            Coordinates coord = new Coordinates(l.get(i), l.get(i+1));
-            String key = ID + String.valueOf(i/2);
-            dict.put(key, coord);
-        }
+        IntStream.range(0,l.size()).filter(i-> i%2 ==0).mapToObj(i ->
+                new Pair<>(ID+String.valueOf(i/2),new Coordinates(l.get(i), l.get(i+1))))
+                .forEach(pair->dict.put(pair.getKey(), pair.getValue()));
     }
 
     private List<Integer> get_list_of_integer_from_String(int index) {
