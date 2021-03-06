@@ -27,27 +27,20 @@ public class Map_Reader {
 
     public GameMap read_Map(String URL, double width, double height) throws IOException {
         _lines = extract_lines(URL);
-        var M = new GameMap(width,height, get_tileset(),get_cell_side(),get_num_of_tiles(),
-                            get_tiles_at_row_index(2),get_tiles_at_row_index(3),retrieve_map_without_metadata());
+        var M = new GameMap(width,height, get_tileset(),get_cell_side(), get_row_and_column_num_of_tiles_composing_map(),
+                            get_Set_of_tiles_at_row_index(2), get_Set_of_tiles_at_row_index(3),retrieve_map_without_metadata());
         fill_dictionary_position('P', 4, M.getDictionary_position());
         fill_dictionary_position('T', 5, M.getDictionary_position());
         return M;
-    }
-
-    private List<String[]> retrieve_map_without_metadata() {
-        return _lines.stream().skip(Custom_Settings.NUMBER_OF_METADATA_LINES).collect(Collectors.toList());
-    }
-
-    private Image get_tileset() {
-        return new Image(_lines.get(0)[0]);
     }
 
     List<String[]> extract_lines(String URL) throws IOException {
         File file = new File(getClass().getClassLoader().getResource(URL).getFile());
         return Files.lines(file.toPath()).parallel().map(l -> l.split(",")).collect(Collectors.toList());
     }
-    public List<String[]> get_lines() {
-        return _lines;
+
+    private Image get_tileset() {
+        return new Image(_lines.get(0)[0]);
     }
 
     private Integer get_cell_side() {
@@ -55,7 +48,7 @@ public class Map_Reader {
     }
 
     // Return the number of tiles in the rows and columns in the map
-    private Pair<Integer, Integer> get_num_of_tiles() {
+    private Pair<Integer, Integer> get_row_and_column_num_of_tiles_composing_map() {
         return new Pair<>(Integer.parseInt(_lines.get(1)[0]),Integer.parseInt(_lines.get(1)[1]));
     }
 
@@ -63,31 +56,32 @@ public class Map_Reader {
      * - in the 2nd row there is the set of passable tiles for the Sprites
      * - in the 3rd row there is the set of tiles not passable for the projectiles
      * */
-    private Set<Integer> get_tiles_at_row_index(int index) {
-        return  Arrays.stream(_lines.get(index)).parallel().mapToInt(Integer::parseInt).boxed().collect(Collectors.toSet());
+    private Set<Integer> get_Set_of_tiles_at_row_index(int index) {
+        return  convertListToSet(get_list_of_integer_from_String(index));
     }
+
+    private List<String[]> retrieve_map_without_metadata() {
+        return _lines.stream().skip(Custom_Settings.NUMBER_OF_METADATA_LINES).collect(Collectors.toList());
+    }
+
     public void fill_dictionary_position(char ID, int index, Map<String, Coordinates> dict){
-        var l = Arrays.stream(_lines.get(index)).parallel().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());;
+        var l = get_list_of_integer_from_String(index);
         //IntStream.range(1,l.size()).mapToObj(i -> new Coordinates(l.get(i-1), l.get(i))).forEach();
         for(int i= 0; i < l.size(); i+=2){
             Coordinates coord = new Coordinates(l.get(i), l.get(i+1));
             String key = ID + String.valueOf(i/2);
-           dict.put(key, coord);
+            dict.put(key, coord);
         }
-
     }
 
+    private List<Integer> get_list_of_integer_from_String(int index) {
+        return Arrays.stream(_lines.get(index)).parallel().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
+    }
 
-
-
-
-
-
-
-
-
-
-
+    public static Set<Integer> convertListToSet(List<Integer> list)
+    {
+        return new HashSet<>(list);
+    }
 
 
 }
