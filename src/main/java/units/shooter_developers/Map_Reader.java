@@ -30,8 +30,8 @@ public class Map_Reader {
         _lines = extract_lines(URL);
         var M = new GameMap(width,height, get_tileset(),get_cell_side(), get_row_and_column_num_of_tiles_composing_map(),
                             get_Set_of_tiles_at_row_index(2), get_Set_of_tiles_at_row_index(3),retrieve_map_without_metadata());
-        fill_dictionary_position('P', 4, M.getDictionary_position());
-        fill_dictionary_position('T', 5, M.getDictionary_position());
+        fill_dictionary_position('P', 4, M.getDictionary_of_positions());
+        fill_dictionary_position('T', 5, M.getDictionary_of_positions());
         return M;
     }
 
@@ -80,6 +80,5 @@ public class Map_Reader {
     {
         return new HashSet<>(list);
     }
-
 
 }
