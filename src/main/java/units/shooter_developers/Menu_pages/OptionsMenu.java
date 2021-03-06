@@ -4,11 +4,9 @@ import java.io.*;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javafx.stage.*;
 import javafx.util.Pair;
 import units.shooter_developers.MenuAPI.Menu;
 import units.shooter_developers.MenuAPI.MenuItem;
-import units.shooter_developers.Simulation;
 
 public class OptionsMenu extends Menu {
 
@@ -18,11 +16,6 @@ public class OptionsMenu extends Menu {
 
     public OptionsMenu(Menu other_menu){
         super(other_menu);
-    }
-
-    public OptionsMenu(Simulation game_instance){
-        this();
-        setSimulationInstance(game_instance);
     }
 
     @Override
