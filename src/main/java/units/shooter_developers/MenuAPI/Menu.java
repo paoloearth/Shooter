@@ -50,6 +50,7 @@ public abstract class Menu extends Application {
     private double _position_height_ratio;
     private static Simulation _simulation_instance;
     private static boolean _simulation_running;
+    private static ColorPalette _color_palette;
 
     /************************** CONSTRUCTORS *****************************/
 
@@ -64,6 +65,7 @@ public abstract class Menu extends Application {
         _position_height_ratio = 0;
         _simulation_running = false;
         _simulation_instance = null;
+        _color_palette = new ColorPalette();
         this.createRootAndBackground(stage_width, stage_height);
     }
 
@@ -432,6 +434,32 @@ public abstract class Menu extends Application {
         var image_wrapped =  new ImageView(image);
         image_wrapped.setViewport(new Rectangle2D( 0, 0, image.getWidth()/number_of_columns, image.getHeight()/number_of_rows));
         return image_wrapped;
+    }
+
+    public static ColorPalette getColorPalette(){
+        return _color_palette;
+    }
+
+    public static void setColorPalette(ColorPalette new_color_palette){
+        _color_palette = new_color_palette;
+    }
+
+
+    protected class ColorPalette {
+        Color basic_text_color;
+        Color selected_text_color;
+        Color base_background_color;
+        Color selected_background_color;
+        Color clicked_background_color;
+
+        protected ColorPalette(){
+            basic_text_color = Color.SILVER;
+            selected_text_color = Color.WHITE;
+            base_background_color = Color.BLACK;
+            selected_background_color = Color.DARKBLUE;
+            clicked_background_color = Color.DARKVIOLET;
+        }
+
     }
 
 }
