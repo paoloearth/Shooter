@@ -19,9 +19,7 @@ public class AlertWindow extends Menu {
     }
 
     @Override
-    public void start(Stage stage){
-        setStage(stage);
-        getStage().centerOnScreen();
+    public void createContent(){
 
         var alert_image = Menu.retrieveImage("alert.png", 1,1);
 
@@ -30,7 +28,6 @@ public class AlertWindow extends Menu {
         addFreeItem("BACK", 0.05, 0.2);
         addFreeItem("CONTINUE", 0.76, 0.2);
         addFlashDisclaimer("Game will be reset. Do you want to confirm?");
-        show();
 
         /* THIS LOOP CAN MAKE USE OF STREAMS?
         menu_items.forEach(item -> etc etc)
@@ -42,15 +39,15 @@ public class AlertWindow extends Menu {
             item.setOnMouseReleased(event -> {
                 if (item.getName().equals("BACK")) {
                     OptionsMenu options_menu = new OptionsMenu(this);
-                    options_menu.start(stage);
+                    options_menu.start(getStage());
                 }
                 if (item.getName().equals("CONTINUE"))
                 {
-                    stage.setMaximized(false);
+                    getStage().setMaximized(false);
                     setStageDimensions(_candidate_width, _candidate_height);
                     writeModifyingSettings();
                     OptionsMenu options_menu = new OptionsMenu();
-                    options_menu.start(stage);
+                    options_menu.start(getStage());
                 }
             });
         }

@@ -123,6 +123,34 @@ public abstract class Menu extends Application {
         }
     }
 
+    /************************** START METHOD ************************************/
+
+    public void start(Stage stage){
+        readDimensions();
+        setStage(stage);
+        stage.centerOnScreen();
+        createContent();
+        show();
+    }
+
+    public abstract void createContent();
+
+    private void readDimensions(){
+        File configFile = new File("config.ini");
+        Properties config = new Properties();
+
+        try{
+            FileReader reader = new FileReader(configFile);
+            config.load(reader);
+            reader.close();
+            double width = Double.parseDouble(config.getProperty("WIDTH"));
+            double height = Double.parseDouble(config.getProperty("HEIGHT"));
+            setStageDimensions(width, height);
+        } catch (Exception e) {
+            return;
+        }
+    }
+
 
     /************************** ELEMENTS MANAGEMENT *****************************/
 

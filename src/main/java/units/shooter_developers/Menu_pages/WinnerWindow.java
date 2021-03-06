@@ -17,9 +17,7 @@ public class WinnerWindow extends Menu {
     }
 
     @Override
-    public void start(Stage stage){
-        setStage(stage);
-        getStage().centerOnScreen();
+    public void createContent(){
 
         var winner_image = Menu.retrieveImage(_player.get_url(),4,1);
         var fireworks = Menu.retrieveImage("fireworks.png", 1,1);
@@ -27,7 +25,6 @@ public class WinnerWindow extends Menu {
         addCentralImageView(winner_image, 0.9, 0.9);
         addSecondaryTitle("The winner is "+ _player._player_name);
         addFlashDisclaimer("<press a key to continue>");
-        show();
 
         waitAndPressToContinue(1);
     }

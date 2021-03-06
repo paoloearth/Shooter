@@ -26,10 +26,7 @@ public class OptionsMenu extends Menu {
     }
 
     @Override
-    public void start(Stage menu_stage){
-        setStage(menu_stage);
-        setStageDimensions(getStageWidth(), getStageHeight());
-        getStage().centerOnScreen();
+    public void createContent(){
 
         setTitle("O P T I O N S");
         this.addSelectorItem("INTERFACE MODE", "light", "dark");
@@ -47,8 +44,7 @@ public class OptionsMenu extends Menu {
         this.addItem("APPLY");
         this.addItem("BACK");
 
-        menu_stage.setTitle("VIDEO GAME");
-        show();
+        getStage().setTitle("VIDEO GAME");
 
         var menu_items = getItems();
         for(var item:menu_items)
@@ -58,7 +54,7 @@ public class OptionsMenu extends Menu {
 
                 if(item_casted.getName() == "BACK") {
                     GameMenu main_menu = new GameMenu(this);
-                    main_menu.start(menu_stage);
+                    main_menu.start(getStage());
 
                 } else if(item_casted.getName() == "APPLY") {
                     applyCurrentSettings();

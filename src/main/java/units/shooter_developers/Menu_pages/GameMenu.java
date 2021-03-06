@@ -25,11 +25,7 @@ public class GameMenu extends Menu {
     }
 
     @Override
-    public void start(Stage menu_stage){
-        setStage(menu_stage);
-        getStage().centerOnScreen();
-        readDimensions();
-        menu_stage.centerOnScreen();
+    public void createContent(){
 
         if(isSimulationRunning()) {
             this.addItem("CONTINUE");
@@ -41,9 +37,8 @@ public class GameMenu extends Menu {
         this.addItem("NEW LAN-GAME");
         this.addItem("OPTIONS");
         this.addItem("EXIT");
-        menu_stage.setTitle("VIDEO GAME");
+        getStage().setTitle("VIDEO GAME");
         setTitle("C A M P A I G N");
-        show();
 
         var menu_items = getItems();
         for(var item:menu_items)
@@ -51,38 +46,22 @@ public class GameMenu extends Menu {
             item.setOnMouseReleased(event -> {
                 if (item.getName().equals("NEW GAME")) {
                     Submenu submenu_launch_game = new Submenu(this);
-                    submenu_launch_game.start(menu_stage);
+                    submenu_launch_game.start(getStage());
                 }
                 if (item.getName().equals("CONTINUE")) {
-                    menu_stage.close();
-                    menu_stage.setScene(getSimulationInstance().getScene());
-                    menu_stage.show();
-                    menu_stage.toFront();
+                    getStage().close();
+                    getStage().setScene(getSimulationInstance().getScene());
+                    getStage().show();
+                    getStage().toFront();
                 }
                 if (item.getName().equals("EXIT")) {
-                    menu_stage.close();
+                    getStage().close();
                 }
                 if (item.getName().equals("OPTIONS")) {
                     OptionsMenu options_menu = new OptionsMenu(this);
-                    options_menu.start(menu_stage);
+                    options_menu.start(getStage());
                 }
             });
-        }
-    }
-
-    private void readDimensions(){
-        File configFile = new File("config.ini");
-        Properties config = new Properties();
-
-        try{
-            FileReader reader = new FileReader(configFile);
-            config.load(reader);
-            reader.close();
-            double width = Double.parseDouble(config.getProperty("WIDTH"));
-            double height = Double.parseDouble(config.getProperty("HEIGHT"));
-            setStageDimensions(width, height);
-        } catch (Exception e) {
-            return;
         }
     }
 
