@@ -46,8 +46,8 @@ public class Teleport extends Pictured_Object{
 
 
     @Override
-    public void update(GameMap M, Sprite S) {
-        S.move_to(destination);
+    public void update( Sprite S) {
+        if(intersect(S)) S.move_to(destination);
     }
 
 

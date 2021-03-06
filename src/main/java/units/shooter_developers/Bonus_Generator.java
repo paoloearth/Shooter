@@ -10,10 +10,12 @@ import javafx.util.Pair;
 public class Bonus_Generator extends Pictured_Object{
 
     private final Timeline timeline;
+    private GameMap _M;
 
     public Bonus_Generator(Pane root, GameMap M, String url, int _n_rows, int _n_cols, Pair<Double, Double> scaling_factor)
     {
         super(scaling_factor,url,_n_rows,_n_cols);
+        _M = M;
 
         set_type(Custom_Settings.BONUS);
         set_scale(Custom_Settings.HEART_SCALE);
@@ -46,14 +48,14 @@ public class Bonus_Generator extends Pictured_Object{
     private Coordinates compute_inmap_position_through_shifiting() { return new Coordinates(get_inmap_X_position(), get_inmap_Y_position()); }
 
     @Override
-    public void update(GameMap M, Sprite S) {
-        bonus_effect(S,M);
+    public void update(Sprite S) {
+        if(intersect(S)) bonus_effect(S);
     }
 
-    public void bonus_effect(Sprite S, GameMap M) {
+    public void bonus_effect(Sprite S) {
         empty_Pane_from_ImageView(this);
         S.H.restore_life();
-        generate(M);
+        generate(_M);
     }
 
     private void empty_Pane_from_ImageView(Pane P) {

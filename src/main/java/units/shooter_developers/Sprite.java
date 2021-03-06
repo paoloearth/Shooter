@@ -60,6 +60,11 @@ public class Sprite extends Dynamic_Object {
         root.getChildren().add(this);
     }
 
+    @Override
+    public void default_movement(GameMap M){
+        move(M);
+    };
+
     private HealthBar getHealthBar() {
         return new HealthBar(this);
     }
@@ -129,11 +134,6 @@ public class Sprite extends Dynamic_Object {
     @Override
     public Box get_hitbox(){
         return new Box(get_current_Y_position() , get_current_X_position() +get_actual_width() * 0.15,  get_actual_width() ,get_actual_height()*.75 );
-    }
-
-    @Override
-    public void update(GameMap M, Sprite S) {
-        move(M);
     }
 
     public void shoot(Pane root){
