@@ -14,12 +14,13 @@ import javafx.util.Pair;
 
 
 public class Sprite extends Dynamic_Object {
-    public String _id;                                                      // Player ID
-    IntegerProperty _frame  = new SimpleIntegerProperty(0);        // Frame property to update the moving sprite
-    HealthBar H;
+
+    private final String _id;                                                      // Player ID
+    private final IntegerProperty _frame  = new SimpleIntegerProperty(0);        // Frame property to update the moving sprite
+    private final HealthBar H;
     private boolean goNorth, goSouth, goEast, goWest;
-    BooleanProperty _can_shoot = new SimpleBooleanProperty(true);
-    public String _player_name;
+    private final BooleanProperty _can_shoot = new SimpleBooleanProperty(true);
+    private final String _player_name;
 
 
 
@@ -32,12 +33,10 @@ public class Sprite extends Dynamic_Object {
     public Sprite(Pane root, GameMap M, Pair<Double, Double> scaling_factor, String url, int _n_rows, int _n_cols, String id, Direction D, String player_name)
     {
         super(scaling_factor, url, _n_rows, _n_cols);
-
         this._player_name = player_name;
         this._id = id;
 
         set_speed(Custom_Settings.PLAYER_SPEED);
-
         set_scale(Custom_Settings.PLAYER_SCALE);
 
 
@@ -145,36 +144,47 @@ public class Sprite extends Dynamic_Object {
         }
     }
 
-    /* Set the boolean attributes according to the key pressed*/
+    /* Setters */
     public void setGoNorth(boolean goNorth) {
         this.goNorth = goNorth;
     }
-
     public void setGoSouth(boolean goSouth) {
         this.goSouth = goSouth;
     }
-
     public void setGoEast(boolean goEast) {
         this.goEast = goEast;
     }
-
     public void setGoWest(boolean goWest) {
         this.goWest = goWest;
     }
 
-    public boolean isGoNorth() {
-        return goNorth;
+    /* Getters */
+
+    public String get_id() {
+        return _id;
     }
 
-    public boolean isGoSouth() {
-        return goSouth;
+    public int get_frame() {
+        return _frame.get();
     }
 
-    public boolean isGoEast() {
-        return goEast;
+    public IntegerProperty _frameProperty() {
+        return _frame;
     }
 
-    public boolean isGoWest() {
-        return goWest;
+    public HealthBar getHBar() {
+        return H;
+    }
+
+    public boolean is_can_shoot() {
+        return _can_shoot.get();
+    }
+
+    public BooleanProperty _can_shootProperty() {
+        return _can_shoot;
+    }
+
+    public String get_player_name() {
+        return _player_name;
     }
 }
