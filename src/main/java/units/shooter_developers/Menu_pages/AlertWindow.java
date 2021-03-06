@@ -43,7 +43,6 @@ public class AlertWindow extends Menu {
                 }
                 if (item.getName().equals("CONTINUE"))
                 {
-                    getStage().setMaximized(false);
                     setStageDimensions(_candidate_width, _candidate_height);
                     writeModifyingSettings();
                     OptionsMenu options_menu = new OptionsMenu();

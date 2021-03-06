@@ -70,6 +70,7 @@ public abstract class Menu extends Application {
     public Menu(Menu other_menu){
         _position_width_ratio = other_menu._position_width_ratio;
         _position_height_ratio = other_menu._position_height_ratio;
+        _stage = other_menu._stage;
         this.createRootAndBackground(_stage_width, _stage_height);
     }
 
@@ -126,10 +127,11 @@ public abstract class Menu extends Application {
     /************************** START METHOD ************************************/
 
     public void start(Stage stage){
-        readDimensions();
         setStage(stage);
-        stage.centerOnScreen();
+        readDimensions();
+        getStage().setMaximized(false);
         createContent();
+        stage.centerOnScreen();
         show();
     }
 
