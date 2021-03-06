@@ -189,9 +189,17 @@ public abstract class Menu extends Application {
             _root.getChildren().remove(title_object);
     }
 
-    public void addFlashDisclaimer(String disclaimer_text, double scaled_position_X, double scaled_position_Y){
-        var disclaimer_object = new FlashDisclaimer(this, disclaimer_text, scaled_position_X, scaled_position_Y);
-        _root.getChildren().add(disclaimer_object);
+    public void addFlashDisclaimer(String disclaimer_text){
+        var disclaimer_object = new FlashDisclaimer(this, disclaimer_text);
+
+        var menu_frame = new BorderPane();
+        menu_frame.setPrefSize(getMenuWidth(), getMenuHeight());
+
+        menu_frame.setAlignment(disclaimer_object,Pos.BOTTOM_CENTER);
+        menu_frame.setBottom(disclaimer_object);
+        menu_frame.setDisable(true);
+
+        _root.getChildren().add(menu_frame);
     }
 
     public void addCentralImageView(ImageView image, double scale_width, double scale_height){
@@ -199,12 +207,14 @@ public abstract class Menu extends Application {
         image.fitHeightProperty().bind(image_frame.heightProperty());
         image.setPreserveRatio(true);
         image_frame.setMaxSize(scale_width*getMenuWidth(), scale_height*getMenuHeight());
+        image_frame.setMinSize(scale_width*getMenuWidth(), scale_height*getMenuHeight());
         image_frame.getChildren().add(image);
         image_frame.setAlignment(Pos.CENTER);
 
         var menu_frame = new BorderPane();
         menu_frame.setPrefSize(getMenuWidth(), getMenuHeight());
         menu_frame.setCenter(image_frame);
+        menu_frame.setDisable(true);
 
         _root.getChildren().add(menu_frame);
     }
@@ -212,11 +222,12 @@ public abstract class Menu extends Application {
     public void addSecondaryTitle(String title){
         var menu_frame = new BorderPane();
         menu_frame.setPrefSize(getMenuWidth(), getMenuHeight());
-        Text top = new Text(title);
-        top.setFont(Font.font("Times New Roman", FontWeight.BOLD,getMenuWidth()*0.06));
-        top.setFill(Color.SILVER);
-        menu_frame.setAlignment(top,Pos.TOP_CENTER);
-        menu_frame.setTop(top);
+        Text title_object = new Text(title);
+        title_object.setFont(Font.font("Times New Roman", FontWeight.BOLD,getMenuWidth()*0.06));
+        title_object.setFill(Color.SILVER);
+        menu_frame.setAlignment(title_object,Pos.TOP_CENTER);
+        menu_frame.setDisable(true);
+        menu_frame.setTop(title_object);
 
         _root.getChildren().add(menu_frame);
     }
