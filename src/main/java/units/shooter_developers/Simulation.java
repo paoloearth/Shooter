@@ -12,6 +12,7 @@ import units.shooter_developers.Menu_pages.WinnerWindow;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -197,24 +198,31 @@ public class Simulation extends Application {
 
 
     private void remove_dead_objects() {
-        root.getChildren().removeIf(node -> (node instanceof Pictured_Object) && ((Pictured_Object)node).is_dead());
 
-        if (Player_1.is_dead() || Player_2.is_dead())
-        {
+     clean_dead_objects();
+     if(all_players().size()==1)  launch_winner_window(all_players().iterator().next());
+    }
 
-            var win_screen =  Player_2.is_dead()?
-                    new WinnerWindow(WIDTH, HEIGHT,  Player_1) :
-                    new WinnerWindow(WIDTH, HEIGHT, Player_2);
+    private void clean_dead_objects() {
+        root.getChildren().removeIf(node -> (node instanceof Pictured_Object) && ((Pictured_Object) node).is_dead());
+    }
 
+    private List<Pictured_Object> all_sprites()
+    {
+        return root.getChildren().stream().parallel().filter(i -> i instanceof Pictured_Object).map(n->(Pictured_Object)n).collect(Collectors.toList());
+    }
 
-            stopSimulation();
-            win_screen.start(_stage);
-
-
-        }
+    private Set<Sprite> all_players()
+    {
+        return all_sprites().stream().filter(i -> i instanceof Sprite).map(n->(Sprite)n).collect(Collectors.toSet());
     }
 
 
+    private void launch_winner_window(Sprite winner) {
+        var win_screen = new WinnerWindow(WIDTH, HEIGHT, winner);
+        stopSimulation();
+        win_screen.start(_stage);
+    }
 
 
     /* ---------------------------------- MAIN ---------------------------------- */
@@ -261,15 +269,7 @@ public class Simulation extends Application {
         });}
 
 
-    private List<Pictured_Object> all_sprites()
-    {
-        return root.getChildren().stream().parallel().filter(i -> i instanceof Pictured_Object).map(n->(Pictured_Object)n).collect(Collectors.toList());
-    }
 
-    private List<Sprite> all_players()
-    {
-        return root.getChildren().stream().parallel().filter(i -> i instanceof Sprite).map(n->(Sprite)n).collect(Collectors.toList());
-    }
 
 
 
