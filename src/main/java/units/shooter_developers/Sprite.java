@@ -39,14 +39,13 @@ public class Sprite extends Dynamic_Object {
 
         update_view();
 
-        /* Add a triggered event to change the view accordingly to the direction of the sprite*/
+        /* Add a triggered event to change the view accordingly to the direction of the sprite */
         ChangeListener<Object> updateImage = getListener();
         _current_directionProperty().addListener(updateImage);
         _current_directionProperty().setValue(D);
 
         Sprite_Hbar = getHealthBar();
         get_is_dead_property().bind(Sprite_Hbar.is_remaining_life_zero());
-
 
         move_to(M.get_position_of(id));
         add_nodes(Sprite_Hbar, get_view());
@@ -59,9 +58,7 @@ public class Sprite extends Dynamic_Object {
         move(M);
     };
     @Override
-    public Box get_hitbox(){
-        return new Box(get_current_Y_position() , get_current_X_position() +get_actual_width() * 0.15,  get_actual_width() -get_actual_width() * 0.15 ,get_actual_height()*.9 );
-    }
+    public Box get_hitbox(){ return new Box(get_current_Y_position() , get_current_X_position() +get_actual_width() * 0.15,  get_actual_width() -get_actual_width() * 0.15 ,get_actual_height()*.9 ); }
     @Override
     public Box get_move_box(){ return new Box( get_future_y() + (get_actual_height() * 2.0/3.0),get_future_x(), get_actual_width() ,get_actual_height()* 1.0/3.0); }
 
@@ -70,9 +67,7 @@ public class Sprite extends Dynamic_Object {
         return new HealthBar(this);
     }
 
-    private ChangeListener<Object> getListener() {
-        return (ov, o, o2) -> get_view().setViewport(new Rectangle2D( _frame.get()*get_width(), get_current_direction().getOffset() * get_height(), get_width(), get_height()));
-    }
+    private ChangeListener<Object> getListener() { return (ov, o, o2) -> get_view().setViewport(new Rectangle2D( _frame.get()*get_width(), get_current_direction().getOffset() * get_height(), get_width(), get_height())); }
 
     //Update the movement in the right direction
     public void update_speed() {

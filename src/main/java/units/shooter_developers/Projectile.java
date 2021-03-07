@@ -3,28 +3,38 @@ package units.shooter_developers;
 import javafx.util.Pair;
 
 public class Projectile extends Dynamic_Object{
-    int biasX;
-    int biasY;
-    String Owner;
+    private int biasX;
+    private int biasY;
+    private final String Owner;
 
 
     public Projectile(Pair<Double, Double> scaling_factor, String url, Sprite S)
     {
         super(scaling_factor, url);
 
-        this.Owner = S.get_id();              // Save the shooter's ID
+        this.Owner = S.get_id();
 
         set_scale(Custom_Settings.PROJECTILE_SCALE);
-
         set_speed(Custom_Settings.PROJECTILE_SPEED);
-
         update_view();
 
         set_initial_and_translate_direction(S.get_current_direction());
 
-        move_to(new Coordinates(S.get_future_x() + this.biasX, S.get_future_y() + this.biasY));
+        move_to(get_biased_starting_position(S));
 
         this.getChildren().add(get_view());
+    }
+
+    private Coordinates get_biased_starting_position(Sprite S) {
+        return new Coordinates(get_biased_x_position(S), get_biased_y_position(S));
+    }
+
+    private double get_biased_y_position(Sprite S) {
+        return S.get_future_y() + this.biasY;
+    }
+
+    private double get_biased_x_position(Sprite S) {
+        return S.get_future_x() + this.biasX;
     }
 
     public void translate(GameMap M)
