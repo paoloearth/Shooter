@@ -1,9 +1,9 @@
-package units.shooter_developers;
+package units.shooter_developers.Menu_pages.submenu;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.RowConstraints;
-import units.shooter_developers.Menu_pages.Submenu_component;
+import units.shooter_developers.Custom_Settings;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -44,7 +44,7 @@ public class Player_selection_menu extends Submenu_component {
     }
 
     private void create_choiceboxes() {
-        CB_P1 = new Choice_Box( Name_URL,TypeImage.SPRITE);
+        CB_P1 = new Choice_Box( Name_URL, TypeImage.SPRITE);
         CB_P2 = new Choice_Box(Name_URL,TypeImage.SPRITE);
 
 

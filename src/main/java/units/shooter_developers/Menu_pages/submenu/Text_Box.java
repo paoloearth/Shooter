@@ -1,10 +1,9 @@
-package units.shooter_developers;
+package units.shooter_developers.Menu_pages.submenu;
 
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import units.shooter_developers.Menu_pages.Submenu_leaf;
 
 public class Text_Box extends Submenu_leaf {
 

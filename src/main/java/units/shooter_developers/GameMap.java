@@ -47,9 +47,8 @@ public class GameMap {
         _num_tiles = num_tiles;
         _values_of_passable_tiles = set_of_passable;
         _values_of_NOT_passable_tiles_for_projectile = set_of_NOT_passable_for_projectile;
-       _map =map;
+        _map =map;
 
-        /* */
         this.populateCells();
 
         _passable_tiles = _tiles.stream().filter(b-> b.is_passable).collect(Collectors.toList());

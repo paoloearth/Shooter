@@ -1,15 +1,15 @@
-package units.shooter_developers.Menu_pages;
+package units.shooter_developers.Menu_pages.submenu;
 
 import javafx.beans.binding.BooleanBinding;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
 import units.shooter_developers.*;
 import units.shooter_developers.MenuAPI.Menu;
 
 import java.util.ArrayList;
 
 public class Submenu extends Menu {
+
     public Submenu(Menu other_menu){
         super(other_menu);
     }
