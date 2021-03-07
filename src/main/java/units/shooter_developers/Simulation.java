@@ -253,6 +253,7 @@ public class Simulation extends Application {
                     case ESCAPE -> {
                         var game_menu = new GameMenu(this);
                         stopSimulation();
+                        game_menu.readProperties();
                         game_menu.start(_stage);
                         startSimulation();
                     }
