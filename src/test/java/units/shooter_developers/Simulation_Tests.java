@@ -20,13 +20,10 @@ import java.util.ArrayList;
 class Simulation_Tests {
 
     private Simulation SIMULATION;
-    private Stage STAGE;
 
 
     @Start
     private void start(Stage stage) throws IOException {
-
-        STAGE = stage;
 
         var FAKE_NAMES = new ArrayList<String>();
         FAKE_NAMES.add("ROBERTUCCIO");
@@ -39,28 +36,25 @@ class Simulation_Tests {
         var FAKE_MAP = new ArrayList<String>();
         FAKE_MAP.add("map_islands.csv");
 
-        STAGE.setWidth(1000);
-        STAGE.setHeight(600);
+        stage.setWidth(1000);
+        stage.setHeight(600);
 
 
         SIMULATION = new Simulation(FAKE_NAMES,FAKE_URLS, FAKE_MAP);
-        SIMULATION.start(STAGE);
+        SIMULATION.start(stage);
 
     }
 
     @Test
-    void width_is_correct_width(FxRobot robot) {
-      Assertions.assertThat(SIMULATION.WIDTH).isEqualTo(1000);
+    void width_is_correct_width () {
+      Assertions.assertThat(SIMULATION.getWIDTH()).isEqualTo(1000);
     }
 
     @Test
-    void height_is_correct_height(FxRobot robot) {
-        Assertions.assertThat(SIMULATION.HEIGHT).isEqualTo(600);
-    }
+    void height_is_correct_height() { Assertions.assertThat(SIMULATION.getHEIGHT()).isEqualTo(600); }
 
-    @Test
+
     void movement(FxRobot robot) {
-
 
         for (int i = 0; i < 10; i++) {
             robot.push(KeyCode.DOWN);
@@ -68,19 +62,6 @@ class Simulation_Tests {
         for (int i = 0; i < 10; i++) {
             robot.push(KeyCode.UP);
         }
-
-
-
-    }
-
-
-
-
-
-    @ParameterizedTest
-    @ValueSource(ints = {4,6,24})
-    void Test_if_tests_works(int number) {
-        assertEquals(number, number);
     }
 
 

@@ -33,19 +33,19 @@ public class Simulation extends Application {
     private AnimationTimer _timer;
 
     /* Window dimensions */
-    double HEIGHT;
-    double WIDTH;
+    private double HEIGHT;
+    private double WIDTH;
 
     /* Scaling */
-    Pair<Double,Double> scaling_factors;
+    private Pair<Double,Double> scaling_factors;
 
     /* Map */
-    GameMap R;
+   private GameMap R;
 
     /* Map */
-    List<String> _players_names;
-    List<String> _players_urls_sprite;
-    List<String> _map_url;
+    private final List<String> _players_names;
+    private final List<String> _players_urls_sprite;
+    private final List<String> _map_url;
 
 
     public Simulation(List<String> players_names ,  List<String> players_urls_sprite,List<String> map_url )
@@ -294,6 +294,13 @@ public class Simulation extends Application {
             }
         });}
 
+    public double getHEIGHT() {
+        return HEIGHT;
+    }
+
+    public double getWIDTH() {
+        return WIDTH;
+    }
 }
 
 

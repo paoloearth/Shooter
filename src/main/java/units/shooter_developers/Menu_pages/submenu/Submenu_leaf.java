@@ -1,4 +1,4 @@
-package units.shooter_developers.Menu_pages;
+package units.shooter_developers.Menu_pages.submenu;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,7 +9,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import units.shooter_developers.Custom_Settings;
-import units.shooter_developers.TypeImage;
 
 public abstract  class Submenu_leaf extends VBox {
 

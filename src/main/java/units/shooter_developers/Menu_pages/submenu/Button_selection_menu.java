@@ -1,11 +1,8 @@
-package units.shooter_developers;
+package units.shooter_developers.Menu_pages.submenu;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-
 import javafx.scene.layout.VBox;
-import units.shooter_developers.Menu_pages.Submenu_component;
-
 
 public class Button_selection_menu extends Submenu_component {
 

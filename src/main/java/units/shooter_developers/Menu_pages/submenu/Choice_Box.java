@@ -1,10 +1,8 @@
-package units.shooter_developers;
+package units.shooter_developers.Menu_pages.submenu;
 
 import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
-import units.shooter_developers.Menu_pages.Submenu_leaf;
-
 import java.util.Map;
 
 
@@ -15,7 +13,7 @@ public class Choice_Box extends Submenu_leaf {
         private Map<String, String> _dict;
 
 
-        public Choice_Box( Map<String, String> Name_URL, TypeImage  T) {
+        public Choice_Box( Map<String, String> Name_URL, TypeImage T) {
             super(T);
 
             set_dict(Name_URL);

@@ -84,7 +84,6 @@ public class Bonus_Generator extends Pictured_Object{
 
     /* Getters */
     private double get_inmap_X_position() { return get_current_X_position()-get_actual_width(); }
-
     private double get_inmap_Y_position() { return get_current_Y_position()-get_actual_height(); }
 
 
