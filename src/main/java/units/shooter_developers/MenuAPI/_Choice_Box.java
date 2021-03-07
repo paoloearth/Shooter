@@ -41,7 +41,7 @@ public class _Choice_Box extends _Submenu_leaf {
             var I = Menu.retrieveImage(retrieve_selected_value_from_dict(selected), _n_rows, 1);
             I.setPreserveRatio(true);
             scale_image_to_fit_box(H, I);
-            fill_HBox_with_image(H,I);
+            H.getChildren().add(I);
 
         });
     }

@@ -26,10 +26,6 @@ public abstract  class _Submenu_leaf extends VBox {
 
     }
 
-    protected static void fill_HBox_with_image(HBox h, ImageView i) {
-        h.getChildren().add(i);
-    }
-
 
     protected void scale_image_to_fit_box(HBox H, ImageView I) {
         I.fitHeightProperty().bind(H.heightProperty());

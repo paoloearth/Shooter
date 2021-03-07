@@ -29,7 +29,7 @@ public class _Text_Box extends _Submenu_leaf {
         I.setEffect(ds);
 
         scale_image_to_fit_box(H, I);
-        fill_HBox_with_image(H,I);
+        H.getChildren().add(I);
 
         getChildren().add(H);
 
