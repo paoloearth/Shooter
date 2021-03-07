@@ -37,7 +37,7 @@ public class Projectile extends Dynamic_Object{
         return S.get_future_x() + this.biasX;
     }
 
-    public void translate(GameMap M)
+    private void translate(GameMap M)
     {
         if(illegal_move(M)) set_is_dead_property(true);
         else move_to(new Coordinates(get_future_x(), get_future_y()));
@@ -57,7 +57,7 @@ public class Projectile extends Dynamic_Object{
 
 
 
-    public void set_biases(int bias_x, int biasY)
+    private void set_biases(int bias_x, int biasY)
     {
         setBiasX(bias_x);
         setBiasY(biasY);
@@ -75,7 +75,7 @@ public class Projectile extends Dynamic_Object{
     };
 
 
-    public void hit(Sprite S)
+    private void hit(Sprite S)
     {
         if(!is_dead() && !Owner.equals(S.get_id())) // If player has not hit anything yet
         {
