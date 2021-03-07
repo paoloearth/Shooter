@@ -14,13 +14,13 @@ import java.util.Map;
 
 public class _Choice_Box extends VBox {
 
-    private ComboBox<String> comboBox;
+    private ComboBox<String> _comboBox;
     private Map<String, String> _dict;
     private int _nrows;
     private double _custom_scale;
 
 
-    public _Choice_Box(Map<String, String> Name_URL, int nrows, double scale) {
+    public _Choice_Box(Map<String, String> map_name_imageURL, int nrows, double scale) {
         super();
         setAlignment(Pos.TOP_CENTER);
         setPadding(new Insets(10));
@@ -28,11 +28,15 @@ public class _Choice_Box extends VBox {
 
         _nrows = nrows;
         _custom_scale = scale;
-        set_dict(Name_URL);
-        create_combobox_with_DICT(Name_URL);
-        add_combobox_to_vbox();
+        set_dict(map_name_imageURL);
+        create_combobox_with_DICT(map_name_imageURL);
+        getChildren().add(getComboBox());
+
+        //SEGUIR TRABAJANDO MAÑANA POR AQUí
+
         HBox H = createCustomHbox();
         getChildren().add(H);
+
         set_listener_to_change_figure(H);
     }
 
@@ -66,12 +70,9 @@ public class _Choice_Box extends VBox {
 
 
     private void create_combobox_with_DICT(Map<String, String> Name_URL) {
-       setComboBox(new ComboBox<>(FXCollections.observableArrayList(Name_URL.keySet())));
+       _comboBox = new ComboBox<>(FXCollections.observableArrayList(Name_URL.keySet()));
     }
 
-    private void add_combobox_to_vbox() {
-            getChildren().add(getComboBox());
-        }
     public String get_value()
     {
         return getComboBox().getValue();
@@ -97,10 +98,7 @@ public class _Choice_Box extends VBox {
 
     /* For combobox varibale */
     public ComboBox<String> getComboBox() {
-        return comboBox;
-    }
-    public void setComboBox(ComboBox<String> comboBox) {
-        this.comboBox = comboBox;
+        return _comboBox;
     }
 
 
