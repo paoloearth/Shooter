@@ -1,15 +1,15 @@
-package units.shooter_developers.Menu_pages.submenu;
+package units.shooter_developers.MenuAPI;
 
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
-public class Text_Box extends Submenu_leaf {
+public class _Text_Box extends _Submenu_leaf {
 
     TextField textField = new TextField();
 
-    public Text_Box(String commands_url, TypeImage T)
+    public _Text_Box(String commands_url, _TypeImage T)
     {
 
         super(T);

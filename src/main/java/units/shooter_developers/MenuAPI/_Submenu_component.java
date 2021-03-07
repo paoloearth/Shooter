@@ -1,10 +1,10 @@
-package units.shooter_developers.Menu_pages.submenu;
+package units.shooter_developers.MenuAPI;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
 
-public class Submenu_component extends GridPane {
+public class _Submenu_component extends GridPane {
 
 
     private double _width;
@@ -12,7 +12,7 @@ public class Submenu_component extends GridPane {
 
     protected SimpleBooleanProperty all_set = new SimpleBooleanProperty(false);
 
-    protected Submenu_component(double width, double height)
+    protected _Submenu_component(double width, double height)
     {
         /* Functions that deals with the aspects of the menu*/
         set_height(height);

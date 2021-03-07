@@ -1,7 +1,5 @@
 package units.shooter_developers.Menu_pages;
 
-import java.io.*;
-import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.util.Pair;
@@ -22,7 +20,7 @@ public class OptionsMenu extends Menu {
     public void createContent(){
 
         setTitle("O P T I O N S");
-        this.addSelectorItem("COLOR MODE", "light", "dark");
+        this.addSelectorItem("COLOR MODE", "dark", "light");
 
         this.addSelectorItem("RESOLUTION",
                 (int) getStageWidth() + "x" + (int) getStageHeight() + " (current)",

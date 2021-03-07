@@ -1,16 +1,15 @@
-package units.shooter_developers.Menu_pages.submenu;
+package units.shooter_developers.MenuAPI;
 
 import javafx.beans.binding.BooleanBinding;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
 import units.shooter_developers.*;
-import units.shooter_developers.MenuAPI.Menu;
 
 import java.util.ArrayList;
 
-public class Submenu extends Menu {
+public class _Submenu extends Menu {
 
-    public Submenu(Menu other_menu){
+    public _Submenu(Menu other_menu){
         super(other_menu);
     }
 
@@ -23,12 +22,12 @@ public class Submenu extends Menu {
     private  class SubmenuObject extends FlowPane {
 
         double _width, _height;
-        Player_selection_menu P_menu;
-        Map_selection_menu P_map;
-        Button_selection_menu P_buttons;
-        Submenu M; // Necessary in order to change the scene
+        _Player_selection_menu player_section;
+        _Map_selection_menu map_section;
+        _Button_selection_menu buttons_section;
+        _Submenu M; // Necessary in order to change the scene
 
-        SubmenuObject(double width, double height, Submenu M)  {
+        SubmenuObject(double width, double height, _Submenu M)  {
 
             this.M = M;
             this._width = width;
@@ -36,33 +35,32 @@ public class Submenu extends Menu {
 
             this.setPrefSize(width, height);
 
-            P_menu     = new Player_selection_menu( _width,             _height / 2);    // THE TOP WILL OCCUPY HALF THE HEIGHT
+            player_section = new _Player_selection_menu( _width,             _height / 2);    // THE TOP WILL OCCUPY HALF THE HEIGHT
+            map_section      = new _Map_selection_menu(_width * .7,       _height / 2);    // THE BOTTOM HALF WILL BE SPLIT 70% for MAP & 25%
+            buttons_section = new _Button_selection_menu(_width * .25,   _height / 2);
 
-            P_map      = new Map_selection_menu(_width * .7,       _height / 2);    // THE BOTTOM HALF WILL BE SPLIT 70% for MAP & 25%
-            P_buttons  = new Button_selection_menu(_width * .25,   _height / 2);
+            map_section.setAlignment(Pos.TOP_CENTER);
+            buttons_section.setAlignment(Pos.CENTER_LEFT);
 
-            P_map.setAlignment(Pos.TOP_CENTER);
-            P_buttons.setAlignment(Pos.CENTER_LEFT);
+            getChildren().addAll(player_section,map_section, buttons_section);
 
-            getChildren().addAll(P_menu,P_map,P_buttons);
-
-            BooleanBinding property = P_map.get_AllSetProperty().or(P_menu.get_AllSetProperty());
+            BooleanBinding property = map_section.get_AllSetProperty().or(player_section.get_AllSetProperty());
 
             disable_button_until_property_is_verified(property);
 
             add_actions_to_buttons(M);
         }
 
-        private void add_actions_to_buttons(Submenu M) {
-            P_buttons.getLaunch_simulation().setOnAction(event -> launch_simulation(M));
-            P_buttons.getLaunch_default().setOnAction(event -> launch_default(M));
+        private void add_actions_to_buttons(_Submenu M) {
+            buttons_section.getMainLaunchButton().setOnAction(event -> launch_simulation(M));
+            buttons_section.getDefaultLaunchButton().setOnAction(event -> launch_default(M));
         }
 
         private void disable_button_until_property_is_verified(BooleanBinding property) {
-            P_buttons.getLaunch_simulation().disableProperty().bind(property);
+            buttons_section.getMainLaunchButton().disableProperty().bind(property);
         }
 
-        private void launch_default(Submenu M) {
+        private void launch_default(_Submenu M) {
 
             var FAKE_NAMES = new ArrayList<String>();
             FAKE_NAMES.add("FIZZ");
@@ -86,8 +84,8 @@ public class Submenu extends Menu {
 
 
 
-        private void launch_simulation(Submenu M) {
-            M.setSimulationInstance(new Simulation(P_menu.get_players_names(),P_menu.get_players_URL(), P_map.get_map_data()));
+        private void launch_simulation(_Submenu M) {
+            M.setSimulationInstance(new Simulation(player_section.get_players_names(), player_section.get_players_URL(), map_section.get_map_data()));
             try {
                 M.getStage().close();
                 getSimulationInstance().start(getStage());

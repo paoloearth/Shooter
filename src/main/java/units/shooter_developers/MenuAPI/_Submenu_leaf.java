@@ -1,4 +1,4 @@
-package units.shooter_developers.Menu_pages.submenu;
+package units.shooter_developers.MenuAPI;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,12 +10,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import units.shooter_developers.Custom_Settings;
 
-public abstract  class Submenu_leaf extends VBox {
+public abstract  class _Submenu_leaf extends VBox {
 
     protected int n_rows=1;
     double custom_scale;
 
-    protected Submenu_leaf(TypeImage T)
+    protected _Submenu_leaf(_TypeImage T)
     {
 
         set_padding_and_spacing();
@@ -26,7 +26,7 @@ public abstract  class Submenu_leaf extends VBox {
 
     }
 
-    private void set_custom_scale_on_T(TypeImage T) {
+    private void set_custom_scale_on_T(_TypeImage T) {
         switch (T) {
             case SPRITE -> {
                 n_rows = 4;
