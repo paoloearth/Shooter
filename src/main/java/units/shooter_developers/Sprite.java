@@ -17,16 +17,14 @@ public class Sprite extends Dynamic_Object {
 
     private final String _id;                                                      // Player ID
     private final IntegerProperty _frame  = new SimpleIntegerProperty(0);        // Frame property to update the moving sprite
-    private final HealthBar H;
+    private final HealthBar Sprite_Hbar;
     private boolean goNorth, goSouth, goEast, goWest;
     private final BooleanProperty _can_shoot = new SimpleBooleanProperty(true);
     private final String _player_name;
 
-
-
-    Timeline shooting_cooldown = new Timeline(
+    private final  Timeline shooting_cooldown = new Timeline(
             new KeyFrame(Duration.ZERO, event -> _can_shoot.setValue(false)),
-            new KeyFrame(Duration.seconds(0.5), event -> _can_shoot.setValue(true))
+            new KeyFrame(Duration.seconds(Custom_Settings.SHOOTING_COOLDOWN), event -> _can_shoot.setValue(true))
     );
 
 
@@ -39,23 +37,20 @@ public class Sprite extends Dynamic_Object {
         set_speed(Custom_Settings.PLAYER_SPEED);
         set_scale(Custom_Settings.PLAYER_SCALE);
 
-
         update_view();
 
-        /* Add a triggered event to changes of locations, set the default direction*/
+        /* Add a triggered event to change the view accordingly to the direction of the sprite*/
         ChangeListener<Object> updateImage = getListener();
         _current_directionProperty().addListener(updateImage);
         _current_directionProperty().setValue(D);
 
+        Sprite_Hbar = getHealthBar();
+        get_is_dead_property().bind(Sprite_Hbar.is_remaining_life_zero());
 
-
-        H = getHealthBar();
-        get_is_dead_property().bind(H.is_remaining_life_zero());
 
         move_to(M.get_position_of(id));
+        add_nodes(Sprite_Hbar, get_view());
 
-
-        this.getChildren().addAll(H, get_view());
         root.getChildren().add(this);
     }
 
@@ -63,16 +58,20 @@ public class Sprite extends Dynamic_Object {
     public void default_movement(GameMap M){
         move(M);
     };
+    @Override
+    public Box get_hitbox(){
+        return new Box(get_current_Y_position() , get_current_X_position() +get_actual_width() * 0.15,  get_actual_width() -get_actual_width() * 0.15 ,get_actual_height()*.9 );
+    }
+    @Override
+    public Box get_move_box(){ return new Box( get_future_y() + (get_actual_height() * 2.0/3.0),get_future_x(), get_actual_width() ,get_actual_height()* 1.0/3.0); }
+
 
     private HealthBar getHealthBar() {
         return new HealthBar(this);
     }
 
-    //Change the picture of the Sprite in the SpriteSheet according to the direction
     private ChangeListener<Object> getListener() {
-
         return (ov, o, o2) -> get_view().setViewport(new Rectangle2D( _frame.get()*get_width(), get_current_direction().getOffset() * get_height(), get_width(), get_height()));
-
     }
 
     //Update the movement in the right direction
@@ -84,7 +83,7 @@ public class Sprite extends Dynamic_Object {
         if (goWest)  set_deltaX(get_deltaX()-get_speed());
     }
 
-    // HERE I TRY TO INFER THE DIRECTION SO THAT I CAN PICK THE RIGHT SPRITE
+
     public void update_get_direction(Coordinates destination)
     {
         Direction D;
@@ -98,7 +97,6 @@ public class Sprite extends Dynamic_Object {
 
 
 
-
     public void move(GameMap M) {
         update_speed();
 
@@ -108,7 +106,7 @@ public class Sprite extends Dynamic_Object {
 
             update_get_direction(destination);
 
-            if (!(illegal_move(M, 2.0 / 3.0, this))) move_to(destination);
+            if (!(illegal_move(M))) move_to(destination);
         }
 
     }
@@ -130,10 +128,6 @@ public class Sprite extends Dynamic_Object {
 
     }
 
-    @Override
-    public Box get_hitbox(){
-        return new Box(get_current_Y_position() , get_current_X_position() +get_actual_width() * 0.15,  get_actual_width() ,get_actual_height()*.75 );
-    }
 
     public void shoot(Pane root){
 
@@ -163,27 +157,21 @@ public class Sprite extends Dynamic_Object {
     public String get_id() {
         return _id;
     }
-
     public int get_frame() {
         return _frame.get();
     }
-
     public IntegerProperty _frameProperty() {
         return _frame;
     }
-
     public HealthBar getHBar() {
-        return H;
+        return Sprite_Hbar;
     }
-
     public boolean is_can_shoot() {
         return _can_shoot.get();
     }
-
     public BooleanProperty _can_shootProperty() {
         return _can_shoot;
     }
-
     public String get_player_name() {
         return _player_name;
     }

@@ -5,7 +5,7 @@ import javafx.util.Pair;
 
 public abstract class Dynamic_Object extends Pictured_Object {
 
-    private ObjectProperty<Direction> _current_direction = new SimpleObjectProperty<>();
+    private final ObjectProperty<Direction> _current_direction = new SimpleObjectProperty<>();
 
     private int _speed;
     private int _deltaX, _deltaY;
@@ -26,21 +26,19 @@ public abstract class Dynamic_Object extends Pictured_Object {
 
 
     public Box get_move_box(){ return new Box( get_future_y() ,get_future_x(), get_actual_width() ,get_actual_height()); }
-   // protected abstract  boolean illegal_move(Map M);
-   protected  boolean illegal_move(GameMap M, double multiplier, Dynamic_Object D) {
+
+    // protected abstract  boolean illegal_move(Map M);
+   protected  boolean illegal_move(GameMap M) {
 
        /* Compute the collision box*/
        var collision_box =  get_move_box();
 
        if(collision_box.is_out_of_map(M)) return true;
 
-       /* Reduce impact area of the object*/
-       collision_box.shrink_height_by(multiplier);
-
        /* Get tiles  */
        collision_box.compute_tiles_bounds(M);
 
-       return collision_box.performs_check(M,D);
+       return collision_box.performs_check(M,this);
 
    }
 
