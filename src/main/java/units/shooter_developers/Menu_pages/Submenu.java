@@ -14,14 +14,10 @@ public class Submenu extends Menu {
         super(other_menu);
     }
 
-    public void start(Stage stage){
-        setStage(stage);
-        getStage().centerOnScreen();
-
+    @Override
+    public void createContent(){
         SubmenuObject content = new SubmenuObject(getMenuWidth(), getMenuHeight(), this);
         addGenericNode(content);
-
-        show();
     }
 
     private  class SubmenuObject extends FlowPane {

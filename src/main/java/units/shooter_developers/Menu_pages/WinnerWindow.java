@@ -1,7 +1,6 @@
 package units.shooter_developers.Menu_pages;
 
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 import units.shooter_developers.MenuAPI.Menu;
 import units.shooter_developers.Sprite;
 
@@ -12,14 +11,12 @@ public class WinnerWindow extends Menu {
     Sprite _player;
 
     public WinnerWindow(double width, double height, Sprite player ){
-        super(width, height);
+        super();
         _player = player;
     }
 
     @Override
-    public void start(Stage stage){
-        setStage(stage);
-        getStage().centerOnScreen();
+    public void createContent(){
 
         var winner_image = Menu.retrieveImage(_player.get_url(),4,1);
         var fireworks = Menu.retrieveImage("fireworks.png", 1,1);
@@ -28,7 +25,6 @@ public class WinnerWindow extends Menu {
 
         addSecondaryTitle("The winner is "+ _player.get_player_name());
         addFlashDisclaimer("<press a key to continue>");
-        show();
 
         waitAndPressToContinue(1);
     }
