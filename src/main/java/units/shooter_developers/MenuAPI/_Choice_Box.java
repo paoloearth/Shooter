@@ -1,16 +1,18 @@
 package units.shooter_developers.MenuAPI;
 
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.util.Map;
 
 
 
-public class _Choice_Box extends _Submenu_leaf {
+public class _Choice_Box extends VBox {
 
     private ComboBox<String> comboBox;
     private Map<String, String> _dict;
@@ -20,6 +22,10 @@ public class _Choice_Box extends _Submenu_leaf {
 
     public _Choice_Box(Map<String, String> Name_URL, int nrows, double scale) {
         super();
+        setAlignment(Pos.TOP_CENTER);
+        setPadding(new Insets(10));
+        setSpacing(10);
+
         _nrows = nrows;
         _custom_scale = scale;
         set_dict(Name_URL);

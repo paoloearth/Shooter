@@ -1,13 +1,15 @@
 package units.shooter_developers.MenuAPI;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-public class _Text_Box extends _Submenu_leaf {
+public class _Text_Box extends VBox {
 
     TextField textField = new TextField();
     int _nrows;
@@ -15,8 +17,11 @@ public class _Text_Box extends _Submenu_leaf {
 
     public _Text_Box(String commands_url, int nrows, double scale)
     {
-
         super();
+
+        setAlignment(Pos.TOP_CENTER);
+        setPadding(new Insets(10));
+        setSpacing(10);
 
         _nrows = nrows;
         _custom_scale = scale;
