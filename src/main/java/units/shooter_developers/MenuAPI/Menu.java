@@ -77,8 +77,6 @@ public abstract class Menu extends Application {
         Pane root = new Pane();
         _root = root;
 
-        setStageDimensions(stage_width, stage_height);
-
         _background.setFitWidth(getMenuWidth());
         _background.setFitHeight(getMenuHeight());
         _background.setX(getPositionX());
@@ -91,6 +89,7 @@ public abstract class Menu extends Application {
     public void start(Stage stage){
         setStage(stage);
         getStage().setMaximized(false);
+        setStageDimensions(getMenuWidth(), getMenuHeight());
         createRootAndBackground(getMenuWidth(), getMenuHeight());
         createContent();
         stage.centerOnScreen();
