@@ -94,7 +94,6 @@ public class OptionsMenu extends Menu {
     private void applyCurrentSettings(){
         writeSettings();
         var selected_resolution = ParseSelectedResolution();
-        var current_resolution = new Pair<Double, Double>(getStageWidth(), getStageHeight());
 
         if (isSimulationRunning())
             askConfirmChanges(selected_resolution.getKey(), selected_resolution.getValue());
@@ -102,6 +101,7 @@ public class OptionsMenu extends Menu {
             setStageDimensions(selected_resolution.getKey(), selected_resolution.getValue());
             writeSettings();
             OptionsMenu options_menu = new OptionsMenu(this);
+            options_menu.readProperties();
             options_menu.start(getStage());
         }
 

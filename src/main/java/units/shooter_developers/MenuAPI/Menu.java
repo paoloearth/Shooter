@@ -21,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -31,9 +32,6 @@ import units.shooter_developers.Simulation;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Properties;
@@ -51,14 +49,11 @@ public abstract class Menu extends Application {
     private static Simulation _simulation_instance;
     private static boolean _simulation_running;
     private static ColorPalette _color_palette;
+    private static ImageView _background;
 
     /************************** CONSTRUCTORS *****************************/
 
     public Menu() {
-        this(tryToReadWidth(), tryToReadHeight());
-    }
-
-    public Menu(double stage_width, double stage_height) {
         _width_scale = 1;
         _height_scale = 1;
         _position_width_ratio = 0;
@@ -66,7 +61,6 @@ public abstract class Menu extends Application {
         _simulation_running = false;
         _simulation_instance = null;
         _color_palette = new ColorPalette();
-        this.createRootAndBackground(stage_width, stage_height);
     }
 
     public Menu(Menu other_menu){
@@ -82,66 +76,19 @@ public abstract class Menu extends Application {
 
         setStageDimensions(stage_width, stage_height);
 
-        root.setPrefSize(getMenuWidth(), getMenuHeight());
-        try (InputStream background_input_stream = Files.newInputStream(Paths.get("src/main/resources/menu_dark.jpeg"))) {
-            ImageView background_img = new ImageView(new Image(background_input_stream));
-            setBackground(background_img);
-        } catch (IOException e) {
-            System.out.println("Menu background image not found");
-        }
-    }
-
-    private void setBackground(ImageView image){
-        var current_background = _root.getChildren().parallelStream()
-                .filter(e -> e instanceof ImageView)
-                .findFirst()
-                .orElse(null);
-        if(current_background != null)
-            _root.getChildren().remove(current_background);
-
-        image.setFitWidth(getMenuWidth());
-        image.setFitHeight(getMenuHeight());
-        image.setX(getPositionX());
-        image.setY(getPositionY());
-        _root.getChildren().add(image);
-    }
-
-    private static double tryToReadWidth(){
-        File configFile = new File("config.ini");
-        Properties config = new Properties();
-
-        try{
-            FileReader reader = new FileReader(configFile);
-            config.load(reader);
-            double width = Double.parseDouble(config.getProperty("WIDTH"));
-            reader.close();
-            return width;
-        } catch(Exception e){
-            return getScreenWidth();
-        }
-    }
-
-    private static double tryToReadHeight(){
-        File configFile = new File("config.ini");
-        Properties config = new Properties();
-
-        try{
-            FileReader reader = new FileReader(configFile);
-            config.load(reader);
-            reader.close();
-            double width = Double.parseDouble(config.getProperty("HEIGHT"));
-            return width;
-        } catch(Exception e){
-            return getScreenHeight();
-        }
+        _background.setFitWidth(getMenuWidth());
+        _background.setFitHeight(getMenuHeight());
+        _background.setX(getPositionX());
+        _background.setY(getPositionY());
+        _root.getChildren().add(_background);
     }
 
     /************************** START METHOD ************************************/
 
     public void start(Stage stage){
         setStage(stage);
-        readDimensions();
         getStage().setMaximized(false);
+        createRootAndBackground(getMenuWidth(), getMenuHeight());
         createContent();
         stage.centerOnScreen();
         show();
@@ -149,47 +96,55 @@ public abstract class Menu extends Application {
 
     public abstract void createContent();
 
-    private void readDimensions(){
+    public void readProperties(){
         File configFile = new File("config.ini");
         Properties config = new Properties();
+        ImageView background_light = null;
+        ImageView background_dark = null;
 
-        try{
+        try {
             FileReader reader = new FileReader(configFile);
             config.load(reader);
             reader.close();
+        }catch (IOException e) {
+            System.out.println("Config file not found. Using default properties.");
+        }
+
+        try{
             double width = Double.parseDouble(config.getProperty("WIDTH"));
             double height = Double.parseDouble(config.getProperty("HEIGHT"));
             setStageDimensions(width, height);
-
-            String color_mode = config.getProperty("COLOR MODE");
-            if(color_mode.equals("light")){
-                try (InputStream background_input_stream = Files.newInputStream(Paths.get("src/main/resources/menu_light.jpg"))) {
-                    ImageView background_img = new ImageView(new Image(background_input_stream));
-                    setBackground(background_img);
-                } catch (IOException e) {
-                    System.out.println("Menu background image not found");
-                }
-                // REFACTOR THIS AND SET ONLY ONE READ METHOD FOR ONCE ON A TIME!!!!!!!
-                //  this is a message for the Jose of the future
-
-                getColorPalette().basic_primary_color = Color.WHEAT;
-                getColorPalette().basic_secondary_color = Color.BLACK;
-                getColorPalette().dead_color = Color.SANDYBROWN;
-                getColorPalette().selected_primary_color = Color.DARKRED;
-                getColorPalette().selected_secondary_color = Color.WHITESMOKE;
-                getColorPalette().clicked_background_color = Color.ORANGERED;
-            } else {
-                try (InputStream background_input_stream = Files.newInputStream(Paths.get("src/main/resources/menu_dark.jpg"))) {
-                    ImageView background_img = new ImageView(new Image(background_input_stream));
-                    setBackground(background_img);
-                } catch (IOException e) {
-                    System.out.println("Menu background image not found");
-                }
-
-                setColorPalette(new ColorPalette());
-            }
         } catch (Exception e) {
-            return;
+            System.out.println("Parse of resolution failed. Using native resolution");
+            setStageDimensions(getScreenWidth(), getScreenHeight());
+        }
+
+        try{
+            background_light = new ImageView("menu_light.jpg");
+            background_dark = new ImageView("menu_dark.jpeg");
+        } catch(Exception e){
+            System.out.println("Background images not found!");
+            var rectangle_image = new Rectangle(2, 2).snapshot(null, null);
+            var default_background = new ImageView(rectangle_image);
+            _background = default_background;
+        }
+
+        String color_mode = config.getProperty("COLOR MODE");
+        if(color_mode.equals("light")){
+            if(background_light != null)
+                _background = background_light;
+
+            getColorPalette().basic_primary_color = Color.WHEAT;
+            getColorPalette().basic_secondary_color = Color.BLACK;
+            getColorPalette().dead_color = Color.SANDYBROWN;
+            getColorPalette().selected_primary_color = Color.DARKRED;
+            getColorPalette().selected_secondary_color = Color.WHITESMOKE;
+            getColorPalette().clicked_background_color = Color.ORANGERED;
+        } else {
+            if(background_dark != null)
+                _background = background_dark;
+
+            setColorPalette(new ColorPalette());
         }
     }
 

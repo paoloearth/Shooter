@@ -1,7 +1,6 @@
 package units.shooter_developers.Menu_pages;
 
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 import units.shooter_developers.MenuAPI.Menu;
 import units.shooter_developers.Sprite;
 
@@ -12,7 +11,7 @@ public class WinnerWindow extends Menu {
     Sprite _player;
 
     public WinnerWindow(double width, double height, Sprite player ){
-        super(width, height);
+        super();
         _player = player;
     }
 
