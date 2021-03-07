@@ -3,33 +3,43 @@ package units.shooter_developers;
 import javafx.util.Pair;
 
 public class Projectile extends Dynamic_Object{
-    int biasX;
-    int biasY;
-    String Owner;
+    private int biasX;
+    private int biasY;
+    private final String Owner;
 
 
     public Projectile(Pair<Double, Double> scaling_factor, String url, Sprite S)
     {
         super(scaling_factor, url);
 
-        this.Owner = S.get_id();              // Save the shooter's ID
+        this.Owner = S.get_id();
 
         set_scale(Custom_Settings.PROJECTILE_SCALE);
-
         set_speed(Custom_Settings.PROJECTILE_SPEED);
-
         update_view();
 
         set_initial_and_translate_direction(S.get_current_direction());
 
-        move_to(new Coordinates(S.get_future_x() + this.biasX, S.get_future_y() + this.biasY));
+        move_to(get_biased_starting_position(S));
 
         this.getChildren().add(get_view());
     }
 
-    public void translate(GameMap M)
+    private Coordinates get_biased_starting_position(Sprite S) {
+        return new Coordinates(get_biased_x_position(S), get_biased_y_position(S));
+    }
+
+    private double get_biased_y_position(Sprite S) {
+        return S.get_future_y() + this.biasY;
+    }
+
+    private double get_biased_x_position(Sprite S) {
+        return S.get_future_x() + this.biasX;
+    }
+
+    private void translate(GameMap M)
     {
-        if( illegal_move(M,0, this)) set_is_dead_property(true);
+        if(illegal_move(M)) set_is_dead_property(true);
         else move_to(new Coordinates(get_future_x(), get_future_y()));
     }
 
@@ -47,7 +57,7 @@ public class Projectile extends Dynamic_Object{
 
 
 
-    public void set_biases(int bias_x, int biasY)
+    private void set_biases(int bias_x, int biasY)
     {
         setBiasX(bias_x);
         setBiasY(biasY);
@@ -65,7 +75,7 @@ public class Projectile extends Dynamic_Object{
     };
 
 
-    public void hit(Sprite S)
+    private void hit(Sprite S)
     {
         if(!is_dead() && !Owner.equals(S.get_id())) // If player has not hit anything yet
         {

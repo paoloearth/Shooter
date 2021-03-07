@@ -43,6 +43,9 @@ public class Custom_Settings {
     /* BONUS */
     public static final int BONUS_COOLDOWN = 5 ;
 
+    /*HEALTHBAR */
+    public static final double SHOOTING_COOLDOWN = .5 ;
+
 
     /* HEALTHBAR */
     public static final double HB_PROPORTIONAL_WIDTH  = 0.1 ;   // HB height is 10 % of sprite's height

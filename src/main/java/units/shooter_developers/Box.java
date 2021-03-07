@@ -7,23 +7,13 @@ public class Box{
     double [] box ;
     int    [] tile;
 
-    public Box(double top, double left, double width, double height)
-    {
-       box = new double[]{top, left,  top+height,left+width};
-    }
+    public Box(double top, double left, double width, double height) { box = new double[]{top, left,  top+height,left+width}; }
 
     public void shrink_height_by(double v) {
         set_top(get_top_box()+get_height() * v);
     }
 
-    public double get_height()
-    {
-        return box[BOUNDS.BOTTOM.ordinal()]- box[BOUNDS.TOP.ordinal()];
-    }
-    public double get_width()
-    {
-        return box[BOUNDS.RIGHT.ordinal()]- box[BOUNDS.LEFT.ordinal()];
-    }
+
 
     public  void  compute_tiles_bounds(GameMap M) {
 
@@ -35,7 +25,6 @@ public class Box{
 
         int left_tile = (int) (get_left_box() / M.getTileWidth());
         if (left_tile < 0) left_tile = 0;
-
 
         int right_tile = (int) (get_right_box()/ M.getTileWidth());
         if (right_tile > M.get_width()) right_tile = (int) M.get_width();
@@ -54,9 +43,6 @@ public class Box{
     {
         return B.get_right_box() > get_left_box()&& B.get_bottom_box() > get_top_box() && B.get_left_box() < get_right_box() && B.get_top_box() < get_bottom_box();
     }
-
-
-
 
 
     private boolean check_top_and_left() {
@@ -83,11 +69,11 @@ public class Box{
         return false;
     }
 
+    /* Setters */
     public void set_top(double top)
     {
         box[BOUNDS.TOP.ordinal()] = top;
     }
-
     public void set_bottom(double bottom)
     {
         box[BOUNDS.BOTTOM.ordinal()] = bottom;
@@ -101,11 +87,11 @@ public class Box{
         box[BOUNDS.RIGHT.ordinal()] = right;
     }
 
+    /* Getters */
     public double get_top_box()
     {
         return box[BOUNDS.TOP.ordinal()];
     }
-
     public double get_bottom_box()
     {
         return box[BOUNDS.BOTTOM.ordinal()];
@@ -117,6 +103,14 @@ public class Box{
     public double get_right_box()
     {
         return box[BOUNDS.RIGHT.ordinal()];
+    }
+    public double get_height()
+    {
+        return box[BOUNDS.BOTTOM.ordinal()]- box[BOUNDS.TOP.ordinal()];
+    }
+    public double get_width()
+    {
+        return box[BOUNDS.RIGHT.ordinal()]- box[BOUNDS.LEFT.ordinal()];
     }
 
     public int get_top_tile()
