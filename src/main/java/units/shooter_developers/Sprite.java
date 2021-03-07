@@ -15,8 +15,8 @@ import javafx.util.Pair;
 
 public class Sprite extends Dynamic_Object {
 
-    private final String _id;                                                      // Player ID
-    private final IntegerProperty _frame  = new SimpleIntegerProperty(0);        // Frame property to update the moving sprite
+    private final String _id;
+    private final IntegerProperty _frame  = new SimpleIntegerProperty(0);
     private final HealthBar Sprite_Hbar;
     private boolean goNorth, goSouth, goEast, goWest;
     private final BooleanProperty _can_shoot = new SimpleBooleanProperty(true);
@@ -70,7 +70,7 @@ public class Sprite extends Dynamic_Object {
     private ChangeListener<Object> getListener() { return (ov, o, o2) -> get_view().setViewport(new Rectangle2D( _frame.get()*get_width(), get_current_direction().getOffset() * get_height(), get_width(), get_height())); }
 
     //Update the movement in the right direction
-    public void update_speed() {
+    private void update_speed() {
         set_deltaX(0);set_deltaY(0);
         if (goNorth) set_deltaY(get_deltaY()- get_speed());
         if (goSouth) set_deltaY(get_deltaY()+get_speed());
@@ -79,7 +79,7 @@ public class Sprite extends Dynamic_Object {
     }
 
 
-    public void update_get_direction(Coordinates destination)
+    private void update_get_direction(Coordinates destination)
     {
         Direction D;
         if (Math.abs(get_deltaX()) > Math.abs(get_deltaY()))
@@ -92,7 +92,7 @@ public class Sprite extends Dynamic_Object {
 
 
 
-    public void move(GameMap M) {
+    private void move(GameMap M) {
         update_speed();
 
         if (has_moved()) {

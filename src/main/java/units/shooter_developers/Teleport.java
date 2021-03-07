@@ -19,7 +19,7 @@ public class Teleport extends Pictured_Object{
 
         rotation_animation();
         move_to(M.get_position_of(ID));
-        root.getChildren().add(this);   // Add local pane to global root
+        root.getChildren().add(this);
     }
 
     private void rotation_animation() {
