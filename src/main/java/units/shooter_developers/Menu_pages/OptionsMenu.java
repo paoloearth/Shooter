@@ -51,7 +51,6 @@ public class OptionsMenu extends Menu {
 
                 } else if(item_casted.getName() == "APPLY") {
                     applyCurrentSettings();
-                    //insert here other possible settings updating
                 }
             });
 
@@ -63,14 +62,14 @@ public class OptionsMenu extends Menu {
 
 
 
-    private Pair<Double, Double> ParseSelectedResolution(){
+    private Pair<Double, Double> ParseSelectedResolution(String string_containing_resolution){
         String width_string;
         String height_string;
 
         try {
             String regex = "\\d+";
             Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(getSelectionFor("RESOLUTION"));
+            Matcher matcher = pattern.matcher(string_containing_resolution);
             matcher.find();
             width_string = matcher.group();
             matcher.find();
@@ -79,48 +78,45 @@ public class OptionsMenu extends Menu {
             double width = Integer.parseInt(width_string);
             double height = Integer.parseInt(height_string);
 
-            return new Pair<Double, Double>(width, height);
+            return new Pair<>(width, height);
         }catch(Exception e){
-            return new Pair<Double, Double>(null, null);
+            return new Pair<>(null, null);
         }
 
     }
 
-    private void askConfirmChanges(double width_candidate, double height_candidate){
-        AlertWindow alert_window = new AlertWindow(this, width_candidate, height_candidate);
+    private void askConfirmChanges(double width_candidate, double height_candidate, String candidate_color_mode){
+        AlertWindow alert_window = new AlertWindow(this, width_candidate, height_candidate, candidate_color_mode);
         alert_window.start(getStage());
     }
 
     private void applyCurrentSettings(){
         writeSettings();
-        var selected_resolution = ParseSelectedResolution();
+        var selected_resolution = ParseSelectedResolution(getSelectionFor("RESOLUTION"));
+        var candidate_width = selected_resolution.getKey();
+        var candidate_height = selected_resolution.getValue();
 
-        if (isSimulationRunning())
-            askConfirmChanges(selected_resolution.getKey(), selected_resolution.getValue());
+        String candidate_color_mode = getSelectionFor("COLOR MODE");
+
+        if (isSimulationRunning()) {
+            if (candidate_width != getMenuWidth() || candidate_height != getMenuHeight())
+                askConfirmChanges(candidate_width, candidate_height, candidate_color_mode);
+            else {
+                setColorMode(candidate_color_mode);
+                writeSettings();
+                OptionsMenu options_menu = new OptionsMenu(this);
+                options_menu.readProperties();
+                options_menu.start(getStage());
+            }
+        }
         else {
-            setStageDimensions(selected_resolution.getKey(), selected_resolution.getValue());
+            setStageDimensions(candidate_width, candidate_height);
+            setColorMode(candidate_color_mode);
             writeSettings();
             OptionsMenu options_menu = new OptionsMenu(this);
             options_menu.readProperties();
             options_menu.start(getStage());
         }
 
-    }
-
-    private void writeSettings() {
-        Properties config = new Properties();
-        var hola = getSelectionFor("COLOR MODE");
-        config.setProperty("COLOR MODE", getSelectionFor("COLOR MODE"));
-        config.setProperty("WIDTH", String.valueOf(getStageWidth()));
-        config.setProperty("HEIGHT", String.valueOf(getStageHeight()));
-
-        File configFile = new File("config.ini");
-        try{
-            FileWriter writer = new FileWriter(configFile);
-            config.store(writer, "Game settings");
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

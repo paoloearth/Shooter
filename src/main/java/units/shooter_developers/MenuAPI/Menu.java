@@ -31,6 +31,7 @@ import units.shooter_developers.Simulation;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,6 +51,7 @@ public abstract class Menu extends Application {
     private static boolean _simulation_running;
     private static ColorPalette _color_palette;
     private static ImageView _background;
+    private static String _color_mode;
 
     /************************** CONSTRUCTORS *****************************/
 
@@ -61,6 +63,7 @@ public abstract class Menu extends Application {
         _simulation_running = false;
         _simulation_instance = null;
         _color_palette = new ColorPalette();
+        _color_mode = "dark";
     }
 
     public Menu(Menu other_menu){
@@ -129,8 +132,12 @@ public abstract class Menu extends Application {
             _background = default_background;
         }
 
-        String color_mode = config.getProperty("COLOR MODE");
-        if(color_mode.equals("light")){
+        var color_mode = config.getProperty("COLOR MODE");
+        if(color_mode != null){
+            setColorMode(color_mode);
+        }
+
+        if(getColorMode().equals("light")){
             if(background_light != null)
                 _background = background_light;
 
@@ -145,6 +152,23 @@ public abstract class Menu extends Application {
                 _background = background_dark;
 
             setColorPalette(new ColorPalette());
+        }
+    }
+
+    public void writeSettings() {
+        Properties config = new Properties();
+
+        config.setProperty("COLOR MODE", getColorMode());
+        config.setProperty("WIDTH", String.valueOf(getStageWidth()));
+        config.setProperty("HEIGHT", String.valueOf(getStageHeight()));
+
+        File configFile = new File("config.ini");
+        try{
+            FileWriter writer = new FileWriter(configFile);
+            config.store(writer, "Game settings");
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -338,6 +362,14 @@ public abstract class Menu extends Application {
         Scene menu_scene = new Scene(_root);
         _stage.setScene(menu_scene);
         _stage.show();
+    }
+
+    public static void setColorMode(String color_mode){
+        _color_mode = color_mode;
+    }
+
+    public static String getColorMode(){
+        return _color_mode;
     }
 
     /** MENU ELEMENTS **/

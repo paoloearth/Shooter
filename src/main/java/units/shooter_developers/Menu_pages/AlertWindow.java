@@ -6,16 +6,19 @@ import units.shooter_developers.MenuAPI.Menu;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Properties;
 
 public class AlertWindow extends Menu {
     double _candidate_width;
     double _candidate_height;
+    String _candidate_color_mode;
 
-    AlertWindow(Menu other_menu, double candidate_width, double candidate_height){
+    AlertWindow(Menu other_menu, double candidate_width, double candidate_height, String candidate_color_mode){
         super(other_menu);
         _candidate_width = candidate_width;
         _candidate_height = candidate_height;
+        _candidate_color_mode = candidate_color_mode;
     }
 
     @Override
@@ -44,7 +47,8 @@ public class AlertWindow extends Menu {
                 if (item.getName().equals("CONTINUE"))
                 {
                     setStageDimensions(_candidate_width, _candidate_height);
-                    writeModifyingSettings();
+                    setColorMode(_candidate_color_mode);
+                    writeSettings();
                     OptionsMenu options_menu = new OptionsMenu();
                     options_menu.start(getStage());
                 }
@@ -54,20 +58,4 @@ public class AlertWindow extends Menu {
 
     }
 
-    private void writeModifyingSettings() {
-        Properties config = new Properties();
-
-        File configFile = new File("config.ini");
-        try{
-            FileWriter writer = new FileWriter(configFile);
-            FileReader reader = new FileReader(configFile);
-            config.load(reader);
-            config.put("WIDTH", String.valueOf(getStageWidth()));
-            config.put("HEIGHT", String.valueOf(getStageHeight()));
-            config.store(writer, "Game settings");
-            writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
