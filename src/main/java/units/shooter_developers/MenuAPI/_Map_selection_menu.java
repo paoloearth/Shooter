@@ -27,7 +27,7 @@ public class _Map_selection_menu extends _Submenu_component {
         set_name_png_dictionary();
         set_name_csv_dictionary();
 
-        CB_MAP = new _Choice_Box(Map_URL, _TypeImage.MAP);
+        CB_MAP = new _Choice_Box(Map_URL, 1, Custom_Settings.MAP_SCALE);
 
         all_set.bind(CB_MAP.getComboBox().getSelectionModel().selectedItemProperty().isNull());
 

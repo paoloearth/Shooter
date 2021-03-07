@@ -9,10 +9,10 @@ public class _Text_Box extends _Submenu_leaf {
 
     TextField textField = new TextField();
 
-    public _Text_Box(String commands_url, _TypeImage T)
+    public _Text_Box(String commands_url, int nrows, double scale)
     {
 
-        super(T);
+        super(nrows, scale);
 
         setFillWidth(false);
 

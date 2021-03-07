@@ -14,8 +14,8 @@ public class _Choice_Box extends _Submenu_leaf {
         private Map<String, String> _dict;
 
 
-        public _Choice_Box(Map<String, String> Name_URL, _TypeImage T) {
-            super(T);
+        public _Choice_Box(Map<String, String> Name_URL, int nrows, double scale) {
+            super(nrows, scale);
 
             set_dict(Name_URL);
             create_combobox_with_DICT(Name_URL);

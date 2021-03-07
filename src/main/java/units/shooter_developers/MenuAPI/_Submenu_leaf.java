@@ -12,36 +12,17 @@ import units.shooter_developers.Custom_Settings;
 
 public abstract  class _Submenu_leaf extends VBox {
 
-    protected int n_rows=1;
-    double custom_scale;
+    protected int n_rows = 1;
+    public double custom_scale;
 
-    protected _Submenu_leaf(_TypeImage T)
+    protected _Submenu_leaf(int nrows, double scale)
     {
 
         set_padding_and_spacing();
 
-        System.out.println(T);
+        n_rows = nrows;
+        custom_scale = scale;
 
-        set_custom_scale_on_T(T);
-
-    }
-
-    private void set_custom_scale_on_T(_TypeImage T) {
-        switch (T) {
-            case SPRITE -> {
-                n_rows = 4;
-                custom_scale = Custom_Settings.SPRITE_SCALE;
-            }
-            case WASD -> {
-                custom_scale = Custom_Settings.WASD_SCALE;
-            }
-            case ARROW -> {
-                custom_scale = Custom_Settings.ARROWS_SCALE;
-            }
-            case MAP -> {
-                custom_scale = Custom_Settings.MAP_SCALE;
-            }
-        }
     }
 
 
@@ -75,7 +56,7 @@ public abstract  class _Submenu_leaf extends VBox {
     }
 
 
-    protected ImageView retrieve_image(String URL, int n_rows)
+    protected static ImageView retrieve_image(String URL, int n_rows)
     {
         var I = new Image(URL);
         var IM =  new ImageView(I);

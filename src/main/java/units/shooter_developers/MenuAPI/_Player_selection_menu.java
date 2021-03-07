@@ -44,8 +44,8 @@ public class _Player_selection_menu extends _Submenu_component {
     }
 
     private void create_choiceboxes() {
-        CB_P1 = new _Choice_Box( Name_URL, _TypeImage.SPRITE);
-        CB_P2 = new _Choice_Box(Name_URL, _TypeImage.SPRITE);
+        CB_P1 = new _Choice_Box( Name_URL, 4, Custom_Settings.SPRITE_SCALE);
+        CB_P2 = new _Choice_Box(Name_URL, 4, Custom_Settings.SPRITE_SCALE);
 
 
 
@@ -55,8 +55,8 @@ public class _Player_selection_menu extends _Submenu_component {
 
     private void create_textboxes() {
         /* TEXT BOX & ADD them to GRIDPANE in right position*/
-        TB_P1 = new _Text_Box(Custom_Settings.URL_COMMANDS_P1, _TypeImage.WASD);
-        TB_P2 = new _Text_Box(Custom_Settings.URL_COMMANDS_P2, _TypeImage.ARROW);
+        TB_P1 = new _Text_Box(Custom_Settings.URL_COMMANDS_P1, 1, Custom_Settings.WASD_SCALE);
+        TB_P2 = new _Text_Box(Custom_Settings.URL_COMMANDS_P2, 1, Custom_Settings.ARROWS_SCALE);
 
         TB_P1.setAlignment(Pos.CENTER);
         TB_P1.setAlignment(Pos.CENTER);
