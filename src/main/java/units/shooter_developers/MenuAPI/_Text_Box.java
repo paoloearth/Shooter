@@ -1,5 +1,6 @@
 package units.shooter_developers.MenuAPI;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.HBox;
@@ -21,7 +22,8 @@ public class _Text_Box extends _Submenu_leaf {
         getChildren().add(textField);
 
         HBox H = createCustomHbox();
-        var I = retrieve_image(commands_url,n_rows);
+        var I = Menu.retrieveImage(commands_url, _n_rows, 1);
+        I.setPreserveRatio(true);
 
         DropShadow ds = new DropShadow( 50, Color.WHITE );
         I.setEffect(ds);
@@ -29,11 +31,16 @@ public class _Text_Box extends _Submenu_leaf {
         scale_image_to_fit_box(H, I);
         fill_HBox_with_image(H,I);
 
+        getChildren().add(H);
 
 
-        add_generic_child_node_to_parent_node(this,H);
+    }
 
-
+    protected static HBox createCustomHbox() {
+        HBox H = new HBox();
+        H.setMinHeight(0);
+        H.setAlignment(Pos.BOTTOM_CENTER);
+        return H;
     }
 
     public String get_value()
