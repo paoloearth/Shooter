@@ -14,10 +14,14 @@ public class _Choice_Box extends _Submenu_leaf {
 
     private ComboBox<String> comboBox;
     private Map<String, String> _dict;
+    private int _nrows;
+    private double _custom_scale;
 
 
     public _Choice_Box(Map<String, String> Name_URL, int nrows, double scale) {
-        super(nrows, scale);
+        super();
+        _nrows = nrows;
+        _custom_scale = scale;
         set_dict(Name_URL);
         create_combobox_with_DICT(Name_URL);
         add_combobox_to_vbox();
@@ -38,7 +42,7 @@ public class _Choice_Box extends _Submenu_leaf {
         getComboBox().valueProperty().addListener((observable,  oldValue,  selected) ->
         {
             H.getChildren().removeIf(i -> i instanceof ImageView);
-            var I = Menu.retrieveImage(retrieve_selected_value_from_dict(selected), _n_rows, 1);
+            var I = Menu.retrieveImage(retrieve_selected_value_from_dict(selected), _nrows, 1);
             I.setPreserveRatio(true);
             scale_image_to_fit_box(H, I);
             H.getChildren().add(I);
@@ -46,7 +50,11 @@ public class _Choice_Box extends _Submenu_leaf {
         });
     }
 
-
+    protected void scale_image_to_fit_box(HBox H, ImageView I) {
+        I.fitHeightProperty().bind(H.heightProperty());
+        I.setScaleY(_custom_scale);
+        I.setScaleX(_custom_scale);
+    }
 
 
 

@@ -3,17 +3,23 @@ package units.shooter_developers.MenuAPI;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
 public class _Text_Box extends _Submenu_leaf {
 
     TextField textField = new TextField();
+    int _nrows;
+    double _custom_scale;
 
     public _Text_Box(String commands_url, int nrows, double scale)
     {
 
-        super(nrows, scale);
+        super();
+
+        _nrows = nrows;
+        _custom_scale = scale;
 
         setFillWidth(false);
 
@@ -22,7 +28,7 @@ public class _Text_Box extends _Submenu_leaf {
         getChildren().add(textField);
 
         HBox H = createCustomHbox();
-        var I = Menu.retrieveImage(commands_url, _n_rows, 1);
+        var I = Menu.retrieveImage(commands_url, _nrows, 1);
         I.setPreserveRatio(true);
 
         DropShadow ds = new DropShadow( 50, Color.WHITE );
@@ -34,6 +40,12 @@ public class _Text_Box extends _Submenu_leaf {
         getChildren().add(H);
 
 
+    }
+
+    protected void scale_image_to_fit_box(HBox H, ImageView I) {
+        I.fitHeightProperty().bind(H.heightProperty());
+        I.setScaleY(_custom_scale);
+        I.setScaleX(_custom_scale);
     }
 
     protected static HBox createCustomHbox() {
