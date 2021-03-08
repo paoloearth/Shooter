@@ -15,6 +15,7 @@ class SelectorItem extends HBox {
     private final String _name;
     private final double _selection_section_translation;
     private StringPropertyBase _selection_as_property;
+    private final boolean _show_name;
 
     public SelectorItem(String name, boolean show_name) {
         _selection_index = 0;
@@ -22,6 +23,7 @@ class SelectorItem extends HBox {
         _width_selection_item = 0.25;
         _selection_section_translation = 0.10;
         _name = name;
+        _show_name = show_name;
         _selection_as_property = new StringPropertyBase(){
             @Override
             public Object getBean() { return this; }
@@ -49,7 +51,7 @@ class SelectorItem extends HBox {
             next();
         });
 
-        //if(!show_name)
+        if(_show_name)
             this.getChildren().add(name_text_box);
         this.getChildren().add(left_arrow_button);
         this.getChildren().add(selection_text_box);
@@ -78,23 +80,13 @@ class SelectorItem extends HBox {
     }
 
     private void updateTagText() {
+        int how_to_skip = _show_name? 1: 0;
         var selection_item = (NonAnimatedItem) getChildren().stream()
                 .filter(e -> e instanceof NonAnimatedItem)
-                .skip(1)
+                .skip(how_to_skip)
                 .findFirst()
                 .orElse(null);
 
-        var index = getChildren().indexOf(selection_item);
-
-        /*
-        getChildren().remove(selection_item);
-        if (!_selection_list.isEmpty()) {
-            selection_item = new NonAnimatedItem(_selection_list.get(_selection_index),
-                    _width_selection_item, -1);
-            selection_item.setTranslateX((_selection_section_translation + 0.01) * Menu.getMenuWidth());
-        }
-        getChildren().add(index, selection_item);
-         */
         if (!_selection_list.isEmpty())
             selection_item.setName(_selection_list.get(_selection_index));
 

@@ -29,20 +29,20 @@ public class _Choice_Box extends VBox {
 
         _nrows = nrows;
         _custom_scale = scale;
-        _selector = new SelectorItem("hola", true);
+        _selector = new SelectorItem("hola", false);
         set_dict(map_name_imageURL);
 
-        create_combobox_with_DICT(map_name_imageURL);
-        //create_selector_with_DICT(map_name_imageURL);
-        getChildren().add(getComboBox());
-        //getChildren().add(_selector);
+        //create_combobox_with_DICT(map_name_imageURL);
+        create_selector_with_DICT(map_name_imageURL);
+        //getChildren().add(getComboBox());
+        getChildren().add(_selector);
 
 
         HBox H = createCustomHbox();
         getChildren().add(H);
 
-        set_listener_to_change_figure(H);
-        //set_listener_to_change_figure_selector(H);
+        //set_listener_to_change_figure(H);
+        set_listener_to_change_figure_selector(H);
     }
 
     protected static HBox createCustomHbox() {
@@ -97,7 +97,8 @@ public class _Choice_Box extends VBox {
 
     public String get_value()
     {
-        return getComboBox().getValue();
+        //return getComboBox().getValue();
+        return _selector.getName();
     }
     private String retrieve_selected_value_from_dict(String selected) {
         return get_dict().get(selected);

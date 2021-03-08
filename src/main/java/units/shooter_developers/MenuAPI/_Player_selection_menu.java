@@ -65,12 +65,15 @@ public class _Player_selection_menu extends _Submenu_component {
         add(TB_P2, 1,0);
     }
 
+    /*
     private void set_bindings() {
         all_set.bind( TB_P1._textField.textProperty().isEmpty()
                 .or(TB_P2._textField.textProperty().isEmpty())
                 .or(CB_P1.getComboBox().getSelectionModel().selectedItemProperty().isNull())
                 .or(CB_P2.getComboBox().getSelectionModel().selectedItemProperty().isNull()));
     }
+
+     */
 
     private Map<String, String> initialize_dictionary() {
         Name_URL = new Hashtable<>();

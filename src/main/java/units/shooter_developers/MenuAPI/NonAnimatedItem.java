@@ -21,6 +21,13 @@ class NonAnimatedItem extends StackPane {
     }
 
     protected NonAnimatedItem(String name, double item_width_ratio, double item_height_ratio) {
+        _name_property = new StringPropertyBase() {
+            @Override
+            public Object getBean() { return null; }
+            @Override
+            public String getName() { return null; }};
+        //_name_property.setValue(name);
+
         var effective_width_ratio = 0.19;
         var effective_height_ratio = 0.05;
         if (item_width_ratio >= 0) {
@@ -29,13 +36,6 @@ class NonAnimatedItem extends StackPane {
         if (item_height_ratio >= 0) {
             effective_height_ratio = item_height_ratio;
         }
-
-        _name_property = new StringPropertyBase() {
-            @Override
-            public Object getBean() { return null; }
-            @Override
-            public String getName() { return null; }};
-        //_name_property.setValue(name);
 
         Color text_color = Menu.getColorPalette().dead_color;
         Color background_color = Menu.getColorPalette().basic_secondary_color;

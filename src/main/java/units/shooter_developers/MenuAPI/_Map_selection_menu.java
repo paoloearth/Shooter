@@ -29,7 +29,7 @@ public class _Map_selection_menu extends _Submenu_component {
 
         CB_MAP = new _Choice_Box(Map_URL, 1, Custom_Settings.MAP_SCALE);
 
-        all_set.bind(CB_MAP.getComboBox().getSelectionModel().selectedItemProperty().isNull());
+        //all_set.bind(CB_MAP.getComboBox().getSelectionModel().selectedItemProperty().isNull());
 
         add(CB_MAP,1,1);
     }
