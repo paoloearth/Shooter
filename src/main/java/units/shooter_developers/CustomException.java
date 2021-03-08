@@ -11,8 +11,6 @@ public class CustomException{
     public static class NegativeNumber extends ExceptionModel{
         NegativeNumber(int i){
             super("Positive integer number required but "+i+" was found");
-           // System.out.println("Positive integer number required but "+i+" was found");
-
         }
 
     }
