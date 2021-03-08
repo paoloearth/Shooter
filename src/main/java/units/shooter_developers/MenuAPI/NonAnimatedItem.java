@@ -35,7 +35,7 @@ class NonAnimatedItem extends StackPane {
             public Object getBean() { return null; }
             @Override
             public String getName() { return null; }};
-        _name_property.setValue(name);
+        //_name_property.setValue(name);
 
         Color text_color = Menu.getColorPalette().dead_color;
         Color background_color = Menu.getColorPalette().basic_secondary_color;
@@ -47,16 +47,7 @@ class NonAnimatedItem extends StackPane {
         Text text = new Text(_name_property.getValue());
         text.setFill(text_color);
         text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, 0.0333 * Menu.getMenuHeight()));
-
-        //Text is transformed into an image and resized
         var params = new SnapshotParameters();
-        params.setFill(Color.TRANSPARENT);
-        var textImage = new ImageView(text.snapshot(params, null));
-        if (textImage.getBoundsInLocal().getWidth() > box.getWidth())
-            textImage.setFitWidth(box.getWidth());
-
-        setAlignment(Pos.CENTER_LEFT);
-        getChildren().add(textImage);
 
         getChildren().add(box);
 
@@ -68,13 +59,15 @@ class NonAnimatedItem extends StackPane {
 
             //Text is transformed into an image and resized
             params.setFill(Color.TRANSPARENT);
-            var new_textImage = new ImageView(new_text.snapshot(params, null));
-            if (new_textImage.getBoundsInLocal().getWidth() > box.getWidth())
+            var textImage = new ImageView(new_text.snapshot(params, null));
+            if (textImage.getBoundsInLocal().getWidth() > box.getWidth())
                 textImage.setFitWidth(box.getWidth());
 
             setAlignment(Pos.CENTER_LEFT);
-            getChildren().add(new_textImage);
+            getChildren().add(textImage);
         });
+
+        _name_property.setValue(name);
 
 
     }
