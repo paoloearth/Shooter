@@ -33,10 +33,9 @@
     ·
     <a href="https://github.com/paoloearth/Shooter/issues">Request Feature</a>
 </p>
-
-<p align="center">
+<center>
 ![Alt Text](/images/islands_gif.gif)
-</p>
+</center>
 
 
 
