@@ -34,7 +34,7 @@ public class _Submenu extends Menu {
 
             player_section = new _Player_selection_menu( 1,             0.5);    // THE TOP WILL OCCUPY HALF THE HEIGHT
             map_section      = new _Map_selection_menu(.7,       0.5);    // THE BOTTOM HALF WILL BE SPLIT 70% for MAP & 25%
-            buttons_section = new _Button_selection_menu(getMenuWidth() * .25,   getMenuHeight() / 2);
+            buttons_section = new _Button_selection_menu(.25,   0.5);
 
             map_section.setAlignment(Pos.TOP_CENTER);
             buttons_section.setAlignment(Pos.CENTER_LEFT);

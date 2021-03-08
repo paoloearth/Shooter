@@ -11,7 +11,7 @@ public class _Button_selection_menu extends _Submenu_component {
 
     public _Button_selection_menu(double width, double height)
     {
-        super(width, height);
+        super(width*Menu.getMenuWidth(), height*Menu.getMenuHeight());
 
         fix_submenu_size_to_width_and_height();
 
