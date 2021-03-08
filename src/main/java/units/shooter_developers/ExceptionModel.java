@@ -1,7 +1,7 @@
 package units.shooter_developers;
 
 public abstract class ExceptionModel extends Exception{
-    private String message;
+    private final String message;
     public ExceptionModel(String errMessage){
         this.message = errMessage;
     }

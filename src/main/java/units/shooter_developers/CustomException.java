@@ -8,4 +8,8 @@ public class CustomException{
         }
     }
 
+    public static class NegativeNumber extends ExceptionModel{
+        NegativeNumber(String msg){super(msg);}
+    }
+
 }

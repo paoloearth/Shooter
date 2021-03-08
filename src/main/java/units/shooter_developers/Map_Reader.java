@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.util.*;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,8 +29,19 @@ public class Map_Reader {
     Map_Reader() throws IOException {  }
 
     public GameMap read_Map(String URL, double width, double height) throws IOException {
-
+        try {
             _lines = extract_lines(URL);
+        }
+        catch(InvalidPathException e){
+            System.out.println("The Path contains invalid character ");
+        }
+        catch(IOException e){
+            System.out.println("Error with files "+e.toString());
+        }
+        catch(NullPointerException e){
+            System.out.println("The file was not found ");
+        }
+
             var M = new GameMap(width, height, get_tileset(), get_cell_side(), get_row_and_column_num_of_tiles_composing_map(),
                     get_Set_of_tiles_at_row_index(2), get_Set_of_tiles_at_row_index(3), retrieve_map_without_metadata());
             fill_dictionary_position('P', 4, M.getDictionary_of_positions());
@@ -37,9 +49,10 @@ public class Map_Reader {
             return M;
     }
 
-    List<String[]> extract_lines(String URL) throws IOException {
-        File file = new File(getClass().getClassLoader().getResource(URL).getFile());
-        return Files.lines(file.toPath()).parallel().map(l -> l.split(",")).collect(Collectors.toList());
+    List<String[]> extract_lines(String URL) throws InvalidPathException,IOException,NullPointerException {
+
+        File file = new File(Objects.requireNonNull(getClass().getClassLoader().getResource(URL)).getFile());
+        return Files.lines(file.toPath()).parallel().map(l -> l.split(Custom_Settings.FILE_SEPARATOR)).collect(Collectors.toList());
     }
 
     private Image get_tileset() {
