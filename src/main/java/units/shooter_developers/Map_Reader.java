@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,6 +31,7 @@ public class Map_Reader {
     Map_Reader() throws IOException {  }
 
     public GameMap read_Map(String URL, double width, double height) throws IOException {
+        GameMap M;
         try {
             _lines = extract_lines(URL);
         }
@@ -42,11 +45,12 @@ public class Map_Reader {
             System.out.println("The file was not found ");
         }
 
-            var M = new GameMap(width, height, get_tileset(), get_cell_side(), get_row_and_column_num_of_tiles_composing_map(),
+            M = new GameMap(width, height, get_tileset(), get_cell_side(), get_row_and_column_num_of_tiles_composing_map(),
                     get_Set_of_tiles_at_row_index(2), get_Set_of_tiles_at_row_index(3), retrieve_map_without_metadata());
             fill_dictionary_position('P', 4, M.getDictionary_of_positions());
             fill_dictionary_position('T', 5, M.getDictionary_of_positions());
             return M;
+
     }
 
     List<String[]> extract_lines(String URL) throws InvalidPathException,IOException,NullPointerException {
@@ -55,8 +59,19 @@ public class Map_Reader {
         return Files.lines(file.toPath()).parallel().map(l -> l.split(Custom_Settings.FILE_SEPARATOR)).collect(Collectors.toList());
     }
 
-    private Image get_tileset() {
-        return new Image(_lines.get(0)[0]);
+    private Image get_tileset() throws IndexOutOfBoundsException{
+        String URL = " ";
+        try {
+           URL = read_lines(0, 3);
+
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Index out of bounds in _lines, URL not valid ");
+        }
+        return new Image(URL);
+    }
+
+    private String read_lines(int row, int col) throws IndexOutOfBoundsException{
+        return _lines.get(row)[col];
     }
 
     private Integer get_cell_side() {
@@ -73,7 +88,7 @@ public class Map_Reader {
      * - in the 3rd row there is the set of tiles not passable for the projectiles
      * */
     private Set<Integer> get_Set_of_tiles_at_row_index(int index) {
-        return  convertListToSet(get_list_of_integer_from_String(index));
+        return convertListToSet(get_list_of_integer_from_String(index));
     }
 
     private List<String[]> retrieve_map_without_metadata() {

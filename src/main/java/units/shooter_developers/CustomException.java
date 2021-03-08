@@ -12,4 +12,8 @@ public class CustomException{
         NegativeNumber(String msg){super(msg);}
     }
 
+    public static class MyException extends ExceptionModel{
+        MyException(String msg){super(msg);}
+    }
+
 }
