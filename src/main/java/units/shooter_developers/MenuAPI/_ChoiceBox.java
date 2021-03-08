@@ -29,14 +29,17 @@ public class _ChoiceBox extends VBox {
 
         _nrows = nrows;
         _custom_scale = scale;
-        _selector = new SelectorItem("ChoiceBox_selector", 0.1, false);
+        _selector = new SelectorItem("ChoiceBox_selector", 0.1*scale, false);
+        _selector.setAlignment(Pos.BASELINE_CENTER);
 
         set_dict(map_image_to_URL);
 
         getChildren().add(_selector);
 
 
-        HBox H = createCustomHbox();
+        HBox H = new HBox();
+        H.setMinHeight(0);
+        H.setAlignment(Pos.BOTTOM_CENTER);
         getChildren().add(H);
 
         _selector.getSelectionAsProperty().addListener((observable,  oldValue,  selected) ->
