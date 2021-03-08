@@ -66,8 +66,8 @@ public class _Player_selection_menu extends _Submenu_component {
     }
 
     private void set_bindings() {
-        all_set.bind( TB_P1.textField.textProperty().isEmpty()
-                .or(TB_P2.textField.textProperty().isEmpty())
+        all_set.bind( TB_P1._textField.textProperty().isEmpty()
+                .or(TB_P2._textField.textProperty().isEmpty())
                 .or(CB_P1.getComboBox().getSelectionModel().selectedItemProperty().isNull())
                 .or(CB_P2.getComboBox().getSelectionModel().selectedItemProperty().isNull()));
     }

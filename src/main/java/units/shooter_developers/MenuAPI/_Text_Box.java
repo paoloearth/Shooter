@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 
 public class _Text_Box extends VBox {
 
-    TextField textField = new TextField();
+    TextField _textField;
     int _nrows;
     double _custom_scale;
 
@@ -28,9 +28,16 @@ public class _Text_Box extends VBox {
 
         setFillWidth(false);
 
-        textField.setPromptText("Enter your first name.");
+        _textField = new TextField();
+        var background_color = Menu.getColorPalette().dead_color;
+        var default_text_color = Menu.getColorPalette().selected_primary_color;
+        var introduced_text_color = Menu.getColorPalette().clicked_background_color;
+        _textField.setStyle("-fx-control-inner-background: #" + background_color.toString().substring(2) + ";" +
+                "-fx-prompt-text-fill: #"+default_text_color.toString().substring(2) + ";" +
+                "-fx-text-fill: #"+introduced_text_color.toString().substring(2) + ";");
+        _textField.setPromptText("Who are you?.");
 
-        getChildren().add(textField);
+        getChildren().add(_textField);
 
         HBox H = createCustomHbox();
         var I = Menu.retrieveImage(commands_url, _nrows, 1);
@@ -62,7 +69,7 @@ public class _Text_Box extends VBox {
 
     public String get_value()
     {
-        return textField.getText();
+        return _textField.getText();
     }
 
 
