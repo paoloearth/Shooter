@@ -59,28 +59,31 @@ public class Map_Reader {
         return Files.lines(file.toPath()).parallel().map(l -> l.split(Custom_Settings.FILE_SEPARATOR)).collect(Collectors.toList());
     }
 
-    private Image get_tileset() throws IndexOutOfBoundsException{
-        String URL = " ";
-        try {
-           URL = read_lines(0, 3);
-
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Index out of bounds in _lines, URL not valid ");
-        }
-        return new Image(URL);
-    }
-
     private String read_lines(int row, int col) throws IndexOutOfBoundsException{
         return _lines.get(row)[col];
     }
 
-    private Integer get_cell_side() {
-        return  Integer.parseInt(_lines.get(1)[2]);
+    private Image get_tileset() throws ArrayIndexOutOfBoundsException{
+        String URL = " ";
+        try {
+           URL = read_lines(0, 0);
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(" Error: Index out of bounds in _lines, URL not valid, fixed with default URL "+e.toString());
+            URL = "TileSet.png";
+        }
+        return new Image(URL);
+    }
+
+
+
+    private Integer get_cell_side() throws CustomException.NegativeNumber {
+      return  Integer.parseInt(read_lines(1,2));
     }
 
     // Return the number of tiles in the rows and columns in the map
     private Pair<Integer, Integer> get_row_and_column_num_of_tiles_composing_map() {
-        return new Pair<>(Integer.parseInt(_lines.get(1)[0]),Integer.parseInt(_lines.get(1)[1]));
+        return new Pair<>(Integer.parseInt(read_lines(1,0)),Integer.parseInt(read_lines(1,1)));
     }
 
     /* Reads a set of tiles at a specific row:
