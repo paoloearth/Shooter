@@ -21,7 +21,6 @@ public class _Submenu extends Menu {
 
     private  class SubmenuObject extends FlowPane {
 
-        double _width, _height;
         _Player_selection_menu player_section;
         _Map_selection_menu map_section;
         _Button_selection_menu buttons_section;
@@ -30,14 +29,12 @@ public class _Submenu extends Menu {
         SubmenuObject(_Submenu M)  {
 
             this.M = M;
-            this._width = getMenuWidth();
-            this._height = getMenuHeight();
 
-            this.setPrefSize(_width, _height);
+            this.setPrefSize(getMenuWidth(), getMenuHeight());
 
-            player_section = new _Player_selection_menu( _width,             _height / 2);    // THE TOP WILL OCCUPY HALF THE HEIGHT
-            map_section      = new _Map_selection_menu(_width * .7,       _height / 2);    // THE BOTTOM HALF WILL BE SPLIT 70% for MAP & 25%
-            buttons_section = new _Button_selection_menu(_width * .25,   _height / 2);
+            player_section = new _Player_selection_menu( getMenuWidth(),             getMenuHeight() / 2);    // THE TOP WILL OCCUPY HALF THE HEIGHT
+            map_section      = new _Map_selection_menu(getMenuWidth() * .7,       getMenuHeight() / 2);    // THE BOTTOM HALF WILL BE SPLIT 70% for MAP & 25%
+            buttons_section = new _Button_selection_menu(getMenuWidth() * .25,   getMenuHeight() / 2);
 
             map_section.setAlignment(Pos.TOP_CENTER);
             buttons_section.setAlignment(Pos.CENTER_LEFT);
