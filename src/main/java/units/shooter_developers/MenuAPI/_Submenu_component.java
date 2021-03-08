@@ -12,8 +12,11 @@ public class _Submenu_component extends GridPane {
 
     protected SimpleBooleanProperty all_set = new SimpleBooleanProperty(false);
 
-    protected _Submenu_component(double width, double height)
+    protected _Submenu_component(double width_scale, double height_scale)
     {
+        var width = Menu.getMenuWidth()*width_scale;
+        var height = Menu.getMenuHeight()*height_scale;
+
         /* Functions that deals with the aspects of the menu*/
         set_height(height);
         set_width(width);

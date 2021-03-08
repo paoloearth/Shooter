@@ -9,9 +9,9 @@ public class _Button_selection_menu extends _Submenu_component {
     Button launch_simulation;
     Button launch_default;
 
-    public _Button_selection_menu(double width, double height)
+    public _Button_selection_menu(double width_scale, double height_scale)
     {
-        super(width*Menu.getMenuWidth(), height*Menu.getMenuHeight());
+        super(width_scale, height_scale);
 
         fix_submenu_size_to_width_and_height();
 

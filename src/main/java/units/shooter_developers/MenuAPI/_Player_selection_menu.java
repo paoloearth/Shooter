@@ -22,7 +22,7 @@ public class _Player_selection_menu extends _Submenu_component {
 
     public _Player_selection_menu(double width_scale, double height_scale)
     {
-        super(width_scale*Menu.getMenuWidth(), height_scale*Menu.getMenuHeight());
+        super(width_scale, height_scale);
 
         create_2_columns_layout();
 
