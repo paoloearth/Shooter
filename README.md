@@ -35,7 +35,7 @@
 </p>
 
 
-![Alt Text](/images/islands.gif)
+![Alt Text](/images/islands_gif.gif)
 
 
 
