@@ -15,7 +15,7 @@ public class _Submenu extends Menu {
 
     @Override
     public void createContent(){
-        SubmenuObject content = new SubmenuObject(getMenuWidth(), getMenuHeight(), this);
+        SubmenuObject content = new SubmenuObject(this);
         addGenericNode(content);
     }
 
@@ -27,13 +27,13 @@ public class _Submenu extends Menu {
         _Button_selection_menu buttons_section;
         _Submenu M; // Necessary in order to change the scene
 
-        SubmenuObject(double width, double height, _Submenu M)  {
+        SubmenuObject(_Submenu M)  {
 
             this.M = M;
-            this._width = width;
-            this._height = height;
+            this._width = getMenuWidth();
+            this._height = getMenuHeight();
 
-            this.setPrefSize(width, height);
+            this.setPrefSize(_width, _height);
 
             player_section = new _Player_selection_menu( _width,             _height / 2);    // THE TOP WILL OCCUPY HALF THE HEIGHT
             map_section      = new _Map_selection_menu(_width * .7,       _height / 2);    // THE BOTTOM HALF WILL BE SPLIT 70% for MAP & 25%
