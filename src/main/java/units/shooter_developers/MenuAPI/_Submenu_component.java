@@ -17,7 +17,11 @@ public class _Submenu_component extends GridPane {
         /* Functions that deals with the aspects of the menu*/
         set_height(height);
         set_width(width);
-        set_padding();
+
+        setHgap(10);                                                 // horizontal gap in pixels
+        setVgap(10);                                                 // vertical gap in pixels
+        setPadding(new Insets(10, 10, 10, 10));   // margins around the whole grid
+        
         fix_submenu_size_to_width_and_height();
 
     }
@@ -31,12 +35,6 @@ public class _Submenu_component extends GridPane {
 
     public void set_width(double _width)   { this._width = _width; }
     public void set_height(double _height) { this._height = _height; }
-
-    private void set_padding() {
-        setHgap(10);                                                 // horizontal gap in pixels
-        setVgap(10);                                                 // vertical gap in pixels
-        setPadding(new Insets(10, 10, 10, 10));   // margins around the whole grid
-    }
 
     public double get_width() {
         return _width;
