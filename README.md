@@ -32,7 +32,6 @@
     <a href="https://github.com/paoloearth/Shooter/issues">Report Bug</a>
     ·
     <a href="https://github.com/paoloearth/Shooter/issues">Request Feature</a>
- </p>
 </p>
 
 
@@ -72,7 +71,7 @@
 ## About The Project :blue_book:
 
 <a href="https://github.com/paoloearth/Shooter">
-    <img src="images/screenshot.png" alt="Screen" >
+    ![Alt Text](islands.gif)
   </a>
 
 There are many great GAMES, however, this is better
