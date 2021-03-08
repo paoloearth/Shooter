@@ -77,7 +77,7 @@ public class Map_Reader {
 
 
 
-    private Integer get_cell_side() throws CustomException.NegativeNumber {
+    private Integer get_cell_side(){
       return  Integer.parseInt(read_lines(1,2));
     }
 
