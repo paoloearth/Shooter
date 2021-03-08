@@ -35,10 +35,7 @@
 </p>
 
 
-
-<a href="https://github.com/paoloearth/Shooter">
-    ![Alt Text](./images/islands.gif)
-  </a>
+![Alt Text](/images/islands.gif)
 
 
 
