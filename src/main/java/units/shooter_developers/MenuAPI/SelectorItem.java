@@ -11,19 +11,24 @@ import java.util.ArrayList;
 class SelectorItem extends HBox {
     private final ArrayList<String> _selection_list;
     private int _selection_index;
-    private final double _width_selection_item;
+    private double _width_selection_item;
     private final String _name;
     private final double _selection_section_translation;
     private StringPropertyBase _selection_as_property;
     private final boolean _show_name;
 
-    public SelectorItem(String name, boolean show_name) {
+    public SelectorItem(String name, boolean show_name){
+        this(name, 0.25, show_name);
+    }
+
+    public SelectorItem(String name, double scale_width_text_box, boolean show_name) {
         _selection_index = 0;
         _selection_list = new ArrayList<>();
         _width_selection_item = 0.25;
         _selection_section_translation = 0.10;
         _name = name;
         _show_name = show_name;
+        _width_selection_item = scale_width_text_box;
         _selection_as_property = new StringPropertyBase(){
             @Override
             public Object getBean() { return this; }
@@ -103,5 +108,9 @@ class SelectorItem extends HBox {
 
     public StringPropertyBase getSelectionAsProperty(){
         return _selection_as_property;
+    }
+
+    protected void setWidthSelectionZone(double scale_width){
+        _width_selection_item = scale_width;
     }
 }

@@ -29,19 +29,16 @@ public class _Choice_Box extends VBox {
 
         _nrows = nrows;
         _custom_scale = scale;
-        _selector = new SelectorItem("hola", false);
+        _selector = new SelectorItem("hola", 0.1, false);
+
         set_dict(map_image_to_URL);
 
-        //create_combobox_with_DICT(map_name_image_to_URL);
-        //getChildren().add(getComboBox());
         getChildren().add(_selector);
 
 
         HBox H = createCustomHbox();
         getChildren().add(H);
 
-        //set_listener_to_change_figure(H);
-        //set_listener_to_change_figure_selector(H);
         _selector.getSelectionAsProperty().addListener((observable,  oldValue,  selected) ->
         {
             H.getChildren().removeIf(i -> i instanceof ImageView);
@@ -64,52 +61,14 @@ public class _Choice_Box extends VBox {
         return H;
     }
 
-    private void set_listener_to_change_figure(HBox H) {
-        getComboBox().valueProperty().addListener((observable,  oldValue,  selected) ->
-        {
-            H.getChildren().removeIf(i -> i instanceof ImageView);
-            var I = Menu.retrieveImage(retrieve_selected_value_from_dict(selected), _nrows, 1);
-            I.setPreserveRatio(true);
-            scale_image_to_fit_box(H, I);
-            H.getChildren().add(I);
-
-        });
-    }
-
-    private void set_listener_to_change_figure_selector(HBox H) {
-        _selector.getSelectionAsProperty().addListener((observable,  oldValue,  selected) ->
-        {
-            H.getChildren().removeIf(i -> i instanceof ImageView);
-            var I = Menu.retrieveImage(retrieve_selected_value_from_dict(selected), _nrows, 1);
-            I.setPreserveRatio(true);
-            scale_image_to_fit_box(H, I);
-            H.getChildren().add(I);
-
-        });
-    }
-
     protected void scale_image_to_fit_box(HBox H, ImageView I) {
         I.fitHeightProperty().bind(H.heightProperty());
         I.setScaleY(_custom_scale);
         I.setScaleX(_custom_scale);
     }
 
-
-
-
-    private void create_combobox_with_DICT(Map<String, String> map_image_to_URL) {
-       _comboBox = new ComboBox<>(FXCollections.observableArrayList(map_image_to_URL.keySet()));
-    }
-
-    private void create_selector_with_DICT(Map<String, String> map_image_to_url) {
-        for(var elem : map_image_to_url.entrySet()){
-            _selector.addTag(elem.getKey());
-        }
-    }
-
     public String get_value()
     {
-        //return getComboBox().getValue();
         return _selector.getName();
     }
     private String retrieve_selected_value_from_dict(String selected) {
