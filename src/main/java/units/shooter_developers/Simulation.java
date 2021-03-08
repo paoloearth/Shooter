@@ -94,7 +94,7 @@ public class Simulation extends Application {
 
     }
 
-    private void create_map() throws IOException {
+    private void create_map() {
         var MR = new Map_Reader();
         R = MR.read_Map(get_map_url(), WIDTH,HEIGHT);
         root.getChildren().add(R.get_cells());

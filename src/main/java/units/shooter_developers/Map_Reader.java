@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,65 +29,76 @@ public class Map_Reader {
     Map_Reader(){  }
 
     public GameMap read_Map(String URL, double width, double height) {
-        GameMap M;
-        try {
-            _lines = extract_lines(URL);
-        }
-        catch(InvalidPathException e){
-            System.out.println("The Path contains invalid character ");
-        }
-        catch(IOException e){
-            System.out.println("Error with files "+e.toString());
-        }
-        catch(NullPointerException e){
-            System.out.println("The file was not found ");
-        }
 
-            M = new GameMap(width, height, get_tileset(), get_cell_side(), get_row_and_column_num_of_tiles_composing_map(),
-                    get_Set_of_tiles_at_row_index(2), get_Set_of_tiles_at_row_index(3), retrieve_map_without_metadata());
-            fill_dictionary_position('P', 4, M.getDictionary_of_positions());
-            fill_dictionary_position('T', 5, M.getDictionary_of_positions());
-            return M;
+        GameMap M;
+
+        try { _lines = extract_lines(URL); }
+        catch(InvalidPathException e){ System.out.println(URL + ": path contains invalid characters"); }
+        catch(FileNotFoundException e){ System.out.println(URL + ": was not found "); }
+        catch(IOException e){ System.out.println(URL + ": problems interacting with the file "); }
+        catch(NullPointerException e){ System.out.println("File is null "); }
+
+
+
+            M = new GameMap(width, height,
+                    get_tileset(), get_cell_side(),
+                    get_row_and_column_num_of_tiles_composing_map(), get_Set_of_tiles_at_row_index(2),
+                    get_Set_of_tiles_at_row_index(3), retrieve_map_without_metadata());
+
+
+        fill_dictionary_position('P', 4, M.getDictionary_of_positions());
+        fill_dictionary_position('T', 5, M.getDictionary_of_positions());
+
+
+        return Objects.requireNonNull(M);
 
     }
 
-    List<String[]> extract_lines(String URL) throws InvalidPathException,IOException,NullPointerException {
-
+    List<String[]> extract_lines(String URL) throws InvalidPathException, IOException,NullPointerException{
         File file = new File(Objects.requireNonNull(getClass().getClassLoader().getResource(URL)).getFile());
         return Files.lines(file.toPath()).parallel().map(l -> l.split(Custom_Settings.FILE_SEPARATOR)).collect(Collectors.toList());
     }
 
-    private String read_lines(int row, int col) throws IndexOutOfBoundsException{
-        return _lines.get(row)[col];
-    }
 
-    private Image get_tileset() throws ArrayIndexOutOfBoundsException{
-        String URL;
-        try {
-           URL = read_lines(0, 0);
-
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println(" Error: Index out of bounds in _lines, URL not valid, fixed with default URL "+e.toString());
+    private Image get_tileset() {
+        String  URL = read_lines(0, 0);
+        
+        try { return read_image(URL); }
+        catch (IllegalArgumentException | NullPointerException e)
+        {
+            System.out.println("Image " +URL + " was not found. Set URL to default");
             URL = "TileSet.png";
         }
+        return read_image(URL);
+    }
+
+    private Image read_image(String URL) throws IllegalArgumentException, NullPointerException
+    {
         return new Image(URL);
+    }
+    
+    private int to_int(String s)
+    {
+        try {
+            return Integer.parseInt(s);
+        }catch (NumberFormatException NE)
+        {
+            System.out.println("The value "+ s + " cannot be cast to integer, wrong format ");
+        }
+        return Integer.parseInt(s);
+        
     }
 
 
 
     private Integer get_cell_side(){
-      return  Integer.parseInt(read_lines(1,2));
+      return  to_int(read_lines(1,2));
     }
 
-    // Return the number of tiles in the rows and columns in the map
     private Pair<Integer, Integer> get_row_and_column_num_of_tiles_composing_map() {
-        return new Pair<>(Integer.parseInt(read_lines(1,0)),Integer.parseInt(read_lines(1,1)));
+        return new Pair<>(to_int(read_lines(1,0)),to_int(read_lines(1,1)));
     }
 
-    /* Reads a set of tiles at a specific row:
-     * - in the 2nd row there is the set of passable tiles for the Sprites
-     * - in the 3rd row there is the set of tiles not passable for the projectiles
-     * */
     private Set<Integer> get_Set_of_tiles_at_row_index(int index) {
         return convertListToSet(get_list_of_integer_from_String(index));
     }
@@ -105,12 +115,38 @@ public class Map_Reader {
     }
 
     private List<Integer> get_list_of_integer_from_String(int index) {
-        return Arrays.stream(_lines.get(index)).parallel().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
+        return Arrays.stream(read_lines(index)).parallel().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
     }
 
     public static Set<Integer> convertListToSet(List<Integer> list)
     {
         return new HashSet<>(list);
+    }
+
+
+
+    private String[] read_lines(int row) {
+        try {
+            return _lines.get(row);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Line" + row + " was not found");
+        }
+        return _lines.get(row);
+    }
+
+    private String read_lines(int row, int col) {
+        try {
+        var L = read_lines(row);
+        return L[col];
+        } catch (ArrayIndexOutOfBoundsException e)
+        {
+            System.out.println("Column " + col + " was not found");
+        }
+
+        var L = read_lines(row);
+        return L[col];
+
+
     }
 
 }
