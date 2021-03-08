@@ -22,6 +22,7 @@ public class Custom_Settings {
     /*  METADATA IN MAP */
 
     public static final int NUMBER_OF_METADATA_LINES  = 6;
+    public static final String  FILE_SEPARATOR= ",";
 
     /* SPEEDS */
     public static final int PLAYER_SPEED  = 2;

@@ -3,8 +3,12 @@ import javafx.scene.image.Image;
 import javafx.util.Pair;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,30 +31,59 @@ public class Map_Reader {
     Map_Reader() throws IOException {  }
 
     public GameMap read_Map(String URL, double width, double height) throws IOException {
-        _lines = extract_lines(URL);
-        var M = new GameMap(width,height, get_tileset(),get_cell_side(), get_row_and_column_num_of_tiles_composing_map(),
-                            get_Set_of_tiles_at_row_index(2), get_Set_of_tiles_at_row_index(3),retrieve_map_without_metadata());
-        fill_dictionary_position('P', 4, M.getDictionary_of_positions());
-        fill_dictionary_position('T', 5, M.getDictionary_of_positions());
-        return M;
+        GameMap M;
+        try {
+            _lines = extract_lines(URL);
+        }
+        catch(InvalidPathException e){
+            System.out.println("The Path contains invalid character ");
+        }
+        catch(IOException e){
+            System.out.println("Error with files "+e.toString());
+        }
+        catch(NullPointerException e){
+            System.out.println("The file was not found ");
+        }
+
+            M = new GameMap(width, height, get_tileset(), get_cell_side(), get_row_and_column_num_of_tiles_composing_map(),
+                    get_Set_of_tiles_at_row_index(2), get_Set_of_tiles_at_row_index(3), retrieve_map_without_metadata());
+            fill_dictionary_position('P', 4, M.getDictionary_of_positions());
+            fill_dictionary_position('T', 5, M.getDictionary_of_positions());
+            return M;
+
     }
 
-    List<String[]> extract_lines(String URL) throws IOException {
-        File file = new File(getClass().getClassLoader().getResource(URL).getFile());
-        return Files.lines(file.toPath()).parallel().map(l -> l.split(",")).collect(Collectors.toList());
+    List<String[]> extract_lines(String URL) throws InvalidPathException,IOException,NullPointerException {
+
+        File file = new File(Objects.requireNonNull(getClass().getClassLoader().getResource(URL)).getFile());
+        return Files.lines(file.toPath()).parallel().map(l -> l.split(Custom_Settings.FILE_SEPARATOR)).collect(Collectors.toList());
     }
 
-    private Image get_tileset() {
-        return new Image(_lines.get(0)[0]);
+    private String read_lines(int row, int col) throws IndexOutOfBoundsException{
+        return _lines.get(row)[col];
     }
 
-    private Integer get_cell_side() {
-        return  Integer.parseInt(_lines.get(1)[2]);
+    private Image get_tileset() throws ArrayIndexOutOfBoundsException{
+        String URL = " ";
+        try {
+           URL = read_lines(0, 0);
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(" Error: Index out of bounds in _lines, URL not valid, fixed with default URL "+e.toString());
+            URL = "TileSet.png";
+        }
+        return new Image(URL);
+    }
+
+
+
+    private Integer get_cell_side() throws CustomException.NegativeNumber {
+      return  Integer.parseInt(read_lines(1,2));
     }
 
     // Return the number of tiles in the rows and columns in the map
     private Pair<Integer, Integer> get_row_and_column_num_of_tiles_composing_map() {
-        return new Pair<>(Integer.parseInt(_lines.get(1)[0]),Integer.parseInt(_lines.get(1)[1]));
+        return new Pair<>(Integer.parseInt(read_lines(1,0)),Integer.parseInt(read_lines(1,1)));
     }
 
     /* Reads a set of tiles at a specific row:
@@ -58,7 +91,7 @@ public class Map_Reader {
      * - in the 3rd row there is the set of tiles not passable for the projectiles
      * */
     private Set<Integer> get_Set_of_tiles_at_row_index(int index) {
-        return  convertListToSet(get_list_of_integer_from_String(index));
+        return convertListToSet(get_list_of_integer_from_String(index));
     }
 
     private List<String[]> retrieve_map_without_metadata() {
