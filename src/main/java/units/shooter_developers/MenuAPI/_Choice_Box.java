@@ -90,8 +90,8 @@ public class _Choice_Box extends VBox {
     }
 
     private void create_selector_with_DICT(Map<String, String> map_image_to_url) {
-        for(int i=0; i<map_image_to_url.size(); i++){
-            _selector.addTag(map_image_to_url.get(i));
+        for(var elem : map_image_to_url.entrySet()){
+            _selector.addTag(elem.getKey());
         }
     }
 
