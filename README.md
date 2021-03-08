@@ -34,9 +34,11 @@
     <a href="https://github.com/paoloearth/Shooter/issues">Request Feature</a>
 </p>
 
-![Alt Text](/images/islands_gif.gif)
 
 
+<p align="center">
+  <img  src="/images/islands_gif.gif">
+</p>
 
 
 <!-- TABLE OF CONTENTS -->
