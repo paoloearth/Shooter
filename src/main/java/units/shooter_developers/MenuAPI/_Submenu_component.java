@@ -13,8 +13,8 @@ public class _Submenu_component extends GridPane {
         var width = Menu.getMenuWidth()*width_scale;
         var height = Menu.getMenuHeight()*height_scale;
 
-        this.setTranslateY(10);
-        this.setTranslateX(10);
+        this.setTranslateY(0.017*height);
+        this.setTranslateX(0.01*width);
 
         this.setMinSize(width, height);
         this.setPrefSize(width, height);
