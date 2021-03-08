@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.Map;
@@ -64,7 +63,7 @@ public class Map_Reader {
     }
 
     private Image get_tileset() throws ArrayIndexOutOfBoundsException{
-        String URL = " ";
+        String URL;
         try {
            URL = read_lines(0, 0);
 
