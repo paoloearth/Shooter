@@ -20,9 +20,9 @@ public class _Player_selection_menu extends _Submenu_component {
 
     Map<String, String> Name_URL;
 
-    public _Player_selection_menu(double width, double height)
+    public _Player_selection_menu(double width_scale, double height_scale)
     {
-        super(width, height);
+        super(width_scale*Menu.getMenuWidth(), height_scale*Menu.getMenuHeight());
 
         create_2_columns_layout();
 
