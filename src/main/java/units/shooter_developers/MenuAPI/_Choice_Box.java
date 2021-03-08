@@ -33,7 +33,6 @@ public class _Choice_Box extends VBox {
         create_combobox_with_DICT(map_name_imageURL);
         getChildren().add(getComboBox());
 
-        //SEGUIR TRABAJANDO MAÑANA POR AQUí
 
         HBox H = createCustomHbox();
         getChildren().add(H);
@@ -47,7 +46,6 @@ public class _Choice_Box extends VBox {
         H.setAlignment(Pos.BOTTOM_CENTER);
         return H;
     }
-
 
     private void set_listener_to_change_figure(HBox H) {
         getComboBox().valueProperty().addListener((observable,  oldValue,  selected) ->

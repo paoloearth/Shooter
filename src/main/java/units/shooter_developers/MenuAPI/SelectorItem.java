@@ -1,5 +1,6 @@
 package units.shooter_developers.MenuAPI;
 
+import javafx.beans.property.StringPropertyBase;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 
@@ -13,6 +14,7 @@ class SelectorItem extends HBox {
     private final double _width_selection_item;
     private final String _name;
     private final double _selection_section_translation;
+    private StringPropertyBase _selection_as_property;
 
     public SelectorItem(String name) {
         _selection_index = 0;
@@ -20,6 +22,12 @@ class SelectorItem extends HBox {
         _width_selection_item = 0.25;
         _selection_section_translation = 0.10;
         _name = name;
+        _selection_as_property = new StringPropertyBase(){
+            @Override
+            public Object getBean() { return this; }
+            @Override
+            public String getName() { return "selectionProperty"; }
+        };
 
 
         setAlignment(Pos.CENTER_LEFT);
@@ -83,6 +91,8 @@ class SelectorItem extends HBox {
             selection_item.setTranslateX((_selection_section_translation + 0.01) * Menu.getMenuWidth());
         }
         getChildren().add(index, selection_item);
+
+        _selection_as_property.setValue(_selection_list.get(_selection_index));
     }
 
     public String getText() {
@@ -91,5 +101,9 @@ class SelectorItem extends HBox {
 
     public String getName() {
         return _name;
+    }
+
+    public StringPropertyBase getSelectionAsProperty(){
+        return _selection_as_property;
     }
 }

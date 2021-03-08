@@ -1,6 +1,8 @@
 package units.shooter_developers.MenuAPI;
 
 import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.StringPropertyBase;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
 import units.shooter_developers.*;
@@ -38,6 +40,8 @@ public class _Submenu extends Menu {
 
             map_section.setAlignment(Pos.TOP_CENTER);
             buttons_section.setAlignment(Pos.CENTER_LEFT);
+
+            //seguir por aqui
 
             getChildren().addAll(player_section,map_section, buttons_section);
 
