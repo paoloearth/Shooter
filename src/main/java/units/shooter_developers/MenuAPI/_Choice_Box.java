@@ -21,7 +21,7 @@ public class _Choice_Box extends VBox {
     private SelectorItem _selector;
 
 
-    public _Choice_Box(Map<String, String> map_name_imageURL, int nrows, double scale) {
+    public _Choice_Box(Map<String, String> map_image_to_URL, int nrows, double scale) {
         super();
         setAlignment(Pos.TOP_CENTER);
         setPadding(new Insets(10));
@@ -30,10 +30,9 @@ public class _Choice_Box extends VBox {
         _nrows = nrows;
         _custom_scale = scale;
         _selector = new SelectorItem("hola", false);
-        set_dict(map_name_imageURL);
+        set_dict(map_image_to_URL);
 
-        //create_combobox_with_DICT(map_name_imageURL);
-        create_selector_with_DICT(map_name_imageURL);
+        //create_combobox_with_DICT(map_name_image_to_URL);
         //getChildren().add(getComboBox());
         getChildren().add(_selector);
 
@@ -42,7 +41,20 @@ public class _Choice_Box extends VBox {
         getChildren().add(H);
 
         //set_listener_to_change_figure(H);
-        set_listener_to_change_figure_selector(H);
+        //set_listener_to_change_figure_selector(H);
+        _selector.getSelectionAsProperty().addListener((observable,  oldValue,  selected) ->
+        {
+            H.getChildren().removeIf(i -> i instanceof ImageView);
+            var I = Menu.retrieveImage(retrieve_selected_value_from_dict(selected), _nrows, 1);
+            I.setPreserveRatio(true);
+            scale_image_to_fit_box(H, I);
+            H.getChildren().add(I);
+
+        });
+
+        for(var elem : map_image_to_URL.entrySet()){
+            _selector.addTag(elem.getKey());
+        }
     }
 
     protected static HBox createCustomHbox() {
