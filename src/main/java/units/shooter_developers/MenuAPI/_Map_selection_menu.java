@@ -14,9 +14,9 @@ public class _Map_selection_menu extends _Submenu_component {
     Map<String, String> Map_CSV;
 
 
-    public _Map_selection_menu(double width, double height)
+    public _Map_selection_menu(double width_scale, double height_scale)
     {
-        super(width,height);
+        super(width_scale*Menu.getMenuWidth(),height_scale*Menu.getMenuHeight());
         create_menu();
     }
 
