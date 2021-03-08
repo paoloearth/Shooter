@@ -86,6 +86,7 @@ class SelectorItem extends HBox {
 
         var index = getChildren().indexOf(selection_item);
 
+        /*
         getChildren().remove(selection_item);
         if (!_selection_list.isEmpty()) {
             selection_item = new NonAnimatedItem(_selection_list.get(_selection_index),
@@ -93,6 +94,9 @@ class SelectorItem extends HBox {
             selection_item.setTranslateX((_selection_section_translation + 0.01) * Menu.getMenuWidth());
         }
         getChildren().add(index, selection_item);
+         */
+        if (!_selection_list.isEmpty())
+            selection_item.setName(_selection_list.get(_selection_index));
 
         _selection_as_property.setValue(_selection_list.get(_selection_index));
     }

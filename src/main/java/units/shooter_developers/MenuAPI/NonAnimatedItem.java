@@ -56,10 +56,30 @@ class NonAnimatedItem extends StackPane {
             textImage.setFitWidth(box.getWidth());
 
         setAlignment(Pos.CENTER_LEFT);
-        getChildren().addAll(box, textImage);
+        getChildren().add(textImage);
+
+        getChildren().add(box);
+
+        _name_property.addListener((observable,  oldValue,  selected) -> {
+            getChildren().removeIf(e -> e instanceof ImageView);
+            Text new_text = new Text(_name_property.getValue());
+            new_text.setFill(text_color);
+            new_text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, 0.0333 * Menu.getMenuHeight()));
+
+            //Text is transformed into an image and resized
+            params.setFill(Color.TRANSPARENT);
+            var new_textImage = new ImageView(new_text.snapshot(params, null));
+            if (new_textImage.getBoundsInLocal().getWidth() > box.getWidth())
+                textImage.setFitWidth(box.getWidth());
+
+            setAlignment(Pos.CENTER_LEFT);
+            getChildren().add(new_textImage);
+        });
+
+
     }
 
-    protected void changeName(String name){
+    protected void setName(String name){
         _name_property.setValue(name);
     }
 
