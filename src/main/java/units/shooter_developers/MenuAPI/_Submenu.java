@@ -41,8 +41,6 @@ public class _Submenu extends Menu {
             map_section.setAlignment(Pos.TOP_CENTER);
             buttons_section.setAlignment(Pos.CENTER_LEFT);
 
-            //seguir por aqui
-
             getChildren().addAll(player_section,map_section, buttons_section);
 
             BooleanBinding property = map_section.get_AllSetProperty().or(player_section.get_AllSetProperty());

@@ -14,7 +14,6 @@ import java.util.Map;
 
 public class _ChoiceBox extends VBox {
 
-    private ComboBox<String> _comboBox;
     private Map<String, String> _dict;
     private int _nrows;
     private double _custom_scale;
@@ -22,84 +21,45 @@ public class _ChoiceBox extends VBox {
 
 
     public _ChoiceBox(Map<String, String> map_image_to_URL, int nrows, double scale) {
-        super();
-        setAlignment(Pos.TOP_CENTER);
-        setPadding(new Insets(10));
-        setSpacing(10);
-
         _nrows = nrows;
         _custom_scale = scale;
         _selector = new SelectorItem("ChoiceBox_selector", 0.1*scale, false);
         _selector.setAlignment(Pos.BASELINE_CENTER);
+        _dict = map_image_to_URL;
 
-        set_dict(map_image_to_URL);
+        setAlignment(Pos.TOP_CENTER);
+        setPadding(new Insets(10));
+        setSpacing(10);
 
-        getChildren().add(_selector);
-
-
-        HBox H = new HBox();
-        H.setMinHeight(0);
-        H.setAlignment(Pos.BOTTOM_CENTER);
-        getChildren().add(H);
+        HBox image_box = new HBox();
+        image_box.setMinHeight(0);
+        image_box.setAlignment(Pos.BOTTOM_CENTER);
 
         _selector.getSelectionAsProperty().addListener((observable,  oldValue,  selected) ->
         {
-            H.getChildren().removeIf(i -> i instanceof ImageView);
-            var I = Menu.retrieveImage(retrieve_selected_value_from_dict(selected), _nrows, 1);
-            I.setPreserveRatio(true);
-            scale_image_to_fit_box(H, I);
-            H.getChildren().add(I);
+            var image = Menu.retrieveImage(_dict.get(selected), _nrows, 1);
 
+            image.setPreserveRatio(true);
+            image.fitHeightProperty().bind(image_box.heightProperty());
+            image.setScaleY(_custom_scale);
+            image.setScaleX(_custom_scale);
+
+            image_box.getChildren().removeIf(i -> i instanceof ImageView);
+            image_box.getChildren().add(image);
         });
 
         for(var elem : map_image_to_URL.entrySet()){
             _selector.addTag(elem.getKey());
         }
-    }
 
-    protected static HBox createCustomHbox() {
-        HBox H = new HBox();
-        H.setMinHeight(0);
-        H.setAlignment(Pos.BOTTOM_CENTER);
-        return H;
-    }
-
-    protected void scale_image_to_fit_box(HBox H, ImageView I) {
-        I.fitHeightProperty().bind(H.heightProperty());
-        I.setScaleY(_custom_scale);
-        I.setScaleX(_custom_scale);
+        getChildren().add(image_box);
+        getChildren().add(_selector);
     }
 
     public String get_value()
     {
         return _selector.getName();
     }
-    private String retrieve_selected_value_from_dict(String selected) {
-        return get_dict().get(selected);
-    }
-
-
-
-
-
-
-    /**************************************   Getters and Setters ******************************************/
-
-    /* For dictionary variable */
-    public void set_dict(Map<String, String> _dict) {
-        this._dict = _dict;
-    }
-    public Map<String, String> get_dict() {
-        return _dict;
-    }
-
-    /* For combobox varibale */
-    public ComboBox<String> getComboBox() {
-        return _comboBox;
-    }
-
-
-
 }
 
 
