@@ -8,7 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.awt.*;
 import java.util.Map;
 
 
@@ -30,6 +29,7 @@ public class _Choice_Box extends VBox {
 
         _nrows = nrows;
         _custom_scale = scale;
+        _selector = new SelectorItem("hola", true);
         set_dict(map_name_imageURL);
 
         create_combobox_with_DICT(map_name_imageURL);

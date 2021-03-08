@@ -16,7 +16,7 @@ class SelectorItem extends HBox {
     private final double _selection_section_translation;
     private StringPropertyBase _selection_as_property;
 
-    public SelectorItem(String name) {
+    public SelectorItem(String name, boolean show_name) {
         _selection_index = 0;
         _selection_list = new ArrayList<>();
         _width_selection_item = 0.25;
@@ -49,10 +49,11 @@ class SelectorItem extends HBox {
             next();
         });
 
-        this.getChildren().addAll(name_text_box,
-                left_arrow_button,
-                selection_text_box,
-                right_arrow_button);
+        //if(!show_name)
+            this.getChildren().add(name_text_box);
+        this.getChildren().add(left_arrow_button);
+        this.getChildren().add(selection_text_box);
+        this.getChildren().add(right_arrow_button);
     }
 
     private void next() {
@@ -84,6 +85,7 @@ class SelectorItem extends HBox {
                 .orElse(null);
 
         var index = getChildren().indexOf(selection_item);
+
         getChildren().remove(selection_item);
         if (!_selection_list.isEmpty()) {
             selection_item = new NonAnimatedItem(_selection_list.get(_selection_index),

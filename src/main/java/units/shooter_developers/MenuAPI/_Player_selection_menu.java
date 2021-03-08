@@ -28,7 +28,7 @@ public class _Player_selection_menu extends _Submenu_component {
 
         create_menu();
 
-        set_bindings();
+        //set_bindings();
     }
 
 

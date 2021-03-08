@@ -1,5 +1,6 @@
 package units.shooter_developers.MenuAPI;
 
+import javafx.beans.property.StringPropertyBase;
 import javafx.geometry.Pos;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.ImageView;
@@ -13,6 +14,7 @@ import javafx.scene.text.Text;
 /************************ NON-ANIMATED ITEM ****************************************/
 
 class NonAnimatedItem extends StackPane {
+    StringPropertyBase _name_property;
 
     public NonAnimatedItem(String name) {
         this(name, -1, -1);
@@ -28,6 +30,13 @@ class NonAnimatedItem extends StackPane {
             effective_height_ratio = item_height_ratio;
         }
 
+        _name_property = new StringPropertyBase() {
+            @Override
+            public Object getBean() { return null; }
+            @Override
+            public String getName() { return null; }};
+        _name_property.setValue(name);
+
         Color text_color = Menu.getColorPalette().dead_color;
         Color background_color = Menu.getColorPalette().basic_secondary_color;
 
@@ -35,7 +44,7 @@ class NonAnimatedItem extends StackPane {
         box.setOpacity(0.3);
         box.setFill(background_color);
 
-        Text text = new Text(name);
+        Text text = new Text(_name_property.getValue());
         text.setFill(text_color);
         text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, 0.0333 * Menu.getMenuHeight()));
 
@@ -49,4 +58,14 @@ class NonAnimatedItem extends StackPane {
         setAlignment(Pos.CENTER_LEFT);
         getChildren().addAll(box, textImage);
     }
+
+    protected void changeName(String name){
+        _name_property.setValue(name);
+    }
+
+    protected StringPropertyBase getNameAsProperty(){
+        return _name_property;
+    }
+
+
 }
