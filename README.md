@@ -36,6 +36,11 @@
 
 
 
+<a href="https://github.com/paoloearth/Shooter">
+    ![Alt Text](./images/islands.gif)
+  </a>
+
+
 
 
 
@@ -69,10 +74,6 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project :blue_book:
-
-<a href="https://github.com/paoloearth/Shooter">
-    ![Alt Text](:/images/islands.gif)
-  </a>
 
 There are many great GAMES, however, this is better
 Here's why:
