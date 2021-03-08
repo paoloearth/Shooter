@@ -1,4 +1,4 @@
-package units.shooter_developers.Menu_pages.submenu;
+package units.shooter_developers.MenuAPI;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.ColumnConstraints;
@@ -10,25 +10,25 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-public class Player_selection_menu extends Submenu_component {
+public class _Player_selection_menu extends _Submenu_component {
 
-    Choice_Box CB_P1;
-    Choice_Box CB_P2;
+    _ChoiceBox CB_P1;
+    _ChoiceBox CB_P2;
 
-    Text_Box TB_P1;
-    Text_Box TB_P2;
+    _Text_Box TB_P1;
+    _Text_Box TB_P2;
 
     Map<String, String> Name_URL;
 
-    public Player_selection_menu(double width, double height)
+    public _Player_selection_menu(double width_scale, double height_scale)
     {
-        super(width, height);
+        super(width_scale, height_scale);
 
         create_2_columns_layout();
 
         create_menu();
 
-        set_bindings();
+        //set_bindings();
     }
 
 
@@ -44,8 +44,8 @@ public class Player_selection_menu extends Submenu_component {
     }
 
     private void create_choiceboxes() {
-        CB_P1 = new Choice_Box( Name_URL, TypeImage.SPRITE);
-        CB_P2 = new Choice_Box(Name_URL,TypeImage.SPRITE);
+        CB_P1 = new _ChoiceBox( Name_URL, 4, Custom_Settings.SPRITE_SCALE);
+        CB_P2 = new _ChoiceBox(Name_URL, 4, Custom_Settings.SPRITE_SCALE);
 
 
 
@@ -55,8 +55,8 @@ public class Player_selection_menu extends Submenu_component {
 
     private void create_textboxes() {
         /* TEXT BOX & ADD them to GRIDPANE in right position*/
-        TB_P1 = new Text_Box(Custom_Settings.URL_COMMANDS_P1, TypeImage.WASD);
-        TB_P2 = new Text_Box(Custom_Settings.URL_COMMANDS_P2, TypeImage.ARROW);
+        TB_P1 = new _Text_Box(Custom_Settings.URL_COMMANDS_P1, 1, Custom_Settings.WASD_SCALE);
+        TB_P2 = new _Text_Box(Custom_Settings.URL_COMMANDS_P2, 1, Custom_Settings.ARROWS_SCALE);
 
         TB_P1.setAlignment(Pos.CENTER);
         TB_P1.setAlignment(Pos.CENTER);
@@ -65,12 +65,15 @@ public class Player_selection_menu extends Submenu_component {
         add(TB_P2, 1,0);
     }
 
+    /*
     private void set_bindings() {
-        all_set.bind( TB_P1.textField.textProperty().isEmpty()
-                .or(TB_P2.textField.textProperty().isEmpty())
+        all_set.bind( TB_P1._textField.textProperty().isEmpty()
+                .or(TB_P2._textField.textProperty().isEmpty())
                 .or(CB_P1.getComboBox().getSelectionModel().selectedItemProperty().isNull())
                 .or(CB_P2.getComboBox().getSelectionModel().selectedItemProperty().isNull()));
     }
+
+     */
 
     private Map<String, String> initialize_dictionary() {
         Name_URL = new Hashtable<>();

@@ -1,4 +1,4 @@
-package units.shooter_developers.Menu_pages.submenu;
+package units.shooter_developers.MenuAPI;
 
 import units.shooter_developers.Custom_Settings;
 
@@ -7,16 +7,16 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-public class Map_selection_menu extends Submenu_component {
+public class _Map_selection_menu extends _Submenu_component {
 
-    Choice_Box CB_MAP;
+    _ChoiceBox CB_MAP;
     Map<String, String> Map_URL;
     Map<String, String> Map_CSV;
 
 
-    public Map_selection_menu(double width, double height)
+    public _Map_selection_menu(double width_scale, double height_scale)
     {
-        super(width,height);
+        super(width_scale,height_scale);
         create_menu();
     }
 
@@ -27,9 +27,9 @@ public class Map_selection_menu extends Submenu_component {
         set_name_png_dictionary();
         set_name_csv_dictionary();
 
-        CB_MAP = new Choice_Box(Map_URL, TypeImage.MAP);
+        CB_MAP = new _ChoiceBox(Map_URL, 1, Custom_Settings.MAP_SCALE);
 
-        all_set.bind(CB_MAP.getComboBox().getSelectionModel().selectedItemProperty().isNull());
+        //all_set.bind(CB_MAP.getComboBox().getSelectionModel().selectedItemProperty().isNull());
 
         add(CB_MAP,1,1);
     }

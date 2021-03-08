@@ -12,6 +12,9 @@ package units.shooter_developers.MenuAPI;
  *  https://github.com/Siderim/video-game-menu/
  */
 
+// COLOCAR NUMEROS Y VALORES ESPECIFICOS EN Custom_Settings
+// USAR DICCIONARIOS PARA LOS SELECTORES ¿? quizás
+
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -181,10 +184,13 @@ public abstract class Menu extends Application {
 
     public void addFreeItem(String new_menu_item, double position_ratio_X, double position_ratio_Y){
         MenuItem new_item = new MenuItem(new_menu_item);
+        var hola = getMenuWidth();
+        var adios = getMenuHeight();
         new_item.setTranslateX(position_ratio_X*getMenuWidth());
-        new_item.setTranslateY(position_ratio_Y*getMenuWidth());
+        new_item.setTranslateY(position_ratio_Y*getMenuHeight());
 
-        _root.getChildren().addAll(new_item);
+        //_root.getChildren().addAll(new_item);
+        addGenericNode(new_item);
     }
 
     public void addNonAnimatedItem(String name){

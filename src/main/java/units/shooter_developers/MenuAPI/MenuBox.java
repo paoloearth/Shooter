@@ -43,7 +43,7 @@ class MenuBox extends VBox {
     }
 
     protected void addSelectorItem(String name, ArrayList<String> tag_list) {
-        SelectorItem new_item = new SelectorItem(name);
+        SelectorItem new_item = new SelectorItem(name, true);
         new_item.setTranslateX(0.005 * Menu.getMenuWidth());
 
         for (var tag : tag_list) {

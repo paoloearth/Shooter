@@ -1,19 +1,17 @@
-package units.shooter_developers.Menu_pages.submenu;
+package units.shooter_developers.MenuAPI;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
-public class Button_selection_menu extends Submenu_component {
+public class _Button_selection_menu extends _Submenu_component {
 
     Button launch_simulation;
     Button launch_default;
 
-    public Button_selection_menu(double width, double height)
+    public _Button_selection_menu(double width_scale, double height_scale)
     {
-        super(width, height);
-
-        fix_submenu_size_to_width_and_height();
+        super(width_scale, height_scale);
 
         setAlignment(Pos.CENTER_LEFT);
 
@@ -44,11 +42,11 @@ public class Button_selection_menu extends Submenu_component {
     }
 
 
-    public Button getLaunch_simulation() {
+    public Button getMainLaunchButton() {
         return launch_simulation;
     }
 
-    public Button getLaunch_default() {
+    public Button getDefaultLaunchButton() {
         return launch_default;
     }
 }
