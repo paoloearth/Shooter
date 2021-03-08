@@ -12,8 +12,8 @@ import java.util.Map;
 
 public class _Player_selection_menu extends _Submenu_component {
 
-    _Choice_Box CB_P1;
-    _Choice_Box CB_P2;
+    _ChoiceBox CB_P1;
+    _ChoiceBox CB_P2;
 
     _Text_Box TB_P1;
     _Text_Box TB_P2;
@@ -44,8 +44,8 @@ public class _Player_selection_menu extends _Submenu_component {
     }
 
     private void create_choiceboxes() {
-        CB_P1 = new _Choice_Box( Name_URL, 4, Custom_Settings.SPRITE_SCALE);
-        CB_P2 = new _Choice_Box(Name_URL, 4, Custom_Settings.SPRITE_SCALE);
+        CB_P1 = new _ChoiceBox( Name_URL, 4, Custom_Settings.SPRITE_SCALE);
+        CB_P2 = new _ChoiceBox(Name_URL, 4, Custom_Settings.SPRITE_SCALE);
 
 
 

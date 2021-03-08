@@ -1,8 +1,10 @@
 package units.shooter_developers.MenuAPI;
 
+import com.sun.javafx.sg.prism.NGRectangle;
 import javafx.beans.property.StringPropertyBase;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
@@ -37,29 +39,36 @@ class SelectorItem extends HBox {
         };
 
 
-        setAlignment(Pos.CENTER_LEFT);
+        //setAlignment(Pos.CENTER_LEFT);
         NonAnimatedItem name_text_box = new NonAnimatedItem(name);
 
+        var long_space = new Rectangle(_selection_section_translation * Menu.getMenuWidth(), 0);
+
         MenuItem left_arrow_button = new MenuItem("<", 0.04, -1);
-        left_arrow_button.setTranslateX(_selection_section_translation * Menu.getMenuWidth());
         left_arrow_button.setOnMouseReleased(event -> {
             previous();
         });
 
+        var short_space_1 = new Rectangle(0.01 * Menu.getMenuWidth(), 0);
+
         NonAnimatedItem selection_text_box;
         selection_text_box = new NonAnimatedItem("not_found", _width_selection_item, -1);
-        selection_text_box.setTranslateX((_selection_section_translation + 0.01) * Menu.getMenuWidth());
+
+        var short_space_2 = new Rectangle(0.01 * Menu.getMenuWidth(), 0);
 
         MenuItem right_arrow_button = new MenuItem(">", 0.04, -1);
-        right_arrow_button.setTranslateX((_selection_section_translation + 0.02) * Menu.getMenuWidth());
         right_arrow_button.setOnMouseReleased(event -> {
             next();
         });
 
-        if(_show_name)
+        if(_show_name) {
             this.getChildren().add(name_text_box);
+            this.getChildren().add(long_space);
+        }
         this.getChildren().add(left_arrow_button);
+        this.getChildren().add(short_space_1);
         this.getChildren().add(selection_text_box);
+        this.getChildren().add(short_space_2);
         this.getChildren().add(right_arrow_button);
     }
 

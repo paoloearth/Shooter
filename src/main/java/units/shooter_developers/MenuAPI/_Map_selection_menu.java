@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class _Map_selection_menu extends _Submenu_component {
 
-    _Choice_Box CB_MAP;
+    _ChoiceBox CB_MAP;
     Map<String, String> Map_URL;
     Map<String, String> Map_CSV;
 
@@ -27,7 +27,7 @@ public class _Map_selection_menu extends _Submenu_component {
         set_name_png_dictionary();
         set_name_csv_dictionary();
 
-        CB_MAP = new _Choice_Box(Map_URL, 1, Custom_Settings.MAP_SCALE);
+        CB_MAP = new _ChoiceBox(Map_URL, 1, Custom_Settings.MAP_SCALE);
 
         //all_set.bind(CB_MAP.getComboBox().getSelectionModel().selectedItemProperty().isNull());
 

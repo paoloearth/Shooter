@@ -12,7 +12,7 @@ import java.util.Map;
 
 
 
-public class _Choice_Box extends VBox {
+public class _ChoiceBox extends VBox {
 
     private ComboBox<String> _comboBox;
     private Map<String, String> _dict;
@@ -21,7 +21,7 @@ public class _Choice_Box extends VBox {
     private SelectorItem _selector;
 
 
-    public _Choice_Box(Map<String, String> map_image_to_URL, int nrows, double scale) {
+    public _ChoiceBox(Map<String, String> map_image_to_URL, int nrows, double scale) {
         super();
         setAlignment(Pos.TOP_CENTER);
         setPadding(new Insets(10));
@@ -29,7 +29,7 @@ public class _Choice_Box extends VBox {
 
         _nrows = nrows;
         _custom_scale = scale;
-        _selector = new SelectorItem("hola", 0.1, false);
+        _selector = new SelectorItem("ChoiceBox_selector", 0.1, false);
 
         set_dict(map_image_to_URL);
 
