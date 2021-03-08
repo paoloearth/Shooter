@@ -13,8 +13,6 @@ public class _Button_selection_menu extends _Submenu_component {
     {
         super(width_scale, height_scale);
 
-        fix_submenu_size_to_width_and_height();
-
         setAlignment(Pos.CENTER_LEFT);
 
         VBox V = create_custom_VBOX();
