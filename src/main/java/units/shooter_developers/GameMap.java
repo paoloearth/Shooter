@@ -36,7 +36,7 @@ public class GameMap {
     GameMap(double width, double height,
             Image tileset, Integer cell_side,
             Pair<Integer,Integer> num_tiles,Set<Integer> set_of_passable,
-            Set<Integer> set_of_NOT_passable_for_projectile, List<String[]> map) throws IOException {
+            Set<Integer> set_of_NOT_passable_for_projectile, List<String[]> map){
         
         /* Set variables  */
         _width = width;

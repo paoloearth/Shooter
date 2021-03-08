@@ -28,9 +28,9 @@ public class Map_Reader {
     private  List<String[]> _lines;
 
     // Constructor
-    Map_Reader() throws IOException {  }
+    Map_Reader(){  }
 
-    public GameMap read_Map(String URL, double width, double height) throws IOException {
+    public GameMap read_Map(String URL, double width, double height) {
         GameMap M;
         try {
             _lines = extract_lines(URL);
