@@ -69,14 +69,4 @@ public class _Player_selection_menu extends GridPane {
 
         //set_bindings();
     }
-
-
-
-    public List<String> get_players_URL() {
-
-                var URL = new ArrayList<String>();
-                URL.add(Name_URL.get(CB_P1.get_value()));
-                URL.add(Name_URL.get(CB_P2.get_value()));
-                return URL;
-    }
 }

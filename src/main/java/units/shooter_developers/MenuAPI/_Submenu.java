@@ -63,6 +63,8 @@ public class _Submenu extends Menu {
         _Map_selection_menu map_section;
         _Button_selection_menu buttons_section;
         _Submenu M; // Necessary in order to change the scene
+        Map<String, String> Name_URL;
+        Map<String, String> Map_URL;
 
         SubmenuObject(_Submenu M)  {
 
@@ -71,14 +73,14 @@ public class _Submenu extends Menu {
             this.setPrefSize(getMenuWidth(), getMenuHeight());
 
 
-            Map<String, String> Name_URL = new Hashtable<>();
+            Name_URL = new Hashtable<>();
             Name_URL.put(Custom_Settings.ARTIST,Custom_Settings.URL_ARTIST);
             Name_URL.put(Custom_Settings.ASTROLOGER,Custom_Settings.URL_ASTROLOGER);
             Name_URL.put(Custom_Settings.WARRIOR,Custom_Settings.URL_WARRIOR);
             player_section = new _Player_selection_menu( 1,0.5, Name_URL);    // THE TOP WILL OCCUPY HALF THE HEIGHT
 
 
-            Map<String, String> Map_URL = new Hashtable<>();
+            Map_URL = new Hashtable<>();
             Map_URL.put(Custom_Settings.ISLAND,Custom_Settings.URL_MAP_ISLAND_PNG);
             Map_URL.put(Custom_Settings.DESERT,Custom_Settings.URL_MAP_DESERT_PNG);
             map_section      = new _Map_selection_menu(.7,       0.5, Map_URL);    // THE BOTTOM HALF WILL BE SPLIT 70% for MAP & 25%
@@ -119,7 +121,11 @@ public class _Submenu extends Menu {
             var player_names = new ArrayList<String>();
             player_names.add(player_section.TB_P1.get_value());
             player_names.add(player_section.TB_P2.get_value());
-            M.setSimulationInstance(new Simulation(player_names, player_section.get_players_URL(), map_data));
+            ArrayList<String> Players_URL = new ArrayList<String>();
+            Players_URL.add(Name_URL.get(player_names.get(0)));
+            Players_URL.add(Name_URL.get(player_names.get(1)));
+
+            M.setSimulationInstance(new Simulation(player_names, Players_URL, map_data));
             try {
                 M.getStage().close();
                 getSimulationInstance().start(getStage());
