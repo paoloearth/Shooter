@@ -10,6 +10,7 @@ import units.shooter_developers.Menu_pages.OptionsMenu;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 public class _Submenu extends Menu {
@@ -103,7 +104,14 @@ public class _Submenu extends Menu {
 
 
         private void launch_simulation(_Submenu M) {
-            M.setSimulationInstance(new Simulation(player_section.get_players_names(), player_section.get_players_URL(), map_section.get_map_data()));
+            Map<String, String> Map_CSV;
+            Map_CSV = new Hashtable<>();
+            Map_CSV.put(Custom_Settings.ISLAND,Custom_Settings.URL_MAP_ISLAND_CSV);
+            Map_CSV.put(Custom_Settings.DESERT,Custom_Settings.URL_MAP_DESERT_CSV);
+            ArrayList<String> map_data = new ArrayList<String>();
+            map_data.add(Map_CSV.get(map_section.getValue()));
+
+            M.setSimulationInstance(new Simulation(player_section.get_players_names(), player_section.get_players_URL(), map_data));
             try {
                 M.getStage().close();
                 getSimulationInstance().start(getStage());

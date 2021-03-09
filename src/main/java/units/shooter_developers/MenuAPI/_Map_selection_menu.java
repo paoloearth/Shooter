@@ -11,7 +11,6 @@ import java.util.Map;
 public class _Map_selection_menu extends GridPane {
 
     _ChoiceBox _choice_box_map;
-    Map<String, String> Map_CSV;
 
 
     public _Map_selection_menu(double width_scale, double height_scale, Map<String, String> map_image_to_URL)
@@ -28,9 +27,6 @@ public class _Map_selection_menu extends GridPane {
 
 
         /* DOUBLE MAP in order to store both the name-> csv mapping & name -> png mapping */
-        Map_CSV = new Hashtable<>();
-        Map_CSV.put(Custom_Settings.ISLAND,Custom_Settings.URL_MAP_ISLAND_CSV);
-        Map_CSV.put(Custom_Settings.DESERT,Custom_Settings.URL_MAP_DESERT_CSV);
 
         _choice_box_map = new _ChoiceBox(map_image_to_URL, 1, Custom_Settings.MAP_SCALE);
 
@@ -40,13 +36,8 @@ public class _Map_selection_menu extends GridPane {
     }
 
 
-    public List<String> get_map_data()
-    {
-        var L = new ArrayList<String>();
-        L.add(Map_CSV.get(_choice_box_map.get_value()));
-
-        return L;
-
+    public String getValue(){
+        return _choice_box_map.get_value();
     }
 
 
