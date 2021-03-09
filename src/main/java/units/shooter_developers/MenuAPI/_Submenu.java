@@ -9,6 +9,8 @@ import units.shooter_developers.*;
 import units.shooter_developers.Menu_pages.OptionsMenu;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Map;
 
 public class _Submenu extends Menu {
 
@@ -68,7 +70,12 @@ public class _Submenu extends Menu {
             this.setPrefSize(getMenuWidth(), getMenuHeight());
 
             player_section = new _Player_selection_menu( 1,             0.5);    // THE TOP WILL OCCUPY HALF THE HEIGHT
-            map_section      = new _Map_selection_menu(.7,       0.5);    // THE BOTTOM HALF WILL BE SPLIT 70% for MAP & 25%
+
+
+            Map<String, String> Map_URL = new Hashtable<>();
+            Map_URL.put(Custom_Settings.ISLAND,Custom_Settings.URL_MAP_ISLAND_PNG);
+            Map_URL.put(Custom_Settings.DESERT,Custom_Settings.URL_MAP_DESERT_PNG);
+            map_section      = new _Map_selection_menu(.7,       0.5, Map_URL);    // THE BOTTOM HALF WILL BE SPLIT 70% for MAP & 25%
             //buttons_section = new _Button_selection_menu(.25,   0.5);
 
             map_section.setAlignment(Pos.TOP_CENTER);

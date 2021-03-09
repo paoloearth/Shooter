@@ -10,12 +10,11 @@ import java.util.Map;
 
 public class _Map_selection_menu extends GridPane {
 
-    _ChoiceBox CB_MAP;
-    Map<String, String> Map_URL;
+    _ChoiceBox _choice_box_map;
     Map<String, String> Map_CSV;
 
 
-    public _Map_selection_menu(double width_scale, double height_scale)
+    public _Map_selection_menu(double width_scale, double height_scale, Map<String, String> map_image_to_URL)
     {
         var width = Menu.getMenuWidth()* width_scale;
         var height = Menu.getMenuHeight()* height_scale;
@@ -28,40 +27,23 @@ public class _Map_selection_menu extends GridPane {
         this.setMaxSize(width, height);
 
 
-        create_menu();
-    }
-
-
-    private void create_menu() {
-
         /* DOUBLE MAP in order to store both the name-> csv mapping & name -> png mapping */
-        set_name_png_dictionary();
-        set_name_csv_dictionary();
-
-        CB_MAP = new _ChoiceBox(Map_URL, 1, Custom_Settings.MAP_SCALE);
-
-        //all_set.bind(CB_MAP.getComboBox().getSelectionModel().selectedItemProperty().isNull());
-
-        add(CB_MAP,1,1);
-    }
-
-    private void set_name_csv_dictionary() {
         Map_CSV = new Hashtable<>();
         Map_CSV.put(Custom_Settings.ISLAND,Custom_Settings.URL_MAP_ISLAND_CSV);
         Map_CSV.put(Custom_Settings.DESERT,Custom_Settings.URL_MAP_DESERT_CSV);
-    }
 
-    private void set_name_png_dictionary() {
-        Map_URL = new Hashtable<>();
-        Map_URL.put(Custom_Settings.ISLAND,Custom_Settings.URL_MAP_ISLAND_PNG);
-        Map_URL.put(Custom_Settings.DESERT,Custom_Settings.URL_MAP_DESERT_PNG);
+        _choice_box_map = new _ChoiceBox(map_image_to_URL, 1, Custom_Settings.MAP_SCALE);
+
+        //all_set.bind(CB_MAP.getComboBox().getSelectionModel().selectedItemProperty().isNull());
+
+        add(_choice_box_map,1,1);
     }
 
 
     public List<String> get_map_data()
     {
         var L = new ArrayList<String>();
-        L.add(Map_CSV.get(CB_MAP.get_value()));
+        L.add(Map_CSV.get(_choice_box_map.get_value()));
 
         return L;
 
