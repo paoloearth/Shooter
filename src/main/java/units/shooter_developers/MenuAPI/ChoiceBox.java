@@ -16,7 +16,7 @@ public class ChoiceBox extends VBox {
     private int _nrows;
     private double _custom_scale;
     private SelectorItem _selector;
-    String _name
+    String _name;
 
 
     public ChoiceBox(String name, Map<String, String> map_image_to_URL, int nrows, double scale) {
