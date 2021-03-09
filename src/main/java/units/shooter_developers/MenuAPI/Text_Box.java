@@ -45,21 +45,16 @@ public class Text_Box extends VBox {
         var I = Menu.retrieveImage(commands_url, _nrows, 1);
         I.setPreserveRatio(true);
 
+        I.setFitHeight(0.2*_custom_scale*Menu.getMenuHeight());
+
         DropShadow ds = new DropShadow( 50, Color.WHITE );
         I.setEffect(ds);
 
-        scale_image_to_fit_box(H, I);
         H.getChildren().add(I);
 
         getChildren().add(H);
 
 
-    }
-
-    protected void scale_image_to_fit_box(HBox H, ImageView I) {
-        I.fitHeightProperty().bind(H.heightProperty());
-        I.setScaleY(_custom_scale);
-        I.setScaleX(_custom_scale);
     }
 
     protected static HBox createCustomHbox() {

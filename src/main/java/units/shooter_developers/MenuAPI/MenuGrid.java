@@ -9,13 +9,13 @@ public class MenuGrid extends GridPane {
 
     public MenuGrid(){
         double scale_width = 0.8;
-        double scale_height = 0.8;
+        double scale_height = 0.95;
         setMaxSize(scale_width*Menu.getMenuWidth(), scale_height*Menu.getMenuHeight());
         setMinSize(scale_width*Menu.getMenuWidth(), scale_height*Menu.getMenuHeight());
         setTranslateX((1-scale_width)/2.*Menu.getMenuWidth());
         setTranslateY((1-scale_height)/2.*Menu.getMenuHeight());
-        //setHgap(0.3*Menu.getMenuHeight());
-        //setVgap(0.1*Menu.getMenuHeight());
+        setHgap(0.3*Menu.getMenuHeight());
+        setVgap(0.05*Menu.getMenuHeight());
         setAlignment(Pos.CENTER);
     }
 

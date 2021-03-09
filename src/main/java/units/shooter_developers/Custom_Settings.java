@@ -38,7 +38,7 @@ public class Custom_Settings {
     public static final double WASD_SCALE =.5 ;
     public static final double ARROWS_SCALE = .2 ;
     public static final double SPRITE_SCALE = .9;
-    public static final double MAP_SCALE = .5;
+    public static final double MAP_SCALE = 1;
 
 
     /* BONUS */

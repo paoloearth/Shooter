@@ -38,7 +38,7 @@ public class _Submenu extends Menu {
 
 
 
-        //addFreeItem("Start!", 0.7, 0.8);
+        addFreeItem("Start!", 0.6, 0.8);
 
 
 

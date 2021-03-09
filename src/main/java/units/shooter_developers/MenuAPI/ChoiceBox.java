@@ -28,8 +28,7 @@ public class ChoiceBox extends VBox {
         _dict = map_image_to_URL;
 
         setAlignment(Pos.TOP_CENTER);
-        setPadding(new Insets(10));
-        setSpacing(10);
+        setSpacing(0.01*Menu.getMenuHeight());
 
         HBox image_box = new HBox();
         image_box.setMinHeight(0);
@@ -40,12 +39,12 @@ public class ChoiceBox extends VBox {
             var image = Menu.retrieveImage(_dict.get(selected), _nrows, 1);
 
             image.setPreserveRatio(true);
-            image.fitHeightProperty().bind(image_box.heightProperty());
-            image.setScaleY(_custom_scale);
-            image.setScaleX(_custom_scale);
+
+            image.setFitHeight(0.2*_custom_scale*Menu.getMenuHeight());
 
             image_box.getChildren().removeIf(i -> i instanceof ImageView);
             image_box.getChildren().add(image);
+
         });
 
         for(var elem : map_image_to_URL.entrySet()){
