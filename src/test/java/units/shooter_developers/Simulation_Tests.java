@@ -9,17 +9,22 @@ import org.testfx.api.FxRobot;
 import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(ApplicationExtension.class)
 class Simulation_Tests {
 
     private Simulation SIMULATION;
+    ArrayList<KeyCode> P1_MOVEMENTS = new ArrayList<>(Arrays.asList(KeyCode.W, KeyCode.A, KeyCode.D,KeyCode.S));
+    ArrayList<KeyCode> P2_MOVEMENTS = new ArrayList<>(Arrays.asList(KeyCode.UP, KeyCode.DOWN, KeyCode.LEFT,KeyCode.RIGHT));
 
 
     @Start
@@ -54,23 +59,116 @@ class Simulation_Tests {
     void height_is_correct_height() { Assertions.assertThat(SIMULATION.getHEIGHT()).isEqualTo(600); }
 
 
-    void movement(FxRobot robot) {
+   @Test
+    void Player_1_is_steady_while_moving_player_2(FxRobot robot) {
 
-        for (int i = 0; i < 10; i++) {
-            robot.push(KeyCode.DOWN);
-        }
-        for (int i = 0; i < 10; i++) {
-            robot.push(KeyCode.UP);
-        }
+        var P1 = SIMULATION.getPlayer_1();
+        Box C = P1.get_hitbox();
+
+        robot.push(KeyCode.DOWN);
+        assertEquals(C, P1.get_hitbox());
+        robot.push(KeyCode.UP);
+        assertEquals(C, P1.get_hitbox());
+        robot.push(KeyCode.LEFT);
+        assertEquals(C, P1.get_hitbox());
+        robot.push(KeyCode.RIGHT);
+        assertEquals(C, P1.get_hitbox());
+
+    }
+
+    @Test
+    void Player_2_is_steady_while_moving_player_1(FxRobot robot) {
+
+        var P1 = SIMULATION.getPlayer_2();
+        Box C = P1.get_hitbox();
+
+        robot.push(KeyCode.A);
+        assertEquals(C, P1.get_hitbox());
+        robot.push(KeyCode.S);
+        assertEquals(C, P1.get_hitbox());
+        robot.push(KeyCode.D);
+        assertEquals(C, P1.get_hitbox());
+        robot.push(KeyCode.W);
+        assertEquals(C, P1.get_hitbox());
+    }
+
+    @Test
+    void shoot_is_adding_objects_to_root(FxRobot robot)
+    {
+         robot.push(KeyCode.ENTER);
+         var b = SIMULATION.all_sprites().stream().anyMatch(p-> p instanceof Projectile);
+         assertTrue(b);
+    }
+
+    @Test
+    void shoot_cooldown_stop_multipleshoots(FxRobot robot)
+    {
+        robot.push(KeyCode.ENTER);
+        robot.push(KeyCode.ENTER);
+        var b = SIMULATION.all_sprites().stream().filter(p-> p instanceof Projectile).count() < 2;
+        assertTrue(b);
+    }
+
+    @Test
+    void shoot_cooldown_allows_shootagain_after_time(FxRobot robot)  {
+        robot.push(KeyCode.ENTER);
+        robot.sleep(500);
+        robot.push(KeyCode.ENTER);
+        var b = SIMULATION.all_sprites().stream().filter(p-> p instanceof Projectile).count() == 2;
+        assertTrue(b);
+    }
+
+
+    @Test
+    void shoot_at_same_time(FxRobot robot)  {
+        robot.push(KeyCode.ENTER);
+        robot.push(KeyCode.SPACE);
+        var b = SIMULATION.all_sprites().stream().filter(p-> p instanceof Projectile).count() == 2;
+        assertTrue(b);
+    }
+
+    @Test
+    void move_to_is_actually_moving_the_sprite(FxRobot robot)
+    {
+        var  M = SIMULATION.getGamemap();
+        var P1    = SIMULATION.getPlayer_1();
+
+        Box original_position = P1.get_hitbox();
+
+        Coordinates C = M.convert_tiles_in_pixel(M.get_random_location());
+        SIMULATION.getPlayer_1().move_to(C);
+
+        assertNotSame(P1.get_hitbox(), original_position);
+    }
+
+    @Test
+    void get_random_location_always_returning_reachable_tiles(FxRobot robot)
+    {
+        var  M = SIMULATION.getGamemap();
+        var P1    = SIMULATION.getPlayer_1();
+
+        IntStream.range(0,10).forEach(
+                i ->
+                {
+                    Coordinates C = M.convert_tiles_in_pixel(M.get_random_location());
+
+                   var number_of_movements=  P1_MOVEMENTS.stream().map(keyCode ->
+                    {
+                        P1.move_to(C);
+                        Box b = P1.get_hitbox();
+                        robot.push(keyCode);
+                        return P1.get_hitbox() !=  b;
+                    }).filter(t -> t).count();
+
+                   assertTrue(number_of_movements > 0);
+
+                });
+
     }
 
 
 
-    @ParameterizedTest
-    @ValueSource(strings = "PER ME E LA CIPOLLA")
-    void Test_if_tests_works(String s) {
-        assertEquals(s, "PER ME E LA CIPOLLA");
-    }
+
 
 
 

@@ -40,7 +40,7 @@ public class Simulation extends Application {
     private Pair<Double,Double> scaling_factors;
 
     /* Map */
-   private GameMap R;
+   private GameMap gamemap;
 
     /* Map */
     private final List<String> _players_names;
@@ -59,12 +59,10 @@ public class Simulation extends Application {
     {
         return _players_names.get(index);
     }
-
     public String get_i_urls_sprite(int index)
     {
         return _players_urls_sprite.get(index);
     }
-
     public String get_map_url()
     {
         return _map_url.get(0);
@@ -80,13 +78,13 @@ public class Simulation extends Application {
     }
 
     private void create_bonus(){
-        new Bonus_Generator(root,R, Custom_Settings.URL_HEART,1,10, scaling_factors);
+        new Bonus_Generator(root, gamemap, Custom_Settings.URL_HEART,1,10, scaling_factors);
     }
 
     private void create_teleports() {
 
-        var T1  = new Teleport(root,  Custom_Settings.URL_TELEPORT,  R, scaling_factors, "T0");
-        var T2  = new Teleport(root,  Custom_Settings.URL_TELEPORT,  R, scaling_factors, "T1");
+        var T1  = new Teleport(root,  Custom_Settings.URL_TELEPORT, gamemap, scaling_factors, "T0");
+        var T2  = new Teleport(root,  Custom_Settings.URL_TELEPORT, gamemap, scaling_factors, "T1");
 
 
         T1.setDestination(T2);
@@ -96,15 +94,15 @@ public class Simulation extends Application {
 
     private void create_map() {
         var MR = new Map_Reader();
-        R = MR.read_Map(get_map_url(), WIDTH,HEIGHT);
-        root.getChildren().add(R.get_cells());
+        gamemap = MR.read_Map(get_map_url(), WIDTH,HEIGHT);
+        root.getChildren().add(gamemap.get_cells());
     }
 
 
 
     private void create_players() {
-        Player_1 = new Sprite(root,R , scaling_factors, get_i_urls_sprite(0),4, 1 , "P0", Direction.RIGHT, get_i_player_name(0));
-        Player_2 = new Sprite(root,R, scaling_factors, get_i_urls_sprite(1),    4, 1,   "P1", Direction.LEFT, get_i_player_name(1));
+        Player_1 = new Sprite(root, gamemap, scaling_factors, get_i_urls_sprite(0),4, 1 , "P0", Direction.RIGHT, get_i_player_name(0));
+        Player_2 = new Sprite(root, gamemap, scaling_factors, get_i_urls_sprite(1),    4, 1,   "P1", Direction.LEFT, get_i_player_name(1));
     }
 
     private void create_frame() {
@@ -166,7 +164,7 @@ public class Simulation extends Application {
 
                     all_sprites().forEach(
                             s -> {
-                                s.default_movement(R);
+                                s.default_movement(gamemap);
                                 all_players().forEach(s::update);
                             }
                     );
@@ -207,12 +205,12 @@ public class Simulation extends Application {
         root.getChildren().removeIf(node -> (node instanceof Pictured_Object) && ((Pictured_Object) node).is_dead());
     }
 
-    private List<Pictured_Object> all_sprites()
+    protected List<Pictured_Object> all_sprites()
     {
         return root.getChildren().stream().parallel().filter(i -> i instanceof Pictured_Object).map(n->(Pictured_Object)n).collect(Collectors.toList());
     }
 
-    private Set<Sprite> all_players()
+    protected Set<Sprite> all_players()
     {
         return all_sprites().stream().filter(i -> i instanceof Sprite).map(n->(Sprite)n).collect(Collectors.toSet());
     }
@@ -297,10 +295,13 @@ public class Simulation extends Application {
     public double getHEIGHT() {
         return HEIGHT;
     }
-
     public double getWIDTH() {
         return WIDTH;
     }
+    public Pane getRoot() { return root; }
+    public Sprite getPlayer_1() { return Player_1; }
+    public Sprite getPlayer_2() { return Player_2; }
+    public GameMap getGamemap(){return gamemap;}
 }
 
 
