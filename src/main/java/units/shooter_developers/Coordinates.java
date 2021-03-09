@@ -10,12 +10,7 @@ public class Coordinates {
     }
 
     @Override
-    public String toString() {
-        return "Coordinates{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
-    }
+    public String toString() { return "Coordinates{" + "x=" + x + ", y=" + y + '}'; }
 
     public double getX() {
         return x;

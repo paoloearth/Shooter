@@ -1,5 +1,7 @@
 package units.shooter_developers;
 
+import java.util.Arrays;
+
 public class Box{
 
 
@@ -34,7 +36,7 @@ public class Box{
         return  check_top_and_left() || check_bottom_and_right(M);
     }
 
-    boolean intersect(Box B)
+    protected boolean intersect(Box B)
     {
         return B.get_right_box() > get_left_box()&& B.get_bottom_box() > get_top_box() && B.get_left_box() < get_right_box() && B.get_top_box() < get_bottom_box();
     }
@@ -50,7 +52,7 @@ public class Box{
 
 
 
-    public boolean  performs_check(GameMap M, Dynamic_Object D)
+    protected boolean  performs_check(GameMap M, Dynamic_Object D)
     {
         for (int i =get_left_tile(); i<= get_right_tile(); i++)
         {
@@ -63,6 +65,16 @@ public class Box{
         }
         return false;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Box box1 = (Box) o;
+        return Arrays.equals(box, box1.box);
+    }
+
 
     /* Setters */
     public void set_top(double top)

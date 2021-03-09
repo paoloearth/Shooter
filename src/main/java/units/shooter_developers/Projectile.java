@@ -81,10 +81,10 @@ public class Projectile extends Dynamic_Object{
 
     private void hit(Sprite S)
     {
-        if(!is_dead() && !Owner.equals(S.get_id())) // If player has not hit anything yet
+        if(!is_dead() && !Owner.equals(S.get_id()))
         {
-            set_is_dead_property(true);        // Now the projectile has hit something
-            S.getHBar().damage();            //Compute damage
+            set_is_dead_property(true);
+            S.getHBar().damage();
         }
     }
 
