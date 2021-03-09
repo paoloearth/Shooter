@@ -302,6 +302,20 @@ public abstract class Menu extends Application {
 
     }
 
+    public void setTextBox(String name, int row, int col, String commands_url, int number_of_rows_spritesheet, double scale, String default_message){
+        var menu_grid_object = (MenuGrid)_root.getChildren().stream()
+                .filter(e -> e instanceof MenuGrid)
+                .findFirst()
+                .orElse(null);
+
+        if(menu_grid_object == null){
+            menu_grid_object = new MenuGrid();
+            _root.getChildren().add(menu_grid_object);
+        }
+
+        menu_grid_object.addTextBox(name, row, col, commands_url, number_of_rows_spritesheet, scale, default_message);
+    }
+
     /************************** SET/GET METHODS *****************************/
 
     /** SCREEN **/

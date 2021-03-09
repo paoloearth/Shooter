@@ -17,9 +17,12 @@ public class _Submenu extends Menu {
 
     @Override
     public void createContent(){
-        SubmenuObject content = new SubmenuObject(this);
+        //SubmenuObject content = new SubmenuObject(this);
 
         //addGenericNode(content);
+
+        setTextBox("Player_textbox_1", 0, 0, Custom_Settings.URL_COMMANDS_P1, 1, Custom_Settings.WASD_SCALE, "Who is Player 1?");
+        setTextBox("Player_textbox_2", 0, 1, Custom_Settings.URL_COMMANDS_P2, 1, Custom_Settings.ARROWS_SCALE, "Who is Player 2?");
 
         Map<String, String> Name_URL = new Hashtable<>();
         Name_URL.put(Custom_Settings.ARTIST,Custom_Settings.URL_ARTIST);
@@ -27,6 +30,13 @@ public class _Submenu extends Menu {
         Name_URL.put(Custom_Settings.WARRIOR,Custom_Settings.URL_WARRIOR);
         setChoiceBox("Player_selection_1", 1, 0, Name_URL, 1,4);
         setChoiceBox("Player_selection_2", 1, 1, Name_URL, 1,4);
+
+        Map<String, String> Map_URL = new Hashtable<>();
+        Map_URL.put(Custom_Settings.ISLAND,Custom_Settings.URL_MAP_ISLAND_PNG);
+        Map_URL.put(Custom_Settings.DESERT,Custom_Settings.URL_MAP_DESERT_PNG);
+        setChoiceBox("Map_selection", 2, 0,Map_URL, Custom_Settings.MAP_SCALE, 1);
+
+
 
         //addFreeItem("Start!", 0.7, 0.8);
 
