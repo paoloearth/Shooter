@@ -33,24 +33,27 @@ public class _Player_selection_menu extends GridPane {
         this.setPrefSize(width, height);
         this.setMaxSize(width, height);
 
-        create_2_columns_layout();
+        //cow c
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setPercentWidth(50);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setPercentWidth(50);
+        getColumnConstraints().addAll(column1, column2);
+        RowConstraints row1 = new RowConstraints();
+        row1.setPercentHeight(50);
+        RowConstraints row2 = new RowConstraints();
+        row2.setPercentHeight(50);
+        getRowConstraints().addAll(row1, row2);
 
-        create_menu();
+
+        Name_URL = initialize_dictionary();
+        create_choiceboxes();
+        create_textboxes();
+
 
         //set_bindings();
     }
 
-
-    private void create_menu() {
-
-        Name_URL = initialize_dictionary();
-
-        create_choiceboxes();
-
-        create_textboxes();
-
-
-    }
 
     private void create_choiceboxes() {
         CB_P1 = new _ChoiceBox( Name_URL, 4, Custom_Settings.SPRITE_SCALE);
@@ -83,36 +86,6 @@ public class _Player_selection_menu extends GridPane {
 
         return Name_URL;
     }
-
-
-
-
-    private void create_2_columns_layout() {
-        set_column_costraints();
-        set_row_costraints();
-    }
-
-    private void set_column_costraints() {
-        ColumnConstraints column1 = new ColumnConstraints();
-        column1.setPercentWidth(50);
-
-        ColumnConstraints column2 = new ColumnConstraints();
-        column2.setPercentWidth(50);
-
-        getColumnConstraints().addAll(column1, column2);
-    }
-
-    private void set_row_costraints() {
-        RowConstraints row1 = new RowConstraints();
-        row1.setPercentHeight(50);
-
-        RowConstraints row2 = new RowConstraints();
-        row2.setPercentHeight(50);
-
-        getRowConstraints().addAll(row1, row2);
-    }
-
-
 
     public List<String> get_players_names()
         {
