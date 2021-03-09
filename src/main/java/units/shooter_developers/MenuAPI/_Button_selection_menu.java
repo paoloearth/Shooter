@@ -2,16 +2,25 @@ package units.shooter_developers.MenuAPI;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-public class _Button_selection_menu extends _Submenu_component {
+public class _Button_selection_menu extends GridPane {
 
     Button launch_simulation;
     Button launch_default;
 
     public _Button_selection_menu(double width_scale, double height_scale)
     {
-        super(width_scale, height_scale);
+        var width = Menu.getMenuWidth()* width_scale;
+        var height = Menu.getMenuHeight()* height_scale;
+
+        this.setTranslateY(0.017*height);
+        this.setTranslateX(0.01*width);
+
+        this.setMinSize(width, height);
+        this.setPrefSize(width, height);
+        this.setMaxSize(width, height);
 
         setAlignment(Pos.CENTER_LEFT);
 

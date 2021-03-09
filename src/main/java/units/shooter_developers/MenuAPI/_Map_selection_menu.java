@@ -1,5 +1,6 @@
 package units.shooter_developers.MenuAPI;
 
+import javafx.scene.layout.GridPane;
 import units.shooter_developers.Custom_Settings;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-public class _Map_selection_menu extends _Submenu_component {
+public class _Map_selection_menu extends GridPane {
 
     _ChoiceBox CB_MAP;
     Map<String, String> Map_URL;
@@ -16,7 +17,17 @@ public class _Map_selection_menu extends _Submenu_component {
 
     public _Map_selection_menu(double width_scale, double height_scale)
     {
-        super(width_scale,height_scale);
+        var width = Menu.getMenuWidth()* width_scale;
+        var height = Menu.getMenuHeight()* height_scale;
+
+        this.setTranslateY(0.017*height);
+        this.setTranslateX(0.01*width);
+
+        this.setMinSize(width, height);
+        this.setPrefSize(width, height);
+        this.setMaxSize(width, height);
+
+
         create_menu();
     }
 

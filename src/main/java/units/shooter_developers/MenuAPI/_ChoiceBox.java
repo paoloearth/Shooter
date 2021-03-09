@@ -23,7 +23,7 @@ public class _ChoiceBox extends VBox {
     public _ChoiceBox(Map<String, String> map_image_to_URL, int nrows, double scale) {
         _nrows = nrows;
         _custom_scale = scale;
-        _selector = new SelectorItem("ChoiceBox_selector", 0.1*scale, false);
+        _selector = new SelectorItem("ChoiceBox_selector", 0.1, false);
         _selector.setAlignment(Pos.BASELINE_CENTER);
         _dict = map_image_to_URL;
 
