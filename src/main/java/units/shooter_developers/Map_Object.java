@@ -17,8 +17,8 @@ public abstract class Map_Object extends Pane {
     void move_to(Coordinates coordinates) { this.relocate(coordinates.getX(),coordinates.getY()); }
 
     public double get_current_X_position() { return this.getLayoutX(); }
-
     public double get_current_Y_position() { return this.getLayoutY(); }
+    public Coordinates get_current_position() {return  new Coordinates(getLayoutX(),getLayoutY());};
 
     public void add_nodes(Node ... nodes) { this.getChildren().addAll(nodes); }
 

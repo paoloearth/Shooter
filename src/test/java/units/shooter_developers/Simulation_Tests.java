@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -65,14 +66,9 @@ class Simulation_Tests {
         var P1 = SIMULATION.getPlayer_1();
         Box C = P1.get_hitbox();
 
-        robot.push(KeyCode.DOWN);
-        assertEquals(C, P1.get_hitbox());
-        robot.push(KeyCode.UP);
-        assertEquals(C, P1.get_hitbox());
-        robot.push(KeyCode.LEFT);
-        assertEquals(C, P1.get_hitbox());
-        robot.push(KeyCode.RIGHT);
-        assertEquals(C, P1.get_hitbox());
+       P2_MOVEMENTS.forEach(
+               keyCode -> {  robot.push(keyCode);  assertEquals(C, P1.get_hitbox());}
+       );
 
     }
 
@@ -82,14 +78,10 @@ class Simulation_Tests {
         var P1 = SIMULATION.getPlayer_2();
         Box C = P1.get_hitbox();
 
-        robot.push(KeyCode.A);
-        assertEquals(C, P1.get_hitbox());
-        robot.push(KeyCode.S);
-        assertEquals(C, P1.get_hitbox());
-        robot.push(KeyCode.D);
-        assertEquals(C, P1.get_hitbox());
-        robot.push(KeyCode.W);
-        assertEquals(C, P1.get_hitbox());
+        P1_MOVEMENTS.forEach(
+                keyCode -> {  robot.push(keyCode);  assertEquals(C, P1.get_hitbox());}
+        );
+
     }
 
     @Test
@@ -147,7 +139,7 @@ class Simulation_Tests {
         var  M = SIMULATION.getGamemap();
         var P1    = SIMULATION.getPlayer_1();
 
-        IntStream.range(0,10).forEach(
+        IntStream.range(0,2).forEach(
                 i ->
                 {
                     Coordinates C = M.convert_tiles_in_pixel(M.get_random_location());
@@ -165,6 +157,61 @@ class Simulation_Tests {
                 });
 
     }
+
+    @Test
+    void does_healtbar_decrease_with_damage(FxRobot robot)
+    {
+
+        var  P2    = SIMULATION.getPlayer_2();
+        var  H = P2.getHBar();
+        var life_before_been_hit = H.get_current_health();
+
+        robot.push(KeyCode.SPACE);
+
+         SIMULATION.getRoot().getChildren()
+                                          .stream()
+                                          .filter(pictured_object -> pictured_object instanceof Projectile)
+                                          .map(pictured_object -> (Projectile) pictured_object)
+                                          .forEach(projectile -> {
+                                            projectile.set_speed(0);
+                                            projectile.move_to(P2.get_current_position());
+                                          });
+
+         robot.sleep(50);
+         assertTrue(H.get_current_health() != life_before_been_hit);
+
+    }
+
+    @Test
+    void does_sprite_dies(FxRobot robot)
+    {
+
+        var  P2    = SIMULATION.getPlayer_2();
+        int number_of_hit_before_death = (int) ( 1/Custom_Settings.PERCENTAGE_DAMAGE_PER_SHOOT) - 1;
+
+        System.out.println(number_of_hit_before_death);
+        IntStream.range(0,number_of_hit_before_death).forEach(i -> {
+            robot.push(KeyCode.SPACE);
+            robot.sleep(500);
+
+            SIMULATION.getRoot().getChildren()
+                       .stream()
+                       .filter(pictured_object -> pictured_object instanceof Projectile)
+                       .map(pictured_object -> (Projectile) pictured_object)
+                       .forEach(
+                               projectile -> {
+
+                                       projectile.set_speed(0);
+                                       projectile.move_to(P2.get_current_position());
+
+                               });
+        });
+
+        robot.sleep(500);
+
+        assertTrue(P2.getHBar().get_current_health() < P2.getHBar().get_max_health() /2 );
+
+     }
 
 
 
