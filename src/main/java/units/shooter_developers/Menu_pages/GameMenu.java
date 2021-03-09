@@ -1,7 +1,6 @@
 package units.shooter_developers.Menu_pages;
 
 import units.shooter_developers.MenuAPI.Menu;
-import units.shooter_developers.MenuAPI._Submenu;
 import units.shooter_developers.Simulation;
 
 public class GameMenu extends Menu {
@@ -41,7 +40,7 @@ public class GameMenu extends Menu {
         {
             item.setOnMouseReleased(event -> {
                 if (item.getName().equals("NEW GAME")) {
-                    _Submenu submenu_launch_game = new _Submenu(this);
+                    Submenu submenu_launch_game = new Submenu(this);
                     submenu_launch_game.start(getStage());
                 }
                 if (item.getName().equals("CONTINUE")) {

@@ -1,9 +1,7 @@
 package units.shooter_developers.MenuAPI;
 
-import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.ComboBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -12,24 +10,25 @@ import java.util.Map;
 
 
 
-public class _ChoiceBox extends VBox {
+public class ChoiceBox extends VBox {
 
     private Map<String, String> _dict;
     private int _nrows;
     private double _custom_scale;
     private SelectorItem _selector;
+    String _name;
 
 
-    public _ChoiceBox(Map<String, String> map_image_to_URL, int nrows, double scale) {
+    public ChoiceBox(String name, Map<String, String> map_image_to_URL, int nrows, double scale) {
+        _name = name;
         _nrows = nrows;
         _custom_scale = scale;
-        _selector = new SelectorItem("ChoiceBox_selector", 0.1*scale, false);
+        _selector = new SelectorItem("ChoiceBox_selector", 0.1, false);
         _selector.setAlignment(Pos.BASELINE_CENTER);
         _dict = map_image_to_URL;
 
         setAlignment(Pos.TOP_CENTER);
-        setPadding(new Insets(10));
-        setSpacing(10);
+        setSpacing(0.01*Menu.getMenuHeight());
 
         HBox image_box = new HBox();
         image_box.setMinHeight(0);
@@ -40,12 +39,12 @@ public class _ChoiceBox extends VBox {
             var image = Menu.retrieveImage(_dict.get(selected), _nrows, 1);
 
             image.setPreserveRatio(true);
-            image.fitHeightProperty().bind(image_box.heightProperty());
-            image.setScaleY(_custom_scale);
-            image.setScaleX(_custom_scale);
+
+            image.setFitHeight(0.2*_custom_scale*Menu.getMenuHeight());
 
             image_box.getChildren().removeIf(i -> i instanceof ImageView);
             image_box.getChildren().add(image);
+
         });
 
         for(var elem : map_image_to_URL.entrySet()){
@@ -58,7 +57,11 @@ public class _ChoiceBox extends VBox {
 
     public String get_value()
     {
-        return _selector.getName();
+        return _selector.getText();
+    }
+
+    public String getName(){
+        return _name;
     }
 }
 
