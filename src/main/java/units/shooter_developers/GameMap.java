@@ -74,7 +74,7 @@ public class GameMap {
                     Rectangle2D R = new Rectangle2D(pos_col, pos_row, _cell_side,_cell_side);
 
                     return new Tile(i*getTileWidth(), j*getTileHeight(), getTileWidth(),
-                                            getTileHeight(), passable,not_passable_for_p, _tileset, R);
+                                        getTileHeight(), passable,not_passable_for_p, _tileset, R);
                     
                 })
         ).flatMap(s -> s).forEach(_cells.getChildren()::add);
