@@ -93,6 +93,7 @@ public class Sprite extends Dynamic_Object {
 
 
     private void move(GameMap M) {
+
         update_speed();
 
         if (has_moved()) {
@@ -113,14 +114,6 @@ public class Sprite extends Dynamic_Object {
 
     private boolean has_moved() {
         return (Math.abs(get_deltaX()) > 0 || Math.abs(get_deltaY()) > 0);
-    }
-
-    Coordinates get_destination()
-    {
-        double future_x = get_current_X_position() + get_deltaX();
-        double future_y = get_current_Y_position() + get_deltaY();
-        return new Coordinates(future_x, future_y);
-
     }
 
 
