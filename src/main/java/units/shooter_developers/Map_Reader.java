@@ -56,8 +56,10 @@ public class Map_Reader {
     }
 
     List<String[]> extract_lines(String URL) throws InvalidPathException, IOException, NullPointerException, URISyntaxException {
-        Stream<String> lines = Files.lines(Paths.get(ClassLoader.getSystemResource(URL).toURI()), Charset.defaultCharset());
-        return lines.parallel().map(l -> l.split(Custom_Settings.FILE_SEPARATOR)).collect(Collectors.toList());
+       try(Stream<String> lines =
+                   Files.lines(Paths.get(ClassLoader.getSystemResource(URL).toURI()), Charset.defaultCharset())){
+           return lines.parallel().map(l -> l.split(Custom_Settings.FILE_SEPARATOR)).collect(Collectors.toList());
+       }
     }
 
 
