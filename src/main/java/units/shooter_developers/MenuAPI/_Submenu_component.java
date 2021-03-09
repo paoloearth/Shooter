@@ -6,8 +6,6 @@ import javafx.scene.layout.GridPane;
 
 public class _Submenu_component extends GridPane {
 
-    protected SimpleBooleanProperty all_set = new SimpleBooleanProperty(false);
-
     protected _Submenu_component(double width_scale, double height_scale)
     {
         var width = Menu.getMenuWidth()*width_scale;
@@ -20,9 +18,5 @@ public class _Submenu_component extends GridPane {
         this.setPrefSize(width, height);
         this.setMaxSize(width, height);
 
-    }
-
-    public SimpleBooleanProperty get_AllSetProperty() {
-        return all_set;
     }
 }
