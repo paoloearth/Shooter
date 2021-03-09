@@ -40,8 +40,12 @@ public class Projectile extends Dynamic_Object{
     private void translate(GameMap M)
     {
         if(illegal_move(M)) set_is_dead_property(true);
-        else move_to(new Coordinates(get_future_x(), get_future_y()));
+        else move_to(get_destination());
     }
+
+
+
+
 
 
 

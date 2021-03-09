@@ -9,11 +9,6 @@ public class Box{
 
     public Box(double top, double left, double width, double height) { box = new double[]{top, left,  top+height,left+width}; }
 
-    public void shrink_height_by(double v) {
-        set_top(get_top_box()+get_height() * v);
-    }
-
-
 
     public  void  compute_tiles_bounds(GameMap M) {
 
@@ -46,7 +41,7 @@ public class Box{
 
 
     private boolean check_top_and_left() {
-        return get_top_box()<= 0 ||  get_left_box() <= 0;
+        return get_top_box()<= 0 ||  get_left_box() <=0;
     }
 
     private boolean check_bottom_and_right(GameMap M) {

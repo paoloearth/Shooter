@@ -23,17 +23,20 @@ public abstract class Dynamic_Object extends Pictured_Object {
     double get_future_y(){ return this.get_current_Y_position() + _deltaY; }
 
 
-    public Box get_move_box(){ return new Box( get_future_y() ,get_future_x(), get_actual_width() ,get_actual_height()); }
+    public Box get_move_box(){ return get_default_move_box();}
+    public Box get_default_move_box(){ return new Box( get_future_y() ,get_future_x(), get_actual_width() ,get_actual_height()); }
+
+    Coordinates get_destination() { return new Coordinates(get_future_x(), get_future_y()); }
 
     protected  boolean illegal_move(GameMap M) {
 
-       /* Compute the collision box*/
-       var collision_box =  get_move_box();
 
-       if(collision_box.is_out_of_map(M)) return true;
+        /* Compute the collision box*/
+       if(get_default_move_box().is_out_of_map(M)) return true;
 
        /* Get tiles  */
-       collision_box.compute_tiles_bounds(M);
+        var collision_box = get_move_box();
+        collision_box.compute_tiles_bounds(M);
 
        return collision_box.performs_check(M,this);
 
