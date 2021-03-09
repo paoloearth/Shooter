@@ -3,14 +3,11 @@ package units.shooter_developers.MenuAPI;
 import javafx.scene.layout.GridPane;
 import units.shooter_developers.Custom_Settings;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 
 public class _Map_selection_menu extends GridPane {
 
-    _ChoiceBox _choice_box_map;
+    ChoiceBox _choice_box_map;
 
 
     public _Map_selection_menu(double width_scale, double height_scale, Map<String, String> map_image_to_URL)
@@ -28,7 +25,7 @@ public class _Map_selection_menu extends GridPane {
 
         /* DOUBLE MAP in order to store both the name-> csv mapping & name -> png mapping */
 
-        _choice_box_map = new _ChoiceBox(map_image_to_URL, 1, Custom_Settings.MAP_SCALE);
+        _choice_box_map = new ChoiceBox("", map_image_to_URL, 1, Custom_Settings.MAP_SCALE);
 
         add(_choice_box_map,1,1);
     }

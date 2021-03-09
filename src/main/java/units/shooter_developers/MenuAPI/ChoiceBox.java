@@ -10,15 +10,17 @@ import java.util.Map;
 
 
 
-public class _ChoiceBox extends VBox {
+public class ChoiceBox extends VBox {
 
     private Map<String, String> _dict;
     private int _nrows;
     private double _custom_scale;
     private SelectorItem _selector;
+    String _name
 
 
-    public _ChoiceBox(Map<String, String> map_image_to_URL, int nrows, double scale) {
+    public ChoiceBox(String name, Map<String, String> map_image_to_URL, int nrows, double scale) {
+        _name = name;
         _nrows = nrows;
         _custom_scale = scale;
         _selector = new SelectorItem("ChoiceBox_selector", 0.1, false);
@@ -57,6 +59,10 @@ public class _ChoiceBox extends VBox {
     public String get_value()
     {
         return _selector.getName();
+    }
+
+    public String getName(){
+        return _name;
     }
 }
 

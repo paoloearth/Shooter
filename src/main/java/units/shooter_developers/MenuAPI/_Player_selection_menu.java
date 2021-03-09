@@ -6,18 +6,15 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import units.shooter_developers.Custom_Settings;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 
 public class _Player_selection_menu extends GridPane {
 
-    _ChoiceBox CB_P1;
-    _ChoiceBox CB_P2;
+    ChoiceBox CB_P1;
+    ChoiceBox CB_P2;
 
-    _Text_Box TB_P1;
-    _Text_Box TB_P2;
+    Text_Box TB_P1;
+    Text_Box TB_P2;
 
     Map<String, String> Name_URL;
 
@@ -48,8 +45,8 @@ public class _Player_selection_menu extends GridPane {
         getRowConstraints().addAll(row1, row2);
 
 
-        CB_P1 = new _ChoiceBox(map_image_to_URL, 4, Custom_Settings.SPRITE_SCALE);
-        CB_P2 = new _ChoiceBox(map_image_to_URL, 4, Custom_Settings.SPRITE_SCALE);
+        CB_P1 = new ChoiceBox("", map_image_to_URL, 4, Custom_Settings.SPRITE_SCALE);
+        CB_P2 = new ChoiceBox("", map_image_to_URL, 4, Custom_Settings.SPRITE_SCALE);
 
 
         add(CB_P1, 0,1);
@@ -57,8 +54,8 @@ public class _Player_selection_menu extends GridPane {
 
 
         /* TEXT BOX & ADD them to GRIDPANE in right position*/
-        TB_P1 = new _Text_Box(Custom_Settings.URL_COMMANDS_P1, 1, Custom_Settings.WASD_SCALE);
-        TB_P2 = new _Text_Box(Custom_Settings.URL_COMMANDS_P2, 1, Custom_Settings.ARROWS_SCALE);
+        TB_P1 = new Text_Box(Custom_Settings.URL_COMMANDS_P1, 1, Custom_Settings.WASD_SCALE);
+        TB_P2 = new Text_Box(Custom_Settings.URL_COMMANDS_P2, 1, Custom_Settings.ARROWS_SCALE);
 
         TB_P1.setAlignment(Pos.CENTER);
         TB_P1.setAlignment(Pos.CENTER);
