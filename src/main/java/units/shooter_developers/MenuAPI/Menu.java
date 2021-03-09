@@ -287,18 +287,19 @@ public abstract class Menu extends Application {
         _root.getChildren().add(menu_frame);
     }
 
-    public void addChoiceBox(String name, Map<String, String> map_image_to_URL, double scale, int spritesheet_number_of_rows){
+    public void setChoiceBox(String name,int row, int col, Map<String, String> map_image_to_URL, double scale, int spritesheet_number_of_rows){
         var menu_grid_object = (MenuGrid)_root.getChildren().stream()
                 .filter(e -> e instanceof MenuGrid)
                 .findFirst()
                 .orElse(null);
 
-        if(menu_grid_object != null){
+        if(menu_grid_object == null){
             menu_grid_object = new MenuGrid();
             _root.getChildren().add(menu_grid_object);
         }
 
-        menu_grid_object.addChoiceBox(name, map_image_to_URL, scale, spritesheet_number_of_rows);
+        menu_grid_object.addChoiceBox(name, row, col, map_image_to_URL, scale, spritesheet_number_of_rows);
+
     }
 
     /************************** SET/GET METHODS *****************************/

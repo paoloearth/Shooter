@@ -1,16 +1,12 @@
 package units.shooter_developers.MenuAPI;
 
 import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.StringProperty;
-import javafx.beans.property.StringPropertyBase;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
 import units.shooter_developers.*;
-import units.shooter_developers.Menu_pages.OptionsMenu;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 
 public class _Submenu extends Menu {
@@ -23,9 +19,16 @@ public class _Submenu extends Menu {
     public void createContent(){
         SubmenuObject content = new SubmenuObject(this);
 
-        addGenericNode(content);
+        //addGenericNode(content);
 
-        addFreeItem("Start!", 0.7, 0.8);
+        Map<String, String> Name_URL = new Hashtable<>();
+        Name_URL.put(Custom_Settings.ARTIST,Custom_Settings.URL_ARTIST);
+        Name_URL.put(Custom_Settings.ASTROLOGER,Custom_Settings.URL_ASTROLOGER);
+        Name_URL.put(Custom_Settings.WARRIOR,Custom_Settings.URL_WARRIOR);
+        setChoiceBox("Player_selection_1", 1, 0, Name_URL, 1,4);
+        setChoiceBox("Player_selection_2", 1, 1, Name_URL, 1,4);
+
+        //addFreeItem("Start!", 0.7, 0.8);
 
 
 

@@ -14,8 +14,9 @@ public class Text_Box extends VBox {
     TextField _textField;
     int _nrows;
     double _custom_scale;
+    String _name;
 
-    public Text_Box(String commands_url, int nrows, double scale)
+    public Text_Box(String name, String commands_url, int nrows, double scale, String default_message)
     {
         super();
 
@@ -25,6 +26,7 @@ public class Text_Box extends VBox {
 
         _nrows = nrows;
         _custom_scale = scale;
+        _name = name;
 
         setFillWidth(false);
 
@@ -35,7 +37,7 @@ public class Text_Box extends VBox {
         _textField.setStyle("-fx-control-inner-background: #" + background_color.toString().substring(2) + ";" +
                 "-fx-prompt-text-fill: #"+default_text_color.toString().substring(2) + ";" +
                 "-fx-text-fill: #"+introduced_text_color.toString().substring(2) + ";");
-        _textField.setPromptText("Who are you?.");
+        _textField.setPromptText(default_message);
 
         getChildren().add(_textField);
 
@@ -70,6 +72,10 @@ public class Text_Box extends VBox {
     public String get_value()
     {
         return _textField.getText();
+    }
+
+    public String getName(){
+        return _name;
     }
 
 
