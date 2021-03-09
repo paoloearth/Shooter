@@ -22,8 +22,13 @@ public class _Submenu extends Menu {
     @Override
     public void createContent(){
         SubmenuObject content = new SubmenuObject(this);
+
         addGenericNode(content);
+
         addFreeItem("Start!", 0.7, 0.8);
+
+
+
 
         for(var item:getItems())
         {

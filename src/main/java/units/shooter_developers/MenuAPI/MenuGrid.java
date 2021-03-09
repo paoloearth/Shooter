@@ -25,5 +25,6 @@ public class MenuGrid extends GridPane {
 
     public void addChoiceBox(String name, Map<String, String> map_image_to_URL, double scale, int spritesheet_number_of_rows){
         ChoiceBox choice_box = new ChoiceBox(name, map_image_to_URL, spritesheet_number_of_rows, scale);
+        getChildren().add(choice_box);
     }
 }
