@@ -287,34 +287,6 @@ public abstract class Menu extends Application {
         _root.getChildren().add(menu_frame);
     }
 
-    public void setChoiceBox(String name,int row, int col, Map<String, String> map_image_to_URL, double scale, int spritesheet_number_of_rows){
-        var menu_grid_object = (MenuGrid)_root.getChildren().stream()
-                .filter(e -> e instanceof MenuGrid)
-                .findFirst()
-                .orElse(null);
-
-        if(menu_grid_object == null){
-            menu_grid_object = new MenuGrid();
-            _root.getChildren().add(menu_grid_object);
-        }
-
-        menu_grid_object.addChoiceBox(name, row, col, map_image_to_URL, scale, spritesheet_number_of_rows);
-
-    }
-
-    public void setTextBox(String name, int row, int col, String commands_url, int number_of_rows_spritesheet, double scale, String default_message){
-        var menu_grid_object = (MenuGrid)_root.getChildren().stream()
-                .filter(e -> e instanceof MenuGrid)
-                .findFirst()
-                .orElse(null);
-
-        if(menu_grid_object == null){
-            menu_grid_object = new MenuGrid();
-            _root.getChildren().add(menu_grid_object);
-        }
-
-        menu_grid_object.addTextBox(name, row, col, commands_url, number_of_rows_spritesheet, scale, default_message);
-    }
 
     /************************** SET/GET METHODS *****************************/
 
@@ -469,6 +441,40 @@ public abstract class Menu extends Application {
         } else {
             return null;
         }
+    }
+
+    public void addChoiceBox(String name, int row, int col, Map<String, String> map_image_to_URL, double scale, int spritesheet_number_of_rows){
+        MenuGrid menu_grid_object = getMenuGridAndCreateIfNotExist();
+        menu_grid_object.addChoiceBox(name, row, col, map_image_to_URL, scale, spritesheet_number_of_rows);
+    }
+
+    public ChoiceBox getChoiceBox(String name){
+        var menu_grid = getMenuGridAndCreateIfNotExist();
+        return menu_grid.getChoiceBox(name);
+    }
+
+    public TextBox getTextBox(String name){
+        var menu_grid = getMenuGridAndCreateIfNotExist();
+        return menu_grid.getTextBox(name);
+    }
+
+    public void addTextBox(String name, int row, int col, String commands_url, int number_of_rows_spritesheet, double scale, String default_message){
+        MenuGrid menu_grid_object = getMenuGridAndCreateIfNotExist();
+
+        menu_grid_object.addTextBox(name, row, col, commands_url, number_of_rows_spritesheet, scale, default_message);
+    }
+
+    private MenuGrid getMenuGridAndCreateIfNotExist() {
+        var menu_grid_object = (MenuGrid) _root.getChildren().stream()
+                .filter(e -> e instanceof MenuGrid)
+                .findFirst()
+                .orElse(null);
+
+        if (menu_grid_object == null) {
+            menu_grid_object = new MenuGrid();
+            _root.getChildren().add(menu_grid_object);
+        }
+        return menu_grid_object;
     }
 
     /** GAME INSTANCE **/

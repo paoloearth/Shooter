@@ -9,14 +9,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-public class Text_Box extends VBox {
+public class TextBox extends VBox {
 
     TextField _textField;
     int _nrows;
     double _custom_scale;
     String _name;
 
-    public Text_Box(String name, String commands_url, int nrows, double scale, String default_message)
+    public TextBox(String name, String commands_url, int nrows, double scale, String default_message)
     {
         super();
 

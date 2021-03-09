@@ -57,7 +57,7 @@ public class ChoiceBox extends VBox {
 
     public String get_value()
     {
-        return _selector.getName();
+        return _selector.getText();
     }
 
     public String getName(){

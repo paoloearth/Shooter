@@ -24,8 +24,34 @@ public class MenuGrid extends GridPane {
         add(choice_box, col, row);
     }
 
+    public ChoiceBox getChoiceBox(String name){
+        var choice_box_object = getChildren().parallelStream()
+                .filter(e -> e instanceof ChoiceBox)
+                .filter(e -> ((ChoiceBox) e).getName().equals(name))
+                .findFirst()
+                .orElse(null);
+
+        if(choice_box_object == null)
+            return null;
+        else
+            return (ChoiceBox) choice_box_object;
+    }
+
     public void addTextBox(String name, int row, int col, String commands_url, int number_of_rows_spritesheet, double scale, String default_message){
-        Text_Box text_box = new Text_Box(name, commands_url, number_of_rows_spritesheet, scale, default_message);
+        TextBox text_box = new TextBox(name, commands_url, number_of_rows_spritesheet, scale, default_message);
         add(text_box, col, row);
+    }
+
+    public TextBox getTextBox(String name){
+        var text_box_object = getChildren().parallelStream()
+                .filter(e -> e instanceof TextBox)
+                .filter(e -> ((TextBox) e).getName().equals(name))
+                .findFirst()
+                .orElse(null);
+
+        if(text_box_object == null)
+            return null;
+        else
+            return (TextBox) text_box_object;
     }
 }

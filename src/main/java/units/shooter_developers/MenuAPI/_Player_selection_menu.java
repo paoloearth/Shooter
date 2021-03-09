@@ -13,8 +13,8 @@ public class _Player_selection_menu extends GridPane {
     ChoiceBox CB_P1;
     ChoiceBox CB_P2;
 
-    Text_Box TB_P1;
-    Text_Box TB_P2;
+    TextBox TB_P1;
+    TextBox TB_P2;
 
     Map<String, String> Name_URL;
 
@@ -54,8 +54,8 @@ public class _Player_selection_menu extends GridPane {
 
 
         /* TEXT BOX & ADD them to GRIDPANE in right position*/
-        TB_P1 = new Text_Box("", Custom_Settings.URL_COMMANDS_P1, 1, Custom_Settings.WASD_SCALE, "Who is Player 1?");
-        TB_P2 = new Text_Box("", Custom_Settings.URL_COMMANDS_P2, 1, Custom_Settings.ARROWS_SCALE, "Who is Player 2?");
+        TB_P1 = new TextBox("", Custom_Settings.URL_COMMANDS_P1, 1, Custom_Settings.WASD_SCALE, "Who is Player 1?");
+        TB_P2 = new TextBox("", Custom_Settings.URL_COMMANDS_P2, 1, Custom_Settings.ARROWS_SCALE, "Who is Player 2?");
 
         TB_P1.setAlignment(Pos.CENTER);
         TB_P1.setAlignment(Pos.CENTER);
