@@ -35,12 +35,12 @@ public class Map_Reader {
 
         GameMap M;
 
-        try { _lines = extract_lines(URL); }
+        try { _lines = read_lines_from_file(URL); }
         catch(InvalidPathException e){ System.out.println(URL + ": path contains invalid characters"); }
         catch(FileNotFoundException e){ System.out.println(URL + ": was not found "); }
-        catch(IOException e){ System.out.println(URL + ": problems interacting with the file "); }
-        catch(NullPointerException e){ System.out.println("File is null ");}
-        catch(URISyntaxException e){ System.out.println("Wrong URL format ");}
+        catch(IOException e){ System.out.println(URL + ": problems interacting with the map file "); }
+        catch(NullPointerException e){ System.out.println("Map File"+URL+" is null ");}
+        catch(URISyntaxException e){ System.out.println("Wrong URL"+URL+" format of map file ");}
 
         M = new GameMap(width, height,
                     get_tileset(), get_cell_side(),
@@ -55,9 +55,11 @@ public class Map_Reader {
 
     }
 
-    List<String[]> extract_lines(String URL) throws InvalidPathException, IOException, NullPointerException, URISyntaxException {
-        Stream<String> lines = Files.lines(Paths.get(ClassLoader.getSystemResource(URL).toURI()), Charset.defaultCharset());
-        return lines.parallel().map(l -> l.split(Custom_Settings.FILE_SEPARATOR)).collect(Collectors.toList());
+    List<String[]> read_lines_from_file(String URL) throws InvalidPathException, IOException, NullPointerException, URISyntaxException {
+       try(Stream<String> lines =
+                   Files.lines(Paths.get(ClassLoader.getSystemResource(URL).toURI()), Charset.defaultCharset())){
+           return lines.parallel().map(l -> l.split(Custom_Settings.FILE_SEPARATOR)).collect(Collectors.toList());
+       }
     }
 
 
@@ -129,8 +131,8 @@ public class Map_Reader {
     private String[] read_lines(int row) {
         try {
             return _lines.get(row);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Line" + row + " was not found");
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Line" + row + " was not found"+e.toString());
         }
         return _lines.get(row);
     }
@@ -139,15 +141,13 @@ public class Map_Reader {
         try {
         var L = read_lines(row);
         return L[col];
-        } catch (ArrayIndexOutOfBoundsException e)
+        } catch (IndexOutOfBoundsException e)
         {
-            System.out.println("Column " + col + " was not found");
+            System.out.println("Column " + col + " was not found"+e.toString());
         }
 
         var L = read_lines(row);
         return L[col];
-
-
     }
 
 }
