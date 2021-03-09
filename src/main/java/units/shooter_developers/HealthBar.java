@@ -47,16 +47,16 @@ public class HealthBar extends Map_Object{
     }
 
 
-    private double get_current_health() {
+    protected double get_current_health() {
         return Health.get();
     }
 
-    public double get_relative_damage()
+    protected double get_relative_damage()
     {
         return get_max_health() * Custom_Settings.PERCENTAGE_DAMAGE_PER_SHOOT;
     }
 
-    public double get_max_health()
+    protected double get_max_health()
     {
         return  get_width();
     }
