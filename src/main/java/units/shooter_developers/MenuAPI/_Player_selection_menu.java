@@ -21,8 +21,10 @@ public class _Player_selection_menu extends GridPane {
 
     Map<String, String> Name_URL;
 
-    public _Player_selection_menu(double width_scale, double height_scale)
+    public _Player_selection_menu(double width_scale, double height_scale, Map<String, String> map_image_to_URL)
     {
+        Name_URL = map_image_to_URL;
+
         var width = Menu.getMenuWidth()* width_scale;
         var height = Menu.getMenuHeight()* height_scale;
 
@@ -46,14 +48,8 @@ public class _Player_selection_menu extends GridPane {
         getRowConstraints().addAll(row1, row2);
 
 
-        Name_URL = new Hashtable<>();
-        Name_URL.put(Custom_Settings.ARTIST,Custom_Settings.URL_ARTIST);
-        Name_URL.put(Custom_Settings.ASTROLOGER,Custom_Settings.URL_ASTROLOGER);
-        Name_URL.put(Custom_Settings.WARRIOR,Custom_Settings.URL_WARRIOR);
-
-
-        CB_P1 = new _ChoiceBox( Name_URL, 4, Custom_Settings.SPRITE_SCALE);
-        CB_P2 = new _ChoiceBox(Name_URL, 4, Custom_Settings.SPRITE_SCALE);
+        CB_P1 = new _ChoiceBox(map_image_to_URL, 4, Custom_Settings.SPRITE_SCALE);
+        CB_P2 = new _ChoiceBox(map_image_to_URL, 4, Custom_Settings.SPRITE_SCALE);
 
 
         add(CB_P1, 0,1);

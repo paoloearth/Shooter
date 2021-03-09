@@ -70,7 +70,12 @@ public class _Submenu extends Menu {
 
             this.setPrefSize(getMenuWidth(), getMenuHeight());
 
-            player_section = new _Player_selection_menu( 1,             0.5);    // THE TOP WILL OCCUPY HALF THE HEIGHT
+
+            Map<String, String> Name_URL = new Hashtable<>();
+            Name_URL.put(Custom_Settings.ARTIST,Custom_Settings.URL_ARTIST);
+            Name_URL.put(Custom_Settings.ASTROLOGER,Custom_Settings.URL_ASTROLOGER);
+            Name_URL.put(Custom_Settings.WARRIOR,Custom_Settings.URL_WARRIOR);
+            player_section = new _Player_selection_menu( 1,0.5, Name_URL);    // THE TOP WILL OCCUPY HALF THE HEIGHT
 
 
             Map<String, String> Map_URL = new Hashtable<>();
