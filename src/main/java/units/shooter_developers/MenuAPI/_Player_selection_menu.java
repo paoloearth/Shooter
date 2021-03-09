@@ -46,26 +46,20 @@ public class _Player_selection_menu extends GridPane {
         getRowConstraints().addAll(row1, row2);
 
 
-        Name_URL = initialize_dictionary();
-        create_choiceboxes();
-        create_textboxes();
+        Name_URL = new Hashtable<>();
+        Name_URL.put(Custom_Settings.ARTIST,Custom_Settings.URL_ARTIST);
+        Name_URL.put(Custom_Settings.ASTROLOGER,Custom_Settings.URL_ASTROLOGER);
+        Name_URL.put(Custom_Settings.WARRIOR,Custom_Settings.URL_WARRIOR);
 
 
-        //set_bindings();
-    }
-
-
-    private void create_choiceboxes() {
         CB_P1 = new _ChoiceBox( Name_URL, 4, Custom_Settings.SPRITE_SCALE);
         CB_P2 = new _ChoiceBox(Name_URL, 4, Custom_Settings.SPRITE_SCALE);
 
 
-
         add(CB_P1, 0,1);
         add(CB_P2, 1,1);
-    }
 
-    private void create_textboxes() {
+
         /* TEXT BOX & ADD them to GRIDPANE in right position*/
         TB_P1 = new _Text_Box(Custom_Settings.URL_COMMANDS_P1, 1, Custom_Settings.WASD_SCALE);
         TB_P2 = new _Text_Box(Custom_Settings.URL_COMMANDS_P2, 1, Custom_Settings.ARROWS_SCALE);
@@ -75,16 +69,9 @@ public class _Player_selection_menu extends GridPane {
 
         add(TB_P1, 0,0);
         add(TB_P2, 1,0);
-    }
 
-    private Map<String, String> initialize_dictionary() {
-        Name_URL = new Hashtable<>();
 
-        Name_URL.put(Custom_Settings.ARTIST,Custom_Settings.URL_ARTIST);
-        Name_URL.put(Custom_Settings.ASTROLOGER,Custom_Settings.URL_ASTROLOGER);
-        Name_URL.put(Custom_Settings.WARRIOR,Custom_Settings.URL_WARRIOR);
-
-        return Name_URL;
+        //set_bindings();
     }
 
     public List<String> get_players_names()
