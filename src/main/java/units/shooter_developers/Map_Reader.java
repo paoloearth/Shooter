@@ -1,16 +1,19 @@
 package units.shooter_developers;
 import javafx.scene.image.Image;
 import javafx.util.Pair;
-
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 
 /* TEMPLATE
@@ -36,11 +39,10 @@ public class Map_Reader {
         catch(InvalidPathException e){ System.out.println(URL + ": path contains invalid characters"); }
         catch(FileNotFoundException e){ System.out.println(URL + ": was not found "); }
         catch(IOException e){ System.out.println(URL + ": problems interacting with the file "); }
-        catch(NullPointerException e){ System.out.println("File is null "); }
+        catch(NullPointerException e){ System.out.println("File is null ");}
+        catch(URISyntaxException e){ System.out.println("Wrong URL format ");}
 
-
-
-            M = new GameMap(width, height,
+        M = new GameMap(width, height,
                     get_tileset(), get_cell_side(),
                     get_row_and_column_num_of_tiles_composing_map(), get_Set_of_tiles_at_row_index(2),
                     get_Set_of_tiles_at_row_index(3), retrieve_map_without_metadata());
@@ -49,14 +51,13 @@ public class Map_Reader {
         fill_dictionary_position('P', 4, M.getDictionary_of_positions());
         fill_dictionary_position('T', 5, M.getDictionary_of_positions());
 
-
-        return Objects.requireNonNull(M);
+        return M;
 
     }
 
-    List<String[]> extract_lines(String URL) throws InvalidPathException, IOException,NullPointerException{
-        File file = new File(Objects.requireNonNull(getClass().getClassLoader().getResource(URL)).getFile());
-        return Files.lines(file.toPath()).parallel().map(l -> l.split(Custom_Settings.FILE_SEPARATOR)).collect(Collectors.toList());
+    List<String[]> extract_lines(String URL) throws InvalidPathException, IOException, NullPointerException, URISyntaxException {
+        Stream<String> lines = Files.lines(Paths.get(ClassLoader.getSystemResource(URL).toURI()), Charset.defaultCharset());
+        return lines.parallel().map(l -> l.split(Custom_Settings.FILE_SEPARATOR)).collect(Collectors.toList());
     }
 
 
@@ -89,11 +90,11 @@ public class Map_Reader {
         
     }
 
-
-
     private Integer get_cell_side(){
-      return  to_int(read_lines(1,2));
+        // if(cell_side <= 0) throw new CustomException.NegativeNumberException("Cell side must be a positive number, please modify it ");
+      return to_int(read_lines(1,2));
     }
+
 
     private Pair<Integer, Integer> get_row_and_column_num_of_tiles_composing_map() {
         return new Pair<>(to_int(read_lines(1,0)),to_int(read_lines(1,1)));
@@ -115,7 +116,7 @@ public class Map_Reader {
     }
 
     private List<Integer> get_list_of_integer_from_String(int index) {
-        return Arrays.stream(read_lines(index)).parallel().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
+        return Arrays.stream(read_lines(index)).parallel().mapToInt(this::to_int).boxed().collect(Collectors.toList());
     }
 
     public static Set<Integer> convertListToSet(List<Integer> list)
