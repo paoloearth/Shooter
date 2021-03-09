@@ -70,13 +70,7 @@ public class _Player_selection_menu extends GridPane {
         //set_bindings();
     }
 
-    public List<String> get_players_names()
-        {
-                var NAMES = new ArrayList<String>();
-                NAMES.add(TB_P1.get_value());
-                NAMES.add(TB_P2.get_value());
-                return NAMES;
-        }
+
 
     public List<String> get_players_URL() {
 

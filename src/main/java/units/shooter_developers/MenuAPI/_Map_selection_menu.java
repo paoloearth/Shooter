@@ -30,8 +30,6 @@ public class _Map_selection_menu extends GridPane {
 
         _choice_box_map = new _ChoiceBox(map_image_to_URL, 1, Custom_Settings.MAP_SCALE);
 
-        //all_set.bind(CB_MAP.getComboBox().getSelectionModel().selectedItemProperty().isNull());
-
         add(_choice_box_map,1,1);
     }
 

@@ -116,7 +116,10 @@ public class _Submenu extends Menu {
             ArrayList<String> map_data = new ArrayList<String>();
             map_data.add(Map_CSV.get(map_section.getValue()));
 
-            M.setSimulationInstance(new Simulation(player_section.get_players_names(), player_section.get_players_URL(), map_data));
+            var player_names = new ArrayList<String>();
+            player_names.add(player_section.TB_P1.get_value());
+            player_names.add(player_section.TB_P2.get_value());
+            M.setSimulationInstance(new Simulation(player_names, player_section.get_players_URL(), map_data));
             try {
                 M.getStage().close();
                 getSimulationInstance().start(getStage());
