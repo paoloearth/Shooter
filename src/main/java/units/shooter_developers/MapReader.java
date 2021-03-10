@@ -27,18 +27,15 @@ import java.util.stream.Stream;
 public class MapReader {
 
     private  List<String[]> _lines;
+    private final String _URL;
 
     // Constructor
     MapReader(String URL){
-        try { _lines = readLinesFromFile(URL); }
-        catch(InvalidPathException e){ System.out.println(URL + ": path contains invalid characters"); }
-        catch(FileNotFoundException e){ System.out.println(URL + ": was not found "); }
-        catch(IOException e){ System.out.println(URL + ": problems interacting with the map file "); }
-        catch(NullPointerException e){ System.out.println("Map File"+URL+" is null ");}
-        catch(URISyntaxException e){ System.out.println("Wrong URL"+URL+" format of map file ");}
+        _URL = URL;
     }
 
     public GameMap makeMapFromFileContent(double width, double height) {
+        _lines = readLinesFromFile(_URL);
 
         GameMap M;
 
@@ -54,11 +51,18 @@ public class MapReader {
 
     }
 
-    protected List<String[]> readLinesFromFile(String URL) throws InvalidPathException, IOException, NullPointerException, URISyntaxException {
+    protected List<String[]> readLinesFromFile(String URL) {
+        List<String[]> rows = null;
        try(Stream<String> lines =
                    Files.lines(Paths.get(ClassLoader.getSystemResource(URL).toURI()), Charset.defaultCharset())){
-           return lines.parallel().map(l -> l.split(CustomSettings.FILE_SEPARATOR)).collect(Collectors.toList());
+                  rows = lines.parallel().map(l -> l.split(CustomSettings.FILE_SEPARATOR)).collect(Collectors.toList());
        }
+       catch(FileNotFoundException e){ System.out.println(URL + ": was not found "); }
+       catch(IOException e){ System.out.println(URL + ": problems interacting with the map file "); }
+       catch(NullPointerException e){ System.out.println("Map File "+URL+" is null ");}
+       catch(URISyntaxException e){ System.out.println("Wrong URL"+URL+" format of map file ");}
+
+       return rows;
     }
 
 
@@ -91,7 +95,7 @@ public class MapReader {
         
     }
 
-    protected Integer getCellSide(){
+    protected int getCellSide(){
         // if(cell_side <= 0) throw new CustomException.NegativeNumberException("Cell side must be a positive number, please modify it ");
       return toInt(readLines(1,2));
     }
@@ -136,7 +140,7 @@ public class MapReader {
         return _lines.get(row);
     }
 
-    protected String readLines(int row, int col) {
+    protected String readLines(int row, int col){
         try {
         var L = readLines(row);
         return L[col];
