@@ -10,7 +10,7 @@ import java.util.Map;
 
 
 
-public class ChoiceBox extends VBox {
+class ChoiceBox extends VBox {
 
     private Map<String, String> _dict;
     private int _nrows;
@@ -55,7 +55,7 @@ public class ChoiceBox extends VBox {
         getChildren().add(_selector);
     }
 
-    public String get_value()
+    public String getValue()
     {
         return _selector.getText();
     }

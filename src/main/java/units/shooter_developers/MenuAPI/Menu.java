@@ -406,7 +406,7 @@ public abstract class Menu extends Application {
     }
 
 
-    public ArrayList<MenuItem> getItems(){
+    private ArrayList<MenuItem> getItems(){
         var item_list_from_box = new ArrayList<MenuItem>();
         if(getItemsBox() != null)
             item_list_from_box = getItemsBox().getItems();
@@ -418,6 +418,15 @@ public abstract class Menu extends Application {
                 .forEach(e -> full_item_list.add((MenuItem)e));
 
         return full_item_list;
+    }
+
+    public MenuItem getItem(String name){
+        var hola = getItems().stream()
+                .filter(e -> e.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+
+        return hola;
     }
 
     protected ArrayList<SelectorItem> getSelectorItems(){
@@ -448,20 +457,28 @@ public abstract class Menu extends Application {
         menu_grid_object.addChoiceBox(name, row, col, map_image_to_URL, scale, spritesheet_number_of_rows);
     }
 
-    public ChoiceBox getChoiceBox(String name){
+    public String getChoiceBoxValue(String name){
+        return getChoiceBox(name).getValue();
+    }
+
+    private ChoiceBox getChoiceBox(String name){
         var menu_grid = getMenuGridAndCreateIfNotExist();
         return menu_grid.getChoiceBox(name);
     }
 
-    public TextBox getTextBox(String name){
+    public String getTextBoxValue(String name){
+        return getTextBox(name).getValue();
+    }
+
+    private TextBox getTextBox(String name){
         var menu_grid = getMenuGridAndCreateIfNotExist();
         return menu_grid.getTextBox(name);
     }
 
-    public void addTextBox(String name, int row, int col, String commands_url, int number_of_rows_spritesheet, double scale, String default_message){
+    public void addTextBox(String name, int row, int col, String commands_url, int number_of_rows_spritesheet, double scale, String default_message, String default_content){
         MenuGrid menu_grid_object = getMenuGridAndCreateIfNotExist();
 
-        menu_grid_object.addTextBox(name, row, col, commands_url, number_of_rows_spritesheet, scale, default_message);
+        menu_grid_object.addTextBox(name, row, col, commands_url, number_of_rows_spritesheet, scale, default_message, default_content);
     }
 
     private MenuGrid getMenuGridAndCreateIfNotExist() {
