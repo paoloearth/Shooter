@@ -1,3 +1,5 @@
+//JOSE: classe visitata
+
 package units.shooter_developers;
 
 import javafx.animation.KeyFrame;
@@ -27,7 +29,7 @@ public class Sprite extends DynamicObject {
             new KeyFrame(Duration.seconds(CustomSettings.SHOOTING_COOLDOWN), event -> _can_shoot.setValue(true))
     );
 
-
+    //JOSE: cambiare root per simulation_root e M per un nome più spiegativo.
     public Sprite(Pane root, GameMap M, Pair<Double, Double> scaling_factor, String url, int _n_rows, int _n_cols, String id, Direction D, String player_name)
     {
         super(scaling_factor, url, _n_rows, _n_cols);
@@ -66,8 +68,11 @@ public class Sprite extends DynamicObject {
     private HealthBar getHealthBar() {
         return new HealthBar(this);
     }
+    //JOSE: perchè si crea una nuova healthbar invede di ritornare Sprite_HBar?
+    //      fa una cosa diversa rispetto a getHBar?
 
     private ChangeListener<Object> getListener() { return (ov, o, o2) -> get_view().setViewport(new Rectangle2D( _frame.get()*get_width(), get_current_direction().getOffset() * get_height(), get_width(), get_height())); }
+    //JOSE: questo metodo è un salame, meglio se si organizza un po' più visualmente, anche mettere i parametri in varie righe.
 
     //Update the movement in the right direction
     private void update_speed() {
@@ -77,8 +82,9 @@ public class Sprite extends DynamicObject {
         if (goEast)  set_deltaX(get_deltaX()+ get_speed());
         if (goWest)  set_deltaX(get_deltaX()-get_speed());
     }
+    //JOSE: si chiama update_speed ma modifica le delta e non la speed.
 
-
+    //JOSE: piuttosto update_direction
     private void update_get_direction(Coordinates destination)
     {
         Direction D;
@@ -91,7 +97,7 @@ public class Sprite extends DynamicObject {
     }
 
 
-
+    //JOSE: dato che si usa solo in default_movement, meglio metterlo in linea lì
     private void move(GameMap M) {
 
         update_speed();

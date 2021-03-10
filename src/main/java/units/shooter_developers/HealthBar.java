@@ -1,3 +1,5 @@
+//JOSE: classe visitata
+
 package units.shooter_developers;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.DoubleProperty;
@@ -26,9 +28,10 @@ public class HealthBar extends MapObject {
 
     }
 
+    //JOSE: come suggeriento, forse un nome un po più intuitivo, del tipo: isLifeSpent
     protected BooleanBinding isRemainingLifeZero() { return health.lessThanOrEqualTo(0); }
 
-
+    //JOSE: intendo che questo metodo applica danneggio, per chiarezza lo chiamerei una roba del tipo: applyDamage
     public void damage()
     {
         setRemainingLifeTo(getCurrentHealth() - getRelativeDamage());
@@ -78,6 +81,7 @@ public class HealthBar extends MapObject {
         return R;
     }
 
+    //JOSE: Non avrebbe più senso tornare un double visto che parliamo di width (la cui quantità è double)?
     private static int get_HBar_height_proportional_to_S_height(double sprite_height) {
         return (int) (sprite_height * CustomSettings.HB_PROPORTIONAL_WIDTH);
     }

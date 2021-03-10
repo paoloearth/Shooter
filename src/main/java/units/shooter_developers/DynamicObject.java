@@ -1,3 +1,10 @@
+//JOSE: classe visitata
+//  -Mi sembra che non siano state implementate le colissioni fra diversi DynamicObject, infatti, i personaggi si possono superporre.
+//  -Il ruolo di _speed e di _deltaX e _deltaY è confuso. Sembrerebbe che la presenza di questi due oggetti introduca ridundanza
+//   dato che _deltaX e _deltaY si possono ricavare univocamente dalla velocità e viceversa se partiamo di movimento rettilineo
+//   uniforme, come effettivamente è il caso.
+//  -Mi sembra che _deltaX e _deltaY non siano scalate con la risoluzione.
+
 package units.shooter_developers;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -22,11 +29,12 @@ public abstract class DynamicObject extends Pictured_Object {
     double get_future_x(){ return this.getCurrentXPosition() + _deltaX; }
     double get_future_y(){ return this.getCurrentYPosition() + _deltaY; }
 
-
     public Box get_move_box(){ return get_default_move_box();}
     public Box get_default_move_box(){ return new Box( get_future_y() ,get_future_x(), getActualWidth() , getActualHeight()); }
+    //JOSE: perchè due metodi che fanno lo stesso? con box si intende hitbox?
 
     Coordinates get_destination() { return new Coordinates(get_future_x(), get_future_y()); }
+    //JOSE: forse meglio get_future_coordinates
 
     protected  boolean illegal_move(GameMap M) {
 
@@ -38,11 +46,14 @@ public abstract class DynamicObject extends Pictured_Object {
         var collision_box = get_move_box();
         collision_box.compute_tiles_bounds(M);
 
+        //JOSE: E le colissioni fra personaggi o altri eventuali DynamicObject?
+
        return collision_box.performs_check(M,this);
 
    }
 
     public abstract  boolean get_property_to_check(Tile t);
+    //JOSE: Il nome di questo metodo è poco chiaro
 
     /* Setters */
     public void set_deltaX(int _deltaX) { this._deltaX = _deltaX; }

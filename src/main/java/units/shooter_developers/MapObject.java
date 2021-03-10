@@ -1,3 +1,5 @@
+//JOSE: classe visitata.
+
 package units.shooter_developers;
 
 import javafx.scene.Node;
@@ -22,6 +24,7 @@ public abstract class MapObject extends Pane {
 
     public void addNodes(Node ... nodes) { this.getChildren().addAll(nodes); }
 
+    //JOSE: gli argomenti non dovrebbero essere double?
     public void setDimensions(int width, int height)
     {
         this.set_width(width); this.set_height(height);
@@ -31,6 +34,7 @@ public abstract class MapObject extends Pane {
     public int get_width() { return _width; }
     public int get_height() { return _height; }
     public Pair<Double, Double> getScalingFactors() { return _scaling_factors; }
+    //JOSE: Quando si ritorna width e height non dovrebbero essere considerati i fattori di scala?
 
     /* Setters */
     public void set_width(int _width) { this._width = _width; }

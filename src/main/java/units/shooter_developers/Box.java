@@ -1,17 +1,26 @@
+//JOSE: Classe visitata
+//     -Questo metodo non ha particolari problemi, semplicemente suggerire che si potrebbe usare
+//      Rectangle di javafx per semplificare il lavoro. Comunque, non penso migliorerebbe l'implementazione,
+//      Solo riducerebbe un po' le righe di codice.
+
 package units.shooter_developers;
 
 import java.util.Arrays;
 
+//JOSE: Io cambierei il nome per hitbox per due mottivi:
+//  1 - È stato riferito come hitbox in altre parti del codice.
+//  2 - È il nome con cui, solitamente, viene chiamato questo oggetto nel contesto dello sviluppo di videogiocchi.
 public class Box{
 
 
     public enum BOUNDS {TOP, LEFT, BOTTOM, RIGHT}
     double [] box ;
     int    [] tile;
+    //JOSE: cambiare tile per un nome più intuitivo p.s. tile_neighborhood o confinant_tile_list
 
     public Box(double top, double left, double width, double height) { box = new double[]{top, left,  top+height,left+width}; }
 
-
+    //JOSE: Cambiare M per un nome migliore
     public  void  compute_tiles_bounds(GameMap M) {
 
         int top_tile = (int) (get_top_box() / M.getTileHeight());
@@ -51,7 +60,7 @@ public class Box{
     }
 
 
-
+    //JOSE: nome più chiaro, cosa si verifica?
     protected boolean  performs_check(GameMap M, DynamicObject D)
     {
         for (int i =get_left_tile(); i<= get_right_tile(); i++)

@@ -1,3 +1,5 @@
+//JOSE: classe visitata
+
 package units.shooter_developers;
 
 import javafx.util.Pair;
@@ -17,6 +19,8 @@ public class Projectile extends DynamicObject {
         set_scale(CustomSettings.PROJECTILE_SCALE);
         set_speed(CustomSettings.PROJECTILE_SPEED);
         update_view();
+        //JOSE: forse sarebbe interessante che questo metodo venga chiamato in automatico all'interno di
+        //      set_scale
 
         set_initial_and_translate_direction(S.get_current_direction());
 
@@ -37,6 +41,7 @@ public class Projectile extends DynamicObject {
         return S.get_future_x() + this.biasX;
     }
 
+    //JOSE: manca il verbo: applyTranstation, updatePosition, performStep, ect.
     private void translate(GameMap M)
     {
         if(illegal_move(M)) set_is_dead_property(true);
@@ -48,7 +53,7 @@ public class Projectile extends DynamicObject {
 
 
 
-
+    //JOSE: questo metodo ha un nome confuso. Meglio del tipo: computeBiasCoordinates(D)
     private void set_initial_and_translate_direction(Direction D) {
         biasX=biasY=0;
         switch (D) {
@@ -60,7 +65,7 @@ public class Projectile extends DynamicObject {
     }
 
 
-
+    //JOSE: anche questo meglio setBiasCoordinates(D)
     private void set_biases(int bias_x, int biasY)
     {
         setBiasX(bias_x);
@@ -78,7 +83,7 @@ public class Projectile extends DynamicObject {
         translate(M);
     };
 
-
+    //JOSE: meglio applyHitConsequences o una roba del genere
     private void hit(Sprite S)
     {
         if(!is_dead() && !Owner.equals(S.get_id()))

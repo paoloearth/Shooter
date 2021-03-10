@@ -1,3 +1,4 @@
+
 package units.shooter_developers;
 
 //Coordinates or class Point2D.Double
