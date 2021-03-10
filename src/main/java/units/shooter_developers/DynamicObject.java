@@ -36,7 +36,7 @@ public abstract class DynamicObject extends PicturedObject {
 
 
     /* Collision handling */
-    public abstract  boolean getPropertyToCheck(Tile t);
+    public abstract boolean checkIfPassable(Tile t);
 
     protected final Box getDefaultMoveBox(){ return new Box( getFutureY() , getFutureX(), getActualWidth() , getActualHeight()); }
 

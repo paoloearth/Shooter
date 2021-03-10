@@ -68,7 +68,7 @@ public class Box{
             for (int j=get_top_tile(); j<= get_bottom_tile(); j++)
             {
                 Tile t =M.get_tile_matrix().get(M.single_index(i, j));
-                var passable = D.getPropertyToCheck(t);
+                var passable = D.checkIfPassable(t);
                 if(!passable) return true;
             }
         }
