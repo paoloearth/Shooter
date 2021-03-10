@@ -1,3 +1,5 @@
+//JOSE: classe visitata
+
 package units.shooter_developers;
 
 import javafx.util.Pair;
@@ -18,6 +20,8 @@ public class Projectile extends DynamicObject {
         setScale(CustomSettings.PROJECTILE_SCALE);
         setSpeed(CustomSettings.PROJECTILE_SPEED);
         updateView();
+        //JOSE: forse sarebbe interessante che questo metodo venga chiamato in automatico all'interno di
+        //      set_scale
 
         setInitialAndTranslateDirection(S.getCurrentDirection());
 
@@ -32,6 +36,7 @@ public class Projectile extends DynamicObject {
         if(illegalMove(M)) setIsDeadProperty(true);
         else moveTo(getDestination());
     }
+
     @Override
     public void update( Sprite S) {
         if(intersect(S)) hit( S);

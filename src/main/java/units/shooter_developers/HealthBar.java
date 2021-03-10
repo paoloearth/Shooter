@@ -1,3 +1,5 @@
+//JOSE: classe visitata
+
 package units.shooter_developers;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.DoubleProperty;
@@ -26,8 +28,8 @@ public class HealthBar extends MapObject {
         addNodes(lostLifeRectangle, remainingLifeRectangle);
     }
 
-
     /* Damage/Life handling */
+    //JOSE: immagino che questo metodo applica danneggio, per chiarezza lo chiamerei una roba del tipo: applyDamage
     protected final void damage()
     {
         setRemainingLifeTo(getCurrentHealth() - getRelativeDamage());
@@ -79,6 +81,7 @@ public class HealthBar extends MapObject {
         R.setStroke(CustomColors.OUTER_RECTANGLE_STROKE);
         return R;
     }
+    //JOSE: Non avrebbe più senso tornare un double visto che parliamo di width (la cui quantità è double)?
     private static int get_HBar_height_proportional_to_S_height(double spriteHeight) {
         return (int) (spriteHeight * CustomSettings.HB_PROPORTIONAL_WIDTH);}
 

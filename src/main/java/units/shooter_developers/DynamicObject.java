@@ -1,3 +1,10 @@
+//JOSE: classe visitata
+//  -Mi sembra che non siano state implementate le colissioni fra diversi DynamicObject, infatti, i personaggi si possono superporre.
+//  -Il ruolo di _speed e di _deltaX e _deltaY è confuso. Sembrerebbe che la presenza di questi due oggetti introduca ridundanza
+//   dato che _deltaX e _deltaY si possono ricavare univocamente dalla velocità e viceversa se partiamo di movimento rettilineo
+//   uniforme, come effettivamente è il caso.
+//  -Mi sembra che _deltaX e _deltaY non siano scalate con la risoluzione.
+
 package units.shooter_developers;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -25,6 +32,7 @@ public abstract class DynamicObject extends PicturedObject {
     protected final double getFutureY() { return getCurrentYPosition() + get_deltaY(); }
 
     protected final Coordinates getDestination() { return new Coordinates(getFutureX(), getFutureY()); }
+    //JOSE: forse meglio get_future_coordinates
 
 
     /* Collision handling */
@@ -41,11 +49,11 @@ public abstract class DynamicObject extends PicturedObject {
         var collision_box = getMoveBox();
         collision_box.compute_tiles_bounds(M);
 
+        //JOSE: E le colissioni fra personaggi o altri eventuali DynamicObject?
+
        return collision_box.performs_check(M,this);
 
    }
-
-
 
     /* Setters */
     public final void set_deltaX(int deltaX) { _deltaX = deltaX; }

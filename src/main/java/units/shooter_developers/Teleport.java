@@ -1,3 +1,5 @@
+//JOSE: classe visitata
+
 package units.shooter_developers;
 
 import javafx.animation.Animation;
@@ -11,6 +13,7 @@ public class Teleport extends PicturedObject {
     private Coordinates destination;
 
     /* Constructors  */
+        //JOSE: meglio cambiare root per simulation_root. Nome migliore per M.
     public Teleport(Pane root, String url, GameMap M, Pair<Double, Double> scalingFactor, String ID) {
         super(scalingFactor, url);
 
@@ -32,6 +35,8 @@ public class Teleport extends PicturedObject {
     public Box getHitbox(){
         return new Box(getCurrentYPosition() + (getActualHeight()*.25), getCurrentXPosition()+(getActualWidth()*.25),  getActualWidth()*.5 , getActualHeight()*.5 );
     }
+    //JOSE: Se si uniforma la gestione della hitbox, si può evitare modificare questo metodo. Basterebbe passare i
+    //      parametri per generare la hitbox come input in qualche modo (costruzione, metodo, ect).
 
     @Override
     public void update( Sprite S) {
