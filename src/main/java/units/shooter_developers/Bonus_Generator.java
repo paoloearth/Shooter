@@ -78,13 +78,13 @@ public class Bonus_Generator extends Pictured_Object{
         return new Timeline(new KeyFrame(Duration.seconds(Custom_Settings.BONUS_COOLDOWN),
                 event -> {
                     empty_Pane_from_ImageView(this);
-                    add_nodes(get_view());
+                    addNodes(get_view());
                 }));
     }
 
     /* Getters */
-    private double get_inmap_X_position() { return get_current_X_position()-get_actual_width(); }
-    private double get_inmap_Y_position() { return get_current_Y_position()-get_actual_height(); }
+    private double get_inmap_X_position() { return getCurrentXPosition()-get_actual_width(); }
+    private double get_inmap_Y_position() { return getCurrentYPosition()-get_actual_height(); }
 
 
 }

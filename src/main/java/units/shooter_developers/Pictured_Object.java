@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Pair;
 
-public abstract class Pictured_Object extends Map_Object {
+public abstract class Pictured_Object extends MapObject {
 
 
     private final String _url;
@@ -31,7 +31,7 @@ public abstract class Pictured_Object extends Map_Object {
 
         this._url = url;
         Image _picture = retrieve_image(_url);
-        set_dimensions((int) _picture.getWidth(),(int) _picture.getHeight());
+        setDimensions((int) _picture.getWidth(),(int) _picture.getHeight());
 
         this._view = new ImageView(_picture);
     }
@@ -44,7 +44,7 @@ public abstract class Pictured_Object extends Map_Object {
         this._n_rows = n_rows;
         this._n_cols = n_cols;
 
-        set_dimensions(get_width()/_n_cols,get_height()/_n_rows);
+        setDimensions(get_width()/_n_cols,get_height()/_n_rows);
 
     }
 
@@ -56,8 +56,8 @@ public abstract class Pictured_Object extends Map_Object {
 
     // Scaling on x-axis and y-axis of images according to the resolution of the window
     void update_view() {
-        this._view.setFitWidth( _scale * get_scaling_factors().getKey()  * get_width());
-        this._view.setFitHeight(_scale * get_scaling_factors().getValue() * get_height());
+        this._view.setFitWidth( _scale * get_scalingFactors().getKey()  * get_width());
+        this._view.setFitHeight(_scale * get_scalingFactors().getValue() * get_height());
         this._view.setPreserveRatio(false);
     }
 
@@ -71,7 +71,7 @@ public abstract class Pictured_Object extends Map_Object {
     }
 
 
-    public Box get_hitbox(){ return new Box(get_current_Y_position(), get_current_X_position(),  get_actual_width() ,get_actual_height() );}
+    public Box get_hitbox(){ return new Box(getCurrentYPosition(), getCurrentXPosition(),  get_actual_width() ,get_actual_height() );}
 
     public boolean intersect(Pictured_Object P2)
     {

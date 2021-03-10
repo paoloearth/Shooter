@@ -15,7 +15,7 @@ public class Teleport extends Pictured_Object{
 
         set_scale(Custom_Settings.TELEPORT_SCALE);
         update_view();
-        add_nodes(get_view());
+        addNodes(get_view());
 
         rotation_animation();
         move_to(M.get_position_of(ID));
@@ -32,12 +32,12 @@ public class Teleport extends Pictured_Object{
 
     public void setDestination(Teleport T)
     {
-        destination = new Coordinates(T.get_current_X_position() + get_actual_width()/4.0 ,T.get_current_Y_position()+get_actual_height());
+        destination = new Coordinates(T.getCurrentXPosition() + get_actual_width()/4.0 ,T.getCurrentYPosition()+get_actual_height());
     }
 
     @Override
     public Box get_hitbox(){
-        return new Box(get_current_Y_position() + (get_actual_height()*.25), get_current_X_position()+(get_actual_width()*.25),  get_actual_width()*.5 ,get_actual_height()*.5 );
+        return new Box(getCurrentYPosition() + (get_actual_height()*.25), getCurrentXPosition()+(get_actual_width()*.25),  get_actual_width()*.5 ,get_actual_height()*.5 );
     }
 
 

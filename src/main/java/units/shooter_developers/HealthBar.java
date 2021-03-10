@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.shape.Rectangle;
 
 
-public class HealthBar extends Map_Object{
+public class HealthBar extends MapObject {
 
     private final Rectangle remaining_life_rectangle;
     private final DoubleProperty Health;
@@ -22,7 +22,7 @@ public class HealthBar extends Map_Object{
 
         move_to(get_default_HBar_position(S));
 
-        add_nodes(lost_life_rectangle, remaining_life_rectangle);
+        addNodes(lost_life_rectangle, remaining_life_rectangle);
 
     }
 
