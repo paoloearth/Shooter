@@ -1,3 +1,4 @@
+//JOSE: classe visitata.
 package units.shooter_developers;
 
 import javafx.beans.property.BooleanProperty;
