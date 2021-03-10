@@ -4,7 +4,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -16,7 +15,7 @@ public class TextBox extends VBox {
     double _custom_scale;
     String _name;
 
-    public TextBox(String name, String commands_url, int nrows, double scale, String default_message)
+    public TextBox(String name, String commands_url, int nrows, double scale, String default_message, String default_content)
     {
         super();
 
@@ -30,13 +29,8 @@ public class TextBox extends VBox {
 
         setFillWidth(false);
 
-        _textField = new TextField();
-        var background_color = Menu.getColorPalette().dead_color;
-        var default_text_color = Menu.getColorPalette().selected_primary_color;
-        var introduced_text_color = Menu.getColorPalette().clicked_background_color;
-        _textField.setStyle("-fx-control-inner-background: #" + background_color.toString().substring(2) + ";" +
-                "-fx-prompt-text-fill: #"+default_text_color.toString().substring(2) + ";" +
-                "-fx-text-fill: #"+introduced_text_color.toString().substring(2) + ";");
+        _textField = customizeTextField(_textField);
+
         _textField.setPromptText(default_message);
 
         getChildren().add(_textField);
@@ -55,6 +49,18 @@ public class TextBox extends VBox {
         getChildren().add(H);
 
 
+    }
+
+    TextField customizeTextField(TextField text_field) {
+        text_field = new TextField();
+        var background_color = Menu.getColorPalette().dead_color;
+        var default_text_color = Menu.getColorPalette().selected_primary_color;
+        var introduced_text_color = Menu.getColorPalette().clicked_background_color;
+        text_field.setStyle("-fx-control-inner-background: #" + background_color.toString().substring(2) + ";" +
+                "-fx-prompt-text-fill: #"+default_text_color.toString().substring(2) + ";" +
+                "-fx-text-fill: #"+introduced_text_color.toString().substring(2) + ";");
+
+        return text_field;
     }
 
     protected static HBox createCustomHbox() {
