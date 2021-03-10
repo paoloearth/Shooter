@@ -5,7 +5,7 @@ import javafx.scene.layout.*;
 
 import java.util.Map;
 
-public class MenuGrid extends GridPane {
+class MenuGrid extends GridPane {
 
     public MenuGrid(){
         double scale_width = 0.8;

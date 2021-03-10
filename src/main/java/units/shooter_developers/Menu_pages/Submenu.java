@@ -42,15 +42,15 @@ public class Submenu extends Menu {
                     player_names.add(getTextBoxValue("Player_textbox_2"));
 
                     ArrayList<String> Players_URL = new ArrayList<String>();
-                    Players_URL.add(Name_URL.get(getChoiceBox("Player_selection_1").get_value()));
-                    Players_URL.add(Name_URL.get(getChoiceBox("Player_selection_2").get_value()));
+                    Players_URL.add(Name_URL.get(getChoiceBoxValue("Player_selection_1")));
+                    Players_URL.add(Name_URL.get(getChoiceBoxValue("Player_selection_2")));
 
                     Map<String, String> Map_CSV;
                     Map_CSV = new Hashtable<>();
                     Map_CSV.put(CustomSettings.ISLAND, CustomSettings.URL_MAP_ISLAND_CSV);
                     Map_CSV.put(CustomSettings.DESERT, CustomSettings.URL_MAP_DESERT_CSV);
                     ArrayList<String> map_data = new ArrayList<String>();
-                    map_data.add(Map_CSV.get(getChoiceBox("Map_selection").get_value()));
+                    map_data.add(Map_CSV.get(getChoiceBoxValue("Map_selection")));
 
                     setSimulationInstance(new Simulation(player_names, Players_URL, map_data));
                     try {

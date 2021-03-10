@@ -448,18 +448,22 @@ public abstract class Menu extends Application {
         menu_grid_object.addChoiceBox(name, row, col, map_image_to_URL, scale, spritesheet_number_of_rows);
     }
 
-    public ChoiceBox getChoiceBox(String name){
+    public String getChoiceBoxValue(String name){
+        return getChoiceBox(name).getValue();
+    }
+
+    private ChoiceBox getChoiceBox(String name){
         var menu_grid = getMenuGridAndCreateIfNotExist();
         return menu_grid.getChoiceBox(name);
     }
 
-    protected TextBox getTextBox(String name){
-        var menu_grid = getMenuGridAndCreateIfNotExist();
-        return menu_grid.getTextBox(name);
-    }
-
     public String getTextBoxValue(String name){
         return getTextBox(name).getValue();
+    }
+
+    private TextBox getTextBox(String name){
+        var menu_grid = getMenuGridAndCreateIfNotExist();
+        return menu_grid.getTextBox(name);
     }
 
     public void addTextBox(String name, int row, int col, String commands_url, int number_of_rows_spritesheet, double scale, String default_message, String default_content){

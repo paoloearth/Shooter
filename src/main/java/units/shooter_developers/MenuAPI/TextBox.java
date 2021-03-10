@@ -8,7 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-public class TextBox extends VBox {
+class TextBox extends VBox {
 
     TextField _textField;
     int _nrows;
