@@ -61,17 +61,17 @@ public abstract class Pictured_Object extends MapObject {
         this._view.setPreserveRatio(false);
     }
 
-    protected  int get_actual_height()
+    protected  int getActualHeight()
     {
         return (int) this._view.getFitHeight();
     }
-    protected  int get_actual_width()
+    protected  int getActualWidth()
     {
         return (int) this._view.getFitWidth();
     }
 
 
-    public Box get_hitbox(){ return new Box(getCurrentYPosition(), getCurrentXPosition(),  get_actual_width() ,get_actual_height() );}
+    public Box get_hitbox(){ return new Box(getCurrentYPosition(), getCurrentXPosition(),  getActualWidth() , getActualHeight() );}
 
     public boolean intersect(Pictured_Object P2)
     {

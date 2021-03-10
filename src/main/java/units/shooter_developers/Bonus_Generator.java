@@ -34,7 +34,7 @@ public class Bonus_Generator extends Pictured_Object{
 
     public void generate(GameMap M)
     {
-        move_to(M.get_random_location());
+        moveTo(M.get_random_location());
 
         if (get_hitbox().is_out_of_map(M))
             push_inside_border();
@@ -42,7 +42,7 @@ public class Bonus_Generator extends Pictured_Object{
         reproduce_animation();
 
     }
-    private void push_inside_border() { move_to(compute_inmap_position_through_shifiting()); }
+    private void push_inside_border() { moveTo(compute_inmap_position_through_shifiting()); }
 
     private Coordinates compute_inmap_position_through_shifiting() { return new Coordinates(get_inmap_X_position(), get_inmap_Y_position()); }
 
@@ -83,8 +83,8 @@ public class Bonus_Generator extends Pictured_Object{
     }
 
     /* Getters */
-    private double get_inmap_X_position() { return getCurrentXPosition()-get_actual_width(); }
-    private double get_inmap_Y_position() { return getCurrentYPosition()-get_actual_height(); }
+    private double get_inmap_X_position() { return getCurrentXPosition()- getActualWidth(); }
+    private double get_inmap_Y_position() { return getCurrentYPosition()- getActualHeight(); }
 
 
 }

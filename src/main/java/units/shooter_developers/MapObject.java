@@ -14,7 +14,7 @@ public abstract class MapObject extends Pane {
     MapObject(Pair<Double,Double> scaling_factors) { set_scalingFactors(scaling_factors); }
     MapObject(int width, int height) { setDimensions(width,height);}
 
-    void move_to(Coordinates coordinates) { relocate(coordinates.getX(),coordinates.getY()); }
+    void moveTo(Coordinates coordinates) { relocate(coordinates.getX(),coordinates.getY()); }
 
     public double getCurrentXPosition() { return getLayoutX(); }
     public double getCurrentYPosition() { return getLayoutY(); }

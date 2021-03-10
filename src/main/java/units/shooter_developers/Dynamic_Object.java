@@ -24,7 +24,7 @@ public abstract class Dynamic_Object extends Pictured_Object {
 
 
     public Box get_move_box(){ return get_default_move_box();}
-    public Box get_default_move_box(){ return new Box( get_future_y() ,get_future_x(), get_actual_width() ,get_actual_height()); }
+    public Box get_default_move_box(){ return new Box( get_future_y() ,get_future_x(), getActualWidth() , getActualHeight()); }
 
     Coordinates get_destination() { return new Coordinates(get_future_x(), get_future_y()); }
 
