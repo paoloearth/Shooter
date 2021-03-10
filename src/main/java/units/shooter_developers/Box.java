@@ -52,7 +52,7 @@ public class Box{
 
 
 
-    protected boolean  performs_check(GameMap M, Dynamic_Object D)
+    protected boolean  performs_check(GameMap M, DynamicObject D)
     {
         for (int i =get_left_tile(); i<= get_right_tile(); i++)
         {

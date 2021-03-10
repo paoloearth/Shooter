@@ -24,12 +24,12 @@ import java.util.stream.Stream;
        4. sprite_1_blocco_x, sprite_1_blocco_y,sprite_2_blocco_x, sprite_2_blocco_y
        5. Teleport_1_x;Teleport_1_y; Teleport_2_x, Teleport_2_y
 */
-public class Map_Reader {
+public class MapReader {
 
     private  List<String[]> _lines;
 
     // Constructor
-    Map_Reader(String URL){
+    MapReader(String URL){
         try { _lines = readLinesFromFile(URL); }
         catch(InvalidPathException e){ System.out.println(URL + ": path contains invalid characters"); }
         catch(FileNotFoundException e){ System.out.println(URL + ": was not found "); }
@@ -57,7 +57,7 @@ public class Map_Reader {
     protected List<String[]> readLinesFromFile(String URL) throws InvalidPathException, IOException, NullPointerException, URISyntaxException {
        try(Stream<String> lines =
                    Files.lines(Paths.get(ClassLoader.getSystemResource(URL).toURI()), Charset.defaultCharset())){
-           return lines.parallel().map(l -> l.split(Custom_Settings.FILE_SEPARATOR)).collect(Collectors.toList());
+           return lines.parallel().map(l -> l.split(CustomSettings.FILE_SEPARATOR)).collect(Collectors.toList());
        }
     }
 
@@ -106,7 +106,7 @@ public class Map_Reader {
     }
 
     protected List<String[]> retrieveMapWithoutMetadata() {
-        return _lines.stream().skip(Custom_Settings.NUMBER_OF_METADATA_LINES).collect(Collectors.toList());
+        return _lines.stream().skip(CustomSettings.NUMBER_OF_METADATA_LINES).collect(Collectors.toList());
     }
 
     public void fillDictionaryPosition(char ID, int index, Map<String, Coordinates> dict){

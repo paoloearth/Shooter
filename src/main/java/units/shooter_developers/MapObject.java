@@ -5,14 +5,14 @@ import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
 
-public abstract class Map_Object extends Pane {
+public abstract class MapObject extends Pane {
 
     private  int _width, _height;
     private  Pair<Double,Double> _scaling_factors;
 
     /* Constructors */
-    Map_Object(Pair<Double,Double> scaling_factors) { set_scaling_factors(scaling_factors); }
-    Map_Object(int width, int height) { set_dimensions(width,height);}
+    MapObject(Pair<Double,Double> scaling_factors) { set_scaling_factors(scaling_factors); }
+    MapObject(int width, int height) { set_dimensions(width,height);}
 
     void move_to(Coordinates coordinates) { this.relocate(coordinates.getX(),coordinates.getY()); }
 

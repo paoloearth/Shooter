@@ -2,7 +2,7 @@ package units.shooter_developers;
 
 import javafx.util.Pair;
 
-public class Projectile extends Dynamic_Object{
+public class Projectile extends DynamicObject {
     private int biasX;
     private int biasY;
     private final String Owner;
@@ -14,8 +14,8 @@ public class Projectile extends Dynamic_Object{
 
         this.Owner = S.get_id();
 
-        set_scale(Custom_Settings.PROJECTILE_SCALE);
-        set_speed(Custom_Settings.PROJECTILE_SPEED);
+        set_scale(CustomSettings.PROJECTILE_SCALE);
+        set_speed(CustomSettings.PROJECTILE_SPEED);
         update_view();
 
         set_initial_and_translate_direction(S.get_current_direction());

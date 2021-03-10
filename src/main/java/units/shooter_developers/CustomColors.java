@@ -2,7 +2,7 @@ package units.shooter_developers;
 
 import javafx.scene.paint.Color;
 
-public class Custom_Colors {
+public class CustomColors {
 
     /*  HEALTHBAR COLORS */
     public static final Color OUTER_RECTANGLE_STROKE = Color.BLACK;

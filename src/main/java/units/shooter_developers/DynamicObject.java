@@ -3,7 +3,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.util.Pair;
 
-public abstract class Dynamic_Object extends Pictured_Object {
+public abstract class DynamicObject extends Pictured_Object {
 
     private final ObjectProperty<Direction> _current_direction = new SimpleObjectProperty<>();
 
@@ -11,11 +11,11 @@ public abstract class Dynamic_Object extends Pictured_Object {
     private int _deltaX, _deltaY;
 
     //Custom Constructor
-    public Dynamic_Object(Pair<Double,Double> scaling_factors, String url)
+    public DynamicObject(Pair<Double,Double> scaling_factors, String url)
     {
         super(scaling_factors, url);
     }
-    public Dynamic_Object( Pair<Double,Double> scaling_factors, String url, int _n_rows, int _n_cols){ super(scaling_factors, url, _n_rows, _n_cols); }
+    public DynamicObject(Pair<Double,Double> scaling_factors, String url, int _n_rows, int _n_cols){ super(scaling_factors, url, _n_rows, _n_cols); }
 
     public  void set_speed(double speed) { this._speed = (int) (speed*get_scaling_factors().getKey()); }   // Set characteristics of the projectile
 

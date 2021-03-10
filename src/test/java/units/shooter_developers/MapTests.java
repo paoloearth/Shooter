@@ -36,14 +36,14 @@ class MapTest {
     @ParameterizedTest
     @CsvSource({"Three_lines.txt,3", "Five_lines.txt,5"})
     void readsTrueNumberOfLines(String file_name, int num_lines) throws IOException, URISyntaxException {
-        var MR = new Map_Reader(file_name);
+        var MR = new MapReader(file_name);
         assertEquals(MR.get_lines().size(), num_lines);
     }
 
     @ParameterizedTest
     @CsvSource({"Five_lines.txt, map_desert.png"})
     void readExactFirstLine(String file_name, String URL) throws IOException, URISyntaxException {
-        var MR = new Map_Reader(file_name);
+        var MR = new MapReader(file_name);
         assertEquals(MR.readLines(0,0),URL);
     }
 

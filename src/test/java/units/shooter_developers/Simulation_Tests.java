@@ -3,8 +3,6 @@ package units.shooter_developers;
 import javafx.scene.input.KeyCode;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.testfx.api.FxRobot;
 import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
@@ -15,7 +13,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -187,7 +184,7 @@ class Simulation_Tests {
     {
 
         var  P2    = SIMULATION.getPlayer_2();
-        int number_of_hit_before_death = (int) ( 1/Custom_Settings.PERCENTAGE_DAMAGE_PER_SHOOT) - 1;
+        int number_of_hit_before_death = (int) ( 1/ CustomSettings.PERCENTAGE_DAMAGE_PER_SHOOT) - 1;
 
         System.out.println(number_of_hit_before_death);
         IntStream.range(0,number_of_hit_before_death).forEach(i -> {

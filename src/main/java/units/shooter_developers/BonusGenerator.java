@@ -7,17 +7,17 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import javafx.util.Pair;
 
-public class Bonus_Generator extends Pictured_Object{
+public class BonusGenerator extends Pictured_Object{
 
     private final Timeline timeline;
     private final GameMap _M;
 
-    public Bonus_Generator(Pane root, GameMap M, String url, int _n_rows, int _n_cols, Pair<Double, Double> scaling_factor)
+    public BonusGenerator(Pane root, GameMap M, String url, int _n_rows, int _n_cols, Pair<Double, Double> scaling_factor)
     {
         super(scaling_factor,url,_n_rows,_n_cols);
         _M = M;
 
-        set_scale(Custom_Settings.HEART_SCALE);
+        set_scale(CustomSettings.HEART_SCALE);
 
         update_view();
 
@@ -64,7 +64,7 @@ public class Bonus_Generator extends Pictured_Object{
 
     /* Animations */
     private void create_and_start_animation() {
-        Object_Animation anim = new Object_Animation(get_view(), Duration.seconds(1), 10, 10, 0, 0, get_width(), get_height());
+        ObjectAnimation anim = new ObjectAnimation(get_view(), Duration.seconds(1), 10, 10, 0, 0, get_width(), get_height());
         anim.setCycleCount(Animation.INDEFINITE);
         anim.play();
     }
@@ -75,7 +75,7 @@ public class Bonus_Generator extends Pictured_Object{
     }
 
     private Timeline get_bonus_animation() {
-        return new Timeline(new KeyFrame(Duration.seconds(Custom_Settings.BONUS_COOLDOWN),
+        return new Timeline(new KeyFrame(Duration.seconds(CustomSettings.BONUS_COOLDOWN),
                 event -> {
                     empty_Pane_from_ImageView(this);
                     add_nodes(get_view());

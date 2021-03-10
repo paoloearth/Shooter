@@ -15,20 +15,20 @@ public class Submenu extends Menu {
 
     @Override
     public void createContent(){
-        addTextBox("Player_textbox_1", 0, 0, Custom_Settings.URL_COMMANDS_P1, 1, Custom_Settings.WASD_SCALE, "Who is Player 1?");
-        addTextBox("Player_textbox_2", 0, 1, Custom_Settings.URL_COMMANDS_P2, 1, Custom_Settings.ARROWS_SCALE, "Who is Player 2?");
+        addTextBox("Player_textbox_1", 0, 0, CustomSettings.URL_COMMANDS_P1, 1, CustomSettings.WASD_SCALE, "Who is Player 1?");
+        addTextBox("Player_textbox_2", 0, 1, CustomSettings.URL_COMMANDS_P2, 1, CustomSettings.ARROWS_SCALE, "Who is Player 2?");
 
         Map<String, String> Name_URL = new Hashtable<>();
-        Name_URL.put(Custom_Settings.ARTIST,Custom_Settings.URL_ARTIST);
-        Name_URL.put(Custom_Settings.ASTROLOGER,Custom_Settings.URL_ASTROLOGER);
-        Name_URL.put(Custom_Settings.WARRIOR,Custom_Settings.URL_WARRIOR);
+        Name_URL.put(CustomSettings.ARTIST, CustomSettings.URL_ARTIST);
+        Name_URL.put(CustomSettings.ASTROLOGER, CustomSettings.URL_ASTROLOGER);
+        Name_URL.put(CustomSettings.WARRIOR, CustomSettings.URL_WARRIOR);
         addChoiceBox("Player_selection_1", 1, 0, Name_URL, 1,4);
         addChoiceBox("Player_selection_2", 1, 1, Name_URL, 1,4);
 
         Map<String, String> Map_URL = new Hashtable<>();
-        Map_URL.put(Custom_Settings.ISLAND,Custom_Settings.URL_MAP_ISLAND_PNG);
-        Map_URL.put(Custom_Settings.DESERT,Custom_Settings.URL_MAP_DESERT_PNG);
-        addChoiceBox("Map_selection", 2, 0,Map_URL, Custom_Settings.MAP_SCALE, 1);
+        Map_URL.put(CustomSettings.ISLAND, CustomSettings.URL_MAP_ISLAND_PNG);
+        Map_URL.put(CustomSettings.DESERT, CustomSettings.URL_MAP_DESERT_PNG);
+        addChoiceBox("Map_selection", 2, 0,Map_URL, CustomSettings.MAP_SCALE, 1);
 
         addFreeItem("Play!", 0.6, 0.8);
 
@@ -47,8 +47,8 @@ public class Submenu extends Menu {
 
                     Map<String, String> Map_CSV;
                     Map_CSV = new Hashtable<>();
-                    Map_CSV.put(Custom_Settings.ISLAND,Custom_Settings.URL_MAP_ISLAND_CSV);
-                    Map_CSV.put(Custom_Settings.DESERT,Custom_Settings.URL_MAP_DESERT_CSV);
+                    Map_CSV.put(CustomSettings.ISLAND, CustomSettings.URL_MAP_ISLAND_CSV);
+                    Map_CSV.put(CustomSettings.DESERT, CustomSettings.URL_MAP_DESERT_CSV);
                     ArrayList<String> map_data = new ArrayList<String>();
                     map_data.add(Map_CSV.get(getChoiceBox("Map_selection").get_value()));
 
@@ -72,11 +72,11 @@ public class Submenu extends Menu {
         FAKE_NAMES.add("BUZZ");
 
         var FAKE_URLS = new ArrayList<String>();
-        FAKE_URLS.add(Custom_Settings.URL_ARTIST);
-        FAKE_URLS.add(Custom_Settings.URL_WARRIOR);
+        FAKE_URLS.add(CustomSettings.URL_ARTIST);
+        FAKE_URLS.add(CustomSettings.URL_WARRIOR);
 
         var FAKE_MAP = new ArrayList<String>();
-        FAKE_MAP.add(Custom_Settings.URL_MAP_ISLAND_CSV);
+        FAKE_MAP.add(CustomSettings.URL_MAP_ISLAND_CSV);
 
 
         setSimulationInstance(new Simulation(FAKE_NAMES,FAKE_URLS, FAKE_MAP));

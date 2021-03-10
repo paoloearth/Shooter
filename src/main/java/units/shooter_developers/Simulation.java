@@ -78,13 +78,13 @@ public class Simulation extends Application {
     }
 
     private void create_bonus(){
-        new Bonus_Generator(root, gamemap, Custom_Settings.URL_HEART,1,10, scaling_factors);
+        new BonusGenerator(root, gamemap, CustomSettings.URL_HEART,1,10, scaling_factors);
     }
 
     private void create_teleports() {
 
-        var T1  = new Teleport(root,  Custom_Settings.URL_TELEPORT, gamemap, scaling_factors, "T0");
-        var T2  = new Teleport(root,  Custom_Settings.URL_TELEPORT, gamemap, scaling_factors, "T1");
+        var T1  = new Teleport(root,  CustomSettings.URL_TELEPORT, gamemap, scaling_factors, "T0");
+        var T2  = new Teleport(root,  CustomSettings.URL_TELEPORT, gamemap, scaling_factors, "T1");
 
 
         T1.setDestination(T2);
@@ -93,7 +93,7 @@ public class Simulation extends Application {
     }
 
     private void create_map() {
-        var MR = new Map_Reader(get_map_url());
+        var MR = new MapReader(get_map_url());
         gamemap = MR.makeMapFromFileContent(WIDTH,HEIGHT);
         root.getChildren().add(gamemap.get_cells());
     }
@@ -112,7 +112,7 @@ public class Simulation extends Application {
 
 
         /* Compute the scaling factor that will be used to update some parameters at RUNTIME*/
-        scaling_factors = new Pair<>(  WIDTH / Custom_Settings.DEFAULT_X,  HEIGHT / Custom_Settings.DEFAULT_Y);
+        scaling_factors = new Pair<>(  WIDTH / CustomSettings.DEFAULT_X,  HEIGHT / CustomSettings.DEFAULT_Y);
 
 
     }

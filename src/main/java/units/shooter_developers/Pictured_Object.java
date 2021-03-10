@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Pair;
 
-public abstract class Pictured_Object extends Map_Object {
+public abstract class Pictured_Object extends MapObject {
 
 
     private final String _url;
