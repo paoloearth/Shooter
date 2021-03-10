@@ -121,7 +121,7 @@ public class Sprite extends DynamicObject {
 
         if(_can_shoot.getValue())
         {
-            root.getChildren().add(new Projectile( get_scalingFactors(), Custom_Settings.URL_PROJECTILE,this));
+            root.getChildren().add(new Projectile( getScalingFactors(), CustomSettings.URL_PROJECTILE,this));
             shooting_cooldown.play();
         }
     }

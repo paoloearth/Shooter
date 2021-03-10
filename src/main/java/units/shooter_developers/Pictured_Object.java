@@ -56,8 +56,8 @@ public abstract class Pictured_Object extends MapObject {
 
     // Scaling on x-axis and y-axis of images according to the resolution of the window
     void update_view() {
-        this._view.setFitWidth( _scale * get_scalingFactors().getKey()  * get_width());
-        this._view.setFitHeight(_scale * get_scalingFactors().getValue() * get_height());
+        this._view.setFitWidth( _scale * getScalingFactors().getKey()  * get_width());
+        this._view.setFitHeight(_scale * getScalingFactors().getValue() * get_height());
         this._view.setPreserveRatio(false);
     }
 

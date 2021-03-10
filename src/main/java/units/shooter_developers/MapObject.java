@@ -12,17 +12,17 @@ public abstract class MapObject extends Pane {
 
     /* Constructors */
     MapObject(Pair<Double,Double> scaling_factors) { set_scaling_factors(scaling_factors); }
-    MapObject(int width, int height) { set_dimensions(width,height);}
+    MapObject(int width, int height) { setDimensions(width,height);}
 
-    void move_to(Coordinates coordinates) { this.relocate(coordinates.getX(),coordinates.getY()); }
+    void moveTo(Coordinates coordinates) { this.relocate(coordinates.getX(),coordinates.getY()); }
 
-    public double get_current_X_position() { return this.getLayoutX(); }
-    public double get_current_Y_position() { return this.getLayoutY(); }
-    public Coordinates get_current_position() {return  new Coordinates(getLayoutX(),getLayoutY());};
+    public double getCurrentXPosition() { return this.getLayoutX(); }
+    public double getCurrentYPosition() { return this.getLayoutY(); }
+    public Coordinates getCurrentPosition() {return  new Coordinates(getLayoutX(),getLayoutY());};
 
-    public void add_nodes(Node ... nodes) { this.getChildren().addAll(nodes); }
+    public void addNodes(Node ... nodes) { this.getChildren().addAll(nodes); }
 
-    public void set_dimensions(int width, int height)
+    public void setDimensions(int width, int height)
     {
         this.set_width(width); this.set_height(height);
     }
@@ -30,7 +30,7 @@ public abstract class MapObject extends Pane {
     /* Getters */
     public int get_width() { return _width; }
     public int get_height() { return _height; }
-    public Pair<Double, Double> get_scaling_factors() { return _scaling_factors; }
+    public Pair<Double, Double> getScalingFactors() { return _scaling_factors; }
 
     /* Setters */
     public void set_width(int _width) { this._width = _width; }
