@@ -28,23 +28,23 @@ public class HealthBar extends MapObject {
 
 
     /* Damage/Life handling */
-    protected void damage()
+    protected final void damage()
     {
         setRemainingLifeTo(getCurrentHealth() - getRelativeDamage());
         if (lessThantHalfLifeRemains()) this.remainingLifeRectangle.setFill(CustomColors.HALF_LIFE);
     }
 
-    protected void restoreLife(){
+    protected final void restoreLife(){
         setRemainingLifeTo(getMaxHealth());
         this.remainingLifeRectangle.setFill(CustomColors.INNER_RECTANGLE);
     }
-    private boolean lessThantHalfLifeRemains() {
+    private  boolean lessThantHalfLifeRemains() {
         return getCurrentHealth() <= getMaxHealth() / 2;
     }
 
-    protected BooleanBinding isRemainingLifeZero() { return health.lessThanOrEqualTo(0); }
+    protected final BooleanBinding isRemainingLifeZero() { return health.lessThanOrEqualTo(0); }
 
-    protected double getCurrentHealth() {
+    protected final double getCurrentHealth() {
         return health.get();
     }
 
@@ -67,13 +67,13 @@ public class HealthBar extends MapObject {
 
 
     /* Graphical components */
-    private Rectangle createCustomInnerRectangle() {
+    private  Rectangle createCustomInnerRectangle() {
         final Rectangle remainingLifeRectangle;
         remainingLifeRectangle = new Rectangle( 0, 0, get_width(), get_height());
         remainingLifeRectangle.setFill(CustomColors.INNER_RECTANGLE);
         return remainingLifeRectangle;
     }
-    private Rectangle createCustomOuterRectangle() {
+    private  Rectangle createCustomOuterRectangle() {
         var R = new Rectangle(0, 0, get_width(), get_height());
         R.setFill(CustomColors.OUTER_RECTANGLE);
         R.setStroke(CustomColors.OUTER_RECTANGLE_STROKE);
@@ -82,7 +82,7 @@ public class HealthBar extends MapObject {
     private static int get_HBar_height_proportional_to_S_height(double spriteHeight) {
         return (int) (spriteHeight * CustomSettings.HB_PROPORTIONAL_WIDTH);}
 
-    private Coordinates getDefaultHBarPosition(Sprite S) {
+    private static Coordinates getDefaultHBarPosition(Sprite S) {
         return new Coordinates(0, (S.getActualHeight() * 1.1));
     }
 
