@@ -3,8 +3,6 @@ package units.shooter_developers;
 import javafx.scene.input.KeyCode;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.testfx.api.FxRobot;
 import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
@@ -15,7 +13,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -128,7 +125,7 @@ class Simulation_Tests {
         Box original_position = P1.get_hitbox();
 
         Coordinates C = M.convert_tiles_in_pixel(M.get_random_location());
-        SIMULATION.getPlayer_1().move_to(C);
+        SIMULATION.getPlayer_1().moveTo(C);
 
         assertNotSame(P1.get_hitbox(), original_position);
     }
@@ -146,7 +143,7 @@ class Simulation_Tests {
 
                    var number_of_movements=  P1_MOVEMENTS.stream().map(keyCode ->
                     {
-                        P1.move_to(C);
+                        P1.moveTo(C);
                         Box b = P1.get_hitbox();
                         robot.push(keyCode);
                         return P1.get_hitbox() !=  b;
@@ -164,7 +161,7 @@ class Simulation_Tests {
 
         var  P2    = SIMULATION.getPlayer_2();
         var  H = P2.getHBar();
-        var life_before_been_hit = H.get_current_health();
+        var life_before_been_hit = H.getCurrentHealth();
 
         robot.push(KeyCode.SPACE);
 
@@ -174,11 +171,11 @@ class Simulation_Tests {
                                           .map(pictured_object -> (Projectile) pictured_object)
                                           .forEach(projectile -> {
                                             projectile.set_speed(0);
-                                            projectile.move_to(P2.get_current_position());
+                                            projectile.moveTo(P2.getCurrentPosition());
                                           });
 
          robot.sleep(50);
-         assertTrue(H.get_current_health() != life_before_been_hit);
+         assertTrue(H.getCurrentHealth() != life_before_been_hit);
 
     }
 
@@ -202,14 +199,14 @@ class Simulation_Tests {
                                projectile -> {
 
                                        projectile.set_speed(0);
-                                       projectile.move_to(P2.get_current_position());
+                                       projectile.moveTo(P2.getCurrentPosition());
 
                                });
         });
 
         robot.sleep(500);
 
-        assertTrue(P2.getHBar().get_current_health() < P2.getHBar().get_max_health() /2 );
+        assertTrue(P2.getHBar().getCurrentHealth() < P2.getHBar().get_max_health() /2 );
 
      }
 

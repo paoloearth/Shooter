@@ -45,10 +45,10 @@ public class Sprite extends Dynamic_Object {
         _current_directionProperty().setValue(D);
 
         Sprite_Hbar = getHealthBar();
-        get_is_dead_property().bind(Sprite_Hbar.is_remaining_life_zero());
+        get_is_dead_property().bind(Sprite_Hbar.isRemainingLifeZero());
 
-        move_to(M.get_position_of(id));
-        add_nodes(Sprite_Hbar, get_view());
+        moveTo(M.get_position_of(id));
+        addNodes(Sprite_Hbar, get_view());
 
         root.getChildren().add(this);
     }
@@ -58,9 +58,9 @@ public class Sprite extends Dynamic_Object {
         move(M);
     };
     @Override
-    public Box get_hitbox(){ return new Box(get_current_Y_position() , get_current_X_position() +get_actual_width() * 0.15,  get_actual_width() -get_actual_width() * 0.15 ,get_actual_height()*.9 ); }
+    public Box get_hitbox(){ return new Box(getCurrentYPosition() , getCurrentXPosition() + getActualWidth() * 0.15,  getActualWidth() - getActualWidth() * 0.15 , getActualHeight()*.9 ); }
     @Override
-    public Box get_move_box(){ return new Box( get_future_y() + (get_actual_height() * 2.0/3.0),get_future_x(), get_actual_width() ,get_actual_height()* 1.0/3.0); }
+    public Box get_move_box(){ return new Box( get_future_y() + (getActualHeight() * 2.0/3.0),get_future_x(), getActualWidth() , getActualHeight()* 1.0/3.0); }
 
 
     private HealthBar getHealthBar() {
@@ -83,9 +83,9 @@ public class Sprite extends Dynamic_Object {
     {
         Direction D;
         if (Math.abs(get_deltaX()) > Math.abs(get_deltaY()))
-                D = (destination.getX()  < get_current_X_position())? Direction.LEFT : Direction.RIGHT;
+                D = (destination.getX()  < getCurrentXPosition())? Direction.LEFT : Direction.RIGHT;
         else
-                D = (destination.getY()  < get_current_Y_position())? Direction.UP:Direction.DOWN;
+                D = (destination.getY()  < getCurrentYPosition())? Direction.UP:Direction.DOWN;
 
         set_current_direction(D);
     }
@@ -102,7 +102,7 @@ public class Sprite extends Dynamic_Object {
 
             update_get_direction(destination);
 
-            if (!(illegal_move(M))) move_to(destination);
+            if (!(illegal_move(M))) moveTo(destination);
         }
 
     }
@@ -121,7 +121,7 @@ public class Sprite extends Dynamic_Object {
 
         if(_can_shoot.getValue())
         {
-            root.getChildren().add(new Projectile( get_scaling_factors(), Custom_Settings.URL_PROJECTILE,this));
+            root.getChildren().add(new Projectile( get_scalingFactors(), Custom_Settings.URL_PROJECTILE,this));
             shooting_cooldown.play();
         }
     }

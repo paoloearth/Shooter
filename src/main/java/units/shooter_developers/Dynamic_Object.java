@@ -17,14 +17,14 @@ public abstract class Dynamic_Object extends Pictured_Object {
     }
     public Dynamic_Object( Pair<Double,Double> scaling_factors, String url, int _n_rows, int _n_cols){ super(scaling_factors, url, _n_rows, _n_cols); }
 
-    public  void set_speed(double speed) { this._speed = (int) (speed*get_scaling_factors().getKey()); }   // Set characteristics of the projectile
+    public  void set_speed(double speed) { this._speed = (int) (speed* get_scalingFactors().getKey()); }   // Set characteristics of the projectile
 
-    double get_future_x(){ return this.get_current_X_position() + _deltaX; }
-    double get_future_y(){ return this.get_current_Y_position() + _deltaY; }
+    double get_future_x(){ return this.getCurrentXPosition() + _deltaX; }
+    double get_future_y(){ return this.getCurrentYPosition() + _deltaY; }
 
 
     public Box get_move_box(){ return get_default_move_box();}
-    public Box get_default_move_box(){ return new Box( get_future_y() ,get_future_x(), get_actual_width() ,get_actual_height()); }
+    public Box get_default_move_box(){ return new Box( get_future_y() ,get_future_x(), getActualWidth() , getActualHeight()); }
 
     Coordinates get_destination() { return new Coordinates(get_future_x(), get_future_y()); }
 

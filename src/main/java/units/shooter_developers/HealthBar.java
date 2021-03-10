@@ -5,53 +5,51 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.shape.Rectangle;
 
 
-public class HealthBar extends Map_Object{
+public class HealthBar extends MapObject {
 
-    private final Rectangle remaining_life_rectangle;
-    private final DoubleProperty Health;
+    private final Rectangle remainingLifeRectangle;
+    private final DoubleProperty health;
 
     public HealthBar(Sprite S)
     {
-        super(S.get_actual_width(), get_HBar_height_proportional_to_S_height(S.get_actual_height()));
+        super(S.getActualWidth(), get_HBar_height_proportional_to_S_height(S.getActualHeight()));
 
-        Rectangle lost_life_rectangle = create_custom_outer_rectangle();
-        remaining_life_rectangle = create_custom_inner_rectangle();
+        Rectangle lostLifeRectangle = create_custom_outer_rectangle();
+        remainingLifeRectangle = create_custom_inner_rectangle();
 
-        Health = new SimpleDoubleProperty(get_width());
-        remaining_life_rectangle.widthProperty().bind(Health);
+        health = new SimpleDoubleProperty(get_width());
+        remainingLifeRectangle.widthProperty().bind(health);
 
-        move_to(get_default_HBar_position(S));
+        moveTo(getDefaultHBarPosition(S));
 
-        add_nodes(lost_life_rectangle, remaining_life_rectangle);
+        addNodes(lostLifeRectangle, remainingLifeRectangle);
 
     }
 
-    public BooleanBinding is_remaining_life_zero() {
-        return Health.lessThanOrEqualTo(0);
-    }
+    protected BooleanBinding isRemainingLifeZero() { return health.lessThanOrEqualTo(0); }
 
 
     public void damage()
     {
-        set_remaining_life_to(get_current_health() - get_relative_damage());
-        if (less_thant_half_life_remain()) this.remaining_life_rectangle.setFill(Custom_Colors.HALF_LIFE);
+        setRemainingLifeTo(getCurrentHealth() - getRelativeDamage());
+        if (lessThantHalfLifeRemains()) this.remainingLifeRectangle.setFill(Custom_Colors.HALF_LIFE);
     }
 
-    private boolean less_thant_half_life_remain() {
-        return get_current_health() <= get_max_health() / 2;
+    private boolean lessThantHalfLifeRemains() {
+        return getCurrentHealth() <= get_max_health() / 2;
     }
 
     public void  restore_life(){
-        set_remaining_life_to(get_max_health());
-        this.remaining_life_rectangle.setFill(Custom_Colors.INNER_RECTANGLE);
+        setRemainingLifeTo(get_max_health());
+        this.remainingLifeRectangle.setFill(Custom_Colors.INNER_RECTANGLE);
     }
 
 
-    protected double get_current_health() {
-        return Health.get();
+    protected double getCurrentHealth() {
+        return health.get();
     }
 
-    protected double get_relative_damage()
+    protected double getRelativeDamage()
     {
         return get_max_health() * Custom_Settings.PERCENTAGE_DAMAGE_PER_SHOOT;
     }
@@ -61,9 +59,9 @@ public class HealthBar extends Map_Object{
         return  get_width();
     }
 
-    private void set_remaining_life_to( double d)
+    private void setRemainingLifeTo(double d)
     {
-        Health.set(d);
+        health.set(d);
     }
 
     private Rectangle create_custom_inner_rectangle() {
@@ -85,8 +83,8 @@ public class HealthBar extends Map_Object{
     }
 
 
-    private Coordinates get_default_HBar_position(Sprite S) {
-        return new Coordinates(0, (S.get_actual_height() * 1.1));
+    private Coordinates getDefaultHBarPosition(Sprite S) {
+        return new Coordinates(0, (S.getActualHeight() * 1.1));
     }
 
 
