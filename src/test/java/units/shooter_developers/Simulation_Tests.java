@@ -179,36 +179,6 @@ class Simulation_Tests {
 
     }
 
-    @Test
-    void does_sprite_dies(FxRobot robot)
-    {
-
-        var  P2    = SIMULATION.getPlayer_2();
-        int number_of_hit_before_death = (int) ( 1/ CustomSettings.PERCENTAGE_DAMAGE_PER_SHOOT) - 1;
-
-        System.out.println(number_of_hit_before_death);
-        IntStream.range(0,number_of_hit_before_death).forEach(i -> {
-            robot.push(KeyCode.SPACE);
-            robot.sleep(500);
-
-            SIMULATION.getRoot().getChildren()
-                       .stream()
-                       .filter(pictured_object -> pictured_object instanceof Projectile)
-                       .map(pictured_object -> (Projectile) pictured_object)
-                       .forEach(
-                               projectile -> {
-
-                                       projectile.set_speed(0);
-                                       projectile.moveTo(P2.getCurrentPosition());
-
-                               });
-        });
-
-        robot.sleep(500);
-
-        assertTrue(P2.getHBar().getCurrentHealth() < P2.getHBar().get_max_health() /2 );
-
-     }
 
 
 

@@ -53,7 +53,7 @@ public class BonusGenerator extends Pictured_Object{
 
     public void bonus_effect(Sprite S) {
         empty_Pane_from_ImageView(this);
-        S.getHBar().restore_life();
+        S.getHBar().restoreLife();
         generate(_M);
     }
 
