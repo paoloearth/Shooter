@@ -45,7 +45,7 @@ public abstract class PicturedObject extends MapObject {
     /* Image management */
     protected static Image retrieveImage(String URL) { return new Image(URL); }
 
-    protected final void update_view() {
+    protected final void updateView() {
         this._view.setFitWidth( _scale * getScalingFactors().getKey()  * get_width());
         this._view.setFitHeight(_scale * getScalingFactors().getValue() * get_height());
         this._view.setPreserveRatio(false);
@@ -53,6 +53,7 @@ public abstract class PicturedObject extends MapObject {
     protected  final int getActualHeight() { return (int)  _view.getFitHeight(); }
 
     protected  final int getActualWidth() { return  (int)  _view.getFitWidth(); }
+
 
     /* Collision handling */
     protected Box getHitbox(){ return new Box(getCurrentYPosition(), getCurrentXPosition(),  getActualWidth() , getActualHeight() );}

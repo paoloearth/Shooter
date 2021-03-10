@@ -15,7 +15,7 @@ public class Teleport extends PicturedObject {
         super(scalingFactor, url);
 
         setScale(CustomSettings.TELEPORT_SCALE);
-        update_view();
+        updateView();
 
         addNodes(getView());
 

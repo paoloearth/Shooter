@@ -17,7 +17,7 @@ public class Projectile extends DynamicObject {
 
         setScale(CustomSettings.PROJECTILE_SCALE);
         setSpeed(CustomSettings.PROJECTILE_SPEED);
-        update_view();
+        updateView();
 
         setInitialAndTranslateDirection(S.getCurrentDirection());
 
@@ -29,8 +29,8 @@ public class Projectile extends DynamicObject {
     /* Movement & action management */
     private void translate(GameMap M)
     {
-        if(illegal_move(M)) setIsDeadProperty(true);
-        else moveTo(get_destination());
+        if(illegalMove(M)) setIsDeadProperty(true);
+        else moveTo(getDestination());
     }
     @Override
     public void update( Sprite S) {

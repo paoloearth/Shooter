@@ -20,7 +20,7 @@ public class Bonus extends PicturedObject {
 
         setScale(CustomSettings.HEART_SCALE);
 
-        update_view();
+        updateView();
 
         _timeline = getBonusAnimation();
         createAndStartAnimation();

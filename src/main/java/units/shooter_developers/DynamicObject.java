@@ -24,7 +24,7 @@ public abstract class DynamicObject extends PicturedObject {
 
     protected final double getFutureY() { return getCurrentYPosition() + get_deltaY(); }
 
-    protected final Coordinates get_destination() { return new Coordinates(getFutureX(), getFutureY()); }
+    protected final Coordinates getDestination() { return new Coordinates(getFutureX(), getFutureY()); }
 
 
     /* Collision handling */
@@ -34,7 +34,7 @@ public abstract class DynamicObject extends PicturedObject {
 
     protected Box getMoveBox(){ return getDefaultMoveBox();}
 
-    protected final boolean illegal_move(GameMap M) {
+    protected final boolean illegalMove(GameMap M) {
 
        if(getDefaultMoveBox().isOutOfMap(M)) return true;
 

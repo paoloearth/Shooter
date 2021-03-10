@@ -17,42 +17,39 @@ public class Sprite extends DynamicObject {
 
     private final String _id;
     private final IntegerProperty _frame  = new SimpleIntegerProperty(0);
-    private final HealthBar Sprite_Hbar;
+    private final HealthBar healthBar;
     private boolean goNorth, goSouth, goEast, goWest;
-    private final BooleanProperty _can_shoot = new SimpleBooleanProperty(true);
-    private final String _player_name;
-
-    private final  Timeline shooting_cooldown = new Timeline(
-            new KeyFrame(Duration.ZERO, event -> _can_shoot.setValue(false)),
-            new KeyFrame(Duration.seconds(CustomSettings.SHOOTING_COOLDOWN), event -> _can_shoot.setValue(true))
-    );
+    private final BooleanProperty canShoot = new SimpleBooleanProperty(true);
+    private final String playerName;
 
 
-    public Sprite(Pane root, GameMap M, Pair<Double, Double> scaling_factor, String url, int _n_rows, int _n_cols, String id, Direction D, String player_name)
+    public Sprite(Pane root, GameMap M, Pair<Double, Double> scalingFactor, String url, int n_rows, int n_cols, String id, Direction D, String playerName)
     {
-        super(scaling_factor, url, _n_rows, _n_cols);
-        this._player_name = player_name;
+        super(scalingFactor, url, n_rows, n_cols);
+        this.playerName = playerName;
         this._id = id;
 
         setSpeed(CustomSettings.PLAYER_SPEED);
         setScale(CustomSettings.PLAYER_SCALE);
 
-        update_view();
+        updateView();
 
         /* Add a triggered event to change the view accordingly to the direction of the sprite */
         ChangeListener<Object> updateImage = getListener();
         _currentDirectionProperty().addListener(updateImage);
         _currentDirectionProperty().setValue(D);
 
-        Sprite_Hbar = getHealthBar();
-        getIsDeadProperty().bind(Sprite_Hbar.isRemainingLifeZero());
+        healthBar = getHealthBar();
+        getIsDeadProperty().bind(healthBar.isRemainingLifeZero());
 
         moveTo(M.get_position_of(id));
-        addNodes(Sprite_Hbar, getView());
 
+        addNodes(healthBar, getView());
         root.getChildren().add(this);
     }
 
+
+    /* Movement & action management */
     @Override
     public void defaultMovement(GameMap M){
         move(M);
@@ -62,49 +59,30 @@ public class Sprite extends DynamicObject {
     @Override
     public Box getMoveBox(){ return new Box( getFutureY() + (getActualHeight() * 2.0/3.0), getFutureX(), getActualWidth() , getActualHeight()* 1.0/3.0); }
 
-
-    private HealthBar getHealthBar() {
-        return new HealthBar(this);
-    }
-
-    private ChangeListener<Object> getListener() { return (ov, o, o2) -> getView().setViewport(new Rectangle2D( _frame.get()*get_width(), getCurrentDirection().getOffset() * get_height(), get_width(), get_height())); }
-
-    //Update the movement in the right direction
-    private void update_speed() {
-        set_deltaX(0);set_deltaY(0);
-        if (goNorth) set_deltaY(get_deltaY()- get_speed());
-        if (goSouth) set_deltaY(get_deltaY()+get_speed());
-        if (goEast)  set_deltaX(get_deltaX()+ get_speed());
-        if (goWest)  set_deltaX(get_deltaX()-get_speed());
-    }
-
-
-    private void update_get_direction(Coordinates destination)
-    {
-        Direction D;
-        if (Math.abs(get_deltaX()) > Math.abs(get_deltaY()))
-                D = (destination.getX()  < getCurrentXPosition())? Direction.LEFT : Direction.RIGHT;
-        else
-                D = (destination.getY()  < getCurrentYPosition())? Direction.UP:Direction.DOWN;
-
-        set_currentDirection(D);
-    }
-
-
-
     private void move(GameMap M) {
 
-        update_speed();
+        updateSpeed();
 
-        if (has_moved()) {
+        if (hasMoved()) {
+            var destination = getDestination();
 
-            var destination = get_destination();
+            updateGetDirection(destination);
 
-            update_get_direction(destination);
-
-            if (!(illegal_move(M))) moveTo(destination);
+            if (!(illegalMove(M))) moveTo(destination);
         }
 
+    }
+    protected void shoot(Pane root){
+        if(canShoot.getValue())
+        {
+            root.getChildren().add(new Projectile( getScalingFactors(), CustomSettings.URL_PROJECTILE,this));
+            shootingCooldown.play();
+        }
+    }
+
+    /* Utils */
+    private HealthBar getHealthBar() {
+        return new HealthBar(this);
     }
 
     public boolean getPropertyToCheck(Tile t)
@@ -112,55 +90,68 @@ public class Sprite extends DynamicObject {
         return t.is_passable;
     }
 
-    private boolean has_moved() {
+    private boolean hasMoved() {
         return (Math.abs(get_deltaX()) > 0 || Math.abs(get_deltaY()) > 0);
     }
 
+    private ChangeListener<Object> getListener() { return (ov, o, o2) -> getView().setViewport(new Rectangle2D( _frame.get()*get_width(), getCurrentDirection().getOffset() * get_height(), get_width(), get_height())); }
 
-    public void shoot(Pane root){
-
-        if(_can_shoot.getValue())
-        {
-            root.getChildren().add(new Projectile( getScalingFactors(), CustomSettings.URL_PROJECTILE,this));
-            shooting_cooldown.play();
-        }
+    private void updateSpeed() {
+        set_deltaX(0);set_deltaY(0);
+        if (goNorth) set_deltaY(get_deltaY()- get_speed());
+        if (goSouth) set_deltaY(get_deltaY()+get_speed());
+        if (goEast)  set_deltaX(get_deltaX()+ get_speed());
+        if (goWest)  set_deltaX(get_deltaX()-get_speed());
     }
+
+    private void updateGetDirection(Coordinates destination)
+    {
+        Direction D;
+        if (Math.abs(get_deltaX()) > Math.abs(get_deltaY()))
+            D = (destination.getX()  < getCurrentXPosition())? Direction.LEFT : Direction.RIGHT;
+        else
+            D = (destination.getY()  < getCurrentYPosition())? Direction.UP:Direction.DOWN;
+
+        set_currentDirection(D);
+    }
+
+
+
+
+    /* Animations */
+    private final  Timeline shootingCooldown = new Timeline(
+            new KeyFrame(Duration.ZERO, event -> canShoot.setValue(false)),
+            new KeyFrame(Duration.seconds(CustomSettings.SHOOTING_COOLDOWN), event -> canShoot.setValue(true))
+    );
 
     /* Setters */
-    public void setGoNorth(boolean goNorth) {
+    public final void setGoNorth(boolean goNorth) {
         this.goNorth = goNorth;
     }
-    public void setGoSouth(boolean goSouth) {
+    public final void setGoSouth(boolean goSouth) {
         this.goSouth = goSouth;
     }
-    public void setGoEast(boolean goEast) {
+    public final void setGoEast(boolean goEast) {
         this.goEast = goEast;
     }
-    public void setGoWest(boolean goWest) {
+    public final void setGoWest(boolean goWest) {
         this.goWest = goWest;
     }
 
     /* Getters */
-
-    public String get_id() {
+    public final String get_id() {
         return _id;
     }
-    public int get_frame() {
-        return _frame.get();
-    }
-    public IntegerProperty _frameProperty() {
+    public final IntegerProperty _frameProperty() {
         return _frame;
     }
-    public HealthBar getHBar() {
-        return Sprite_Hbar;
+    public final HealthBar getHBar() {
+        return healthBar;
     }
-    public boolean is_can_shoot() {
-        return _can_shoot.get();
+    public final String getPlayerName() {
+        return playerName;
     }
-    public BooleanProperty _can_shootProperty() {
-        return _can_shoot;
-    }
-    public String get_player_name() {
-        return _player_name;
-    }
+
+
+
 }
