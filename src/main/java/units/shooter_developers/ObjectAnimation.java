@@ -8,7 +8,7 @@ import javafx.util.Duration;
 
 public class ObjectAnimation extends Transition {
     private final ImageView imageView;
-    private final int count;
+    private final int number_of_frames;
     private final int columns;
     private final int offsetX;
     private final int offsetY;
@@ -20,11 +20,11 @@ public class ObjectAnimation extends Transition {
     //constructor
     public ObjectAnimation(ImageView imageView,
                            Duration duration,
-                           int count, int columns,
+                           int number_of_frames, int columns,
                            int offsetX, int offsetY,
                            int width, int height) {
         this.imageView = imageView;
-        this.count     = count;
+        this.number_of_frames = number_of_frames;
         this.columns   = columns;
         this.offsetX   = offsetX;
         this.offsetY   = offsetY;
@@ -37,7 +37,7 @@ public class ObjectAnimation extends Transition {
 
 
     protected void interpolate(double k) {
-        final int index = Math.min((int) Math.floor(k * count), count - 1);
+        final int index = Math.min((int) Math.floor(k * number_of_frames), number_of_frames - 1);
         if (index != lastIndex) {
             final int x = (index % columns) * width  + offsetX;
             final int y = (index / columns) * height + offsetY;

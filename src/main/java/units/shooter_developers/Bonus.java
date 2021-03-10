@@ -1,4 +1,3 @@
-//JOSE: classe visitata
 package units.shooter_developers;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -10,11 +9,11 @@ import javafx.util.Pair;
 
 public class Bonus extends PicturedObject {
 
-    private  final Timeline _timeline;
+    private final Timeline _waiting_time;
     private final GameMap _map;
 
     /* Constructor */
-    public Bonus(Pane simulation_root, GameMap map, String url, int n_rows, int n_cols, Pair<Double, Double> scalingFactor)
+    public Bonus(Pane simulation_root, GameMap map, String url, int n_rows, int n_cols, int number_of_frames, Pair<Double, Double> scalingFactor)
     {
         super(scalingFactor,url,n_rows,n_cols);
         this._map = map;
@@ -23,10 +22,10 @@ public class Bonus extends PicturedObject {
 
         updateView();
 
-        _timeline = getBonusAnimation();
-        createAndStartAnimation();
+        _waiting_time = waitSomeTimeBeforeDisplayingBonusAgain();
+        createAndStartAnimation(number_of_frames,n_cols);
 
-        generate(map);
+        generate();
 
         simulation_root.getChildren().add(this);
 
@@ -43,22 +42,18 @@ public class Bonus extends PicturedObject {
     public void action(Sprite S) {
         if(intersect(S)) bonus_effect(S);
     }
-    //JOSE: questo metodo applica l'effetto del bonus sul giocatore, quindi dovrebbe chiamarsi tipo applyTo().
 
-    //JOSE: questo metodo dovrebbe essere privato.
-    public void bonus_effect(Sprite S) {
+    private void bonus_effect(Sprite S) {
         emptyPaneFromImageView(this);
         S.getHBar().restoreLife();
-        generate(_map);
+        generate();
     }
 
-    //JOSE: siccome la classe contiene la variabile _M si può togliere l'input
-    //      non è un metodo "opaco" perchè è pubblico.
-    public void generate(GameMap M)
+    public void generate()
     {
-        moveTo(M.getRandomLocation());
-        if (getHitbox().isOutOfMap(M)) pushInsideBorder();
-        reproduceAnimation();
+        moveTo(_map.getRandomLocation());
+        if (getHitbox().isOutOfMap(_map)) pushInsideBorder();
+        _waiting_time.play();
 
     }
 
@@ -67,33 +62,19 @@ public class Bonus extends PicturedObject {
         P.getChildren().removeIf(i -> i instanceof ImageView);
     }
 
-
     /* Animations */
-    //JOSE: questo metodo dovrebbe tornare la animazione o una roba del genere o, se fa modifiche su oggetti della classe,
-    //      riceverli come input. Questo permetterebbe di renderlo statico e riusarlo se fosse neccesario, anche spingerlo
-    //      ad una classe superiore eventualmente (se si volesse per esempio creare un altro tipo di bonus u oggetto animato).
-    private  void createAndStartAnimation() {
-        ObjectAnimation anim = new ObjectAnimation(getView(), Duration.seconds(1), 10, 10, 0, 0, get_width(), get_height());
+    private void createAndStartAnimation(int frames, int n_cols) {
+        ObjectAnimation anim = new ObjectAnimation(getView(), Duration.seconds(1), frames, n_cols, 0, 0, get_width(), get_height());
         anim.setCycleCount(Animation.INDEFINITE);
         anim.play();
     }
 
-    //JOSE: Questo metodo da più chiarezza al codice forse se si inlinea o se si rende statico e passando _timeline come input.
-    private void reproduceAnimation() {
-        _timeline.setCycleCount(1);
-        _timeline.play();
-    }
-
-    private Timeline getBonusAnimation() {
+    private Timeline waitSomeTimeBeforeDisplayingBonusAgain() {
         return new Timeline(new KeyFrame(Duration.seconds(CustomSettings.BONUS_COOLDOWN),
                 event -> {
                     emptyPaneFromImageView(this);
                     addNodes(getView());
                 }));
     }
-
-
-
-
 
 }
