@@ -3,7 +3,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.util.Pair;
 
-public abstract class DynamicObject extends Pictured_Object {
+public abstract class DynamicObject extends PicturedObject {
 
     private final ObjectProperty<Direction> _current_direction = new SimpleObjectProperty<>();
 

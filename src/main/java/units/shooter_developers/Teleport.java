@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import javafx.util.Pair;
 
-public class Teleport extends Pictured_Object{
+public class Teleport extends PicturedObject {
     private Coordinates destination;
 
     public Teleport(Pane root, String url, GameMap M, Pair<Double, Double> scaling_factor, String ID) {

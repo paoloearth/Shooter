@@ -2,12 +2,13 @@ package units.shooter_developers;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import javafx.util.Pair;
 
-public class BonusGenerator extends Pictured_Object{
+public class BonusGenerator extends PicturedObject {
 
     private final Timeline timeline;
     private final GameMap _M;
@@ -53,7 +54,7 @@ public class BonusGenerator extends Pictured_Object{
 
     public void bonus_effect(Sprite S) {
         empty_Pane_from_ImageView(this);
-        S.getHBar().restore_life();
+        S.getHBar().restoreLife();
         generate(_M);
     }
 
@@ -85,6 +86,7 @@ public class BonusGenerator extends Pictured_Object{
     /* Getters */
     private double get_inmap_X_position() { return getCurrentXPosition()- getActualWidth(); }
     private double get_inmap_Y_position() { return getCurrentYPosition()- getActualHeight(); }
+
 
 
 }
