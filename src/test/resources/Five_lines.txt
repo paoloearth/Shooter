@@ -1,4 +1,4 @@
-Row1
+map_desert.png
 Row2
 Row3
 Row4

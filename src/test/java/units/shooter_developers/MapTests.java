@@ -7,16 +7,49 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.testfx.api.FxRobot;
+import org.testfx.framework.junit5.ApplicationExtension;
+import org.testfx.framework.junit5.Start;
 
-public class MapTests {
+@ExtendWith(ApplicationExtension.class)
+class MapTest {
+    private Pane root;
+    @Start
+    private void start(Stage stage) {
+        root = new Pane();
+        stage.setScene(new Scene(root, 100, 100));
+        stage.show();
+    }
+    @Test
+    void random_test( FxRobot robot)
+    {
+        robot.push(KeyCode.A);
+        robot.sleep(500);
+    }
 
     @ParameterizedTest
     @CsvSource({"Three_lines.txt,3", "Five_lines.txt,5"})
-    void Reads_true_number_of_lines(String file_name, int num_lines) throws IOException, URISyntaxException {
-        var MR = new Map_Reader();
-        assertEquals(MR.readLinesFromFile(file_name).size(), num_lines);
+    void readsTrueNumberOfLines(String file_name, int num_lines) throws IOException, URISyntaxException {
+        var MR = new Map_Reader(file_name);
+        assertEquals(MR.get_lines().size(), num_lines);
     }
 
-
+    @ParameterizedTest
+    @CsvSource({"Five_lines.txt, map_desert.png"})
+    void readExactFirstLine(String file_name, String URL) throws IOException, URISyntaxException {
+        var MR = new Map_Reader(file_name);
+        assertEquals(MR.readLines(0,0),URL);
+    }
 
 }
+
+
+
+
+

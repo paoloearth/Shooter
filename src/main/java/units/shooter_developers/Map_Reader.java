@@ -29,24 +29,23 @@ public class Map_Reader {
     private  List<String[]> _lines;
 
     // Constructor
-    Map_Reader(){  }
-
-    public GameMap read_Map(String URL, double width, double height) {
-
-        GameMap M;
-
+    Map_Reader(String URL){
         try { _lines = readLinesFromFile(URL); }
         catch(InvalidPathException e){ System.out.println(URL + ": path contains invalid characters"); }
         catch(FileNotFoundException e){ System.out.println(URL + ": was not found "); }
         catch(IOException e){ System.out.println(URL + ": problems interacting with the map file "); }
         catch(NullPointerException e){ System.out.println("Map File"+URL+" is null ");}
         catch(URISyntaxException e){ System.out.println("Wrong URL"+URL+" format of map file ");}
+    }
+
+    public GameMap makeMapFromFileContent(double width, double height) {
+
+        GameMap M;
 
         M = new GameMap(width, height,
                     getTileset(), getCellSide(),
                     getRowAndColumnNumOfTilesComposingMap(), getSetOfTilesAtRowIndex(2),
                     getSetOfTilesAtRowIndex(3), retrieveMapWithoutMetadata());
-
 
         fillDictionaryPosition('P', 4, M.getDictionary_of_positions());
         fillDictionaryPosition('T', 5, M.getDictionary_of_positions());
@@ -55,7 +54,7 @@ public class Map_Reader {
 
     }
 
-    List<String[]> readLinesFromFile(String URL) throws InvalidPathException, IOException, NullPointerException, URISyntaxException {
+    protected List<String[]> readLinesFromFile(String URL) throws InvalidPathException, IOException, NullPointerException, URISyntaxException {
        try(Stream<String> lines =
                    Files.lines(Paths.get(ClassLoader.getSystemResource(URL).toURI()), Charset.defaultCharset())){
            return lines.parallel().map(l -> l.split(Custom_Settings.FILE_SEPARATOR)).collect(Collectors.toList());
@@ -63,7 +62,7 @@ public class Map_Reader {
     }
 
 
-    private Image getTileset() {
+    protected Image getTileset() {
         String  URL = readLines(0, 0);
         
         try { return readImage(URL); }
@@ -75,12 +74,12 @@ public class Map_Reader {
         return readImage(URL);
     }
 
-    private Image readImage(String URL) throws IllegalArgumentException, NullPointerException
+    protected Image readImage(String URL) throws IllegalArgumentException, NullPointerException
     {
         return new Image(URL);
     }
     
-    private int toInt(String s)
+    protected int toInt(String s)
     {
         try {
             return Integer.parseInt(s);
@@ -92,21 +91,21 @@ public class Map_Reader {
         
     }
 
-    private Integer getCellSide(){
+    protected Integer getCellSide(){
         // if(cell_side <= 0) throw new CustomException.NegativeNumberException("Cell side must be a positive number, please modify it ");
       return toInt(readLines(1,2));
     }
 
 
-    private Pair<Integer, Integer> getRowAndColumnNumOfTilesComposingMap() {
+    protected Pair<Integer, Integer> getRowAndColumnNumOfTilesComposingMap() {
         return new Pair<>(toInt(readLines(1,0)), toInt(readLines(1,1)));
     }
 
-    private Set<Integer> getSetOfTilesAtRowIndex(int index) {
+    protected Set<Integer> getSetOfTilesAtRowIndex(int index) {
         return convertListToSet(getListOfIntegerFromString(index));
     }
 
-    private List<String[]> retrieveMapWithoutMetadata() {
+    protected List<String[]> retrieveMapWithoutMetadata() {
         return _lines.stream().skip(Custom_Settings.NUMBER_OF_METADATA_LINES).collect(Collectors.toList());
     }
 
@@ -117,18 +116,18 @@ public class Map_Reader {
                 .forEach(pair->dict.put(pair.getKey(), pair.getValue()));
     }
 
-    private List<Integer> getListOfIntegerFromString(int index) {
+    protected List<Integer> getListOfIntegerFromString(int index) {
         return Arrays.stream(readLines(index)).parallel().mapToInt(this::toInt).boxed().collect(Collectors.toList());
     }
 
-    public static Set<Integer> convertListToSet(List<Integer> list)
+    protected static Set<Integer> convertListToSet(List<Integer> list)
     {
         return new HashSet<>(list);
     }
 
 
 
-    private String[] readLines(int row) {
+    protected String[] readLines(int row) {
         try {
             return _lines.get(row);
         } catch (IndexOutOfBoundsException e) {
@@ -137,7 +136,7 @@ public class Map_Reader {
         return _lines.get(row);
     }
 
-    private String readLines(int row, int col) {
+    protected String readLines(int row, int col) {
         try {
         var L = readLines(row);
         return L[col];
@@ -150,4 +149,7 @@ public class Map_Reader {
         return L[col];
     }
 
+    public List<String[]> get_lines() {
+        return _lines;
+    }
 }

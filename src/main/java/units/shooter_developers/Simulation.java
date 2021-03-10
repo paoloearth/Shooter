@@ -93,11 +93,10 @@ public class Simulation extends Application {
     }
 
     private void create_map() {
-        var MR = new Map_Reader();
-        gamemap = MR.read_Map(get_map_url(), WIDTH,HEIGHT);
+        var MR = new Map_Reader(get_map_url());
+        gamemap = MR.makeMapFromFileContent(WIDTH,HEIGHT);
         root.getChildren().add(gamemap.get_cells());
     }
-
 
 
     private void create_players() {
