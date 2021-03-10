@@ -64,19 +64,26 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project :blue_book:
 
-There are many great GAMES, however, this is better
-Here's why:
-* Reason 1 :fire:
-* Reason 2 :smile:
+*Name of the game* is a 2 players 2D-top-down shooter game that:
+* Features multiple elements like **bonuses** and teleporting **black-holes** 1 :milky_way:
+* Has a stylish menu with multiple functionalities :smile:
+* Has multiple maps, from desert to lakes :earth_africa:
+* An ever-expanding set of characters for the players to chose from :space_invader:
 
 
 
 ### Built With :hammer:
 
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-* [Java](https://java.com)
+Code is written in:
+* [Java](https://java.com) with particular attention to the use of Java Streams and functional programming
+* [JavaFX](https://openjfx.io/) for the UI part
 
+Code is tested via:
+* [Gradle](https://gradle.org/) with [TestFX](http://testfx.github.io/TestFX/), [Junit5](https://junit.org/junit5/) and [Monocle](https://github.com/TestFX/Monocle) for headless testing.
 
+Continuos Integration is handled by both:
+* [GitHub Action](https://github.com/features/actions)
+* [Travis CI](https://travis-ci.com/)
 
 <!-- GETTING STARTED -->
 ## Getting Started :information_source:
