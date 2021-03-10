@@ -3,14 +3,15 @@ package units.shooter_developers;
 import javafx.util.Pair;
 
 public class Projectile extends DynamicObject {
-    private int biasX;
-    private int biasY;
+
+    private int _biasX;
+    private int _biasY;
     private final String Owner;
 
-
-    public Projectile(Pair<Double, Double> scaling_factor, String url, Sprite S)
+    /* Constructor */
+    public Projectile(Pair<Double, Double> scalingFactor, String url, Sprite S)
     {
-        super(scaling_factor, url);
+        super(scalingFactor, url);
 
         this.Owner = S.get_id();
 
@@ -18,56 +19,19 @@ public class Projectile extends DynamicObject {
         setSpeed(CustomSettings.PROJECTILE_SPEED);
         update_view();
 
-        set_initial_and_translate_direction(S.get_currentDirection());
+        setInitialAndTranslateDirection(S.getCurrentDirection());
 
-        moveTo(get_biased_starting_position(S));
+        moveTo(getBiasedStartingPosition(S));
 
-        this.getChildren().add(getView());
+        addNodes(getView());
     }
 
-    private Coordinates get_biased_starting_position(Sprite S) {
-        return new Coordinates(get_biased_x_position(S), get_biased_y_position(S));
-    }
-
-    private double get_biased_y_position(Sprite S) {
-        return S.getFutureY() + this.biasY;
-    }
-
-    private double get_biased_x_position(Sprite S) {
-        return S.getFutureX() + this.biasX;
-    }
-
+    /* Movement & action management */
     private void translate(GameMap M)
     {
         if(illegal_move(M)) setIsDeadProperty(true);
         else moveTo(get_destination());
     }
-
-
-
-
-
-
-
-    private void set_initial_and_translate_direction(Direction D) {
-        biasX=biasY=0;
-        switch (D) {
-            case UP    ->  { set_biases(+(int)(getActualWidth()),-(int) (getActualHeight()/2)); set_deltaY(get_deltaY()- get_speed());}
-            case DOWN  ->  { set_biases(+(int)(getActualWidth()),+ (int)(getActualHeight()*2)); set_deltaY(get_deltaY()+ get_speed());}
-            case LEFT  ->  { set_biases(( 0), +(int) getActualHeight()/2);set_deltaX(get_deltaX()-get_speed());}
-            case RIGHT ->  { set_biases((+(int)(getActualWidth()*2)), getActualHeight()/2);set_deltaX(get_deltaX()+get_speed());}
-        }
-    }
-
-
-
-    private void set_biases(int bias_x, int biasY)
-    {
-        setBiasX(bias_x);
-        setBiasY(biasY);
-    }
-
-
     @Override
     public void update( Sprite S) {
         if(intersect(S)) hit( S);
@@ -76,8 +40,12 @@ public class Projectile extends DynamicObject {
     @Override
     public void defaultMovement(GameMap M){
         translate(M);
-    };
+    }
 
+    @Override
+    public boolean getPropertyToCheck(Tile t) {
+        return t.is_passable_for_projectile;
+    }
 
     private void hit(Sprite S)
     {
@@ -88,24 +56,37 @@ public class Projectile extends DynamicObject {
         }
     }
 
-    public int getBiasX() {
-        return biasX;
+    /* Utils */
+    private void setInitialAndTranslateDirection(Direction D) {
+        _biasX = _biasY =0;
+        switch (D) {
+            case UP    ->  { set_biases(+(int)(getActualWidth()),-(int) (getActualHeight()/2)); set_deltaY(get_deltaY()- get_speed());}
+            case DOWN  ->  { set_biases(+(int)(getActualWidth()),+ (int)(getActualHeight()*2)); set_deltaY(get_deltaY()+ get_speed());}
+            case LEFT  ->  { set_biases(( 0), +(int) getActualHeight()/2);set_deltaX(get_deltaX()-get_speed());}
+            case RIGHT ->  { set_biases((+(int)(getActualWidth()*2)), getActualHeight()/2);set_deltaX(get_deltaX()+get_speed());}
+        }
+    }
+    private double get_biased_y_position(Sprite S) { return S.getFutureY() + _biasY; }
+
+    private double get_biased_x_position(Sprite S) {
+        return S.getFutureX() + _biasX;
     }
 
-    public void setBiasX(int biasX) {
-        this.biasX = biasX;
+    private Coordinates getBiasedStartingPosition(Sprite S) { return new Coordinates(get_biased_x_position(S), get_biased_y_position(S)); }
+
+    private void set_biases(int biasX, int biasY)
+    {
+        set_biasX(biasX);
+        set_biasY(biasY);
     }
 
-    public int getBiasY() {
-        return biasY;
+    public void set_biasX(int biasX) {
+        this._biasX = biasX;
     }
 
-    public void setBiasY(int biasY) {
-        this.biasY = biasY;
+    public void set_biasY(int biasY) {
+        this._biasY = biasY;
     }
 
-    @Override
-    public boolean getPropertyToCheck(Tile t) {
-        return t.is_passable_for_projectile;
-    }
+
 }

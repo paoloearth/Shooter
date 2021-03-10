@@ -61,7 +61,7 @@ public abstract class DynamicObject extends PicturedObject {
 
     public final int get_deltaY() { return _deltaY; }
 
-    public final Direction get_currentDirection() { return _currentDirection.get(); }
+    public final Direction getCurrentDirection() { return _currentDirection.get(); }
 
     public final ObjectProperty<Direction> _currentDirectionProperty() { return _currentDirection; }
 

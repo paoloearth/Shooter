@@ -67,7 +67,7 @@ public class Sprite extends DynamicObject {
         return new HealthBar(this);
     }
 
-    private ChangeListener<Object> getListener() { return (ov, o, o2) -> getView().setViewport(new Rectangle2D( _frame.get()*get_width(), get_currentDirection().getOffset() * get_height(), get_width(), get_height())); }
+    private ChangeListener<Object> getListener() { return (ov, o, o2) -> getView().setViewport(new Rectangle2D( _frame.get()*get_width(), getCurrentDirection().getOffset() * get_height(), get_width(), get_height())); }
 
     //Update the movement in the right direction
     private void update_speed() {

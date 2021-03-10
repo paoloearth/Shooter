@@ -10,6 +10,7 @@ import javafx.util.Pair;
 public class Teleport extends PicturedObject {
     private Coordinates destination;
 
+    /* Constructors  */
     public Teleport(Pane root, String url, GameMap M, Pair<Double, Double> scalingFactor, String ID) {
         super(scalingFactor, url);
 
