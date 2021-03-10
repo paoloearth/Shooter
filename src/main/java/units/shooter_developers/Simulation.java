@@ -164,7 +164,7 @@ public class Simulation extends Application {
                     all_sprites().forEach(
                             s -> {
                                 s.defaultMovement(gamemap);
-                                all_players().forEach(s::update);
+                                all_players().forEach(s::action);
                             }
                     );
                     try {

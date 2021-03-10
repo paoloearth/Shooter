@@ -38,7 +38,7 @@ public class Projectile extends DynamicObject {
     }
 
     @Override
-    public void update( Sprite S) {
+    public void action(Sprite S) {
         if(intersect(S)) hit( S);
     }
 

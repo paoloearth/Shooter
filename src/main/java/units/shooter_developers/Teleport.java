@@ -39,7 +39,7 @@ public class Teleport extends PicturedObject {
     //      parametri per generare la hitbox come input in qualche modo (costruzione, metodo, ect).
 
     @Override
-    public void update( Sprite S) {
+    public void action(Sprite S) {
         if(intersect(S)) S.moveTo(destination);
     }
 

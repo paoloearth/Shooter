@@ -14,8 +14,7 @@ public class Bonus extends PicturedObject {
     private final GameMap _map;
 
     /* Constructor */
-    //JOSE: cambiare root per un nome più autospiegativo del tipo simulation_root
-    public Bonus(Pane root, GameMap map, String url, int n_rows, int n_cols, Pair<Double, Double> scalingFactor)
+    public Bonus(Pane simulation_root, GameMap map, String url, int n_rows, int n_cols, Pair<Double, Double> scalingFactor)
     {
         super(scalingFactor,url,n_rows,n_cols);
         this._map = map;
@@ -29,24 +28,19 @@ public class Bonus extends PicturedObject {
 
         generate(map);
 
-        root.getChildren().add(this);
+        simulation_root.getChildren().add(this);
 
     }
 
-
     /* Movement & action management */
-    private void pushInsideBorder() { moveTo(computeInMapPositionThroughShifiting()); }
-
-    //JOSE: questo metodo non fa niente di che e si usa una sola volta, in più ha un nome poco chiaro. Meglio inlinearlo in push_inside_border
-    private Coordinates computeInMapPositionThroughShifiting() { return new Coordinates(getInMapXPosition(), getInMapYPosition()); }
+    private void pushInsideBorder() { moveTo(new Coordinates(getInMapXPosition(), getInMapYPosition())); }
 
     private double getInMapXPosition() { return getCurrentXPosition()- getActualWidth(); }
 
     private double getInMapYPosition() { return getCurrentYPosition()- getActualHeight(); }
-    //JOSE: questi metodi usano elementi della classe genitore. Non avrebbero forse più senso in MapObject?
 
     @Override
-    public void update(Sprite S) {
+    public void action(Sprite S) {
         if(intersect(S)) bonus_effect(S);
     }
     //JOSE: questo metodo applica l'effetto del bonus sul giocatore, quindi dovrebbe chiamarsi tipo applyTo().
