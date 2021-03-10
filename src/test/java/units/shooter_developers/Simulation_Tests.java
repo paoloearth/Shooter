@@ -61,10 +61,10 @@ class Simulation_Tests {
     void Player_1_is_steady_while_moving_player_2(FxRobot robot) {
 
         var P1 = SIMULATION.getPlayer_1();
-        Box C = P1.get_hitbox();
+        Box C = P1.getHitbox();
 
        P2_MOVEMENTS.forEach(
-               keyCode -> {  robot.push(keyCode);  assertEquals(C, P1.get_hitbox());}
+               keyCode -> {  robot.push(keyCode);  assertEquals(C, P1.getHitbox());}
        );
 
     }
@@ -73,10 +73,10 @@ class Simulation_Tests {
     void Player_2_is_steady_while_moving_player_1(FxRobot robot) {
 
         var P1 = SIMULATION.getPlayer_2();
-        Box C = P1.get_hitbox();
+        Box C = P1.getHitbox();
 
         P1_MOVEMENTS.forEach(
-                keyCode -> {  robot.push(keyCode);  assertEquals(C, P1.get_hitbox());}
+                keyCode -> {  robot.push(keyCode);  assertEquals(C, P1.getHitbox());}
         );
 
     }
@@ -122,12 +122,12 @@ class Simulation_Tests {
         var  M = SIMULATION.getGamemap();
         var P1    = SIMULATION.getPlayer_1();
 
-        Box original_position = P1.get_hitbox();
+        Box original_position = P1.getHitbox();
 
-        Coordinates C = M.convert_tiles_in_pixel(M.get_random_location());
+        Coordinates C = M.convert_tiles_in_pixel(M.getRandomLocation());
         SIMULATION.getPlayer_1().moveTo(C);
 
-        assertNotSame(P1.get_hitbox(), original_position);
+        assertNotSame(P1.getHitbox(), original_position);
     }
 
     @Test
@@ -139,14 +139,14 @@ class Simulation_Tests {
         IntStream.range(0,2).forEach(
                 i ->
                 {
-                    Coordinates C = M.convert_tiles_in_pixel(M.get_random_location());
+                    Coordinates C = M.convert_tiles_in_pixel(M.getRandomLocation());
 
                    var number_of_movements=  P1_MOVEMENTS.stream().map(keyCode ->
                     {
                         P1.moveTo(C);
-                        Box b = P1.get_hitbox();
+                        Box b = P1.getHitbox();
                         robot.push(keyCode);
-                        return P1.get_hitbox() !=  b;
+                        return P1.getHitbox() !=  b;
                     }).filter(t -> t).count();
 
                    assertTrue(number_of_movements > 0);
@@ -170,7 +170,7 @@ class Simulation_Tests {
                                           .filter(pictured_object -> pictured_object instanceof Projectile)
                                           .map(pictured_object -> (Projectile) pictured_object)
                                           .forEach(projectile -> {
-                                            projectile.set_speed(0);
+                                            projectile.setSpeed(0);
                                             projectile.moveTo(P2.getCurrentPosition());
                                           });
 
@@ -179,36 +179,6 @@ class Simulation_Tests {
 
     }
 
-    @Test
-    void does_sprite_dies(FxRobot robot)
-    {
-
-        var  P2    = SIMULATION.getPlayer_2();
-        int number_of_hit_before_death = (int) ( 1/ CustomSettings.PERCENTAGE_DAMAGE_PER_SHOOT) - 1;
-
-        System.out.println(number_of_hit_before_death);
-        IntStream.range(0,number_of_hit_before_death).forEach(i -> {
-            robot.push(KeyCode.SPACE);
-            robot.sleep(500);
-
-            SIMULATION.getRoot().getChildren()
-                       .stream()
-                       .filter(pictured_object -> pictured_object instanceof Projectile)
-                       .map(pictured_object -> (Projectile) pictured_object)
-                       .forEach(
-                               projectile -> {
-
-                                       projectile.set_speed(0);
-                                       projectile.moveTo(P2.getCurrentPosition());
-
-                               });
-        });
-
-        robot.sleep(500);
-
-        assertTrue(P2.getHBar().getCurrentHealth() < P2.getHBar().get_max_health() /2 );
-
-     }
 
 
 

@@ -116,7 +116,7 @@ public class GameMap {
         return _tiles;
     }
 
-    public Coordinates get_random_location(){
+    public Coordinates getRandomLocation(){
         int index = new Random().nextInt(_passable_tiles.size());
         return _passable_tiles.get(index).get_pixel_of_block_position();
     }

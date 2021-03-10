@@ -40,11 +40,14 @@ public class CustomSettings {
     public static final double SPRITE_SCALE = .9;
     public static final double MAP_SCALE = 1;
 
+    /* TELEPORT */
+    public static final int TELEPORT_TIME_TO_ROTATE = 3000;
+
 
     /* BONUS */
     public static final int BONUS_COOLDOWN = 5 ;
 
-    /*HEALTHBAR */
+    /* SPRITE SHOOTING */
     public static final double SHOOTING_COOLDOWN = .5 ;
 
 

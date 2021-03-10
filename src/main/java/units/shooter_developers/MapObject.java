@@ -9,35 +9,41 @@ import javafx.util.Pair;
 
 public abstract class MapObject extends Pane {
 
-    private  int _width, _height;
-    private  Pair<Double,Double> _scaling_factors;
+    private   int _width, _height;
+    private   Pair<Double,Double> _scalingFactors;
 
     /* Constructors */
-    MapObject(Pair<Double,Double> scaling_factors) { set_scaling_factors(scaling_factors); }
+    MapObject(Pair<Double,Double> scaling_factors) { set_scalingFactors(scaling_factors); }
+
     MapObject(int width, int height) { setDimensions(width,height);}
 
-    void moveTo(Coordinates coordinates) { this.relocate(coordinates.getX(),coordinates.getY()); }
+    /* Movement & action management */
+    protected final void moveTo(Coordinates coordinates) { relocate(coordinates.getX(),coordinates.getY()); }
 
-    public double getCurrentXPosition() { return this.getLayoutX(); }
-    public double getCurrentYPosition() { return this.getLayoutY(); }
-    public Coordinates getCurrentPosition() {return  new Coordinates(getLayoutX(),getLayoutY());};
+    public final double getCurrentXPosition() { return getLayoutX(); }
 
-    public void addNodes(Node ... nodes) { this.getChildren().addAll(nodes); }
+    public final double getCurrentYPosition() { return getLayoutY(); }
+
+    public final Coordinates getCurrentPosition() {return  new Coordinates(getLayoutX(),getLayoutY());};
+
+    /* Utils */
+    protected final void addNodes(Node ... nodes) { getChildren().addAll(nodes); }
 
     //JOSE: gli argomenti non dovrebbero essere double?
-    public void setDimensions(int width, int height)
-    {
-        this.set_width(width); this.set_height(height);
-    }
+    public final void setDimensions(int width, int height) { set_width(width); set_height(height); }
 
     /* Getters */
-    public int get_width() { return _width; }
-    public int get_height() { return _height; }
-    public Pair<Double, Double> getScalingFactors() { return _scaling_factors; }
+    public final int get_width() { return _width; }
+
+    public final int get_height() { return _height; }
     //JOSE: Quando si ritorna width e height non dovrebbero essere considerati i fattori di scala?
 
+    public final Pair<Double, Double> getScalingFactors() { return _scalingFactors; }
+
     /* Setters */
-    public void set_width(int _width) { this._width = _width; }
-    public void set_height(int _height) { this._height = _height; }
-    public void set_scaling_factors(Pair<Double, Double> _scaling_factors) { this._scaling_factors = _scaling_factors; }
+    public final void set_width(int width) { _width = width; }
+
+    public final void set_height(int height) { _height = height; }
+
+    public final void set_scalingFactors(Pair<Double, Double> scalingFactors) { _scalingFactors = scalingFactors; }
 }
