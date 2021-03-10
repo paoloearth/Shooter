@@ -67,7 +67,7 @@ public class Bonus extends PicturedObject {
 
 
     /* Animations */
-    private void createAndStartAnimation() {
+    private  void createAndStartAnimation() {
         ObjectAnimation anim = new ObjectAnimation(getView(), Duration.seconds(1), 10, 10, 0, 0, get_width(), get_height());
         anim.setCycleCount(Animation.INDEFINITE);
         anim.play();
