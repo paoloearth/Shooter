@@ -420,6 +420,15 @@ public abstract class Menu extends Application {
         return full_item_list;
     }
 
+    public MenuItem getItem(String name){
+        var hola = getItems().stream()
+                .filter(e -> e.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+
+        return hola;
+    }
+
     protected ArrayList<SelectorItem> getSelectorItems(){
         return getItemsBox().getSelectorItems();
     }

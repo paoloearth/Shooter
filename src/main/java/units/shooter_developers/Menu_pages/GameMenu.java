@@ -35,29 +35,25 @@ public class GameMenu extends Menu {
         getStage().setTitle("VIDEO GAME");
         setTitle("C A M P A I G N");
 
-        var menu_items = getItems();
-        for(var item:menu_items)
-        {
-            item.setOnMouseReleased(event -> {
-                if (item.getName().equals("NEW GAME")) {
-                    Submenu submenu_launch_game = new Submenu(this);
-                    submenu_launch_game.start(getStage());
-                }
-                if (item.getName().equals("CONTINUE")) {
-                    getStage().close();
-                    getStage().setScene(getSimulationInstance().getScene());
-                    getStage().show();
-                    getStage().toFront();
-                }
-                if (item.getName().equals("EXIT")) {
-                    getStage().close();
-                }
-                if (item.getName().equals("OPTIONS")) {
-                    OptionsMenu options_menu = new OptionsMenu(this);
-                    options_menu.start(getStage());
-                }
+        getItem("NEW GAME").setOnMouseReleased(event -> {
+            Submenu submenu_launch_game = new Submenu(this);
+            submenu_launch_game.start(getStage());
+        });
+        if(isSimulationRunning()) {
+            getItem("CONTINUE").setOnMouseReleased(event -> {
+                getStage().close();
+                getStage().setScene(getSimulationInstance().getScene());
+                getStage().show();
+                getStage().toFront();
             });
         }
+        getItem("EXIT").setOnMouseReleased(event -> {
+            getStage().close();
+        });
+        getItem("OPTIONS").setOnMouseReleased(event -> {
+            OptionsMenu options_menu = new OptionsMenu(this);
+            options_menu.start(getStage());
+        });
     }
 
     @Override
