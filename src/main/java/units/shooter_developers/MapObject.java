@@ -4,8 +4,6 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
-import javax.annotation.processing.SupportedAnnotationTypes;
-
 
 public abstract class MapObject extends Pane {
 

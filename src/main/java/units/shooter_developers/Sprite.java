@@ -35,7 +35,7 @@ public class Sprite extends DynamicObject {
         this._id = id;
 
         set_speed(CustomSettings.PLAYER_SPEED);
-        set_scale(CustomSettings.PLAYER_SCALE);
+        setScale(CustomSettings.PLAYER_SCALE);
 
         update_view();
 
@@ -45,20 +45,20 @@ public class Sprite extends DynamicObject {
         _current_directionProperty().setValue(D);
 
         Sprite_Hbar = getHealthBar();
-        get_is_dead_property().bind(Sprite_Hbar.isRemainingLifeZero());
+        getIsDeadProperty().bind(Sprite_Hbar.isRemainingLifeZero());
 
         moveTo(M.get_position_of(id));
-        addNodes(Sprite_Hbar, get_view());
+        addNodes(Sprite_Hbar, getView());
 
         root.getChildren().add(this);
     }
 
     @Override
-    public void default_movement(GameMap M){
+    public void defaultMovement(GameMap M){
         move(M);
     };
     @Override
-    public Box get_hitbox(){ return new Box(getCurrentYPosition() , getCurrentXPosition() + getActualWidth() * 0.15,  getActualWidth() - getActualWidth() * 0.15 , getActualHeight()*.9 ); }
+    public Box getHitbox(){ return new Box(getCurrentYPosition() , getCurrentXPosition() + getActualWidth() * 0.15,  getActualWidth() - getActualWidth() * 0.15 , getActualHeight()*.9 ); }
     @Override
     public Box get_move_box(){ return new Box( get_future_y() + (getActualHeight() * 2.0/3.0),get_future_x(), getActualWidth() , getActualHeight()* 1.0/3.0); }
 
@@ -67,7 +67,7 @@ public class Sprite extends DynamicObject {
         return new HealthBar(this);
     }
 
-    private ChangeListener<Object> getListener() { return (ov, o, o2) -> get_view().setViewport(new Rectangle2D( _frame.get()*get_width(), get_current_direction().getOffset() * get_height(), get_width(), get_height())); }
+    private ChangeListener<Object> getListener() { return (ov, o, o2) -> getView().setViewport(new Rectangle2D( _frame.get()*get_width(), get_current_direction().getOffset() * get_height(), get_width(), get_height())); }
 
     //Update the movement in the right direction
     private void update_speed() {

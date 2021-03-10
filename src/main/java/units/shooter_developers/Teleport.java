@@ -13,9 +13,9 @@ public class Teleport extends PicturedObject {
     public Teleport(Pane root, String url, GameMap M, Pair<Double, Double> scaling_factor, String ID) {
         super(scaling_factor, url);
 
-        set_scale(CustomSettings.TELEPORT_SCALE);
+        setScale(CustomSettings.TELEPORT_SCALE);
         update_view();
-        addNodes(get_view());
+        addNodes(getView());
 
         rotation_animation();
         moveTo(M.get_position_of(ID));
@@ -36,7 +36,7 @@ public class Teleport extends PicturedObject {
     }
 
     @Override
-    public Box get_hitbox(){
+    public Box getHitbox(){
         return new Box(getCurrentYPosition() + (getActualHeight()*.25), getCurrentXPosition()+(getActualWidth()*.25),  getActualWidth()*.5 , getActualHeight()*.5 );
     }
 

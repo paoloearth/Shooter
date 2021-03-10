@@ -14,7 +14,7 @@ public class Projectile extends DynamicObject {
 
         this.Owner = S.get_id();
 
-        set_scale(CustomSettings.PROJECTILE_SCALE);
+        setScale(CustomSettings.PROJECTILE_SCALE);
         set_speed(CustomSettings.PROJECTILE_SPEED);
         update_view();
 
@@ -22,7 +22,7 @@ public class Projectile extends DynamicObject {
 
         moveTo(get_biased_starting_position(S));
 
-        this.getChildren().add(get_view());
+        this.getChildren().add(getView());
     }
 
     private Coordinates get_biased_starting_position(Sprite S) {
@@ -39,7 +39,7 @@ public class Projectile extends DynamicObject {
 
     private void translate(GameMap M)
     {
-        if(illegal_move(M)) set_is_dead_property(true);
+        if(illegal_move(M)) setIsDeadProperty(true);
         else moveTo(get_destination());
     }
 
@@ -74,16 +74,16 @@ public class Projectile extends DynamicObject {
     }
 
     @Override
-    public void default_movement(GameMap M){
+    public void defaultMovement(GameMap M){
         translate(M);
     };
 
 
     private void hit(Sprite S)
     {
-        if(!is_dead() && !Owner.equals(S.get_id()))
+        if(!isDead() && !Owner.equals(S.get_id()))
         {
-            set_is_dead_property(true);
+            setIsDeadProperty(true);
             S.getHBar().damage();
         }
     }

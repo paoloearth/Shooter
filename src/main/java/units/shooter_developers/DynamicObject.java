@@ -30,11 +30,8 @@ public abstract class DynamicObject extends PicturedObject {
 
     protected  boolean illegal_move(GameMap M) {
 
-
-        /* Compute the collision box*/
        if(get_default_move_box().is_out_of_map(M)) return true;
 
-       /* Get tiles  */
         var collision_box = get_move_box();
         collision_box.compute_tiles_bounds(M);
 

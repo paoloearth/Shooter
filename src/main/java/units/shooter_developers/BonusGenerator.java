@@ -2,7 +2,6 @@ package units.shooter_developers;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
@@ -18,7 +17,7 @@ public class BonusGenerator extends PicturedObject {
         super(scaling_factor,url,_n_rows,_n_cols);
         _M = M;
 
-        set_scale(CustomSettings.HEART_SCALE);
+        setScale(CustomSettings.HEART_SCALE);
 
         update_view();
 
@@ -37,7 +36,7 @@ public class BonusGenerator extends PicturedObject {
     {
         moveTo(M.get_random_location());
 
-        if (get_hitbox().is_out_of_map(M))
+        if (getHitbox().is_out_of_map(M))
             push_inside_border();
 
         reproduce_animation();
@@ -65,7 +64,7 @@ public class BonusGenerator extends PicturedObject {
 
     /* Animations */
     private void create_and_start_animation() {
-        ObjectAnimation anim = new ObjectAnimation(get_view(), Duration.seconds(1), 10, 10, 0, 0, get_width(), get_height());
+        ObjectAnimation anim = new ObjectAnimation(getView(), Duration.seconds(1), 10, 10, 0, 0, get_width(), get_height());
         anim.setCycleCount(Animation.INDEFINITE);
         anim.play();
     }
@@ -79,7 +78,7 @@ public class BonusGenerator extends PicturedObject {
         return new Timeline(new KeyFrame(Duration.seconds(CustomSettings.BONUS_COOLDOWN),
                 event -> {
                     empty_Pane_from_ImageView(this);
-                    addNodes(get_view());
+                    addNodes(getView());
                 }));
     }
 
