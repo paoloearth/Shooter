@@ -23,7 +23,7 @@
 <p align="center">
   <h3 align="center"><b>Everscape :gun:</b></h3>
   <p align="center">
-    <a href="https://github.com/paoloearth/Shooter/issues">Report Bug or Request a Feature</a>
+    <a href="https://github.com/paoloearth/Shooter/issues">Report a feature</a>
 </p>
 
 
