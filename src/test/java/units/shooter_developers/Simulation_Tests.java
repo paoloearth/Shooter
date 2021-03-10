@@ -124,7 +124,7 @@ class Simulation_Tests {
 
         Box original_position = P1.getHitbox();
 
-        Coordinates C = M.convert_tiles_in_pixel(M.get_random_location());
+        Coordinates C = M.convert_tiles_in_pixel(M.getRandomLocation());
         SIMULATION.getPlayer_1().moveTo(C);
 
         assertNotSame(P1.getHitbox(), original_position);
@@ -139,7 +139,7 @@ class Simulation_Tests {
         IntStream.range(0,2).forEach(
                 i ->
                 {
-                    Coordinates C = M.convert_tiles_in_pixel(M.get_random_location());
+                    Coordinates C = M.convert_tiles_in_pixel(M.getRandomLocation());
 
                    var number_of_movements=  P1_MOVEMENTS.stream().map(keyCode ->
                     {
@@ -170,7 +170,7 @@ class Simulation_Tests {
                                           .filter(pictured_object -> pictured_object instanceof Projectile)
                                           .map(pictured_object -> (Projectile) pictured_object)
                                           .forEach(projectile -> {
-                                            projectile.set_speed(0);
+                                            projectile.setSpeed(0);
                                             projectile.moveTo(P2.getCurrentPosition());
                                           });
 

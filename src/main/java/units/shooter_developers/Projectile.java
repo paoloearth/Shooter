@@ -15,10 +15,10 @@ public class Projectile extends DynamicObject {
         this.Owner = S.get_id();
 
         setScale(CustomSettings.PROJECTILE_SCALE);
-        set_speed(CustomSettings.PROJECTILE_SPEED);
+        setSpeed(CustomSettings.PROJECTILE_SPEED);
         update_view();
 
-        set_initial_and_translate_direction(S.get_current_direction());
+        set_initial_and_translate_direction(S.get_currentDirection());
 
         moveTo(get_biased_starting_position(S));
 
@@ -30,11 +30,11 @@ public class Projectile extends DynamicObject {
     }
 
     private double get_biased_y_position(Sprite S) {
-        return S.get_future_y() + this.biasY;
+        return S.getFutureY() + this.biasY;
     }
 
     private double get_biased_x_position(Sprite S) {
-        return S.get_future_x() + this.biasX;
+        return S.getFutureX() + this.biasX;
     }
 
     private void translate(GameMap M)
@@ -105,7 +105,7 @@ public class Projectile extends DynamicObject {
     }
 
     @Override
-    public boolean get_property_to_check(Tile t) {
+    public boolean getPropertyToCheck(Tile t) {
         return t.is_passable_for_projectile;
     }
 }

@@ -34,15 +34,15 @@ public class Sprite extends DynamicObject {
         this._player_name = player_name;
         this._id = id;
 
-        set_speed(CustomSettings.PLAYER_SPEED);
+        setSpeed(CustomSettings.PLAYER_SPEED);
         setScale(CustomSettings.PLAYER_SCALE);
 
         update_view();
 
         /* Add a triggered event to change the view accordingly to the direction of the sprite */
         ChangeListener<Object> updateImage = getListener();
-        _current_directionProperty().addListener(updateImage);
-        _current_directionProperty().setValue(D);
+        _currentDirectionProperty().addListener(updateImage);
+        _currentDirectionProperty().setValue(D);
 
         Sprite_Hbar = getHealthBar();
         getIsDeadProperty().bind(Sprite_Hbar.isRemainingLifeZero());
@@ -60,14 +60,14 @@ public class Sprite extends DynamicObject {
     @Override
     public Box getHitbox(){ return new Box(getCurrentYPosition() , getCurrentXPosition() + getActualWidth() * 0.15,  getActualWidth() - getActualWidth() * 0.15 , getActualHeight()*.9 ); }
     @Override
-    public Box get_move_box(){ return new Box( get_future_y() + (getActualHeight() * 2.0/3.0),get_future_x(), getActualWidth() , getActualHeight()* 1.0/3.0); }
+    public Box getMoveBox(){ return new Box( getFutureY() + (getActualHeight() * 2.0/3.0), getFutureX(), getActualWidth() , getActualHeight()* 1.0/3.0); }
 
 
     private HealthBar getHealthBar() {
         return new HealthBar(this);
     }
 
-    private ChangeListener<Object> getListener() { return (ov, o, o2) -> getView().setViewport(new Rectangle2D( _frame.get()*get_width(), get_current_direction().getOffset() * get_height(), get_width(), get_height())); }
+    private ChangeListener<Object> getListener() { return (ov, o, o2) -> getView().setViewport(new Rectangle2D( _frame.get()*get_width(), get_currentDirection().getOffset() * get_height(), get_width(), get_height())); }
 
     //Update the movement in the right direction
     private void update_speed() {
@@ -87,7 +87,7 @@ public class Sprite extends DynamicObject {
         else
                 D = (destination.getY()  < getCurrentYPosition())? Direction.UP:Direction.DOWN;
 
-        set_current_direction(D);
+        set_currentDirection(D);
     }
 
 
@@ -107,7 +107,7 @@ public class Sprite extends DynamicObject {
 
     }
 
-    public boolean get_property_to_check(Tile t)
+    public boolean getPropertyToCheck(Tile t)
     {
         return t.is_passable;
     }

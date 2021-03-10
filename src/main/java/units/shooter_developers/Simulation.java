@@ -78,7 +78,7 @@ public class Simulation extends Application {
     }
 
     private void create_bonus(){
-        new BonusGenerator(root, gamemap, CustomSettings.URL_HEART,1,10, scaling_factors);
+        new Bonus(root, gamemap, CustomSettings.URL_HEART,1,10, scaling_factors);
     }
 
     private void create_teleports() {
