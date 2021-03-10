@@ -16,7 +16,7 @@ public class TextBox extends VBox {
     String _name;
     String _default_textfield_content;
 
-    public TextBox(String name, String commands_url, int nrows, double scale, String default_message, String default_content)
+    protected TextBox(String name, String commands_url, int nrows, double scale, String default_message, String default_content)
     {
         super();
 
@@ -31,7 +31,7 @@ public class TextBox extends VBox {
 
         setFillWidth(false);
 
-        _textField = customizeTextField(_textField);
+        _textField = createCustomizedTextField();
 
         _textField.setPromptText(default_message);
 
@@ -53,8 +53,8 @@ public class TextBox extends VBox {
 
     }
 
-    TextField customizeTextField(TextField text_field) {
-        text_field = new TextField();
+    private TextField createCustomizedTextField() {
+        TextField text_field = new TextField();
         var background_color = Menu.getColorPalette().dead_color;
         var default_text_color = Menu.getColorPalette().selected_primary_color;
         var introduced_text_color = Menu.getColorPalette().clicked_background_color;
@@ -72,7 +72,7 @@ public class TextBox extends VBox {
         return H;
     }
 
-    public String getValue()
+    protected String getValue()
     {
         if(_textField.getText() == "")
             return _default_textfield_content;
@@ -80,22 +80,7 @@ public class TextBox extends VBox {
             return _textField.getText();
     }
 
-    public String getName(){
+    protected String getName(){
         return _name;
     }
-
-
-
-        /*
-           To go back to previous configuration goes to
-           Extends HBOX
-           HBox.setHgrow(textField, Priority.NEVER);
-        */
-
-
-
-
-
-
-
 }

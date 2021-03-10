@@ -453,9 +453,13 @@ public abstract class Menu extends Application {
         return menu_grid.getChoiceBox(name);
     }
 
-    public TextBox getTextBox(String name){
+    protected TextBox getTextBox(String name){
         var menu_grid = getMenuGridAndCreateIfNotExist();
         return menu_grid.getTextBox(name);
+    }
+
+    public String getTextBoxValue(String name){
+        return getTextBox(name).getValue();
     }
 
     public void addTextBox(String name, int row, int col, String commands_url, int number_of_rows_spritesheet, double scale, String default_message, String default_content){
