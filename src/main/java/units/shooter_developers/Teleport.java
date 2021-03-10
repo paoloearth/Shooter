@@ -13,8 +13,7 @@ public class Teleport extends PicturedObject {
     private Coordinates destination;
 
     /* Constructors  */
-        //JOSE: meglio cambiare root per simulation_root. Nome migliore per M.
-    public Teleport(Pane root, String url, GameMap M, Pair<Double, Double> scalingFactor, String ID) {
+    public Teleport(Pane simulation_root, String url, GameMap M, Pair<Double, Double> scalingFactor, String ID) {
         super(scalingFactor, url);
 
         setScale(CustomSettings.TELEPORT_SCALE);
@@ -26,7 +25,7 @@ public class Teleport extends PicturedObject {
 
         moveTo(M.get_position_of(ID));
 
-        root.getChildren().add(this);
+        simulation_root.getChildren().add(this);
     }
 
 
