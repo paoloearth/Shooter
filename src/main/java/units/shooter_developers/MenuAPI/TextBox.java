@@ -35,13 +35,15 @@ public class TextBox extends VBox {
         var I = Menu.retrieveImage(commands_url, _nrows, 1);
         I.setPreserveRatio(true);
         I.setFitHeight(0.2*_custom_scale*Menu.getMenuHeight());
+        var hola = I.getFitHeight();
         DropShadow ds = new DropShadow( 50, Color.WHITE );
         I.setEffect(ds);
         HBox H = createCustomHbox();
         H.getChildren().add(I);
 
         getChildren().add(_textField);
-        getChildren().add(H);
+        //getChildren().add(H);
+        getChildren().add(I);
     }
 
     private TextField createCustomizedTextField() {
