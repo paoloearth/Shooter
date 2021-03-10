@@ -21,15 +21,9 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <h3 align="center"><b>Shooter :gun:</b></h3>
+  <h3 align="center"><b>Everscape :gun:</b></h3>
   <p align="center">
-    <br />
-    <a href="https://github.com/paoloearth/Shooter"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/paoloearth/Shooter/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/paoloearth/Shooter/issues">Request Feature</a>
+    <a href="https://github.com/paoloearth/Shooter/issues">Report Bug or Request a Feature</a>
 </p>
 
 
