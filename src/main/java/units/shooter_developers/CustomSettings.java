@@ -12,7 +12,7 @@ package units.shooter_developers;
     */
 
 
-public class Custom_Settings {
+public class CustomSettings {
 
 
     /* DIMENSIONS */

@@ -184,7 +184,7 @@ class Simulation_Tests {
     {
 
         var  P2    = SIMULATION.getPlayer_2();
-        int number_of_hit_before_death = (int) ( 1/Custom_Settings.PERCENTAGE_DAMAGE_PER_SHOOT) - 1;
+        int number_of_hit_before_death = (int) ( 1/ CustomSettings.PERCENTAGE_DAMAGE_PER_SHOOT) - 1;
 
         System.out.println(number_of_hit_before_death);
         IntStream.range(0,number_of_hit_before_death).forEach(i -> {

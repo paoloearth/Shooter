@@ -24,63 +24,62 @@ import java.util.stream.Stream;
        4. sprite_1_blocco_x, sprite_1_blocco_y,sprite_2_blocco_x, sprite_2_blocco_y
        5. Teleport_1_x;Teleport_1_y; Teleport_2_x, Teleport_2_y
 */
-public class Map_Reader {
+public class MapReader {
 
     private  List<String[]> _lines;
 
     // Constructor
-    Map_Reader(){  }
-
-    public GameMap read_Map(String URL, double width, double height) {
-
-        GameMap M;
-
-        try { _lines = read_lines_from_file(URL); }
+    MapReader(String URL){
+        try { _lines = readLinesFromFile(URL); }
         catch(InvalidPathException e){ System.out.println(URL + ": path contains invalid characters"); }
         catch(FileNotFoundException e){ System.out.println(URL + ": was not found "); }
         catch(IOException e){ System.out.println(URL + ": problems interacting with the map file "); }
         catch(NullPointerException e){ System.out.println("Map File"+URL+" is null ");}
         catch(URISyntaxException e){ System.out.println("Wrong URL"+URL+" format of map file ");}
+    }
+
+    public GameMap makeMapFromFileContent(double width, double height) {
+
+        GameMap M;
 
         M = new GameMap(width, height,
-                    get_tileset(), get_cell_side(),
-                    get_row_and_column_num_of_tiles_composing_map(), get_Set_of_tiles_at_row_index(2),
-                    get_Set_of_tiles_at_row_index(3), retrieve_map_without_metadata());
+                    getTileset(), getCellSide(),
+                    getRowAndColumnNumOfTilesComposingMap(), getSetOfTilesAtRowIndex(2),
+                    getSetOfTilesAtRowIndex(3), retrieveMapWithoutMetadata());
 
-
-        fill_dictionary_position('P', 4, M.getDictionary_of_positions());
-        fill_dictionary_position('T', 5, M.getDictionary_of_positions());
+        fillDictionaryPosition('P', 4, M.getDictionary_of_positions());
+        fillDictionaryPosition('T', 5, M.getDictionary_of_positions());
 
         return M;
 
     }
 
-    List<String[]> read_lines_from_file(String URL) throws InvalidPathException, IOException, NullPointerException, URISyntaxException {
+    protected List<String[]> readLinesFromFile(String URL) throws InvalidPathException, IOException, NullPointerException, URISyntaxException {
        try(Stream<String> lines =
                    Files.lines(Paths.get(ClassLoader.getSystemResource(URL).toURI()), Charset.defaultCharset())){
-           return lines.parallel().map(l -> l.split(Custom_Settings.FILE_SEPARATOR)).collect(Collectors.toList());
+           return lines.parallel().map(l -> l.split(CustomSettings.FILE_SEPARATOR)).collect(Collectors.toList());
        }
     }
 
 
-    private Image get_tileset() {
-        String  URL = read_lines(0, 0);
+    protected Image getTileset() {
+        String  URL = readLines(0, 0);
         
-        try { return read_image(URL); }
+        try { return readImage(URL); }
         catch (IllegalArgumentException | NullPointerException e)
         {
             System.out.println("Image " +URL + " was not found. Set URL to default");
             URL = "TileSet.png";
         }
-        return read_image(URL);
+        return readImage(URL);
     }
 
-    private Image read_image(String URL) throws IllegalArgumentException, NullPointerException
+    protected Image readImage(String URL) throws IllegalArgumentException, NullPointerException
     {
         return new Image(URL);
     }
     
-    private int to_int(String s)
+    protected int toInt(String s)
     {
         try {
             return Integer.parseInt(s);
@@ -92,43 +91,43 @@ public class Map_Reader {
         
     }
 
-    private Integer get_cell_side(){
+    protected Integer getCellSide(){
         // if(cell_side <= 0) throw new CustomException.NegativeNumberException("Cell side must be a positive number, please modify it ");
-      return to_int(read_lines(1,2));
+      return toInt(readLines(1,2));
     }
 
 
-    private Pair<Integer, Integer> get_row_and_column_num_of_tiles_composing_map() {
-        return new Pair<>(to_int(read_lines(1,0)),to_int(read_lines(1,1)));
+    protected Pair<Integer, Integer> getRowAndColumnNumOfTilesComposingMap() {
+        return new Pair<>(toInt(readLines(1,0)), toInt(readLines(1,1)));
     }
 
-    private Set<Integer> get_Set_of_tiles_at_row_index(int index) {
-        return convertListToSet(get_list_of_integer_from_String(index));
+    protected Set<Integer> getSetOfTilesAtRowIndex(int index) {
+        return convertListToSet(getListOfIntegerFromString(index));
     }
 
-    private List<String[]> retrieve_map_without_metadata() {
-        return _lines.stream().skip(Custom_Settings.NUMBER_OF_METADATA_LINES).collect(Collectors.toList());
+    protected List<String[]> retrieveMapWithoutMetadata() {
+        return _lines.stream().skip(CustomSettings.NUMBER_OF_METADATA_LINES).collect(Collectors.toList());
     }
 
-    public void fill_dictionary_position(char ID, int index, Map<String, Coordinates> dict){
-        var l = get_list_of_integer_from_String(index);
+    public void fillDictionaryPosition(char ID, int index, Map<String, Coordinates> dict){
+        var l = getListOfIntegerFromString(index);
         IntStream.range(0,l.size()).filter(i-> i%2 ==0).mapToObj(i ->
                 new Pair<>(ID+String.valueOf(i/2),new Coordinates(l.get(i), l.get(i+1))))
                 .forEach(pair->dict.put(pair.getKey(), pair.getValue()));
     }
 
-    private List<Integer> get_list_of_integer_from_String(int index) {
-        return Arrays.stream(read_lines(index)).parallel().mapToInt(this::to_int).boxed().collect(Collectors.toList());
+    protected List<Integer> getListOfIntegerFromString(int index) {
+        return Arrays.stream(readLines(index)).parallel().mapToInt(this::toInt).boxed().collect(Collectors.toList());
     }
 
-    public static Set<Integer> convertListToSet(List<Integer> list)
+    protected static Set<Integer> convertListToSet(List<Integer> list)
     {
         return new HashSet<>(list);
     }
 
 
 
-    private String[] read_lines(int row) {
+    protected String[] readLines(int row) {
         try {
             return _lines.get(row);
         } catch (IndexOutOfBoundsException e) {
@@ -137,17 +136,20 @@ public class Map_Reader {
         return _lines.get(row);
     }
 
-    private String read_lines(int row, int col) {
+    protected String readLines(int row, int col) {
         try {
-        var L = read_lines(row);
+        var L = readLines(row);
         return L[col];
         } catch (IndexOutOfBoundsException e)
         {
             System.out.println("Column " + col + " was not found"+e.toString());
         }
 
-        var L = read_lines(row);
+        var L = readLines(row);
         return L[col];
     }
 
+    public List<String[]> get_lines() {
+        return _lines;
+    }
 }

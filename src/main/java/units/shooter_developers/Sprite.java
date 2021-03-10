@@ -13,7 +13,7 @@ import javafx.util.Duration;
 import javafx.util.Pair;
 
 
-public class Sprite extends Dynamic_Object {
+public class Sprite extends DynamicObject {
 
     private final String _id;
     private final IntegerProperty _frame  = new SimpleIntegerProperty(0);
@@ -24,7 +24,7 @@ public class Sprite extends Dynamic_Object {
 
     private final  Timeline shooting_cooldown = new Timeline(
             new KeyFrame(Duration.ZERO, event -> _can_shoot.setValue(false)),
-            new KeyFrame(Duration.seconds(Custom_Settings.SHOOTING_COOLDOWN), event -> _can_shoot.setValue(true))
+            new KeyFrame(Duration.seconds(CustomSettings.SHOOTING_COOLDOWN), event -> _can_shoot.setValue(true))
     );
 
 
@@ -34,8 +34,8 @@ public class Sprite extends Dynamic_Object {
         this._player_name = player_name;
         this._id = id;
 
-        set_speed(Custom_Settings.PLAYER_SPEED);
-        set_scale(Custom_Settings.PLAYER_SCALE);
+        set_speed(CustomSettings.PLAYER_SPEED);
+        set_scale(CustomSettings.PLAYER_SCALE);
 
         update_view();
 

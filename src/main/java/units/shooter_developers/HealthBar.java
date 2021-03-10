@@ -51,7 +51,7 @@ public class HealthBar extends MapObject {
 
     protected double getRelativeDamage()
     {
-        return get_max_health() * Custom_Settings.PERCENTAGE_DAMAGE_PER_SHOOT;
+        return get_max_health() * CustomSettings.PERCENTAGE_DAMAGE_PER_SHOOT;
     }
 
     protected double get_max_health()
@@ -67,19 +67,19 @@ public class HealthBar extends MapObject {
     private Rectangle create_custom_inner_rectangle() {
         final Rectangle remaining_life_rectangle;
         remaining_life_rectangle = new Rectangle( 0, 0, get_width(), get_height());
-        remaining_life_rectangle.setFill(Custom_Colors.INNER_RECTANGLE);
+        remaining_life_rectangle.setFill(CustomColors.INNER_RECTANGLE);
         return remaining_life_rectangle;
     }
 
     private Rectangle create_custom_outer_rectangle() {
         var R = new Rectangle(0, 0, get_width(), get_height());
-        R.setFill(Custom_Colors.OUTER_RECTANGLE);
-        R.setStroke(Custom_Colors.OUTER_RECTANGLE_STROKE);
+        R.setFill(CustomColors.OUTER_RECTANGLE);
+        R.setStroke(CustomColors.OUTER_RECTANGLE_STROKE);
         return R;
     }
 
     private static int get_HBar_height_proportional_to_S_height(double sprite_height) {
-        return (int) (sprite_height * Custom_Settings.HB_PROPORTIONAL_WIDTH);
+        return (int) (sprite_height * CustomSettings.HB_PROPORTIONAL_WIDTH);
     }
 
 

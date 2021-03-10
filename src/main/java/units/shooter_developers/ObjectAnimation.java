@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 
-public class Object_Animation extends Transition {
+public class ObjectAnimation extends Transition {
     private final ImageView imageView;
     private final int count;
     private final int columns;
@@ -18,11 +18,11 @@ public class Object_Animation extends Transition {
     private int lastIndex;
 
     //constructor
-    public Object_Animation( ImageView imageView,
-                             Duration duration,
-                             int count, int columns,
-                             int offsetX, int offsetY,
-                             int width, int height) {
+    public ObjectAnimation(ImageView imageView,
+                           Duration duration,
+                           int count, int columns,
+                           int offsetX, int offsetY,
+                           int width, int height) {
         this.imageView = imageView;
         this.count     = count;
         this.columns   = columns;
