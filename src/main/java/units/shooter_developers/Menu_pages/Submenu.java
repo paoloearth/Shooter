@@ -32,58 +32,30 @@ public class Submenu extends Menu {
 
         addFreeItem("Play!", 0.6, 0.8);
 
+        getItem("Play!").setOnMouseReleased(event -> {
+            var player_names = new ArrayList<String>();
+            player_names.add(getTextBoxValue("Player_textbox_1"));
+            player_names.add(getTextBoxValue("Player_textbox_2"));
 
-        for(var item:getItems())
-        {
-            item.setOnMouseReleased(event -> {
-                if (item.getName().equals("Play!")) {
-                    var player_names = new ArrayList<String>();
-                    player_names.add(getTextBoxValue("Player_textbox_1"));
-                    player_names.add(getTextBoxValue("Player_textbox_2"));
+            ArrayList<String> Players_URL = new ArrayList<String>();
+            Players_URL.add(Name_URL.get(getChoiceBoxValue("Player_selection_1")));
+            Players_URL.add(Name_URL.get(getChoiceBoxValue("Player_selection_2")));
 
-                    ArrayList<String> Players_URL = new ArrayList<String>();
-                    Players_URL.add(Name_URL.get(getChoiceBoxValue("Player_selection_1")));
-                    Players_URL.add(Name_URL.get(getChoiceBoxValue("Player_selection_2")));
+            Map<String, String> Map_CSV;
+            Map_CSV = new Hashtable<>();
+            Map_CSV.put(CustomSettings.ISLAND, CustomSettings.URL_MAP_ISLAND_CSV);
+            Map_CSV.put(CustomSettings.DESERT, CustomSettings.URL_MAP_DESERT_CSV);
+            ArrayList<String> map_data = new ArrayList<String>();
+            map_data.add(Map_CSV.get(getChoiceBoxValue("Map_selection")));
 
-                    Map<String, String> Map_CSV;
-                    Map_CSV = new Hashtable<>();
-                    Map_CSV.put(CustomSettings.ISLAND, CustomSettings.URL_MAP_ISLAND_CSV);
-                    Map_CSV.put(CustomSettings.DESERT, CustomSettings.URL_MAP_DESERT_CSV);
-                    ArrayList<String> map_data = new ArrayList<String>();
-                    map_data.add(Map_CSV.get(getChoiceBoxValue("Map_selection")));
-
-                    setSimulationInstance(new Simulation(player_names, Players_URL, map_data));
-                    try {
-                        getStage().close();
-                        getSimulationInstance().start(getStage());
-                        getStage().setAlwaysOnTop(true);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        }
-    }
-
-    private void launch_default() {
-
-        var FAKE_NAMES = new ArrayList<String>();
-        FAKE_NAMES.add("FIZZ");
-        FAKE_NAMES.add("BUZZ");
-
-        var FAKE_URLS = new ArrayList<String>();
-        FAKE_URLS.add(CustomSettings.URL_ARTIST);
-        FAKE_URLS.add(CustomSettings.URL_WARRIOR);
-
-        var FAKE_MAP = new ArrayList<String>();
-        FAKE_MAP.add(CustomSettings.URL_MAP_ISLAND_CSV);
-
-
-        setSimulationInstance(new Simulation(FAKE_NAMES,FAKE_URLS, FAKE_MAP));
-        try {
-            getSimulationInstance().start(getStage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            setSimulationInstance(new Simulation(player_names, Players_URL, map_data));
+            try {
+                getStage().close();
+                getSimulationInstance().start(getStage());
+                getStage().setAlwaysOnTop(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

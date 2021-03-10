@@ -406,7 +406,7 @@ public abstract class Menu extends Application {
     }
 
 
-    public ArrayList<MenuItem> getItems(){
+    private ArrayList<MenuItem> getItems(){
         var item_list_from_box = new ArrayList<MenuItem>();
         if(getItemsBox() != null)
             item_list_from_box = getItemsBox().getItems();

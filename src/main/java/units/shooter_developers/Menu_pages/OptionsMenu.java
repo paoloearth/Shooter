@@ -37,25 +37,13 @@ public class OptionsMenu extends Menu {
 
         getStage().setTitle("VIDEO GAME");
 
-        var menu_items = getItems();
-        for(var item:menu_items)
-        {
-            item.setOnMouseReleased(event -> {
-                var item_casted = (MenuItem)item;
-
-                if(item_casted.getName() == "BACK") {
-                    GameMenu main_menu = new GameMenu(this);
-                    main_menu.start(getStage());
-
-                } else if(item_casted.getName() == "APPLY") {
-                    applyCurrentSettings();
-                }
-            });
-
-
-
-        }
-
+        getItem("BACK").setOnMouseReleased(event -> {
+            GameMenu main_menu = new GameMenu(this);
+            main_menu.start(getStage());
+        });
+        getItem("APPLY").setOnMouseReleased(event -> {
+            applyCurrentSettings();
+        });
     }
 
 

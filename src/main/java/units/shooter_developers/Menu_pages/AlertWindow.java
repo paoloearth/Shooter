@@ -28,27 +28,18 @@ public class AlertWindow extends Menu {
         /* THIS LOOP CAN MAKE USE OF STREAMS?
         menu_items.forEach(item -> etc etc)
          */
+        getItem("BACK").setOnMouseReleased(event -> {
+            OptionsMenu options_menu = new OptionsMenu(this);
+            options_menu.start(getStage());
+        });
 
-        var menu_items = getItems();
-        for(var item:menu_items)
-        {
-            item.setOnMouseReleased(event -> {
-                if (item.getName().equals("BACK")) {
-                    OptionsMenu options_menu = new OptionsMenu(this);
-                    options_menu.start(getStage());
-                }
-                if (item.getName().equals("CONTINUE"))
-                {
-                    setStageDimensions(_candidate_width, _candidate_height);
-                    setColorMode(_candidate_color_mode);
-                    writeSettings();
-                    OptionsMenu options_menu = new OptionsMenu();
-                    options_menu.start(getStage());
-                }
-            });
-        }
-
-
+        getItem("CONTINUE").setOnMouseReleased(event -> {
+            setStageDimensions(_candidate_width, _candidate_height);
+            setColorMode(_candidate_color_mode);
+            writeSettings();
+            OptionsMenu options_menu = new OptionsMenu();
+            options_menu.start(getStage());
+        });
     }
 
 }
