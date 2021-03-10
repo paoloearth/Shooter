@@ -19,38 +19,29 @@ public class TextBox extends VBox {
     protected TextBox(String name, String commands_url, int nrows, double scale, String default_message, String default_content)
     {
         super();
-
         setAlignment(Pos.TOP_CENTER);
         setPadding(new Insets(10));
         setSpacing(10);
+        setFillWidth(false);
 
         _nrows = nrows;
         _custom_scale = scale;
         _name = name;
         _default_textfield_content = default_content;
 
-        setFillWidth(false);
-
         _textField = createCustomizedTextField();
-
         _textField.setPromptText(default_message);
 
-        getChildren().add(_textField);
-
-        HBox H = createCustomHbox();
         var I = Menu.retrieveImage(commands_url, _nrows, 1);
         I.setPreserveRatio(true);
-
         I.setFitHeight(0.2*_custom_scale*Menu.getMenuHeight());
-
         DropShadow ds = new DropShadow( 50, Color.WHITE );
         I.setEffect(ds);
-
+        HBox H = createCustomHbox();
         H.getChildren().add(I);
 
+        getChildren().add(_textField);
         getChildren().add(H);
-
-
     }
 
     private TextField createCustomizedTextField() {
