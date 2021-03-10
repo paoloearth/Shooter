@@ -38,6 +38,7 @@ public class Submenu extends Menu {
             item.setOnMouseReleased(event -> {
                 if (item.getName().equals("Play!")) {
                     var player_names = new ArrayList<String>();
+                    var hola = getTextBox("Player_textbox_1");
                     player_names.add(getTextBox("Player_textbox_1").getValue());
                     player_names.add(getTextBox("Player_textbox_2").getValue());
 

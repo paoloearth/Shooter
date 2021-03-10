@@ -27,6 +27,7 @@ public class TextBox extends VBox {
         _nrows = nrows;
         _custom_scale = scale;
         _name = name;
+        _default_textfield_content = default_content;
 
         setFillWidth(false);
 
