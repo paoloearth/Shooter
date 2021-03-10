@@ -24,8 +24,7 @@ public class Sprite extends DynamicObject {
     private final BooleanProperty canShoot = new SimpleBooleanProperty(true);
     private final String playerName;
 
-    //JOSE: cambiare root per simulation_root e M per un nome più spiegativo.
-    public Sprite(Pane root, GameMap M, Pair<Double, Double> scalingFactor, String url, int n_rows, int n_cols, String id, Direction D, String playerName)
+    public Sprite(Pane simulation_root, GameMap M, Pair<Double, Double> scalingFactor, String url, int n_rows, int n_cols, String id, Direction D, String playerName)
     {
         super(scalingFactor, url, n_rows, n_cols);
         this.playerName = playerName;
@@ -41,13 +40,13 @@ public class Sprite extends DynamicObject {
         _currentDirectionProperty().addListener(updateImage);
         _currentDirectionProperty().setValue(D);
 
-        healthBar = getHealthBar();
+        healthBar = new HealthBar(this);
         getIsDeadProperty().bind(healthBar.isRemainingLifeZero());
 
         moveTo(M.get_position_of(id));
 
         addNodes(healthBar, getView());
-        root.getChildren().add(this);
+        simulation_root.getChildren().add(this);
     }
 
 
@@ -83,11 +82,6 @@ public class Sprite extends DynamicObject {
     }
 
     /* Utils */
-    private HealthBar getHealthBar() {
-        return new HealthBar(this);
-    }
-    //JOSE: perchè si crea una nuova healthbar invede di ritornare Sprite_HBar?
-    //      fa una cosa diversa rispetto a getHBar?
 
     public boolean getPropertyToCheck(Tile t)
     {
@@ -146,16 +140,12 @@ public class Sprite extends DynamicObject {
     public final String get_id() {
         return _id;
     }
-    public final IntegerProperty _frameProperty() {
-        return _frame;
-    }
     public final HealthBar getHBar() {
         return healthBar;
     }
     public final String getPlayerName() {
         return playerName;
     }
-
 
 
 }
