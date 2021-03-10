@@ -52,22 +52,22 @@ public class Sprite extends DynamicObject {
 
     /* Movement & action management */
     @Override
-    public void defaultMovement(GameMap M){
-        move(M);
-    };
+    public void defaultMovement(GameMap M){ move(M);}
     @Override
-    public Box getHitbox(){ return new Box(getCurrentYPosition() , getCurrentXPosition() + getActualWidth() * 0.15,  getActualWidth() - getActualWidth() * 0.15 , getActualHeight()*.9 ); }
+    public Box getHitbox(){ return new Box(getCurrentYPosition() , getCurrentXPosition() + getActualWidth() * 0.15,
+                                     getActualWidth() - getActualWidth() * 0.15 , getActualHeight()*.9 ); }
     @Override
-    public Box getMoveBox(){ return new Box( getFutureY() + (getActualHeight() * 2.0/3.0), getFutureX(), getActualWidth() , getActualHeight()* 1.0/3.0); }
+    public Box getMoveBox(){ return new Box( getFutureY() + (getActualHeight() * 2.0/3.0), getFutureX(),
+                                                  getActualWidth() , getActualHeight()* 1.0/3.0); }
 
     private void move(GameMap M) {
 
-        updateSpeed();
+        updateMovement();
 
         if (hasMoved()) {
             var destination = getDestination();
 
-            updateGetDirection(destination);
+            updateDirection(destination);
 
             if (!(illegalMove(M))) moveTo(destination);
         }
@@ -83,7 +83,7 @@ public class Sprite extends DynamicObject {
 
     /* Utils */
 
-    public boolean getPropertyToCheck(Tile t)
+    public boolean checkIfPassable(Tile t)
     {
         return t.is_passable;
     }
@@ -92,20 +92,21 @@ public class Sprite extends DynamicObject {
         return (Math.abs(get_deltaX()) > 0 || Math.abs(get_deltaY()) > 0);
     }
 
-    private ChangeListener<Object> getListener() { return (ov, o, o2) -> getView().setViewport(new Rectangle2D( _frame.get()*get_width(), getCurrentDirection().getOffset() * get_height(), get_width(), get_height())); }
+    private ChangeListener<Object> getListener() { return (obs, ov, nv) ->
+                                                  getView().setViewport(new Rectangle2D( _frame.get()*get_width(),
+                                                                                 getCurrentDirection().getOffset() * get_height(),
+                                                                                       get_width(), get_height())); }
     //JOSE: questo metodo è un salame, meglio se si organizza un po' più visualmente, anche mettere i parametri in varie righe.
 
-    private void updateSpeed() {
+    private void updateMovement() {
         set_deltaX(0);set_deltaY(0);
         if (goNorth) set_deltaY(get_deltaY()- get_speed());
         if (goSouth) set_deltaY(get_deltaY()+get_speed());
         if (goEast)  set_deltaX(get_deltaX()+ get_speed());
         if (goWest)  set_deltaX(get_deltaX()-get_speed());
     }
-    //JOSE: si chiama update_speed ma modifica le delta e non la speed.
 
-    //JOSE: piuttosto update_direction
-    private void updateGetDirection(Coordinates destination)
+    private void updateDirection(Coordinates destination)
     {
         Direction D;
         if (Math.abs(get_deltaX()) > Math.abs(get_deltaY()))

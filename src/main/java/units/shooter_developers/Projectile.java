@@ -48,7 +48,7 @@ public class Projectile extends DynamicObject {
     }
 
     @Override
-    public boolean getPropertyToCheck(Tile t) {
+    public boolean checkIfPassable(Tile t) {
         return t.is_passable_for_projectile;
     }
 
