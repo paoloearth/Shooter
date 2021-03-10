@@ -78,7 +78,7 @@ public class Simulation extends Application {
     }
 
     private void create_bonus(){
-        new BonusGenerator(root, gamemap, CustomSettings.URL_HEART,1,10, scaling_factors);
+        new Bonus(root, gamemap, CustomSettings.URL_HEART,1,10, scaling_factors);
     }
 
     private void create_teleports() {
@@ -163,7 +163,7 @@ public class Simulation extends Application {
 
                     all_sprites().forEach(
                             s -> {
-                                s.default_movement(gamemap);
+                                s.defaultMovement(gamemap);
                                 all_players().forEach(s::update);
                             }
                     );
@@ -201,7 +201,7 @@ public class Simulation extends Application {
     }
 
     private void clean_dead_objects() {
-        root.getChildren().removeIf(node -> (node instanceof PicturedObject) && ((PicturedObject) node).is_dead());
+        root.getChildren().removeIf(node -> (node instanceof PicturedObject) && ((PicturedObject) node).isDead());
     }
 
     protected List<PicturedObject> all_sprites()

@@ -5,56 +5,65 @@ import javafx.util.Pair;
 
 public abstract class DynamicObject extends PicturedObject {
 
-    private final ObjectProperty<Direction> _current_direction = new SimpleObjectProperty<>();
-
+    private final ObjectProperty<Direction> _currentDirection = new SimpleObjectProperty<>();
     private int _speed;
     private int _deltaX, _deltaY;
 
-    //Custom Constructor
-    public DynamicObject(Pair<Double,Double> scaling_factors, String url)
+    /* Constructors */
+    public DynamicObject(Pair<Double,Double> scalingFactors, String url)
     {
-        super(scaling_factors, url);
+        super(scalingFactors, url);
     }
-    public DynamicObject(Pair<Double,Double> scaling_factors, String url, int _n_rows, int _n_cols){ super(scaling_factors, url, _n_rows, _n_cols); }
 
-    public  void set_speed(double speed) { this._speed = (int) (speed* getScalingFactors().getKey()); }   // Set characteristics of the projectile
+    public DynamicObject(Pair<Double,Double> scalingFactors, String url, int n_rows, int n_cols){ super(scalingFactors, url, n_rows, n_cols); }
 
-    double get_future_x(){ return this.getCurrentXPosition() + _deltaX; }
-    double get_future_y(){ return this.getCurrentYPosition() + _deltaY; }
+    /* Movement management */
+    protected void setSpeed(double speed) { _speed = (int) (speed* getScalingFactors().getKey()); }
 
+    protected final double getFutureX(){ return getCurrentXPosition() + get_deltaX(); }
 
-    public Box get_move_box(){ return get_default_move_box();}
-    public Box get_default_move_box(){ return new Box( get_future_y() ,get_future_x(), getActualWidth() , getActualHeight()); }
+    protected final double getFutureY() { return getCurrentYPosition() + get_deltaY(); }
 
-    Coordinates get_destination() { return new Coordinates(get_future_x(), get_future_y()); }
-
-    protected  boolean illegal_move(GameMap M) {
+    protected final Coordinates getDestination() { return new Coordinates(getFutureX(), getFutureY()); }
 
 
-        /* Compute the collision box*/
-       if(get_default_move_box().is_out_of_map(M)) return true;
+    /* Collision handling */
+    public abstract  boolean getPropertyToCheck(Tile t);
 
-       /* Get tiles  */
-        var collision_box = get_move_box();
+    protected final Box getDefaultMoveBox(){ return new Box( getFutureY() , getFutureX(), getActualWidth() , getActualHeight()); }
+
+    protected Box getMoveBox(){ return getDefaultMoveBox();}
+
+    protected final boolean illegalMove(GameMap M) {
+
+       if(getDefaultMoveBox().isOutOfMap(M)) return true;
+
+        var collision_box = getMoveBox();
         collision_box.compute_tiles_bounds(M);
 
        return collision_box.performs_check(M,this);
 
    }
 
-    public abstract  boolean get_property_to_check(Tile t);
+
 
     /* Setters */
-    public void set_deltaX(int _deltaX) { this._deltaX = _deltaX; }
-    public void set_deltaY(int _deltaY) { this._deltaY = _deltaY; }
-    public void set_current_direction(Direction _current_direction) { this._current_direction.set(_current_direction); }
+    public final void set_deltaX(int deltaX) { _deltaX = deltaX; }
+
+    public final void set_deltaY(int deltaY) { _deltaY = deltaY; }
+
+    public final void set_currentDirection(Direction currentDirection) { _currentDirection.set(currentDirection); }
 
     /* Getters */
-    public int get_speed() { return _speed; }
-    public int get_deltaX() { return _deltaX; }
-    public int get_deltaY() { return _deltaY; }
-    public Direction get_current_direction() { return _current_direction.get(); }
-    public ObjectProperty<Direction> _current_directionProperty() { return _current_direction; }
+    public final int get_speed() { return _speed; }
+
+    public final int get_deltaX() { return _deltaX; }
+
+    public final int get_deltaY() { return _deltaY; }
+
+    public final Direction getCurrentDirection() { return _currentDirection.get(); }
+
+    public final ObjectProperty<Direction> _currentDirectionProperty() { return _currentDirection; }
 
 
 
