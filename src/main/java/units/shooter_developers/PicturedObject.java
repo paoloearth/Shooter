@@ -6,8 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Pair;
 
-public abstract class Pictured_Object extends MapObject {
-
+public abstract class PicturedObject extends MapObject {
 
     private final String _url;
     private final ImageView _view;
@@ -15,29 +14,28 @@ public abstract class Pictured_Object extends MapObject {
     private int _n_rows;                // Number of rows  of the sprite-sheet
     private int _n_cols;                // Number of columns of the sprite-sheet
 
-
     private double _scale;             // Scale to make the loaded image of desired size
 
 
     private final BooleanProperty _isDead = new SimpleBooleanProperty(false);
 
 
-    public Pictured_Object(Pair<Double,Double> scaling_factors, String url )
+    public PicturedObject(Pair<Double,Double> scaling_factors, String url )
     {
         super(scaling_factors);
 
-        this._n_rows = 1;
-        this._n_cols = 1;
+        _n_rows = 1;
+        _n_cols = 1;
 
-        this._url = url;
-        Image _picture = retrieve_image(_url);
+        _url = url;
+        Image _picture = retrieveImage(_url);
         setDimensions((int) _picture.getWidth(),(int) _picture.getHeight());
 
-        this._view = new ImageView(_picture);
+        _view = new ImageView(_picture);
     }
 
     /* Custom constructor for SpriteSheet with multiple views*/
-    public Pictured_Object(Pair<Double,Double> scaling_factors, String url, int n_rows, int n_cols )
+    public PicturedObject(Pair<Double,Double> scaling_factors, String url, int n_rows, int n_cols )
     {
         this(scaling_factors,url);
 
@@ -49,23 +47,23 @@ public abstract class Pictured_Object extends MapObject {
     }
 
     // Create an image given an URL
-    Image retrieve_image(String URL)
+    Image retrieveImage(String URL)
     {
         return new Image(URL);
     }
 
     // Scaling on x-axis and y-axis of images according to the resolution of the window
-    void update_view() {
+    protected final void update_view() {
         this._view.setFitWidth( _scale * getScalingFactors().getKey()  * get_width());
         this._view.setFitHeight(_scale * getScalingFactors().getValue() * get_height());
         this._view.setPreserveRatio(false);
     }
 
-    protected  int getActualHeight()
+    protected  final int getActualHeight()
     {
         return (int) this._view.getFitHeight();
     }
-    protected  int getActualWidth()
+    protected  final int getActualWidth()
     {
         return (int) this._view.getFitWidth();
     }
@@ -73,14 +71,14 @@ public abstract class Pictured_Object extends MapObject {
 
     public Box get_hitbox(){ return new Box(getCurrentYPosition(), getCurrentXPosition(),  getActualWidth() , getActualHeight() );}
 
-    public boolean intersect(Pictured_Object P2)
+    public final boolean intersect(PicturedObject P2)
     {
         return this.get_hitbox().intersect(P2.get_hitbox());
     }
 
 
     public void default_movement(GameMap M){};
-    public  void update(Sprite S){};
+    public void update(Sprite S){};
 
 
     public String get_url() {

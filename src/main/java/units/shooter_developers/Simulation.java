@@ -201,12 +201,12 @@ public class Simulation extends Application {
     }
 
     private void clean_dead_objects() {
-        root.getChildren().removeIf(node -> (node instanceof Pictured_Object) && ((Pictured_Object) node).is_dead());
+        root.getChildren().removeIf(node -> (node instanceof PicturedObject) && ((PicturedObject) node).is_dead());
     }
 
-    protected List<Pictured_Object> all_sprites()
+    protected List<PicturedObject> all_sprites()
     {
-        return root.getChildren().stream().parallel().filter(i -> i instanceof Pictured_Object).map(n->(Pictured_Object)n).collect(Collectors.toList());
+        return root.getChildren().stream().parallel().filter(i -> i instanceof PicturedObject).map(n->(PicturedObject)n).collect(Collectors.toList());
     }
 
     protected Set<Sprite> all_players()
