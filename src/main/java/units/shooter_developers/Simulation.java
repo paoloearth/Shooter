@@ -69,7 +69,7 @@ public class Simulation extends Application {
     }
 
 
-    private void createContent() throws IOException{
+    private void createContent(){
         create_frame();
         create_map();
         create_players();
@@ -78,7 +78,7 @@ public class Simulation extends Application {
     }
 
     private void create_bonus(){
-        new Bonus(root, gamemap, CustomSettings.URL_HEART,1,10, scaling_factors);
+        new Bonus(root, gamemap, CustomSettings.URL_HEART,1,10,10, scaling_factors);
     }
 
     private void create_teleports() {
@@ -154,7 +154,8 @@ public class Simulation extends Application {
 
 
         /* Create timer */
-        AnimationTimer timer = new AnimationTimer() {
+
+        _timer = new AnimationTimer() {
             private long last_update = 0;
             @Override
             public void handle(long now) {
@@ -164,7 +165,7 @@ public class Simulation extends Application {
                     all_sprites().forEach(
                             s -> {
                                 s.defaultMovement(gamemap);
-                                all_players().forEach(s::update);
+                                all_players().forEach(s::action);
                             }
                     );
                     try {
@@ -178,8 +179,6 @@ public class Simulation extends Application {
 
             }
         };
-
-        _timer = timer;
 
         startSimulation();
     }

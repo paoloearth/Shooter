@@ -77,7 +77,7 @@ public abstract class PicturedObject extends MapObject {
     /* Movement & action management */
     protected void defaultMovement(GameMap M){};
 
-    protected void update(Sprite S){};
+    protected void action(Sprite S){};
     //JOSE: E questi metodi? penso che bisognerebbe renderli abstract oppure implementare un'interfaccia.
 
     /* Getters */
