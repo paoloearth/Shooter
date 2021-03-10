@@ -27,8 +27,6 @@
     <a href="https://github.com/paoloearth/Shooter"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/paoloearth/Shooter">View Demo</a>
-    ·
     <a href="https://github.com/paoloearth/Shooter/issues">Report Bug</a>
     ·
     <a href="https://github.com/paoloearth/Shooter/issues">Request Feature</a>
