@@ -37,8 +37,8 @@ public class MenuGrid extends GridPane {
             return (ChoiceBox) choice_box_object;
     }
 
-    public void addTextBox(String name, int row, int col, String commands_url, int number_of_rows_spritesheet, double scale, String default_message){
-        TextBox text_box = new TextBox(name, commands_url, number_of_rows_spritesheet, scale, default_message, "not_found");
+    public void addTextBox(String name, int row, int col, String commands_url, int number_of_rows_spritesheet, double scale, String default_message, String default_content){
+        TextBox text_box = new TextBox(name, commands_url, number_of_rows_spritesheet, scale, default_message, default_content);
         add(text_box, col, row);
     }
 

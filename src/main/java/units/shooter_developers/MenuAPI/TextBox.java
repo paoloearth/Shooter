@@ -14,6 +14,7 @@ public class TextBox extends VBox {
     int _nrows;
     double _custom_scale;
     String _name;
+    String _default_textfield_content;
 
     public TextBox(String name, String commands_url, int nrows, double scale, String default_message, String default_content)
     {
@@ -70,9 +71,12 @@ public class TextBox extends VBox {
         return H;
     }
 
-    public String get_value()
+    public String getValue()
     {
-        return _textField.getText();
+        if(_textField.getText() == "")
+            return _default_textfield_content;
+        else
+            return _textField.getText();
     }
 
     public String getName(){

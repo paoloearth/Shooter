@@ -458,10 +458,10 @@ public abstract class Menu extends Application {
         return menu_grid.getTextBox(name);
     }
 
-    public void addTextBox(String name, int row, int col, String commands_url, int number_of_rows_spritesheet, double scale, String default_message){
+    public void addTextBox(String name, int row, int col, String commands_url, int number_of_rows_spritesheet, double scale, String default_message, String default_content){
         MenuGrid menu_grid_object = getMenuGridAndCreateIfNotExist();
 
-        menu_grid_object.addTextBox(name, row, col, commands_url, number_of_rows_spritesheet, scale, default_message);
+        menu_grid_object.addTextBox(name, row, col, commands_url, number_of_rows_spritesheet, scale, default_message, default_content);
     }
 
     private MenuGrid getMenuGridAndCreateIfNotExist() {

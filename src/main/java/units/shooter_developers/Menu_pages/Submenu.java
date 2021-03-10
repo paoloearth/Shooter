@@ -15,8 +15,8 @@ public class Submenu extends Menu {
 
     @Override
     public void createContent(){
-        addTextBox("Player_textbox_1", 0, 0, CustomSettings.URL_COMMANDS_P1, 1, CustomSettings.WASD_SCALE, "Who is Player 1?");
-        addTextBox("Player_textbox_2", 0, 1, CustomSettings.URL_COMMANDS_P2, 1, CustomSettings.ARROWS_SCALE, "Who is Player 2?");
+        addTextBox("Player_textbox_1", 0, 0, CustomSettings.URL_COMMANDS_P1, 1, CustomSettings.WASD_SCALE, "Who is Player 1?", "Rajoy");
+        addTextBox("Player_textbox_2", 0, 1, CustomSettings.URL_COMMANDS_P2, 1, CustomSettings.ARROWS_SCALE, "Who is Player 2?", "Zapatero");
 
         Map<String, String> Name_URL = new Hashtable<>();
         Name_URL.put(CustomSettings.ARTIST, CustomSettings.URL_ARTIST);
@@ -38,8 +38,8 @@ public class Submenu extends Menu {
             item.setOnMouseReleased(event -> {
                 if (item.getName().equals("Play!")) {
                     var player_names = new ArrayList<String>();
-                    player_names.add(getTextBox("Player_textbox_1").get_value());
-                    player_names.add(getTextBox("Player_textbox_2").get_value());
+                    player_names.add(getTextBox("Player_textbox_1").getValue());
+                    player_names.add(getTextBox("Player_textbox_2").getValue());
 
                     ArrayList<String> Players_URL = new ArrayList<String>();
                     Players_URL.add(Name_URL.get(getChoiceBox("Player_selection_1").get_value()));
