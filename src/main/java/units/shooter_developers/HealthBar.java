@@ -32,7 +32,7 @@ public class HealthBar extends MapObject {
     public void damage()
     {
         setRemainingLifeTo(getCurrentHealth() - getRelativeDamage());
-        if (lessThantHalfLifeRemains()) this.remainingLifeRectangle.setFill(Custom_Colors.HALF_LIFE);
+        if (lessThantHalfLifeRemains()) this.remainingLifeRectangle.setFill(CustomColors.HALF_LIFE);
     }
 
     private boolean lessThantHalfLifeRemains() {
@@ -41,7 +41,7 @@ public class HealthBar extends MapObject {
 
     public void  restore_life(){
         setRemainingLifeTo(get_max_health());
-        this.remainingLifeRectangle.setFill(Custom_Colors.INNER_RECTANGLE);
+        this.remainingLifeRectangle.setFill(CustomColors.INNER_RECTANGLE);
     }
 
 

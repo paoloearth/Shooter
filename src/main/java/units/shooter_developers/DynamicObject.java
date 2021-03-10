@@ -17,7 +17,7 @@ public abstract class DynamicObject extends Pictured_Object {
     }
     public DynamicObject(Pair<Double,Double> scaling_factors, String url, int _n_rows, int _n_cols){ super(scaling_factors, url, _n_rows, _n_cols); }
 
-    public  void set_speed(double speed) { this._speed = (int) (speed* get_scalingFactors().getKey()); }   // Set characteristics of the projectile
+    public  void set_speed(double speed) { this._speed = (int) (speed* getScalingFactors().getKey()); }   // Set characteristics of the projectile
 
     double get_future_x(){ return this.getCurrentXPosition() + _deltaX; }
     double get_future_y(){ return this.getCurrentYPosition() + _deltaY; }
