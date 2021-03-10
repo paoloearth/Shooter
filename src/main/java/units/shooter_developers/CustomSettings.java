@@ -23,6 +23,12 @@ public class CustomSettings {
 
     public static final int NUMBER_OF_METADATA_LINES  = 6;
     public static final String  FILE_SEPARATOR= ",";
+    public static final int URL_TILESET_INDEX = 0;
+    public static final int MAP_INFO_INDEX = 1;
+    public static final int PASSABLE_TILES_INDEX = 2;
+    public static final int NOT_PASSABLE_TILES_FOR_P_INDEX = 3;
+    public static final int SPRITE_COORD_INDEX = 4;
+    public static final int TELEPORT_COORD_INDEX = 5;
 
     /* SPEEDS */
     public static final int PLAYER_SPEED  = 2;
