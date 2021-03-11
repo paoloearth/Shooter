@@ -64,7 +64,7 @@ public class Bonus extends PicturedObject {
 
     /* Animations */
     private void createAndStartAnimation(int frames, int n_cols) {
-        ObjectAnimation anim = new ObjectAnimation(getImageView(), Duration.seconds(1), frames, n_cols, 0, 0, get_width(), get_height());
+        ObjectAnimation anim = new ObjectAnimation(getPicture(), Duration.seconds(1), frames, n_cols, 0, 0, get_width(), get_height());
         anim.setCycleCount(Animation.INDEFINITE);
         anim.play();
     }
@@ -73,7 +73,7 @@ public class Bonus extends PicturedObject {
         return new Timeline(new KeyFrame(Duration.seconds(CustomSettings.BONUS_COOLDOWN),
                 event -> {
                     emptyPaneFromImageView(this);
-                    addNodes(getImageView());
+                    addNodes(getPicture());
                 }));
     }
 

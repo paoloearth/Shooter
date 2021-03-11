@@ -64,7 +64,7 @@ public class CustomSettings {
 
     /* HEALTHBAR */
     public static final double HB_PROPORTIONAL_WIDTH  = 0.1 ;   // HB height is 10 % of sprite's height
-    public static final double PERCENTAGE_DAMAGE_PER_SHOOT = .25;
+    public static final double PERCENTAGE_DAMAGE_PER_SHOOT = .26;
 
     /*  URLS */
     public static final String URL_TELEPORT   = "teleport.png";

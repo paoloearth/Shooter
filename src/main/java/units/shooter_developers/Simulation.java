@@ -201,7 +201,7 @@ public class Simulation extends Application {
     }
 
     private void clean_dead_objects() {
-        root.getChildren().removeIf(node -> (node instanceof PicturedObject) && ((PicturedObject) node).isDead());
+        root.getChildren().removeIf(node -> (node instanceof PicturedObject) && ((PicturedObject) node).hasToBeRemoved());
     }
 
     protected List<PicturedObject> all_sprites()

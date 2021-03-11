@@ -41,23 +41,28 @@ public class Sprite extends DynamicObject {
         _currentDirectionProperty().setValue(D);
 
         healthBar = new HealthBar(this);
-        getIsDeadProperty().bind(healthBar.isRemainingLifeZero());
+        getRemovedProperty().bind(healthBar.isRemainingLifeZero());
 
         moveTo(M.get_position_of(id));
 
-        addNodes(healthBar, getImageView());
+        addNodes(healthBar, getPicture());
         simulation_root.getChildren().add(this);
     }
 
 
     /* Movement & action management */
+    @Override
     public void defaultMovement(GameMap M){ move(M);}
+
     @Override
     public Box getHitbox(){ return new Box(getCurrentYPosition() , getCurrentXPosition() + getScaledWidth() * 0.15,
                                      getScaledWidth() - getScaledWidth() * 0.15 , getScaledHeight()*.9 ); }
     @Override
+    protected void action(Sprite S) { }
+
+    @Override
     public Box getMoveBox(){ return new Box( getFutureY() + (getScaledHeight() * 2.0/3.0), getFutureX(),
-                                                  getScaledWidth() , getScaledHeight()* 1.0/3.0); }
+                                                  getScaledWidth() , getScaledHeight() /3.0); }
 
     private void move(GameMap M) {
 
@@ -92,7 +97,7 @@ public class Sprite extends DynamicObject {
     }
 
     private ChangeListener<Object> getListener() { return (obs, ov, nv) ->
-                                                  getImageView().setViewport(new Rectangle2D( _frame.get()*get_width(),
+                                                  getPicture().setViewport(new Rectangle2D( _frame.get()*get_width(),
                                                                                  getCurrentDirection().getOffset() * get_height(),
                                                                                        get_width(), get_height())); }
     //JOSE: questo metodo è un salame, meglio se si organizza un po' più visualmente, anche mettere i parametri in varie righe.

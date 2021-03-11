@@ -19,7 +19,6 @@ public abstract class PicturedObject extends MapObject {
     {
         super(scalingFactors);
 
-
         Image image = retrieveImage(url);
         setDimensions( image.getWidth(), image.getHeight());
         _picture = new ImageView(image);
@@ -40,9 +39,6 @@ public abstract class PicturedObject extends MapObject {
         this._picture.setFitHeight(_customScale * getResolutionScalingFactors().getValue() * get_height());
         this._picture.setPreserveRatio(false);
     }
-    //JOSE: sostituire commento per un nome più chiaro, p.s. update_image_size
-    //      cmq, forse potrebbe essere interessante usare in questo caso un bind
-    //      invece di ridimensionare manualmente
 
     protected  final double getScaledHeight() { return _picture.getFitHeight(); }
 
@@ -54,19 +50,16 @@ public abstract class PicturedObject extends MapObject {
 
     protected final boolean intersect(PicturedObject P2) { return getHitbox().intersect(P2.getHitbox()); }
 
-
-    protected void action(Sprite S){}
-    //JOSE: E questi metodi? penso che bisognerebbe renderli abstract oppure implementare un'interfaccia.
+    protected abstract void action(Sprite S);
 
     /* Getters */
-    public final ImageView getImageView() { return _picture; }
-    //JOSE: se si cambia il nome di _view, cambiare il nome di questo metodo.
+    public final ImageView getPicture() { return _picture; }
 
-    public final boolean isDead() {
+    public final boolean hasToBeRemoved() {
         return _toBeRemoved.get();
     }
 
-    public final BooleanProperty getIsDeadProperty() {
+    public final BooleanProperty getRemovedProperty() {
         return _toBeRemoved;
     }
 
@@ -75,7 +68,7 @@ public abstract class PicturedObject extends MapObject {
         _customScale = scale;
     }
 
-    public final void setIsDeadProperty(boolean isDead) {
+    public final void getRemoveProperty(boolean isDead) {
         _toBeRemoved.set(isDead);
     }
 }

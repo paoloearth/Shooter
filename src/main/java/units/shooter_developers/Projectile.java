@@ -27,13 +27,13 @@ public class Projectile extends DynamicObject {
 
         moveTo(getBiasedStartingPosition(S));
 
-        addNodes(getImageView());
+        addNodes(getPicture());
     }
 
     /* Movement & action management */
     private void translate(GameMap M)
     {
-        if(illegalMove(M)) setIsDeadProperty(true);
+        if(illegalMove(M)) getRemoveProperty(true);
         else moveTo(getDestination());
     }
 
@@ -42,6 +42,7 @@ public class Projectile extends DynamicObject {
         if(intersect(S)) hit( S);
     }
 
+    @Override
     public void defaultMovement(GameMap M){
         translate(M);
     }
@@ -53,9 +54,9 @@ public class Projectile extends DynamicObject {
 
     private void hit(Sprite S)
     {
-        if(!isDead() && !Owner.equals(S.get_id()))
+        if(!hasToBeRemoved() && !Owner.equals(S.get_id()))
         {
-            setIsDeadProperty(true);
+            getRemoveProperty(true);
             S.getHBar().applyDamage();
         }
     }

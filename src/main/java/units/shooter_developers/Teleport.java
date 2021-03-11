@@ -17,7 +17,7 @@ public class Teleport extends PicturedObject {
         setScale(CustomSettings.TELEPORT_SCALE);
         scalePicture();
 
-        addNodes(getImageView());
+        addNodes(getPicture());
 
         rotationAnimation();
 
