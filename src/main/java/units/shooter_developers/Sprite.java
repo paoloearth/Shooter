@@ -51,7 +51,6 @@ public class Sprite extends DynamicObject {
 
 
     /* Movement & action management */
-    @Override
     public void defaultMovement(GameMap M){ move(M);}
     @Override
     public Box getHitbox(){ return new Box(getCurrentYPosition() , getCurrentXPosition() + getActualWidth() * 0.15,

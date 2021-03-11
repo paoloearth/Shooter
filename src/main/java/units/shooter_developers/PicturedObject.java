@@ -73,8 +73,6 @@ public abstract class PicturedObject extends MapObject {
 
     protected final boolean intersect(PicturedObject P2) { return getHitbox().intersect(P2.getHitbox()); }
 
-    /* Movement & action management */
-    protected void defaultMovement(GameMap M){}
 
     protected void action(Sprite S){}
     //JOSE: E questi metodi? penso che bisognerebbe renderli abstract oppure implementare un'interfaccia.
