@@ -18,9 +18,8 @@ public class Bonus extends PicturedObject {
         super(scalingFactor,url,nRows,nCols);
         this._map = map;
 
-        setScale(CustomSettings.HEART_SCALE);
+        applyCustomScaleToObject(CustomSettings.HEART_SCALE);
 
-        scalePicture();
 
         _waitingTime = waitSomeTimeBeforeDisplayingBonusAgain();
         createAndStartAnimation(numberOfFrames,nCols);

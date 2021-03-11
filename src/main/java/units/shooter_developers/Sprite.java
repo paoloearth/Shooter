@@ -31,9 +31,8 @@ public class Sprite extends DynamicObject {
         this._id = id;
 
         setSpeed(CustomSettings.PLAYER_SPEED);
-        setScale(CustomSettings.PLAYER_SCALE);
+        applyCustomScaleToObject(CustomSettings.PLAYER_SCALE);
 
-        scalePicture();
 
         /* Add a triggered event to change the view accordingly to the direction of the sprite */
         ChangeListener<Object> updateImage = getListener();

@@ -63,8 +63,9 @@ public abstract class PicturedObject extends MapObject {
     }
 
     /* Setters */
-    public final void setScale(double scale) {
+    public final void applyCustomScaleToObject(double scale) {
         _customScale = scale;
+        scalePicture();
     }
 
     public final void getRemoveProperty(boolean isDead) {

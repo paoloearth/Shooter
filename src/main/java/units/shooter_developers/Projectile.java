@@ -17,9 +17,9 @@ public class Projectile extends DynamicObject {
 
         this.Owner = S.get_id();
 
-        setScale(CustomSettings.PROJECTILE_SCALE);
+        applyCustomScaleToObject(CustomSettings.PROJECTILE_SCALE);
         setSpeed(CustomSettings.PROJECTILE_SPEED);
-        scalePicture();
+
         //JOSE: forse sarebbe interessante che questo metodo venga chiamato in automatico all'interno di
         //      set_scale
 

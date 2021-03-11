@@ -14,8 +14,7 @@ public class Teleport extends PicturedObject {
     public Teleport(Pane simulationRoot, String url, GameMap M, Pair<Double, Double> scalingFactor, String ID) {
         super(scalingFactor, url);
 
-        setScale(CustomSettings.TELEPORT_SCALE);
-        scalePicture();
+        applyCustomScaleToObject(CustomSettings.TELEPORT_SCALE);
 
         addNodes(getPicture());
 
