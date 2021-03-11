@@ -515,6 +515,13 @@ public abstract class Menu extends Application {
         return image_wrapped;
     }
 
+    static private Node retrieveFirstObjectOfType(Object type, Pane node_set){
+        return node_set.getChildren().stream()
+                .filter(e -> e instanceof MenuGrid)
+                .findFirst()
+                .orElse(null);
+    }
+
 
     /************************** COLOR PALETTE OBJECT *****************************/
 
