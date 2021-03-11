@@ -33,7 +33,7 @@ public abstract class PicturedObject extends MapObject {
 
         _url = url;
         Image _picture = retrieveImage(_url);
-        setDimensions((int) _picture.getWidth(),(int) _picture.getHeight());
+        setDimensions( _picture.getWidth(), _picture.getHeight());
         //JOSE: se si cambiano gli argomenti a double si può rimuovere il cast.
 
         _view = new ImageView(_picture);
@@ -74,9 +74,9 @@ public abstract class PicturedObject extends MapObject {
     protected final boolean intersect(PicturedObject P2) { return getHitbox().intersect(P2.getHitbox()); }
 
     /* Movement & action management */
-    protected void defaultMovement(GameMap M){};
+    protected void defaultMovement(GameMap M){}
 
-    protected void action(Sprite S){};
+    protected void action(Sprite S){}
     //JOSE: E questi metodi? penso che bisognerebbe renderli abstract oppure implementare un'interfaccia.
 
     /* Getters */

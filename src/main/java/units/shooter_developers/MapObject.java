@@ -29,7 +29,6 @@ public abstract class MapObject extends Pane {
     /* Utils */
     protected final void addNodes(Node ... nodes) { getChildren().addAll(nodes); }
 
-    //JOSE: gli argomenti non dovrebbero essere double?
     public final void setDimensions(double width, double height) { set_width(width); set_height(height); }
 
     /* Getters */

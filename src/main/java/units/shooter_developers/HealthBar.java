@@ -1,5 +1,3 @@
-//JOSE: classe visitata
-
 package units.shooter_developers;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.DoubleProperty;
@@ -10,7 +8,7 @@ import javafx.scene.shape.Rectangle;
 public class HealthBar extends MapObject {
 
     private final Rectangle remainingLifeRectangle;
-    private final DoubleProperty health;
+    private final DoubleProperty healthPercentage;
 
     /* Constructors */
     public HealthBar(Sprite S)
@@ -20,8 +18,8 @@ public class HealthBar extends MapObject {
         final Rectangle lostLifeRectangle = createCustomOuterRectangle();
         remainingLifeRectangle = createCustomInnerRectangle();
 
-        health = new SimpleDoubleProperty(get_width());
-        remainingLifeRectangle.widthProperty().bind(health);
+        healthPercentage = new SimpleDoubleProperty(get_width());
+        remainingLifeRectangle.widthProperty().bind(healthPercentage);
 
         moveTo(getDefaultHBarPosition(S));
 
@@ -29,8 +27,7 @@ public class HealthBar extends MapObject {
     }
 
     /* Damage/Life handling */
-    //JOSE: immagino che questo metodo applica danneggio, per chiarezza lo chiamerei una roba del tipo: applyDamage
-    protected final void damage()
+    protected final void applyDamage()
     {
         setRemainingLifeTo(getCurrentHealth() - getRelativeDamage());
         if (lessThantHalfLifeRemains()) this.remainingLifeRectangle.setFill(CustomColors.HALF_LIFE);
@@ -44,10 +41,10 @@ public class HealthBar extends MapObject {
         return getCurrentHealth() <= getMaxHealth() / 2;
     }
 
-    protected final BooleanBinding isRemainingLifeZero() { return health.lessThanOrEqualTo(0); }
+    protected final BooleanBinding isRemainingLifeZero() { return healthPercentage.lessThanOrEqualTo(0); }
 
     protected final double getCurrentHealth() {
-        return health.get();
+        return healthPercentage.get();
     }
 
     private double getRelativeDamage()
@@ -62,7 +59,7 @@ public class HealthBar extends MapObject {
 
     private void setRemainingLifeTo(double d)
     {
-        health.set(d);
+        healthPercentage.set(d);
     }
 
 
@@ -86,8 +83,5 @@ public class HealthBar extends MapObject {
     private static Coordinates getDefaultHBarPosition(Sprite S) {
         return new Coordinates(0, (S.getActualHeight() * 1.1));
     }
-
-
-
 
 }
