@@ -34,7 +34,7 @@ public class Projectile extends DynamicObject {
     private void translate(GameMap M)
     {
         if(illegalMove(M)) getRemoveProperty(true);
-        else moveTo(getDestination());
+        else moveTo(getFutureCoordinates());
     }
 
     @Override
@@ -65,10 +65,12 @@ public class Projectile extends DynamicObject {
     private void setInitialAndTranslateDirection(Direction D) {
         _biasX = _biasY =0;
         switch (D) {
-            case UP    ->  { set_biases(+(getScaledWidth()),-(getScaledHeight()/2)); set_deltaY(get_deltaY()- get_speed());}
-            case DOWN  ->  { set_biases(+(getScaledWidth()),+ (getScaledHeight()*2)); set_deltaY(get_deltaY()+ get_speed());}
-            case LEFT  ->  { set_biases(( 0), + getScaledHeight()/2);set_deltaX(get_deltaX()-get_speed());}
-            case RIGHT ->  { set_biases((+(getScaledWidth()*2)), getScaledHeight()/2);set_deltaX(get_deltaX()+get_speed());}
+            case UP    ->  { set_biases(+(getScaledWidth()),-(getScaledHeight()/2)); setDeltaY(- getSpeed());}
+            case DOWN  ->  { set_biases(+(getScaledWidth()),+ (getScaledHeight()*2)); setDeltaY(getSpeed());}
+            case LEFT  ->  { set_biases(( 0), + getScaledHeight()/2);
+                setDeltaX(-getSpeed());}
+            case RIGHT ->  { set_biases((+(getScaledWidth()*2)), getScaledHeight()/2);
+                setDeltaX(+getSpeed());}
         }
     }
     private double get_biased_y_position(Sprite S) { return S.getFutureY() + _biasY; }

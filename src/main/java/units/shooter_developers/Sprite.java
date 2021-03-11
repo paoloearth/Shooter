@@ -37,8 +37,8 @@ public class Sprite extends DynamicObject {
 
         /* Add a triggered event to change the view accordingly to the direction of the sprite */
         ChangeListener<Object> updateImage = getListener();
-        _currentDirectionProperty().addListener(updateImage);
-        _currentDirectionProperty().setValue(D);
+        getCurrentDirectionProperty().addListener(updateImage);
+        getCurrentDirectionProperty().setValue(D);
 
         healthBar = new HealthBar(this);
         getRemovedProperty().bind(healthBar.isRemainingLifeZero());
@@ -69,7 +69,7 @@ public class Sprite extends DynamicObject {
         updateMovement();
 
         if (hasMoved()) {
-            var destination = getDestination();
+            var destination = getFutureCoordinates();
 
             updateDirection(destination);
 
@@ -93,27 +93,27 @@ public class Sprite extends DynamicObject {
     }
 
     private boolean hasMoved() {
-        return (Math.abs(get_deltaX()) > 0 || Math.abs(get_deltaY()) > 0);
+        return (Math.abs(getDeltaX()) > 0 || Math.abs(getDeltaY()) > 0);
     }
 
     private ChangeListener<Object> getListener() { return (obs, ov, nv) ->
                                                   getPicture().setViewport(new Rectangle2D( _frame.get()*get_width(),
                                                                                  getCurrentDirection().getOffset() * get_height(),
                                                                                        get_width(), get_height())); }
-    //JOSE: questo metodo è un salame, meglio se si organizza un po' più visualmente, anche mettere i parametri in varie righe.
 
     private void updateMovement() {
-        set_deltaX(0);set_deltaY(0);
-        if (goNorth) set_deltaY(get_deltaY()- get_speed());
-        if (goSouth) set_deltaY(get_deltaY()+get_speed());
-        if (goEast)  set_deltaX(get_deltaX()+ get_speed());
-        if (goWest)  set_deltaX(get_deltaX()-get_speed());
+        setDeltaX(0);
+        setDeltaY(0);
+        if (goNorth) setDeltaY(- getSpeed());
+        if (goSouth) setDeltaY(getSpeed());
+        if (goEast)  setDeltaX(getSpeed());
+        if (goWest)  setDeltaX(-getSpeed());
     }
 
     private void updateDirection(Coordinates destination)
     {
         Direction D;
-        if (Math.abs(get_deltaX()) > Math.abs(get_deltaY()))
+        if (Math.abs(getDeltaX()) > Math.abs(getDeltaY()))
             D = (destination.getX()  < getCurrentXPosition())? Direction.LEFT : Direction.RIGHT;
         else
             D = (destination.getY()  < getCurrentYPosition())? Direction.UP:Direction.DOWN;

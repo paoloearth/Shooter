@@ -61,7 +61,7 @@ public class Box{
 
 
     //JOSE: nome più chiaro, cosa si verifica?
-    protected boolean  performs_check(GameMap M, DynamicObject D)
+    protected boolean performsCheck(GameMap M, DynamicObject D)
     {
         for (int i =get_left_tile(); i<= get_right_tile(); i++)
         {

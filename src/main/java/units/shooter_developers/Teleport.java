@@ -11,7 +11,7 @@ public class Teleport extends PicturedObject {
     private Coordinates destination;
 
     /* Constructors  */
-    public Teleport(Pane simulation_root, String url, GameMap M, Pair<Double, Double> scalingFactor, String ID) {
+    public Teleport(Pane simulationRoot, String url, GameMap M, Pair<Double, Double> scalingFactor, String ID) {
         super(scalingFactor, url);
 
         setScale(CustomSettings.TELEPORT_SCALE);
@@ -23,7 +23,7 @@ public class Teleport extends PicturedObject {
 
         moveTo(M.get_position_of(ID));
 
-        simulation_root.getChildren().add(this);
+        simulationRoot.getChildren().add(this);
     }
 
 
