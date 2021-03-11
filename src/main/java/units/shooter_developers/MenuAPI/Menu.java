@@ -31,6 +31,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import units.shooter_developers.CustomColors;
+import units.shooter_developers.CustomSettings;
 import units.shooter_developers.Simulation;
 
 import java.io.File;
@@ -129,8 +130,8 @@ public abstract class Menu extends Application {
         }
 
         try{
-            background_light = new ImageView("menu_light.jpg");
-            background_dark = new ImageView("menu_dark.jpeg");
+            background_light = new ImageView(CustomSettings.URL_BACKGROUND_LIGHT);
+            background_dark = new ImageView(CustomSettings.URL_BACKGROUND_DARK);
         } catch(Exception e){
             System.out.println("Background images not found!");
             var rectangle_image = new Rectangle(2, 2).snapshot(null, null);
