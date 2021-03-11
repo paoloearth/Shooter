@@ -1,9 +1,3 @@
-//JOSE: classe visitata
-//  -Mi sembra che non siano state implementate le colissioni fra diversi DynamicObject, infatti, i personaggi si possono superporre.
-//  -Il ruolo di _speed e di _deltaX e _deltaY è confuso. Sembrerebbe che la presenza di questi due oggetti introduca ridundanza
-//   dato che _deltaX e _deltaY si possono ricavare univocamente dalla velocità e viceversa se partiamo di movimento rettilineo
-//   uniforme, come effettivamente è il caso.
-//  -Mi sembra che _deltaX e _deltaY non siano scalate con la risoluzione.
 
 package units.shooter_developers;
 import javafx.beans.property.ObjectProperty;
@@ -13,8 +7,11 @@ import javafx.util.Pair;
 public abstract class DynamicObject extends PicturedObject {
 
     private final ObjectProperty<Direction> _currentDirection = new SimpleObjectProperty<>();
-    private int _speed;
-    private int _deltaX, _deltaY;
+    private double  _speed;
+    private double  _deltaX, _deltaY;
+
+
+
 
     /* Constructors */
     public DynamicObject(Pair<Double,Double> scalingFactors, String url)
@@ -24,23 +21,30 @@ public abstract class DynamicObject extends PicturedObject {
 
     public DynamicObject(Pair<Double,Double> scalingFactors, String url, int n_rows, int n_cols){ super(scalingFactors, url, n_rows, n_cols); }
 
+
+
+
     /* Movement management */
-    protected void setSpeed(double speed) { _speed = (int) (speed* getResolutionScalingFactors().getKey()); }
+    protected void setSpeed(double speed) { _speed = speed;}
 
-    protected final double getFutureX(){ return getCurrentXPosition() + get_deltaX(); }
+    protected final double getFutureX(){ return getCurrentXPosition() + getDeltaX() * getResolutionScalingFactors().getKey() ; }
 
-    protected final double getFutureY() { return getCurrentYPosition() + get_deltaY(); }
+    protected final double getFutureY() { return getCurrentYPosition() + getDeltaY() * getResolutionScalingFactors().getValue() ;}
 
-    protected final Coordinates getDestination() { return new Coordinates(getFutureX(), getFutureY()); }
-    //JOSE: forse meglio get_future_coordinates
+    protected final Coordinates getFutureCoordinates() { return new Coordinates(getFutureX(), getFutureY()); }
+
+
 
 
     /* Collision handling */
     public abstract boolean checkIfPassable(Tile t);
 
-    protected final Box getDefaultMoveBox(){ return new Box( getFutureY() , getFutureX(), getScaledWidth() , getScaledHeight()); }
+    protected final HitBox getDefaultMoveBox(){ return new HitBox( getFutureY() , getFutureX(), getScaledWidth() , getScaledHeight()); }
 
-    protected Box getMoveBox(){ return getDefaultMoveBox();}
+    protected HitBox getMoveBox(){ return getDefaultMoveBox();}
+
+
+
 
     /* Movement & action management */
     protected abstract void defaultMovement(GameMap M);
@@ -52,29 +56,33 @@ public abstract class DynamicObject extends PicturedObject {
         var collision_box = getMoveBox();
         collision_box.compute_tiles_bounds(M);
 
-        //JOSE: E le colissioni fra personaggi o altri eventuali DynamicObject?
-
-       return collision_box.performs_check(M,this);
+       return collision_box.checkIfObjectCanMoveOnNeighboursTiles(M,this);
 
    }
 
-    /* Setters */
-    public final void set_deltaX(int deltaX) { _deltaX = deltaX; }
 
-    public final void set_deltaY(int deltaY) { _deltaY = deltaY; }
+
+
+    /* Setters */
+    public final void setDeltaX(double deltaX) { _deltaX = deltaX; }
+
+    public final void setDeltaY(double deltaY) { _deltaY = deltaY; }
 
     public final void set_currentDirection(Direction currentDirection) { _currentDirection.set(currentDirection); }
 
+
+
+
     /* Getters */
-    public final int get_speed() { return _speed; }
+    public final double getSpeed() { return _speed; }
 
-    public final int get_deltaX() { return _deltaX; }
+    public final double getDeltaX() { return _deltaX; }
 
-    public final int get_deltaY() { return _deltaY; }
+    public final double getDeltaY() { return _deltaY; }
 
     public final Direction getCurrentDirection() { return _currentDirection.get(); }
 
-    public final ObjectProperty<Direction> _currentDirectionProperty() { return _currentDirection; }
+    public final ObjectProperty<Direction> getCurrentDirectionProperty() { return _currentDirection; }
 
 
 

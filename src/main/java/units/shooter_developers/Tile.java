@@ -6,39 +6,35 @@ import javafx.scene.image.ImageView;
 
 public class Tile extends ImageView {
 
-    private final Coordinates block_pixel_position;
+    private final Coordinates tilePixelPosition;
 
-    /* encode the "walkability" for a player and for a projectile*/
-    boolean is_passable;
-    boolean is_passable_for_projectile;
+    /* to encode properties of each tile*/
+    private final boolean passableForPlayer;
+    private final boolean passableForProjectile;
 
-    Tile(double pos_x, double pos_y, double width, double height, boolean passable, boolean not_passable_p, Image img, Rectangle2D r2)
+    Tile(double posX, double posY, double width, double height, boolean PassableForPlayers, boolean notPassableForProjectile, Image tileSet, Rectangle2D portionOfTileSet)
     {
-        /* Position the tile in the proper position */
-        this.relocate(pos_x,pos_y);
+        relocate(posX,posY);
 
-        /* Position the tile in the proper position */
-        this.setFitWidth(width);
-        this.setFitHeight(height);
+        setFitWidth(width);
+        setFitHeight(height);
 
-        /* Save the pixel posiion of the block */
-        this.block_pixel_position = new Coordinates(pos_x,pos_y);
+        tilePixelPosition = new Coordinates(posX,posY);
 
-        /* Set passability parameters */
-        this.is_passable = passable;
-        this.is_passable_for_projectile = !not_passable_p;
-
-        /* Set image property of the figure */
-        this.setImage(img);
-        this.setViewport(r2);
-        this.setPreserveRatio(false);
+        passableForPlayer = PassableForPlayers;
+        passableForProjectile = !notPassableForProjectile;
+        
+        setImage(tileSet);
+        setViewport(portionOfTileSet);
+        setPreserveRatio(false);
 
     }
 
-    public Coordinates get_pixel_of_block_position() {
-        return this.block_pixel_position;
+    public Coordinates getPixelPositionOfTheTile() {
+        return this.tilePixelPosition;
     }
 
+    public boolean isPassableForPlayer() { return passableForPlayer; }
 
-
+    public boolean isPassableForProjectile() { return passableForProjectile; }
 }

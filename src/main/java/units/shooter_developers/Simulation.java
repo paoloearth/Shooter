@@ -167,7 +167,7 @@ public class Simulation extends Application {
                             s -> {
                                 if(s instanceof DynamicObject) ((DynamicObject) s).defaultMovement(gamemap);
                                 all_players().forEach(s::action);
-                            }
+                                }
                     );
                     try {
                         remove_dead_objects();
@@ -201,7 +201,7 @@ public class Simulation extends Application {
     }
 
     private void clean_dead_objects() {
-        root.getChildren().removeIf(node -> (node instanceof PicturedObject) && ((PicturedObject) node).isDead());
+        root.getChildren().removeIf(node -> (node instanceof PicturedObject) && ((PicturedObject) node).hasToBeRemoved());
     }
 
     protected List<PicturedObject> all_sprites()

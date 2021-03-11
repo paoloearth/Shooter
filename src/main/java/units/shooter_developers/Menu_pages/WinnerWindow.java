@@ -18,12 +18,12 @@ public class WinnerWindow extends Menu {
     @Override
     public void createContent(){
 
-        var winner_image = Menu.retrieveImage(_player.getImageView().getImage().getUrl(),4,1);
+        var winner_image = Menu.retrieveImage(_player.getPicture().getImage().getUrl(),4,1);
         var fireworks = Menu.retrieveImage("fireworks.png", 1,1);
         addCentralImageView(fireworks, 0.9, 0.9);
         addCentralImageView(winner_image, 0.9, 0.9);
 
-        addSecondaryTitle("The winner is "+ _player.getPlayerName());
+        addSecondaryTitle("The winner is "+ _player.get_playerName());
         addFlashDisclaimer("<press a key to continue>");
 
         waitAndPressToContinue(1);
