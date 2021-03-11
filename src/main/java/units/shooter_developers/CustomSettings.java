@@ -36,8 +36,8 @@ public class CustomSettings {
 
 
     /* SPEEDS */
-    public static final int PLAYER_SPEED  = 2;
-    public static final int PROJECTILE_SPEED  = 5;
+    public static final int PLAYER_SPEED  = 3;
+    public static final int PROJECTILE_SPEED  = 7;
 
     /*  SCALES */
     public static final double PLAYER_SCALE  = 1.0/20;
@@ -48,7 +48,6 @@ public class CustomSettings {
     /* MENU SCALES */
     public static final double WASD_SCALE =.5 ;
     public static final double ARROWS_SCALE = .4 ;
-    public static final double SPRITE_SCALE = .9;
     public static final double MAP_SCALE = 1;
 
     /* TELEPORT */
@@ -64,7 +63,7 @@ public class CustomSettings {
 
     /* HEALTHBAR */
     public static final double HB_PROPORTIONAL_WIDTH  = 0.1 ;   // HB height is 10 % of sprite's height
-    public static final double PERCENTAGE_DAMAGE_PER_SHOOT = .25;
+    public static final double PERCENTAGE_DAMAGE_PER_SHOOT = .26;
 
     /*  URLS */
     public static final String URL_TELEPORT   = "teleport.png";
@@ -95,12 +94,6 @@ public class CustomSettings {
 
     public static final String DESERT     = "Desert";
     public static final String ISLAND     = "Islands";
-
-    public static final String BONUS  = "BONUS";
-    public static final String PROJECTILE  ="PROJECTILE";
-    public static final String SPRITE  ="SPRITE";
-    public static final String TELEPORT  ="TELEPORT";
-
 
 
 

@@ -17,24 +17,21 @@ public class Projectile extends DynamicObject {
 
         this.Owner = S.get_id();
 
-        setScale(CustomSettings.PROJECTILE_SCALE);
+        applyCustomScaleToObject(CustomSettings.PROJECTILE_SCALE);
         setSpeed(CustomSettings.PROJECTILE_SPEED);
-        scalePicture();
-        //JOSE: forse sarebbe interessante che questo metodo venga chiamato in automatico all'interno di
-        //      set_scale
 
         setInitialAndTranslateDirection(S.getCurrentDirection());
 
         moveTo(getBiasedStartingPosition(S));
 
-        addNodes(getImageView());
+        addNodes(getPicture());
     }
 
     /* Movement & action management */
     private void translate(GameMap M)
     {
-        if(illegalMove(M)) setIsDeadProperty(true);
-        else moveTo(getDestination());
+        if(illegalMove(M)) getRemoveProperty(true);
+        else moveTo(getFutureCoordinates());
     }
 
     @Override
@@ -42,20 +39,19 @@ public class Projectile extends DynamicObject {
         if(intersect(S)) hit( S);
     }
 
+    @Override
     public void defaultMovement(GameMap M){
         translate(M);
     }
 
     @Override
-    public boolean checkIfPassable(Tile t) {
-        return t.is_passable_for_projectile;
-    }
+    public boolean checkIfPassable(Tile t) { return t.isPassableForProjectile(); }
 
     private void hit(Sprite S)
     {
-        if(!isDead() && !Owner.equals(S.get_id()))
+        if(!hasToBeRemoved() && !Owner.equals(S.get_id()))
         {
-            setIsDeadProperty(true);
+            getRemoveProperty(true);
             S.getHBar().applyDamage();
         }
     }
@@ -64,10 +60,10 @@ public class Projectile extends DynamicObject {
     private void setInitialAndTranslateDirection(Direction D) {
         _biasX = _biasY =0;
         switch (D) {
-            case UP    ->  { set_biases(+(getScaledWidth()),-(getScaledHeight()/2)); set_deltaY(get_deltaY()- get_speed());}
-            case DOWN  ->  { set_biases(+(getScaledWidth()),+ (getScaledHeight()*2)); set_deltaY(get_deltaY()+ get_speed());}
-            case LEFT  ->  { set_biases(( 0), + getScaledHeight()/2);set_deltaX(get_deltaX()-get_speed());}
-            case RIGHT ->  { set_biases((+(getScaledWidth()*2)), getScaledHeight()/2);set_deltaX(get_deltaX()+get_speed());}
+            case UP    ->  { set_biases(+(getScaledWidth()),-(getScaledHeight()/2)); setDeltaY(- getSpeed());}
+            case DOWN  ->  { set_biases(+(getScaledWidth()),+ (getScaledHeight()*2)); setDeltaY(getSpeed());}
+            case LEFT  ->  { set_biases(( 0), + getScaledHeight()/2);setDeltaX(-getSpeed());}
+            case RIGHT ->  { set_biases((+(getScaledWidth()*2)), getScaledHeight()/2);setDeltaX(+getSpeed());}
         }
     }
     private double get_biased_y_position(Sprite S) { return S.getFutureY() + _biasY; }

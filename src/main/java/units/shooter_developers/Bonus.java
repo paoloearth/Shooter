@@ -9,25 +9,24 @@ import javafx.util.Pair;
 
 public class Bonus extends PicturedObject {
 
-    private final Timeline _waiting_time;
+    private final Timeline _waitingTime;
     private final GameMap _map;
 
     /* Constructor */
-    public Bonus(Pane simulation_root, GameMap map, String url, int n_rows, int n_cols, int number_of_frames, Pair<Double, Double> scalingFactor)
+    public Bonus(Pane simulationRoot, GameMap map, String url, int nRows, int nCols, int numberOfFrames, Pair<Double, Double> scalingFactor)
     {
-        super(scalingFactor,url,n_rows,n_cols);
+        super(scalingFactor,url,nRows,nCols);
         this._map = map;
 
-        setScale(CustomSettings.HEART_SCALE);
+        applyCustomScaleToObject(CustomSettings.HEART_SCALE);
 
-        scalePicture();
 
-        _waiting_time = waitSomeTimeBeforeDisplayingBonusAgain();
-        createAndStartAnimation(number_of_frames,n_cols);
+        _waitingTime = waitSomeTimeBeforeDisplayingBonusAgain();
+        createAndStartAnimation(numberOfFrames,nCols);
 
         generate();
 
-        simulation_root.getChildren().add(this);
+        simulationRoot.getChildren().add(this);
 
     }
 
@@ -53,7 +52,7 @@ public class Bonus extends PicturedObject {
     {
         moveTo(_map.getRandomLocation());
         if (getHitbox().isOutOfMap(_map)) pushInsideBorder();
-        _waiting_time.play();
+        _waitingTime.play();
 
     }
 
@@ -64,7 +63,7 @@ public class Bonus extends PicturedObject {
 
     /* Animations */
     private void createAndStartAnimation(int frames, int n_cols) {
-        ObjectAnimation anim = new ObjectAnimation(getImageView(), Duration.seconds(1), frames, n_cols, 0, 0, get_width(), get_height());
+        ObjectAnimation anim = new ObjectAnimation(getPicture(), Duration.seconds(1), frames, n_cols, 0, 0, get_width(), get_height());
         anim.setCycleCount(Animation.INDEFINITE);
         anim.play();
     }
@@ -73,7 +72,7 @@ public class Bonus extends PicturedObject {
         return new Timeline(new KeyFrame(Duration.seconds(CustomSettings.BONUS_COOLDOWN),
                 event -> {
                     emptyPaneFromImageView(this);
-                    addNodes(getImageView());
+                    addNodes(getPicture());
                 }));
     }
 

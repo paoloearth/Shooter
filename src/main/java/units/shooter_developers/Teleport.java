@@ -11,26 +11,25 @@ public class Teleport extends PicturedObject {
     private Coordinates destination;
 
     /* Constructors  */
-    public Teleport(Pane simulation_root, String url, GameMap M, Pair<Double, Double> scalingFactor, String ID) {
+    public Teleport(Pane simulationRoot, String url, GameMap M, Pair<Double, Double> scalingFactor, String ID) {
         super(scalingFactor, url);
 
-        setScale(CustomSettings.TELEPORT_SCALE);
-        scalePicture();
+        applyCustomScaleToObject(CustomSettings.TELEPORT_SCALE);
 
-        addNodes(getImageView());
+        addNodes(getPicture());
 
         rotationAnimation();
 
         moveTo(M.get_position_of(ID));
 
-        simulation_root.getChildren().add(this);
+        simulationRoot.getChildren().add(this);
     }
 
 
     /* Collisions & action management */
     @Override
-    public Box getHitbox(){
-        return new Box(getCurrentYPosition() + (getScaledHeight()*.25), getCurrentXPosition()+(getScaledWidth()*.25),
+    public HitBox getHitbox(){
+        return new HitBox(getCurrentYPosition() + (getScaledHeight()*.25), getCurrentXPosition()+(getScaledWidth()*.25),
                       getScaledWidth()*.5 , getScaledHeight()*.5 );
     }
 
