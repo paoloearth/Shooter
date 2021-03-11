@@ -30,6 +30,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import units.shooter_developers.CustomColors;
 import units.shooter_developers.Simulation;
 
 import java.io.File;
@@ -94,7 +95,6 @@ public abstract class Menu extends Application {
 
     public void start(Stage stage){
         setStage(stage);
-        var hola = getColorMode();
         getStage().setMaximized(false);
         setStageDimensions(getMenuWidth(), getMenuHeight());
         createRootAndBackground(getMenuWidth(), getMenuHeight());
@@ -417,12 +417,12 @@ public abstract class Menu extends Application {
     }
 
     public MenuItem getItem(String name){
-        var hola = getItems().stream()
+        var item = getItems().stream()
                 .filter(e -> e.getName().equals(name))
                 .findFirst()
                 .orElse(null);
 
-        return hola;
+        return item;
     }
 
     protected ArrayList<SelectorItem> getSelectorItems(){
@@ -532,30 +532,25 @@ public abstract class Menu extends Application {
         Color dead_color;
 
         protected ColorPalette(){
-            basic_primary_color = Color.SILVER;
-            selected_primary_color = Color.WHITE;
-            basic_secondary_color = Color.BLACK;
-            selected_secondary_color = Color.DARKBLUE;
-            clicked_background_color = Color.DARKVIOLET;
-            dead_color = Color.DARKGREY;
+            setDark();
         }
 
         protected void setDark(){
-            basic_primary_color = Color.SILVER;
-            selected_primary_color = Color.WHITE;
-            basic_secondary_color = Color.BLACK;
-            selected_secondary_color = Color.DARKBLUE;
-            clicked_background_color = Color.DARKVIOLET;
-            dead_color = Color.DARKGREY;
+            basic_primary_color = CustomColors.BASIC_PRIMARY_COLOR_DARK;
+            selected_primary_color = CustomColors.SELECTED_PRIMARY_COLOR_DARK;
+            basic_secondary_color = CustomColors.BASIC_SECONDARY_COLOR_DARK;
+            selected_secondary_color = CustomColors.SELECTED_SECONDARY_COLOR_DARK;
+            clicked_background_color = CustomColors.CLICKED_BACKGROUND_COLOR_DARK;
+            dead_color = CustomColors.DEAD_COLOR_DARK;
         }
 
         protected void setLight(){
-            basic_primary_color = Color.WHEAT;
-            basic_secondary_color = Color.BLACK;
-            dead_color = Color.SANDYBROWN;
-            selected_primary_color = Color.DARKRED;
-            selected_secondary_color = Color.WHITESMOKE;
-            clicked_background_color = Color.ORANGERED;
+            basic_primary_color = CustomColors.BASIC_PRIMARY_COLOR_LIGHT;
+            selected_primary_color = CustomColors.SELECTED_PRIMARY_COLOR_LIGHT;
+            basic_secondary_color = CustomColors.BASIC_SECONDARY_COLOR_LIGHT;
+            selected_secondary_color = CustomColors.SELECTED_SECONDARY_COLOR_LIGHT;
+            clicked_background_color = CustomColors.CLICKED_BACKGROUND_COLOR_LIGHT;
+            dead_color = CustomColors.DEAD_COLOR_LIGHT;
         }
 
     }
