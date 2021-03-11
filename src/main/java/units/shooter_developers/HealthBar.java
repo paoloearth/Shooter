@@ -79,9 +79,9 @@ public class HealthBar extends MapObject {
         R.setStroke(CustomColors.OUTER_RECTANGLE_STROKE);
         return R;
     }
-    //JOSE: Non avrebbe più senso tornare un double visto che parliamo di width (la cui quantità è double)?
-    private static int getHBarHeightProportionalToSpriteHeight(double spriteHeight) {
-        return (int) (spriteHeight * CustomSettings.HB_PROPORTIONAL_WIDTH);}
+
+    private static double getHBarHeightProportionalToSpriteHeight(double spriteHeight) {
+        return  (spriteHeight * CustomSettings.HB_PROPORTIONAL_WIDTH);}
 
     private static Coordinates getDefaultHBarPosition(Sprite S) {
         return new Coordinates(0, (S.getActualHeight() * 1.1));
