@@ -33,6 +33,7 @@ class MapTest {
         robot.sleep(500);
     }
 
+    /*
     @ParameterizedTest
     @CsvSource({"Three_lines.txt,3", "Five_lines.txt,5"})
     void readsTrueNumberOfLines(String file_name, int num_lines) throws IOException, URISyntaxException {
@@ -46,6 +47,8 @@ class MapTest {
         var MR = new MapReader(file_name);
         assertEquals(MR.readLines(0,0),URL);
     }
+    */
+
 
 }
 
