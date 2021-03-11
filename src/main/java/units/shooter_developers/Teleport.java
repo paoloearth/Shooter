@@ -28,8 +28,8 @@ public class Teleport extends PicturedObject {
 
     /* Collisions & action management */
     @Override
-    public Box getHitbox(){
-        return new Box(getCurrentYPosition() + (getScaledHeight()*.25), getCurrentXPosition()+(getScaledWidth()*.25),
+    public HitBox getHitbox(){
+        return new HitBox(getCurrentYPosition() + (getScaledHeight()*.25), getCurrentXPosition()+(getScaledWidth()*.25),
                       getScaledWidth()*.5 , getScaledHeight()*.5 );
     }
 

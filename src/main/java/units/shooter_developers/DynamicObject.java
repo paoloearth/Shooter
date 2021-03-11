@@ -30,9 +30,9 @@ public abstract class DynamicObject extends PicturedObject {
     /* Collision handling */
     public abstract boolean checkIfPassable(Tile t);
 
-    protected final Box getDefaultMoveBox(){ return new Box( getFutureY() , getFutureX(), getScaledWidth() , getScaledHeight()); }
+    protected final HitBox getDefaultMoveBox(){ return new HitBox( getFutureY() , getFutureX(), getScaledWidth() , getScaledHeight()); }
 
-    protected Box getMoveBox(){ return getDefaultMoveBox();}
+    protected HitBox getMoveBox(){ return getDefaultMoveBox();}
 
     /* Movement & action management */
     protected abstract void defaultMovement(GameMap M);
@@ -44,7 +44,7 @@ public abstract class DynamicObject extends PicturedObject {
         var collision_box = getMoveBox();
         collision_box.compute_tiles_bounds(M);
 
-       return collision_box.performsCheck(M,this);
+       return collision_box.checkIfObjectCanMoveOnNeighboursTiles(M,this);
 
    }
 

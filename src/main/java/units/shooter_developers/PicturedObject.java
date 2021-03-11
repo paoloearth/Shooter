@@ -45,7 +45,7 @@ public abstract class PicturedObject extends MapObject {
 
 
     /* Collision handling */
-    protected Box getHitbox(){ return new Box(getCurrentYPosition(), getCurrentXPosition(),  getScaledWidth() , getScaledHeight() );}
+    protected HitBox getHitbox(){ return new HitBox(getCurrentYPosition(), getCurrentXPosition(),  getScaledWidth() , getScaledHeight() );}
 
     protected final boolean intersect(PicturedObject P2) { return getHitbox().intersect(P2.getHitbox()); }
 

@@ -52,13 +52,13 @@ public class Sprite extends DynamicObject {
     public void defaultMovement(GameMap M){ move(M);}
 
     @Override
-    public Box getHitbox(){ return new Box(getCurrentYPosition() , getCurrentXPosition() + getScaledWidth() * 0.15,
+    public HitBox getHitbox(){ return new HitBox(getCurrentYPosition() , getCurrentXPosition() + getScaledWidth() * 0.15,
                                      getScaledWidth() - getScaledWidth() * 0.15 , getScaledHeight()*.9 ); }
     @Override
     protected void action(Sprite S) { }
 
     @Override
-    public Box getMoveBox(){ return new Box( getFutureY() + (getScaledHeight() * 2.0/3.0), getFutureX(),
+    public HitBox getMoveBox(){ return new HitBox( getFutureY() + (getScaledHeight() * 2.0/3.0), getFutureX(),
                                                   getScaledWidth() , getScaledHeight() /3.0); }
 
     private void move(GameMap M) {
