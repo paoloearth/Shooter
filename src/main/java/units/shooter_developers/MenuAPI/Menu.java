@@ -107,27 +107,15 @@ public abstract class Menu extends Application {
     public abstract void createContent();
 
     public void readProperties(){
+        FileReader reader;
         File configFile = new File("config.ini");
         Properties config = new Properties();
         ImageView background_light = null;
         ImageView background_dark = null;
 
-        try {
-            FileReader reader = new FileReader(configFile);
-            config.load(reader);
-            reader.close();
-        }catch (IOException e) {
-            System.out.println("Config file not found. Using default properties.");
-        }
+        config = readPropertiesFromFile(configFile);
 
-        try{
-            double width = Double.parseDouble(config.getProperty("WIDTH"));
-            double height = Double.parseDouble(config.getProperty("HEIGHT"));
-            setStageDimensions(width, height);
-        } catch (Exception e) {
-            System.out.println("Parse of resolution failed. Using native resolution");
-            setStageDimensions(getScreenWidth(), getScreenHeight());
-        }
+        setResolution(config);
 
         try{
             background_light = new ImageView(CustomSettings.URL_BACKGROUND_LIGHT);
@@ -138,6 +126,7 @@ public abstract class Menu extends Application {
             var default_background = new ImageView(rectangle_image);
             _background = default_background;
         }
+
         var color_mode = config.getProperty("COLOR MODE");
         color_mode = color_mode == null? "" :  color_mode;
 
@@ -150,6 +139,31 @@ public abstract class Menu extends Application {
             if(background_dark != null)
                 _background = background_dark;
         }
+    }
+
+    private void setResolution(Properties config) {
+        try{
+            double width = Double.parseDouble(config.getProperty("WIDTH"));
+            double height = Double.parseDouble(config.getProperty("HEIGHT"));
+            setStageDimensions(width, height);
+        } catch (Exception e) {
+            System.out.println("Parse of resolution failed. Using native resolution");
+            setStageDimensions(getScreenWidth(), getScreenHeight());
+        }
+    }
+
+    private Properties readPropertiesFromFile(File configFile) {
+        FileReader reader;
+        Properties config = new Properties();
+        try {
+            reader = new FileReader(configFile);
+            config.load(reader);
+            reader.close();
+        }catch (IOException e) {
+            System.out.println("Config file not found. Using default properties.");
+        }
+
+        return config;
     }
 
     public void writeSettings() {
