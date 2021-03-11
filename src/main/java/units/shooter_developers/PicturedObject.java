@@ -34,8 +34,6 @@ public abstract class PicturedObject extends MapObject {
         _url = url;
         Image _picture = retrieveImage(_url);
         setDimensions( _picture.getWidth(), _picture.getHeight());
-        //JOSE: se si cambiano gli argomenti a double si può rimuovere il cast.
-
         _view = new ImageView(_picture);
     }
 
@@ -63,9 +61,9 @@ public abstract class PicturedObject extends MapObject {
     //      cmq, forse potrebbe essere interessante usare in questo caso un bind
     //      invece di ridimensionare manualmente
 
-    protected  final int getActualHeight() { return (int)  _view.getFitHeight(); }
+    protected  final double getActualHeight() { return _view.getFitHeight(); }
 
-    protected  final int getActualWidth() { return  (int)  _view.getFitWidth(); }
+    protected  final double getActualWidth() { return   _view.getFitWidth(); }
 
 
     /* Collision handling */
