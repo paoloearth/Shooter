@@ -42,6 +42,9 @@ public abstract class DynamicObject extends PicturedObject {
 
     protected Box getMoveBox(){ return getDefaultMoveBox();}
 
+    /* Movement & action management */
+    protected abstract void defaultMovement(GameMap M);
+
     protected final boolean illegalMove(GameMap M) {
 
        if(getDefaultMoveBox().isOutOfMap(M)) return true;

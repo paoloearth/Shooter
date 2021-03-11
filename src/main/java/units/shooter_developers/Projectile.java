@@ -42,7 +42,6 @@ public class Projectile extends DynamicObject {
         if(intersect(S)) hit( S);
     }
 
-    @Override
     public void defaultMovement(GameMap M){
         translate(M);
     }

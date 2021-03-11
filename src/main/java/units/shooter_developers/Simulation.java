@@ -165,7 +165,7 @@ public class Simulation extends Application {
 
                     all_sprites().forEach(
                             s -> {
-                                s.defaultMovement(gamemap);
+                                if(s instanceof DynamicObject) ((DynamicObject) s).defaultMovement(gamemap);
                                 all_players().forEach(s::action);
                             }
                     );
