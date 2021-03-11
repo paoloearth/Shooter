@@ -75,7 +75,7 @@ public class Sprite extends DynamicObject {
     protected void shoot(Pane root){
         if(canShoot.getValue())
         {
-            root.getChildren().add(new Projectile( getScalingFactors(), CustomSettings.URL_PROJECTILE,this));
+            root.getChildren().add(new Projectile( getResolutionScalingFactors(), CustomSettings.URL_PROJECTILE,this));
             shootingCooldown.play();
         }
     }

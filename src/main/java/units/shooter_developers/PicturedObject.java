@@ -53,8 +53,8 @@ public abstract class PicturedObject extends MapObject {
     //      -Inoltre bisognerebbe considerare sicurezza: che succede se l'immagine non si trova?
 
     protected final void updateView() {
-        this._view.setFitWidth( _scale * getScalingFactors().getKey()  * get_width());
-        this._view.setFitHeight(_scale * getScalingFactors().getValue() * get_height());
+        this._view.setFitWidth( _scale * getResolutionScalingFactors().getKey()  * get_width());
+        this._view.setFitHeight(_scale * getResolutionScalingFactors().getValue() * get_height());
         this._view.setPreserveRatio(false);
     }
     //JOSE: sostituire commento per un nome più chiaro, p.s. update_image_size
