@@ -15,7 +15,7 @@ public class ObjectAnimation extends Transition {
     private final double width;
     private final double height;
 
-    private int lastIndex;
+    private double lastIndex;
 
     //constructor
     public ObjectAnimation(ImageView imageView,
@@ -37,10 +37,10 @@ public class ObjectAnimation extends Transition {
 
 
     protected void interpolate(double k) {
-        final int index = Math.min((int) Math.floor(k * number_of_frames), number_of_frames - 1);
+        final double index = Math.min(Math.floor(k * number_of_frames), number_of_frames - 1);
         if (index != lastIndex) {
             final double x = (index % columns) * width  + offsetX;
-            final double y = (index / columns) * height + offsetY;
+            final double y = Math.floor(index / columns) * height + offsetY;
             imageView.setViewport(new Rectangle2D(x, y, width, height));
             lastIndex = index;
         }
