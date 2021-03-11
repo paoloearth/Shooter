@@ -58,7 +58,7 @@ public abstract class PicturedObject extends MapObject {
         return _toBeRemoved.get();
     }
 
-    public final BooleanProperty getRemovedProperty() {
+    public final BooleanProperty geToBeRemovedProperty() {
         return _toBeRemoved;
     }
 
@@ -68,7 +68,7 @@ public abstract class PicturedObject extends MapObject {
         scalePicture();
     }
 
-    public final void getRemoveProperty(boolean isDead) {
-        _toBeRemoved.set(isDead);
+    public final void getRemoveProperty(boolean toRemove) {
+        _toBeRemoved.set(toRemove);
     }
 }

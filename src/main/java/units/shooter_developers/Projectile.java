@@ -20,9 +20,6 @@ public class Projectile extends DynamicObject {
         applyCustomScaleToObject(CustomSettings.PROJECTILE_SCALE);
         setSpeed(CustomSettings.PROJECTILE_SPEED);
 
-        //JOSE: forse sarebbe interessante che questo metodo venga chiamato in automatico all'interno di
-        //      set_scale
-
         setInitialAndTranslateDirection(S.getCurrentDirection());
 
         moveTo(getBiasedStartingPosition(S));
@@ -67,10 +64,8 @@ public class Projectile extends DynamicObject {
         switch (D) {
             case UP    ->  { set_biases(+(getScaledWidth()),-(getScaledHeight()/2)); setDeltaY(- getSpeed());}
             case DOWN  ->  { set_biases(+(getScaledWidth()),+ (getScaledHeight()*2)); setDeltaY(getSpeed());}
-            case LEFT  ->  { set_biases(( 0), + getScaledHeight()/2);
-                setDeltaX(-getSpeed());}
-            case RIGHT ->  { set_biases((+(getScaledWidth()*2)), getScaledHeight()/2);
-                setDeltaX(+getSpeed());}
+            case LEFT  ->  { set_biases(( 0), + getScaledHeight()/2);setDeltaX(-getSpeed());}
+            case RIGHT ->  { set_biases((+(getScaledWidth()*2)), getScaledHeight()/2);setDeltaX(+getSpeed());}
         }
     }
     private double get_biased_y_position(Sprite S) { return S.getFutureY() + _biasY; }

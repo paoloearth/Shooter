@@ -1,4 +1,3 @@
-//JOSE: classe visitata
 
 package units.shooter_developers;
 
@@ -19,33 +18,32 @@ public class Sprite extends DynamicObject {
 
     private final String _id;
     private final IntegerProperty _frame  = new SimpleIntegerProperty(0);
-    private final HealthBar healthBar;
-    private boolean goNorth, goSouth, goEast, goWest;
+    private final HealthBar _healthBar;
+    private boolean _goNorth, _goSouth, _goEast, _goWest;
     private final BooleanProperty canShoot = new SimpleBooleanProperty(true);
-    private final String playerName;
+    private final String _playerName;
 
-    public Sprite(Pane simulation_root, GameMap M, Pair<Double, Double> scalingFactor, String url, int n_rows, int n_cols, String id, Direction D, String playerName)
+    public Sprite(Pane simulationRoot, GameMap M, Pair<Double, Double> scalingFactor, String url, int n_rows, int n_cols, String id, Direction D, String playerName)
     {
         super(scalingFactor, url, n_rows, n_cols);
-        this.playerName = playerName;
+        this._playerName = playerName;
         this._id = id;
 
         setSpeed(CustomSettings.PLAYER_SPEED);
         applyCustomScaleToObject(CustomSettings.PLAYER_SCALE);
-
 
         /* Add a triggered event to change the view accordingly to the direction of the sprite */
         ChangeListener<Object> updateImage = getListener();
         getCurrentDirectionProperty().addListener(updateImage);
         getCurrentDirectionProperty().setValue(D);
 
-        healthBar = new HealthBar(this);
-        getRemovedProperty().bind(healthBar.isRemainingLifeZero());
+        _healthBar = new HealthBar(this);
+        geToBeRemovedProperty().bind(_healthBar.isRemainingLifeZero());
 
         moveTo(M.get_position_of(id));
 
-        addNodes(healthBar, getPicture());
-        simulation_root.getChildren().add(this);
+        addNodes(_healthBar, getPicture());
+        simulationRoot.getChildren().add(this);
     }
 
 
@@ -103,10 +101,10 @@ public class Sprite extends DynamicObject {
     private void updateMovement() {
         setDeltaX(0);
         setDeltaY(0);
-        if (goNorth) setDeltaY(- getSpeed());
-        if (goSouth) setDeltaY(getSpeed());
-        if (goEast)  setDeltaX(getSpeed());
-        if (goWest)  setDeltaX(-getSpeed());
+        if (_goNorth) setDeltaY(- getSpeed());
+        if (_goSouth) setDeltaY(getSpeed());
+        if (_goEast)  setDeltaX(getSpeed());
+        if (_goWest)  setDeltaX(-getSpeed());
     }
 
     private void updateDirection(Coordinates destination)
@@ -127,17 +125,17 @@ public class Sprite extends DynamicObject {
     );
 
     /* Setters */
-    public final void setGoNorth(boolean goNorth) {
-        this.goNorth = goNorth;
+    public final void setGoNorth(boolean _goNorth) {
+        this._goNorth = _goNorth;
     }
-    public final void setGoSouth(boolean goSouth) {
-        this.goSouth = goSouth;
+    public final void setGoSouth(boolean _goSouth) {
+        this._goSouth = _goSouth;
     }
-    public final void setGoEast(boolean goEast) {
-        this.goEast = goEast;
+    public final void setGoEast(boolean _goEast) {
+        this._goEast = _goEast;
     }
-    public final void setGoWest(boolean goWest) {
-        this.goWest = goWest;
+    public final void setGoWest(boolean _goWest) {
+        this._goWest = _goWest;
     }
 
     /* Getters */
@@ -145,10 +143,10 @@ public class Sprite extends DynamicObject {
         return _id;
     }
     public final HealthBar getHBar() {
-        return healthBar;
+        return _healthBar;
     }
-    public final String getPlayerName() {
-        return playerName;
+    public final String get_playerName() {
+        return _playerName;
     }
 
 
