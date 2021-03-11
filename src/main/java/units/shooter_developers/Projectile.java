@@ -19,7 +19,7 @@ public class Projectile extends DynamicObject {
 
         setScale(CustomSettings.PROJECTILE_SCALE);
         setSpeed(CustomSettings.PROJECTILE_SPEED);
-        updateView();
+        scalePicture();
         //JOSE: forse sarebbe interessante che questo metodo venga chiamato in automatico all'interno di
         //      set_scale
 
@@ -27,7 +27,7 @@ public class Projectile extends DynamicObject {
 
         moveTo(getBiasedStartingPosition(S));
 
-        addNodes(getView());
+        addNodes(getImageView());
     }
 
     /* Movement & action management */
@@ -64,10 +64,10 @@ public class Projectile extends DynamicObject {
     private void setInitialAndTranslateDirection(Direction D) {
         _biasX = _biasY =0;
         switch (D) {
-            case UP    ->  { set_biases(+(getActualWidth()),-(getActualHeight()/2)); set_deltaY(get_deltaY()- get_speed());}
-            case DOWN  ->  { set_biases(+(getActualWidth()),+ (getActualHeight()*2)); set_deltaY(get_deltaY()+ get_speed());}
-            case LEFT  ->  { set_biases(( 0), + getActualHeight()/2);set_deltaX(get_deltaX()-get_speed());}
-            case RIGHT ->  { set_biases((+(getActualWidth()*2)), getActualHeight()/2);set_deltaX(get_deltaX()+get_speed());}
+            case UP    ->  { set_biases(+(getScaledWidth()),-(getScaledHeight()/2)); set_deltaY(get_deltaY()- get_speed());}
+            case DOWN  ->  { set_biases(+(getScaledWidth()),+ (getScaledHeight()*2)); set_deltaY(get_deltaY()+ get_speed());}
+            case LEFT  ->  { set_biases(( 0), + getScaledHeight()/2);set_deltaX(get_deltaX()-get_speed());}
+            case RIGHT ->  { set_biases((+(getScaledWidth()*2)), getScaledHeight()/2);set_deltaX(get_deltaX()+get_speed());}
         }
     }
     private double get_biased_y_position(Sprite S) { return S.getFutureY() + _biasY; }

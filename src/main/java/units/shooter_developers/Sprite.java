@@ -33,7 +33,7 @@ public class Sprite extends DynamicObject {
         setSpeed(CustomSettings.PLAYER_SPEED);
         setScale(CustomSettings.PLAYER_SCALE);
 
-        updateView();
+        scalePicture();
 
         /* Add a triggered event to change the view accordingly to the direction of the sprite */
         ChangeListener<Object> updateImage = getListener();
@@ -45,7 +45,7 @@ public class Sprite extends DynamicObject {
 
         moveTo(M.get_position_of(id));
 
-        addNodes(healthBar, getView());
+        addNodes(healthBar, getImageView());
         simulation_root.getChildren().add(this);
     }
 
@@ -53,11 +53,11 @@ public class Sprite extends DynamicObject {
     /* Movement & action management */
     public void defaultMovement(GameMap M){ move(M);}
     @Override
-    public Box getHitbox(){ return new Box(getCurrentYPosition() , getCurrentXPosition() + getActualWidth() * 0.15,
-                                     getActualWidth() - getActualWidth() * 0.15 , getActualHeight()*.9 ); }
+    public Box getHitbox(){ return new Box(getCurrentYPosition() , getCurrentXPosition() + getScaledWidth() * 0.15,
+                                     getScaledWidth() - getScaledWidth() * 0.15 , getScaledHeight()*.9 ); }
     @Override
-    public Box getMoveBox(){ return new Box( getFutureY() + (getActualHeight() * 2.0/3.0), getFutureX(),
-                                                  getActualWidth() , getActualHeight()* 1.0/3.0); }
+    public Box getMoveBox(){ return new Box( getFutureY() + (getScaledHeight() * 2.0/3.0), getFutureX(),
+                                                  getScaledWidth() , getScaledHeight()* 1.0/3.0); }
 
     private void move(GameMap M) {
 
@@ -92,7 +92,7 @@ public class Sprite extends DynamicObject {
     }
 
     private ChangeListener<Object> getListener() { return (obs, ov, nv) ->
-                                                  getView().setViewport(new Rectangle2D( _frame.get()*get_width(),
+                                                  getImageView().setViewport(new Rectangle2D( _frame.get()*get_width(),
                                                                                  getCurrentDirection().getOffset() * get_height(),
                                                                                        get_width(), get_height())); }
     //JOSE: questo metodo è un salame, meglio se si organizza un po' più visualmente, anche mettere i parametri in varie righe.

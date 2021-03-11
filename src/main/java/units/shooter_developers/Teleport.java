@@ -15,9 +15,9 @@ public class Teleport extends PicturedObject {
         super(scalingFactor, url);
 
         setScale(CustomSettings.TELEPORT_SCALE);
-        updateView();
+        scalePicture();
 
-        addNodes(getView());
+        addNodes(getImageView());
 
         rotationAnimation();
 
@@ -30,8 +30,8 @@ public class Teleport extends PicturedObject {
     /* Collisions & action management */
     @Override
     public Box getHitbox(){
-        return new Box(getCurrentYPosition() + (getActualHeight()*.25), getCurrentXPosition()+(getActualWidth()*.25),
-                      getActualWidth()*.5 , getActualHeight()*.5 );
+        return new Box(getCurrentYPosition() + (getScaledHeight()*.25), getCurrentXPosition()+(getScaledWidth()*.25),
+                      getScaledWidth()*.5 , getScaledHeight()*.5 );
     }
 
     @Override
@@ -41,7 +41,7 @@ public class Teleport extends PicturedObject {
 
     protected final void setDestination(Teleport T)
     {
-        destination = new Coordinates(T.getCurrentXPosition() + getActualWidth()/4.0 ,T.getCurrentYPosition()+ getActualHeight());
+        destination = new Coordinates(T.getCurrentXPosition() + getScaledWidth()/4.0 ,T.getCurrentYPosition()+ getScaledHeight());
     }
 
 

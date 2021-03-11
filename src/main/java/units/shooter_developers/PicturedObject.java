@@ -9,14 +9,11 @@ import javafx.util.Pair;
 
 public abstract class PicturedObject extends MapObject {
 
-    private final String _url;
-    private final ImageView _view;
+    private final ImageView _picture;
     private int _n_rows_spritesheet;
     private int _n_cols_spritesheet;
-    private double _scale;              // Scale to make the loaded image of desired size
+    private double _customScale;              // Scale to make the loaded image of desired size
     //JOSE: -può esserci ridundanza fra _view e _url + _n_rows + _n_cols?
-    //      -forse un nome più intuitivo, anche _image
-
 
     private final BooleanProperty _isDead = new SimpleBooleanProperty(false);
     //JOSE: penso di aver capito che questo oggetto blocca l'aggiornamento di un oggetto
@@ -31,15 +28,14 @@ public abstract class PicturedObject extends MapObject {
         _n_rows_spritesheet = 1;
         _n_cols_spritesheet = 1;
 
-        _url = url;
-        Image _picture = retrieveImage(_url);
+        Image _picture = retrieveImage(url);
         setDimensions( _picture.getWidth(), _picture.getHeight());
-        _view = new ImageView(_picture);
+        this._picture = new ImageView(_picture);
     }
 
-    public PicturedObject(Pair<Double,Double> scalingFactors, String url, int n_rows, int n_cols )
+    public PicturedObject(Pair<Double,Double> resolutionScalingFactors, String url, int n_rows, int n_cols )
     {
-        this(scalingFactors,url);
+        this(resolutionScalingFactors,url);
 
         _n_rows_spritesheet = n_rows;
         _n_cols_spritesheet = n_cols;
@@ -52,22 +48,22 @@ public abstract class PicturedObject extends MapObject {
     //JOSE: -Ci sono molti metodi che fanno questo lavoro. Bisognerebbe unificarlo
     //      -Inoltre bisognerebbe considerare sicurezza: che succede se l'immagine non si trova?
 
-    protected final void updateView() {
-        this._view.setFitWidth( _scale * getResolutionScalingFactors().getKey()  * get_width());
-        this._view.setFitHeight(_scale * getResolutionScalingFactors().getValue() * get_height());
-        this._view.setPreserveRatio(false);
+    protected final void scalePicture() {
+        this._picture.setFitWidth( _customScale * getResolutionScalingFactors().getKey()  * get_width());
+        this._picture.setFitHeight(_customScale * getResolutionScalingFactors().getValue() * get_height());
+        this._picture.setPreserveRatio(false);
     }
     //JOSE: sostituire commento per un nome più chiaro, p.s. update_image_size
     //      cmq, forse potrebbe essere interessante usare in questo caso un bind
     //      invece di ridimensionare manualmente
 
-    protected  final double getActualHeight() { return _view.getFitHeight(); }
+    protected  final double getScaledHeight() { return _picture.getFitHeight(); }
 
-    protected  final double getActualWidth() { return   _view.getFitWidth(); }
+    protected  final double getScaledWidth() { return   _picture.getFitWidth(); }
 
 
     /* Collision handling */
-    protected Box getHitbox(){ return new Box(getCurrentYPosition(), getCurrentXPosition(),  getActualWidth() , getActualHeight() );}
+    protected Box getHitbox(){ return new Box(getCurrentYPosition(), getCurrentXPosition(),  getScaledWidth() , getScaledHeight() );}
 
     protected final boolean intersect(PicturedObject P2) { return getHitbox().intersect(P2.getHitbox()); }
 
@@ -76,9 +72,7 @@ public abstract class PicturedObject extends MapObject {
     //JOSE: E questi metodi? penso che bisognerebbe renderli abstract oppure implementare un'interfaccia.
 
     /* Getters */
-    public final String getURL() { return _url; }
-
-    public final ImageView getView() { return _view; }
+    public final ImageView getImageView() { return _picture; }
     //JOSE: se si cambia il nome di _view, cambiare il nome di questo metodo.
 
     public final boolean isDead() {
@@ -91,7 +85,7 @@ public abstract class PicturedObject extends MapObject {
 
     /* Setters */
     public final void setScale(double scale) {
-        _scale = scale;
+        _customScale = scale;
     }
 
     public final void setIsDeadProperty(boolean isDead) {
