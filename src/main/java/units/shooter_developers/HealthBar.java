@@ -15,7 +15,7 @@ public class HealthBar extends MapObject {
     /* Constructors */
     public HealthBar(Sprite S)
     {
-        super(S.getActualWidth(), get_HBar_height_proportional_to_S_height(S.getActualHeight()));
+        super(S.getActualWidth(), getHBarHeightProportionalToSpriteHeight(S.getActualHeight()));
 
         final Rectangle lostLifeRectangle = createCustomOuterRectangle();
         remainingLifeRectangle = createCustomInnerRectangle();
@@ -66,8 +66,6 @@ public class HealthBar extends MapObject {
     }
 
 
-
-
     /* Graphical components */
     private  Rectangle createCustomInnerRectangle() {
         final Rectangle remainingLifeRectangle;
@@ -82,7 +80,7 @@ public class HealthBar extends MapObject {
         return R;
     }
     //JOSE: Non avrebbe più senso tornare un double visto che parliamo di width (la cui quantità è double)?
-    private static int get_HBar_height_proportional_to_S_height(double spriteHeight) {
+    private static int getHBarHeightProportionalToSpriteHeight(double spriteHeight) {
         return (int) (spriteHeight * CustomSettings.HB_PROPORTIONAL_WIDTH);}
 
     private static Coordinates getDefaultHBarPosition(Sprite S) {

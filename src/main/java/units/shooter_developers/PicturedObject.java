@@ -11,9 +11,8 @@ public abstract class PicturedObject extends MapObject {
 
     private final String _url;
     private final ImageView _view;
-    private int _n_rows;                // Number of rows  of the sprite-sheet
-    private int _n_cols;                // Number of columns of the sprite-sheet
-    //JOSE: io in queste variabili farei riferimento alla spritesheet, per esempio _n_rows_spritesheet
+    private int _n_rows_spritesheet;
+    private int _n_cols_spritesheet;
     private double _scale;              // Scale to make the loaded image of desired size
     //JOSE: -può esserci ridundanza fra _view e _url + _n_rows + _n_cols?
     //      -forse un nome più intuitivo, anche _image
@@ -29,8 +28,8 @@ public abstract class PicturedObject extends MapObject {
     {
         super(scalingFactors);
 
-        _n_rows = 1;
-        _n_cols = 1;
+        _n_rows_spritesheet = 1;
+        _n_cols_spritesheet = 1;
 
         _url = url;
         Image _picture = retrieveImage(_url);
@@ -44,10 +43,10 @@ public abstract class PicturedObject extends MapObject {
     {
         this(scalingFactors,url);
 
-        _n_rows = n_rows;
-        _n_cols = n_cols;
+        _n_rows_spritesheet = n_rows;
+        _n_cols_spritesheet = n_cols;
 
-        setDimensions(get_width()/_n_cols,get_height()/_n_rows);
+        setDimensions(get_width()/ _n_cols_spritesheet,get_height()/ _n_rows_spritesheet);
     }
 
     /* Image management */
