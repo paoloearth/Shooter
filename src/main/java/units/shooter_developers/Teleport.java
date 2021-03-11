@@ -1,5 +1,3 @@
-//JOSE: classe visitata
-
 package units.shooter_developers;
 
 import javafx.animation.Animation;
@@ -32,10 +30,9 @@ public class Teleport extends PicturedObject {
     /* Collisions & action management */
     @Override
     public Box getHitbox(){
-        return new Box(getCurrentYPosition() + (getActualHeight()*.25), getCurrentXPosition()+(getActualWidth()*.25),  getActualWidth()*.5 , getActualHeight()*.5 );
+        return new Box(getCurrentYPosition() + (getActualHeight()*.25), getCurrentXPosition()+(getActualWidth()*.25),
+                      getActualWidth()*.5 , getActualHeight()*.5 );
     }
-    //JOSE: Se si uniforma la gestione della hitbox, si può evitare modificare questo metodo. Basterebbe passare i
-    //      parametri per generare la hitbox come input in qualche modo (costruzione, metodo, ect).
 
     @Override
     public void action(Sprite S) {
