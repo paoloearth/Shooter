@@ -57,7 +57,7 @@ public class Projectile extends DynamicObject {
         if(!isDead() && !Owner.equals(S.get_id()))
         {
             setIsDeadProperty(true);
-            S.getHBar().damage();
+            S.getHBar().applyDamage();
         }
     }
 

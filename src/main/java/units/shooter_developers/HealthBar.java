@@ -1,5 +1,3 @@
-//JOSE: classe visitata
-
 package units.shooter_developers;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.DoubleProperty;
@@ -10,18 +8,18 @@ import javafx.scene.shape.Rectangle;
 public class HealthBar extends MapObject {
 
     private final Rectangle remainingLifeRectangle;
-    private final DoubleProperty health;
+    private final DoubleProperty healthPercentage;
 
     /* Constructors */
     public HealthBar(Sprite S)
     {
-        super(S.getActualWidth(), get_HBar_height_proportional_to_S_height(S.getActualHeight()));
+        super(S.getActualWidth(), getHBarHeightProportionalToSpriteHeight(S.getActualHeight()));
 
         final Rectangle lostLifeRectangle = createCustomOuterRectangle();
         remainingLifeRectangle = createCustomInnerRectangle();
 
-        health = new SimpleDoubleProperty(get_width());
-        remainingLifeRectangle.widthProperty().bind(health);
+        healthPercentage = new SimpleDoubleProperty(get_width());
+        remainingLifeRectangle.widthProperty().bind(healthPercentage);
 
         moveTo(getDefaultHBarPosition(S));
 
@@ -29,8 +27,7 @@ public class HealthBar extends MapObject {
     }
 
     /* Damage/Life handling */
-    //JOSE: immagino che questo metodo applica danneggio, per chiarezza lo chiamerei una roba del tipo: applyDamage
-    protected final void damage()
+    protected final void applyDamage()
     {
         setRemainingLifeTo(getCurrentHealth() - getRelativeDamage());
         if (lessThantHalfLifeRemains()) this.remainingLifeRectangle.setFill(CustomColors.HALF_LIFE);
@@ -44,10 +41,10 @@ public class HealthBar extends MapObject {
         return getCurrentHealth() <= getMaxHealth() / 2;
     }
 
-    protected final BooleanBinding isRemainingLifeZero() { return health.lessThanOrEqualTo(0); }
+    protected final BooleanBinding isRemainingLifeZero() { return healthPercentage.lessThanOrEqualTo(0); }
 
     protected final double getCurrentHealth() {
-        return health.get();
+        return healthPercentage.get();
     }
 
     private double getRelativeDamage()
@@ -62,10 +59,8 @@ public class HealthBar extends MapObject {
 
     private void setRemainingLifeTo(double d)
     {
-        health.set(d);
+        healthPercentage.set(d);
     }
-
-
 
 
     /* Graphical components */
@@ -81,15 +76,12 @@ public class HealthBar extends MapObject {
         R.setStroke(CustomColors.OUTER_RECTANGLE_STROKE);
         return R;
     }
-    //JOSE: Non avrebbe più senso tornare un double visto che parliamo di width (la cui quantità è double)?
-    private static int get_HBar_height_proportional_to_S_height(double spriteHeight) {
-        return (int) (spriteHeight * CustomSettings.HB_PROPORTIONAL_WIDTH);}
+
+    private static double getHBarHeightProportionalToSpriteHeight(double spriteHeight) {
+        return  (spriteHeight * CustomSettings.HB_PROPORTIONAL_WIDTH);}
 
     private static Coordinates getDefaultHBarPosition(Sprite S) {
         return new Coordinates(0, (S.getActualHeight() * 1.1));
     }
-
-
-
 
 }
