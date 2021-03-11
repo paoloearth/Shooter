@@ -83,8 +83,8 @@ public class Simulation extends Application {
 
     private void create_teleports() {
 
-        var T1  = new Teleport(root,  CustomSettings.URL_TELEPORT, gamemap, scaling_factors, "T0");
-        var T2  = new Teleport(root,  CustomSettings.URL_TELEPORT, gamemap, scaling_factors, "T1");
+        var T1  = new Teleport(root,  CustomSettings.URL_TELEPORT, gamemap, scaling_factors, "" + CustomSettings.TELEPORT_CODE + '0');
+        var T2  = new Teleport(root,  CustomSettings.URL_TELEPORT, gamemap, scaling_factors, "" + CustomSettings.TELEPORT_CODE + '1');
 
 
         T1.setDestination(T2);
@@ -93,15 +93,16 @@ public class Simulation extends Application {
     }
 
     private void create_map() {
-        var MR = new MapReader(get_map_url());
-        gamemap = MR.makeMapFromFileContent(WIDTH,HEIGHT);
-        root.getChildren().add(gamemap.get_cells());
+        var MR = new MapReader();
+        gamemap = MR.makeMapFromFileContent(get_map_url(), WIDTH,HEIGHT);
+        root.getChildren().add(gamemap.getCells());
+
     }
 
 
     private void create_players() {
-        Player_1 = new Sprite(root, gamemap, scaling_factors, get_i_urls_sprite(0),4, 1 , "P0", Direction.RIGHT, get_i_player_name(0));
-        Player_2 = new Sprite(root, gamemap, scaling_factors, get_i_urls_sprite(1),    4, 1,   "P1", Direction.LEFT, get_i_player_name(1));
+    Player_1 = new Sprite(root, gamemap, scaling_factors, get_i_urls_sprite(0),4, 1 ,  "" + CustomSettings.PLAYER_CODE + '0', Direction.RIGHT, get_i_player_name(0));
+    Player_2 = new Sprite(root, gamemap, scaling_factors, get_i_urls_sprite(1),    4, 1,   "" + CustomSettings.PLAYER_CODE + '1', Direction.LEFT, get_i_player_name(1));
     }
 
     private void create_frame() {

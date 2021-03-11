@@ -30,6 +30,11 @@ public class CustomSettings {
     public static final int SPRITE_COORD_INDEX = 4;
     public static final int TELEPORT_COORD_INDEX = 5;
 
+    /* CODES */
+    public static  final char PLAYER_CODE = 'P';
+    public static  final char TELEPORT_CODE = 'T';
+
+
     /* SPEEDS */
     public static final int PLAYER_SPEED  = 2;
     public static final int PROJECTILE_SPEED  = 5;
