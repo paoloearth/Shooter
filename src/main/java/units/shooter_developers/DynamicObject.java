@@ -10,6 +10,9 @@ public abstract class DynamicObject extends PicturedObject {
     private double  _speed;
     private double  _deltaX, _deltaY;
 
+
+
+
     /* Constructors */
     public DynamicObject(Pair<Double,Double> scalingFactors, String url)
     {
@@ -17,6 +20,9 @@ public abstract class DynamicObject extends PicturedObject {
     }
 
     public DynamicObject(Pair<Double,Double> scalingFactors, String url, int n_rows, int n_cols){ super(scalingFactors, url, n_rows, n_cols); }
+
+
+
 
     /* Movement management */
     protected void setSpeed(double speed) { _speed = speed;}
@@ -27,12 +33,18 @@ public abstract class DynamicObject extends PicturedObject {
 
     protected final Coordinates getFutureCoordinates() { return new Coordinates(getFutureX(), getFutureY()); }
 
+
+
+
     /* Collision handling */
     public abstract boolean checkIfPassable(Tile t);
 
     protected final HitBox getDefaultMoveBox(){ return new HitBox( getFutureY() , getFutureX(), getScaledWidth() , getScaledHeight()); }
 
     protected HitBox getMoveBox(){ return getDefaultMoveBox();}
+
+
+
 
     /* Movement & action management */
     protected abstract void defaultMovement(GameMap M);
@@ -48,12 +60,18 @@ public abstract class DynamicObject extends PicturedObject {
 
    }
 
+
+
+
     /* Setters */
     public final void setDeltaX(double deltaX) { _deltaX = deltaX; }
 
     public final void setDeltaY(double deltaY) { _deltaY = deltaY; }
 
     public final void set_currentDirection(Direction currentDirection) { _currentDirection.set(currentDirection); }
+
+
+
 
     /* Getters */
     public final double getSpeed() { return _speed; }

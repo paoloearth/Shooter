@@ -8,7 +8,6 @@ package units.shooter_developers;
 
 public class HitBox {
 
-
     public enum BOUNDS {TOP, LEFT, BOTTOM, RIGHT}
     double [] box ;
     int    [] tileNeighborhood;
