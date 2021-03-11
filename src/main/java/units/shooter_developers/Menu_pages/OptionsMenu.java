@@ -4,7 +4,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.util.Pair;
 import units.shooter_developers.MenuAPI.Menu;
-import units.shooter_developers.MenuAPI.MenuItem;
 
 public class OptionsMenu extends Menu {
 
@@ -78,11 +77,11 @@ public class OptionsMenu extends Menu {
 
     private void applyCurrentSettings(){
         writeSettings();
-        var selected_resolution = ParseSelectedResolution(getSelectionFor("RESOLUTION"));
+        var selected_resolution = ParseSelectedResolution(getSelectorValue("RESOLUTION"));
         var candidate_width = selected_resolution.getKey();
         var candidate_height = selected_resolution.getValue();
 
-        String candidate_color_mode = getSelectionFor("COLOR MODE");
+        String candidate_color_mode = getSelectorValue("COLOR MODE");
 
         if (isSimulationRunning()) {
             if (candidate_width != getMenuWidth() || candidate_height != getMenuHeight())

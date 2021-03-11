@@ -82,8 +82,7 @@ public abstract class Menu extends Application {
     }
 
     private void createRootAndBackground(double stage_width, double stage_height) {
-        Pane root = new Pane();
-        _root = root;
+        _root = new Pane();
 
         _background.setFitWidth(getMenuWidth());
         _background.setFitHeight(getMenuHeight());
@@ -107,9 +106,8 @@ public abstract class Menu extends Application {
     public abstract void createContent();
 
     public void readProperties(){
-        FileReader reader;
         File configFile = new File("config.ini");
-        Properties config = new Properties();
+        Properties config;
         ImageView background_light = null;
         ImageView background_dark = null;
 
@@ -123,8 +121,7 @@ public abstract class Menu extends Application {
         } catch(Exception e){
             System.out.println("Background images not found!");
             var rectangle_image = new Rectangle(2, 2).snapshot(null, null);
-            var default_background = new ImageView(rectangle_image);
-            _background = default_background;
+            _background = new ImageView(rectangle_image);
         }
 
         var color_mode = config.getProperty("COLOR MODE");
@@ -184,7 +181,7 @@ public abstract class Menu extends Application {
     }
 
 
-    /************************** ELEMENTS MANAGEMENT *****************************/
+    /************************** CONTENT MANAGEMENT *****************************/
 
     public void addItem(String new_menu_item){
         generateMenuBoxIfNotExist();
@@ -206,7 +203,7 @@ public abstract class Menu extends Application {
 
     public void addSelectorItem(String name, String ... selection_tags){
         generateMenuBoxIfNotExist();
-        ArrayList<String> tag_list= new ArrayList<String>();
+        ArrayList<String> tag_list= new ArrayList<>();
         Collections.addAll(tag_list, selection_tags);
 
         getItemsBox().addSelectorItem(name, tag_list);
@@ -214,21 +211,6 @@ public abstract class Menu extends Application {
 
     public void addGenericNode(Node generic_node){
         _root.getChildren().add(generic_node);
-    }
-
-    private void generateMenuBoxIfNotExist(){
-        MenuBox menu_box = (MenuBox) _root.getChildren().parallelStream()
-                .filter(e -> e instanceof MenuBox)
-                .findFirst()
-                .orElse(null);
-
-        if(menu_box == null){
-            MenuBox vbox = new MenuBox();
-            vbox.setTranslateX(0.0952*getMenuWidth() + getPositionX());
-            vbox.setTranslateY(0.5*getMenuHeight() + getPositionY());
-
-            _root.getChildren().addAll(vbox);
-        }
     }
 
     public void setTitle(String title){
@@ -282,9 +264,11 @@ public abstract class Menu extends Application {
     public void addSecondaryTitle(String title){
         var menu_frame = new BorderPane();
         menu_frame.setPrefSize(getMenuWidth(), getMenuHeight());
+
         Text title_object = new Text(title);
         title_object.setFont(Font.font("Times New Roman", FontWeight.BOLD,getMenuWidth()*0.06));
         title_object.setFill(getColorPalette().basic_primary_color);
+
         menu_frame.setAlignment(title_object,Pos.TOP_CENTER);
         menu_frame.setDisable(true);
         menu_frame.setTop(title_object);
@@ -292,10 +276,37 @@ public abstract class Menu extends Application {
         _root.getChildren().add(menu_frame);
     }
 
+    public void addChoiceBox(String name, int row, int col, Map<String, String> map_image_to_URL, double scale, int spritesheet_number_of_rows){
+        MenuGrid menu_grid_object = getMenuGridAndCreateIfNotExist();
+        menu_grid_object.addChoiceBox(name, row, col, map_image_to_URL, scale, spritesheet_number_of_rows);
+    }
+
+    public void addTextBox(String name, int row, int col, String commands_url, int number_of_rows_spritesheet, double scale, String default_message, String default_content){
+        MenuGrid menu_grid_object = getMenuGridAndCreateIfNotExist();
+
+        menu_grid_object.addTextBox(name, row, col, commands_url, number_of_rows_spritesheet, scale, default_message, default_content);
+    }
+
+    private void generateMenuBoxIfNotExist(){
+        MenuBox menu_box = (MenuBox) _root.getChildren().parallelStream()
+                .filter(e -> e instanceof MenuBox)
+                .findFirst()
+                .orElse(null);
+
+        if(menu_box == null){
+            MenuBox vbox = new MenuBox();
+            vbox.setTranslateX(0.0952*getMenuWidth() + getPositionX());
+            vbox.setTranslateY(0.5*getMenuHeight() + getPositionY());
+
+            _root.getChildren().addAll(vbox);
+        }
+    }
+
 
     /************************** SET/GET METHODS *****************************/
 
-    /** SCREEN **/
+    /** GETTERS **/
+
     public static double getScreenWidth(){
         Screen screen = Screen.getPrimary();
         Rectangle2D screen_bounds = screen.getVisualBounds();
@@ -310,24 +321,8 @@ public abstract class Menu extends Application {
         return screen_bounds.getHeight();
     }
 
-    /** STAGE **/
-    public void setStage(Stage stage){
-        _stage = stage;
-        _stage.setMaximized(false);
-    }
-
     public Stage getStage(){
         return _stage;
-    }
-
-    public void setStageDimensions(double width, double height){
-        _stage_width = width;
-        _stage_height = height;
-
-        if(getStage() != null) {
-            getStage().setWidth(width);
-            getStage().setHeight(height);
-        }
     }
 
     public static double getStageHeight() {
@@ -338,24 +333,12 @@ public abstract class Menu extends Application {
         return _stage_width;
     }
 
-    /** MENU **/
-
-    public void scaleMenu(double width_scale, double height_scale){
-        _width_scale = width_scale;
-        _height_scale = height_scale;
-    }
-
     public static double getMenuHeight() {
         return _height_scale * getStageHeight();
     }
 
     public static double getMenuWidth() {
         return _width_scale * getStageWidth();
-    }
-
-    public void setScaledPosition(double scaled_position_X, double scaled_position_Y){
-        _position_width_ratio = scaled_position_X;
-        _position_height_ratio = scaled_position_Y;
     }
 
     public double getPositionX(){
@@ -370,52 +353,63 @@ public abstract class Menu extends Application {
         return getStage().getScene();
     }
 
-    public void show(){
-        Scene menu_scene = new Scene(_root);
-        _stage.setScene(menu_scene);
-        _stage.show();
-    }
-
-    public static void setColorMode(String color_mode){
-        if(color_mode == "light"){
-            _color_mode = "light";
-            getColorPalette().setLight();
-        } else {
-            _color_mode = "dark";
-            getColorPalette().setDark();
-        }
-    }
-
     public static String getColorMode(){
         return _color_mode;
     }
 
-    /** MENU ELEMENTS **/
+    public MenuItem getItem(String name){
+        return getItems().stream()
+                .filter(e -> e.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public String getSelectorValue(String name){
+        var selector_object = getSelectorItem(name);
+
+        if(selector_object != null){
+            return selector_object.getText();
+        } else {
+            return null;
+        }
+    }
+
+    public String getChoiceBoxValue(String name){
+        return getChoiceBox(name).getValue();
+    }
+
+    public String getTextBoxValue(String name){
+        return getTextBox(name).getValue();
+    }
+
+    public static Simulation getSimulationInstance(){
+        return _simulation_instance;
+    }
+
+    protected static ColorPalette getColorPalette(){
+        return _color_palette;
+    }
+
+    protected SelectorItem getSelectorItem(String name){
+        return getSelectorItems().stream()
+                .filter(e -> e.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+    }
 
     private Title getTitleObject() {
-        var title_object = _root.getChildren().stream()
+        return (Title)_root.getChildren().stream()
                 .filter(e -> e instanceof Title)
                 .findFirst()
                 .orElse(null);
-
-        if(title_object == null)
-            return null;
-        else
-            return (Title)title_object;
     }
 
     private MenuBox getItemsBox() {
-        var menu_box_object = _root.getChildren().parallelStream()
+        return (MenuBox)_root.getChildren().parallelStream()
                 .filter(e -> e instanceof MenuBox)
                 .findFirst()
                 .orElse(null);
-
-        if(menu_box_object == null)
-            return null;
-        else
-            return (MenuBox) menu_box_object;
     }
-
 
     private ArrayList<MenuItem> getItems(){
         var item_list_from_box = new ArrayList<MenuItem>();
@@ -431,65 +425,14 @@ public abstract class Menu extends Application {
         return full_item_list;
     }
 
-    public MenuItem getItem(String name){
-        var item = getItems().stream()
-                .filter(e -> e.getName().equals(name))
-                .findFirst()
-                .orElse(null);
-
-        return item;
-    }
-
-    protected ArrayList<SelectorItem> getSelectorItems(){
-        return getItemsBox().getSelectorItems();
-    }
-
-    protected SelectorItem getSelectorItem(String name){
-        var selector_object = getSelectorItems().stream()
-                .filter(e -> e.getName().equals(name))
-                .findFirst()
-                .orElse(null);
-
-        return selector_object;
-    }
-
-    public String getSelectionFor(String name){
-        var selector_object = getSelectorItem(name);
-
-        if(selector_object != null){
-            return selector_object.getText();
-        } else {
-            return null;
-        }
-    }
-
-    public void addChoiceBox(String name, int row, int col, Map<String, String> map_image_to_URL, double scale, int spritesheet_number_of_rows){
-        MenuGrid menu_grid_object = getMenuGridAndCreateIfNotExist();
-        menu_grid_object.addChoiceBox(name, row, col, map_image_to_URL, scale, spritesheet_number_of_rows);
-    }
-
-    public String getChoiceBoxValue(String name){
-        return getChoiceBox(name).getValue();
-    }
-
     private ChoiceBox getChoiceBox(String name){
         var menu_grid = getMenuGridAndCreateIfNotExist();
         return menu_grid.getChoiceBox(name);
     }
 
-    public String getTextBoxValue(String name){
-        return getTextBox(name).getValue();
-    }
-
     private TextBox getTextBox(String name){
         var menu_grid = getMenuGridAndCreateIfNotExist();
         return menu_grid.getTextBox(name);
-    }
-
-    public void addTextBox(String name, int row, int col, String commands_url, int number_of_rows_spritesheet, double scale, String default_message, String default_content){
-        MenuGrid menu_grid_object = getMenuGridAndCreateIfNotExist();
-
-        menu_grid_object.addTextBox(name, row, col, commands_url, number_of_rows_spritesheet, scale, default_message, default_content);
     }
 
     private MenuGrid getMenuGridAndCreateIfNotExist() {
@@ -505,10 +448,46 @@ public abstract class Menu extends Application {
         return menu_grid_object;
     }
 
-    /** GAME INSTANCE **/
+    private ArrayList<SelectorItem> getSelectorItems(){
+        return getItemsBox().getSelectorItems();
+    }
 
-    public Simulation getSimulationInstance(){
-        return _simulation_instance;
+
+    /** SETTERS **/
+
+    public void setStage(Stage stage){
+        _stage = stage;
+        _stage.setMaximized(false);
+    }
+
+    public void setStageDimensions(double width, double height){
+        _stage_width = width;
+        _stage_height = height;
+
+        if(getStage() != null) {
+            getStage().setWidth(width);
+            getStage().setHeight(height);
+        }
+    }
+
+    public void setScaledPosition(double scaled_position_X, double scaled_position_Y){
+        _position_width_ratio = scaled_position_X;
+        _position_height_ratio = scaled_position_Y;
+    }
+
+    public void scaleMenu(double width_scale, double height_scale){
+        _width_scale = width_scale;
+        _height_scale = height_scale;
+    }
+
+    public static void setColorMode(String color_mode){
+        if(color_mode == "light"){
+            _color_mode = "light";
+            getColorPalette().setLight();
+        } else {
+            _color_mode = "dark";
+            getColorPalette().setDark();
+        }
     }
 
     public void setSimulationInstance(Simulation simulation_instance){
@@ -516,11 +495,17 @@ public abstract class Menu extends Application {
         _simulation_running = true;
     }
 
+    /** OTHER **/
+
+    public void show(){
+        Scene menu_scene = new Scene(_root);
+        _stage.setScene(menu_scene);
+        _stage.show();
+    }
+
     public boolean isSimulationRunning(){
         return _simulation_running;
     }
-
-    /** other **/
 
     public static ImageView retrieveImage(String URL, int number_of_rows, int number_of_columns)
     {
@@ -530,15 +515,10 @@ public abstract class Menu extends Application {
         return image_wrapped;
     }
 
-    public static ColorPalette getColorPalette(){
-        return _color_palette;
-    }
 
-    public static void setColorPalette(ColorPalette new_color_palette){
-        _color_palette = new_color_palette;
-    }
+    /************************** COLOR PALETTE OBJECT *****************************/
 
-    protected class ColorPalette {
+    protected static class ColorPalette {
         Color basic_primary_color;
         Color selected_primary_color;
         Color basic_secondary_color;
