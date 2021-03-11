@@ -22,16 +22,16 @@ public class GameMap {
 
     private final double _width;
     private final double _height;
-    private final int _horizontalCells;
-    private final int _verticalCells;
+    private final int _columns;
+    private final int _rows;
 
 
-    private final Map<String,Coordinates> startPlayerAndBonusPositions;
+    private final Map<String,Coordinates> playerAndBonusPositions;
 
 
     public GameMap(double width, double height,
                    Image tileSet, int cellSide,
-                   int horizontalCells, int verticalCells,
+                   int columns, int rows,
                    Set<Integer> passableCodes, Set<Integer> unpassableCodes,
                    List<String[]> mapTileComposition,
                    Map<String, Coordinates> coordinateDictionary)
@@ -40,14 +40,12 @@ public class GameMap {
         _width = width;
         _height = height;
 
-        _horizontalCells = horizontalCells;
-        _verticalCells = verticalCells;
+        _columns = columns;
+        _rows = rows;
 
-        startPlayerAndBonusPositions = coordinateDictionary;
+        playerAndBonusPositions = coordinateDictionary;
 
-
-        generateMap(horizontalCells,verticalCells,cellSide,mapTileComposition, passableCodes, unpassableCodes, tileSet);
-
+        generateMap(columns,rows,cellSide,mapTileComposition, passableCodes, unpassableCodes, tileSet);
 
         passableTiles = tiles.stream().filter(b-> b.is_passable).collect(Collectors.toList());
 
@@ -61,8 +59,6 @@ public class GameMap {
                             )
     {
         int  tilePerRow = (int) (tileSet.getWidth()/ cellSide);
-
-
 
         IntStream.range(0,horizontalCells ).mapToObj(i ->
                 IntStream.range(0, verticalCells).mapToObj(j -> {
@@ -86,15 +82,13 @@ public class GameMap {
                 })
         ).flatMap(s -> s).forEach(cells.getChildren()::add);
 
-
-
         tiles = cells.getChildren().stream().parallel().map(s->(Tile) s).collect(Collectors.toList());
 
     }
 
 
     /* Utils */
-    Coordinates get_position_of(String id) { return convert_tiles_in_pixel(getStartPlayerAndBonusPositions().get(id)); }
+    Coordinates get_position_of(String id) { return convert_tiles_in_pixel(getPlayerAndBonusPositions().get(id)); }
 
     Coordinates convert_tiles_in_pixel(Coordinates tile_coordinates)
     {
@@ -102,11 +96,11 @@ public class GameMap {
                                tile_coordinates.getY() * getTileHeight() );
     }
 
-    int single_index(int x, int y) {  return  (x * _verticalCells) + y;  }
+    int single_index(int x, int y) {  return  (x * _rows) + y;  }
 
-    public double getTileWidth() { return _width/_horizontalCells  ;   }
+    public double getTileWidth() { return _width/ _columns;   }
 
-    public double getTileHeight(){ return _height/_verticalCells; }
+    public double getTileHeight(){ return _height/ _rows; }
 
     public Coordinates getRandomLocation(){
         int index = new Random().nextInt(passableTiles.size());
@@ -115,7 +109,7 @@ public class GameMap {
 
     /* Getters  */
     public List<Tile> get_tile_matrix() { return tiles;  }
-    public Map<String, Coordinates> getStartPlayerAndBonusPositions() { return startPlayerAndBonusPositions; }
+    public Map<String, Coordinates> getPlayerAndBonusPositions() { return playerAndBonusPositions; }
     public Pane getCells() { return cells; }
     public double get_width()  { return _width; }
     public double get_height() { return _height; }

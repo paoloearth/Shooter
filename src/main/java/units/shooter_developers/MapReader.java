@@ -10,53 +10,62 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CyclicBarrier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 
-/* TEMPLATE
-       0. URL_spritesheet_mappa
-       1. n_cols, n_rows, cell_size
-       2. set_of_passable_blocks
-       3. set_of_non_passable_block_for_projectiles
-       4. sprite_1_blocco_x, sprite_1_blocco_y,sprite_2_blocco_x, sprite_2_blocco_y
-       5. Teleport_1_x;Teleport_1_y; Teleport_2_x, Teleport_2_y
+/*     TEMPLATE
+       0. Spritesheet URL
+       1. Columns, Rows, CellSize
+       2. Passable blocks for the sprite
+       3. Not passable blocks for the projectile
+       4. P1_start_X, P1_start_Y,P2_start_X, P2_start_X
+       5. T1_start_X;T1_start_Y; T2_start_X, T2_start_Y
+       6 ... Map codes
 */
 public class MapReader {
 
 
-    MapReader(){ }
+    /* Core function
+    * It is the longest method. We tried to split it but
+    * that only leads to more confusion because it
+    * looses the "linearity" of sequentially parsing a
+    * file. Annotation help the readers in this case.
+    * */
 
-    /* Core function */
     public GameMap makeMapFromFileContent(String URL, double width, double height)
     {
         List<String[]> lines = readLinesFromFile(URL);
 
-
+       /* 0. Spritesheet URL */
         String tileSetURL = lines.get(CustomSettings.URL_TILESET_INDEX)[0];
         Image  tileSet = getTilesetFromURL(tileSetURL);
 
+        /* 1. Columns, Rows, CellSize */
         List<Integer> mapInfo = parseStringArrayToIntArray(lines.get(CustomSettings.MAP_INFO_INDEX));
-        int horizonalCells = mapInfo.get(0);
-        int verticalCells = mapInfo.get(1);
+        int columns = mapInfo.get(0);
+        int rows = mapInfo.get(1);
         int cellSide = mapInfo.get(2);
 
+        /* 2. Passable blocks for the sprite
+        *  3. Not passable blocks for the projectile */
         Set<Integer> passableCodes   = fromIntListToSet(parseStringArrayToIntArray(lines.get(CustomSettings.PASSABLE_TILES_INDEX)));
         Set<Integer> unpassableCodes = fromIntListToSet(parseStringArrayToIntArray(lines.get(CustomSettings.NOT_PASSABLE_TILES_FOR_P_INDEX)));
 
 
+        /*   4. P1_start_X, P1_start_Y,P2_start_X, P2_start_X
+             5. T1_start_X;T1_start_Y; T2_start_X, T2_start_Y */
         Map<String, Coordinates> coordinateDictionary = new HashMap<>();
         fillDictionaryPosition(coordinateDictionary,CustomSettings.PLAYER_CODE, parseStringArrayToIntArray(lines.get(CustomSettings.SPRITE_COORD_INDEX)));
         fillDictionaryPosition(coordinateDictionary, CustomSettings.TELEPORT_CODE, parseStringArrayToIntArray(lines.get(CustomSettings.TELEPORT_COORD_INDEX)));
 
+        /* 6 ... Map codes */
         List<String[]> mapTileComposition = retrieveMapWithoutMetadata(lines, CustomSettings.NUMBER_OF_METADATA_LINES);
-
 
         return new GameMap(width, height,
                            tileSet,cellSide,
-                           horizonalCells,verticalCells,
+                           columns,rows,
                            passableCodes,unpassableCodes,
                            mapTileComposition, coordinateDictionary);
 
