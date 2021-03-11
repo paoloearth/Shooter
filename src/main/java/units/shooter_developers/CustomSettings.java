@@ -84,6 +84,9 @@ public class CustomSettings {
     public static final String URL_COMMANDS_P1     = "WASD.png";
     public static final String URL_COMMANDS_P2     = "arrows.png";
 
+    public static final String URL_BACKGROUND_LIGHT = "menu_light.jpg";
+    public static final String URL_BACKGROUND_DARK = "menu_dark.jpeg";
+
 
 
     /*  DISPLAYED NAMES */
@@ -94,6 +97,13 @@ public class CustomSettings {
 
     public static final String DESERT     = "Desert";
     public static final String ISLAND     = "Islands";
+
+    public static final String BONUS  = "BONUS";
+    public static final String PROJECTILE  ="PROJECTILE";
+    public static final String SPRITE  ="SPRITE";
+    public static final String TELEPORT  ="TELEPORT";
+
+    /*  MENU COLOR PALETTES */
 
 
 
