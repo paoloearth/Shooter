@@ -1,5 +1,3 @@
-//JOSE: classe visitata.
-
 package units.shooter_developers;
 
 import javafx.scene.Node;
@@ -10,10 +8,10 @@ import javafx.util.Pair;
 public abstract class MapObject extends Pane {
 
     private double _width, _height;
-    private   Pair<Double,Double> _scalingFactors;
+    private   Pair<Double,Double> _resolutionScalingFactors;
 
     /* Constructors */
-    MapObject(Pair<Double,Double> scaling_factors) { set_scalingFactors(scaling_factors); }
+    MapObject(Pair<Double,Double> resolutionScalingFactors) { setResolutionScalingFactors(resolutionScalingFactors); }
 
     MapObject(double width, double height) { setDimensions(width,height);}
 
@@ -35,14 +33,13 @@ public abstract class MapObject extends Pane {
     public final double get_width() { return _width; }
 
     public final double get_height() { return _height; }
-    //JOSE: Quando si ritorna width e height non dovrebbero essere considerati i fattori di scala?
 
-    public final Pair<Double, Double> getScalingFactors() { return _scalingFactors; }
+    public final Pair<Double, Double> getResolutionScalingFactors() { return _resolutionScalingFactors; }
 
     /* Setters */
     public final void set_width(double width) { _width = width; }
 
     public final void set_height(double height) { _height = height; }
 
-    public final void set_scalingFactors(Pair<Double, Double> scalingFactors) { _scalingFactors = scalingFactors; }
+    public final void setResolutionScalingFactors(Pair<Double, Double> resolutionScalingFactors) { _resolutionScalingFactors = resolutionScalingFactors; }
 }

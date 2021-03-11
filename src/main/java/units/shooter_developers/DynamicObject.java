@@ -25,7 +25,7 @@ public abstract class DynamicObject extends PicturedObject {
     public DynamicObject(Pair<Double,Double> scalingFactors, String url, int n_rows, int n_cols){ super(scalingFactors, url, n_rows, n_cols); }
 
     /* Movement management */
-    protected void setSpeed(double speed) { _speed = (int) (speed* getScalingFactors().getKey()); }
+    protected void setSpeed(double speed) { _speed = (int) (speed* getResolutionScalingFactors().getKey()); }
 
     protected final double getFutureX(){ return getCurrentXPosition() + get_deltaX(); }
 
@@ -38,7 +38,7 @@ public abstract class DynamicObject extends PicturedObject {
     /* Collision handling */
     public abstract boolean checkIfPassable(Tile t);
 
-    protected final Box getDefaultMoveBox(){ return new Box( getFutureY() , getFutureX(), getActualWidth() , getActualHeight()); }
+    protected final Box getDefaultMoveBox(){ return new Box( getFutureY() , getFutureX(), getScaledWidth() , getScaledHeight()); }
 
     protected Box getMoveBox(){ return getDefaultMoveBox();}
 

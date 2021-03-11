@@ -20,7 +20,7 @@ public class Bonus extends PicturedObject {
 
         setScale(CustomSettings.HEART_SCALE);
 
-        updateView();
+        scalePicture();
 
         _waiting_time = waitSomeTimeBeforeDisplayingBonusAgain();
         createAndStartAnimation(number_of_frames,n_cols);
@@ -34,9 +34,9 @@ public class Bonus extends PicturedObject {
     /* Movement & action management */
     private void pushInsideBorder() { moveTo(new Coordinates(getInMapXPosition(), getInMapYPosition())); }
 
-    private double getInMapXPosition() { return getCurrentXPosition()- getActualWidth(); }
+    private double getInMapXPosition() { return getCurrentXPosition()- getScaledWidth(); }
 
-    private double getInMapYPosition() { return getCurrentYPosition()- getActualHeight(); }
+    private double getInMapYPosition() { return getCurrentYPosition()- getScaledHeight(); }
 
     @Override
     public void action(Sprite S) {
@@ -64,7 +64,7 @@ public class Bonus extends PicturedObject {
 
     /* Animations */
     private void createAndStartAnimation(int frames, int n_cols) {
-        ObjectAnimation anim = new ObjectAnimation(getView(), Duration.seconds(1), frames, n_cols, 0, 0, get_width(), get_height());
+        ObjectAnimation anim = new ObjectAnimation(getImageView(), Duration.seconds(1), frames, n_cols, 0, 0, get_width(), get_height());
         anim.setCycleCount(Animation.INDEFINITE);
         anim.play();
     }
@@ -73,7 +73,7 @@ public class Bonus extends PicturedObject {
         return new Timeline(new KeyFrame(Duration.seconds(CustomSettings.BONUS_COOLDOWN),
                 event -> {
                     emptyPaneFromImageView(this);
-                    addNodes(getView());
+                    addNodes(getImageView());
                 }));
     }
 

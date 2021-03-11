@@ -13,7 +13,7 @@ public class HealthBar extends MapObject {
     /* Constructors */
     public HealthBar(Sprite S)
     {
-        super(S.getActualWidth(), getHBarHeightProportionalToSpriteHeight(S.getActualHeight()));
+        super(S.getScaledWidth(), getHBarHeightProportionalToSpriteHeight(S.getScaledHeight()));
 
         final Rectangle lostLifeRectangle = createCustomOuterRectangle();
         remainingLifeRectangle = createCustomInnerRectangle();
@@ -81,7 +81,7 @@ public class HealthBar extends MapObject {
         return  (spriteHeight * CustomSettings.HB_PROPORTIONAL_WIDTH);}
 
     private static Coordinates getDefaultHBarPosition(Sprite S) {
-        return new Coordinates(0, (S.getActualHeight() * 1.1));
+        return new Coordinates(0, (S.getScaledHeight() * 1.1));
     }
 
 }
