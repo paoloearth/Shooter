@@ -85,8 +85,6 @@ public class CustomSettings {
     public static final String URL_COMMANDS_P1     = "WASD.png";
     public static final String URL_COMMANDS_P2     = "arrows.png";
 
-    public static final String URL_LIGHT_BACKGROUND =
-
 
 
     /*  DISPLAYED NAMES */
@@ -103,7 +101,7 @@ public class CustomSettings {
     public static final String SPRITE  ="SPRITE";
     public static final String TELEPORT  ="TELEPORT";
 
-
+    /*  MENU COLOR PALETTES */
 
 
 }

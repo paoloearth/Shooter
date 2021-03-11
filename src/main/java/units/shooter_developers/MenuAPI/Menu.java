@@ -68,6 +68,8 @@ public abstract class Menu extends Application {
         _simulation_instance = null;
         _color_palette = new ColorPalette();
         _color_mode = "dark";
+
+        _color_palette.setDark();
     }
 
     public Menu(Menu other_menu){
@@ -92,6 +94,7 @@ public abstract class Menu extends Application {
 
     public void start(Stage stage){
         setStage(stage);
+        var hola = getColorMode();
         getStage().setMaximized(false);
         setStageDimensions(getMenuWidth(), getMenuHeight());
         createRootAndBackground(getMenuWidth(), getMenuHeight());
@@ -134,27 +137,17 @@ public abstract class Menu extends Application {
             var default_background = new ImageView(rectangle_image);
             _background = default_background;
         }
-
         var color_mode = config.getProperty("COLOR MODE");
-        if(color_mode != null){
-            setColorMode(color_mode);
-        }
+        color_mode = color_mode == null? "" :  color_mode;
 
-        if(getColorMode().equals("light")){
+        if(color_mode.equals("light")){
+            setColorMode("light");
             if(background_light != null)
                 _background = background_light;
-
-            getColorPalette().basic_primary_color = Color.WHEAT;
-            getColorPalette().basic_secondary_color = Color.BLACK;
-            getColorPalette().dead_color = Color.SANDYBROWN;
-            getColorPalette().selected_primary_color = Color.DARKRED;
-            getColorPalette().selected_secondary_color = Color.WHITESMOKE;
-            getColorPalette().clicked_background_color = Color.ORANGERED;
         } else {
+            setColorMode("dark");
             if(background_dark != null)
                 _background = background_dark;
-
-            setColorPalette(new ColorPalette());
         }
     }
 
@@ -187,7 +180,7 @@ public abstract class Menu extends Application {
         MenuItem new_item = new MenuItem(new_menu_item);
         new_item.setTranslateX(position_ratio_X*getMenuWidth());
         new_item.setTranslateY(position_ratio_Y*getMenuHeight());
-        
+
         addGenericNode(new_item);
     }
 
@@ -369,7 +362,13 @@ public abstract class Menu extends Application {
     }
 
     public static void setColorMode(String color_mode){
-        _color_mode = color_mode;
+        if(color_mode == "light"){
+            _color_mode = "light";
+            getColorPalette().setLight();
+        } else {
+            _color_mode = "dark";
+            getColorPalette().setDark();
+        }
     }
 
     public static String getColorMode(){
@@ -539,6 +538,24 @@ public abstract class Menu extends Application {
             selected_secondary_color = Color.DARKBLUE;
             clicked_background_color = Color.DARKVIOLET;
             dead_color = Color.DARKGREY;
+        }
+
+        protected void setDark(){
+            basic_primary_color = Color.SILVER;
+            selected_primary_color = Color.WHITE;
+            basic_secondary_color = Color.BLACK;
+            selected_secondary_color = Color.DARKBLUE;
+            clicked_background_color = Color.DARKVIOLET;
+            dead_color = Color.DARKGREY;
+        }
+
+        protected void setLight(){
+            basic_primary_color = Color.WHEAT;
+            basic_secondary_color = Color.BLACK;
+            dead_color = Color.SANDYBROWN;
+            selected_primary_color = Color.DARKRED;
+            selected_secondary_color = Color.WHITESMOKE;
+            clicked_background_color = Color.ORANGERED;
         }
 
     }
