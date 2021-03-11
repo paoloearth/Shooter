@@ -10,43 +10,30 @@ import javafx.util.Pair;
 public abstract class PicturedObject extends MapObject {
 
     private final ImageView _picture;
-    private int _n_rows_spritesheet;
-    private int _n_cols_spritesheet;
     private double _customScale;              // Scale to make the loaded image of desired size
-    //JOSE: -può esserci ridundanza fra _view e _url + _n_rows + _n_cols?
 
-    private final BooleanProperty _isDead = new SimpleBooleanProperty(false);
-    //JOSE: penso di aver capito che questo oggetto blocca l'aggiornamento di un oggetto
-    //      data una certa iterazione se è true. Forse è meglio cambiare il nome a _isBlocked o
-    //      _blockedProperty.
+    private final BooleanProperty _toBeRemoved = new SimpleBooleanProperty(false);
 
     /* Constructors  */
     public PicturedObject(Pair<Double,Double> scalingFactors, String url )
     {
         super(scalingFactors);
 
-        _n_rows_spritesheet = 1;
-        _n_cols_spritesheet = 1;
 
-        Image _picture = retrieveImage(url);
-        setDimensions( _picture.getWidth(), _picture.getHeight());
-        this._picture = new ImageView(_picture);
+        Image image = retrieveImage(url);
+        setDimensions( image.getWidth(), image.getHeight());
+        _picture = new ImageView(image);
     }
 
     public PicturedObject(Pair<Double,Double> resolutionScalingFactors, String url, int n_rows, int n_cols )
     {
         this(resolutionScalingFactors,url);
-
-        _n_rows_spritesheet = n_rows;
-        _n_cols_spritesheet = n_cols;
-
-        setDimensions(get_width()/ _n_cols_spritesheet,get_height()/ _n_rows_spritesheet);
+        setDimensions(get_width()/ n_cols,get_height()/ n_rows);
     }
 
     /* Image management */
     protected static Image retrieveImage(String URL) { return new Image(URL); }
-    //JOSE: -Ci sono molti metodi che fanno questo lavoro. Bisognerebbe unificarlo
-    //      -Inoltre bisognerebbe considerare sicurezza: che succede se l'immagine non si trova?
+
 
     protected final void scalePicture() {
         this._picture.setFitWidth( _customScale * getResolutionScalingFactors().getKey()  * get_width());
@@ -76,11 +63,11 @@ public abstract class PicturedObject extends MapObject {
     //JOSE: se si cambia il nome di _view, cambiare il nome di questo metodo.
 
     public final boolean isDead() {
-        return _isDead.get();
+        return _toBeRemoved.get();
     }
 
     public final BooleanProperty getIsDeadProperty() {
-        return _isDead;
+        return _toBeRemoved;
     }
 
     /* Setters */
@@ -89,6 +76,6 @@ public abstract class PicturedObject extends MapObject {
     }
 
     public final void setIsDeadProperty(boolean isDead) {
-        _isDead.set(isDead);
+        _toBeRemoved.set(isDead);
     }
 }

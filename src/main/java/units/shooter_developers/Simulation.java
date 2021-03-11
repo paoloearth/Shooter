@@ -167,7 +167,7 @@ public class Simulation extends Application {
                             s -> {
                                 if(s instanceof DynamicObject) ((DynamicObject) s).defaultMovement(gamemap);
                                 all_players().forEach(s::action);
-                            }
+                                }
                     );
                     try {
                         remove_dead_objects();
