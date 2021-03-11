@@ -47,7 +47,7 @@ public class GameMap {
 
         generateMap(columns,rows,cellSide,mapTileComposition, passableCodes, unpassableCodes, tileSet);
 
-        passableTiles = tiles.stream().filter(b-> b.is_passable).collect(Collectors.toList());
+        passableTiles = tiles.stream().filter(Tile::isPassableForPlayer).collect(Collectors.toList());
 
     }
 
@@ -88,23 +88,23 @@ public class GameMap {
 
 
     /* Utils */
-    Coordinates get_position_of(String id) { return convert_tiles_in_pixel(getPlayerAndBonusPositions().get(id)); }
+    public Coordinates get_position_of(String id) { return convert_tiles_in_pixel(getPlayerAndBonusPositions().get(id)); }
 
-    Coordinates convert_tiles_in_pixel(Coordinates tile_coordinates)
+    public Coordinates convert_tiles_in_pixel(Coordinates tile_coordinates)
     {
         return new Coordinates(tile_coordinates.getX()* getTileWidth(),
                                tile_coordinates.getY() * getTileHeight() );
     }
 
-    int single_index(int x, int y) {  return  (x * _rows) + y;  }
+    public int single_index(int x, int y) {  return  (x * _rows) + y;  }
 
-    public double getTileWidth() { return _width/ _columns;   }
+    public double getTileWidth() { return _width/ _columns; }
 
     public double getTileHeight(){ return _height/ _rows; }
 
     public Coordinates getRandomLocation(){
         int index = new Random().nextInt(passableTiles.size());
-        return passableTiles.get(index).get_pixel_of_block_position();
+        return passableTiles.get(index).getPixelPositionOfTheTile();
     }
 
     /* Getters  */

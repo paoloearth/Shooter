@@ -86,7 +86,7 @@ public class Sprite extends DynamicObject {
 
     public boolean checkIfPassable(Tile t)
     {
-        return t.is_passable;
+        return t.isPassableForPlayer();
     }
 
     private boolean hasMoved() {

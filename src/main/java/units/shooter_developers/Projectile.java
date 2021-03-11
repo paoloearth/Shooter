@@ -45,9 +45,7 @@ public class Projectile extends DynamicObject {
     }
 
     @Override
-    public boolean checkIfPassable(Tile t) {
-        return t.is_passable_for_projectile;
-    }
+    public boolean checkIfPassable(Tile t) { return t.isPassableForProjectile(); }
 
     private void hit(Sprite S)
     {
