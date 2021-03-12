@@ -18,7 +18,7 @@ import java.util.stream.IntStream;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(ApplicationExtension.class)
-class Simulation_Tests {
+class SimulationTests {
 
     private Simulation SIMULATION;
     ArrayList<KeyCode> P1_MOVEMENTS = new ArrayList<>(Arrays.asList(KeyCode.W, KeyCode.A, KeyCode.D,KeyCode.S));
@@ -49,16 +49,16 @@ class Simulation_Tests {
     }
 
     @Test
-    void width_is_correct_width () {
+    void widthIsCorrectWidth() {
       Assertions.assertThat(SIMULATION.getWIDTH()).isEqualTo(1000);
     }
 
     @Test
-    void height_is_correct_height() { Assertions.assertThat(SIMULATION.getHEIGHT()).isEqualTo(600); }
+    void heightIsCorrectHeight() { Assertions.assertThat(SIMULATION.getHEIGHT()).isEqualTo(600); }
 
 
    @Test
-    void Player_1_is_steady_while_moving_player_2(FxRobot robot) {
+    void player1IsSteadyWhileMovingPlayer2(FxRobot robot) {
 
         var P1 = SIMULATION.getPlayer_1();
         HitBox C = P1.getHitbox();
@@ -70,7 +70,7 @@ class Simulation_Tests {
     }
 
     @Test
-    void Player_2_is_steady_while_moving_player_1(FxRobot robot) {
+    void player2IsSteadyWhileMovingPlayer1(FxRobot robot) {
 
         var P1 = SIMULATION.getPlayer_2();
         HitBox C = P1.getHitbox();
@@ -82,7 +82,7 @@ class Simulation_Tests {
     }
 
     @Test
-    void shoot_is_adding_objects_to_root(FxRobot robot)
+    void shootIsAddingObjectsToRoot(FxRobot robot)
     {
          robot.push(KeyCode.ENTER);
          var b = SIMULATION.all_sprites().stream().anyMatch(p-> p instanceof Projectile);
@@ -90,7 +90,7 @@ class Simulation_Tests {
     }
 
     @Test
-    void shoot_cooldown_stop_multipleshoots(FxRobot robot)
+    void shootCooldownStopMultipleshoots(FxRobot robot)
     {
         robot.push(KeyCode.ENTER);
         robot.push(KeyCode.ENTER);
@@ -99,7 +99,7 @@ class Simulation_Tests {
     }
 
     @Test
-    void shoot_cooldown_allows_shootagain_after_time(FxRobot robot)  {
+    void shootCooldownAllowsShootagainAfterTime(FxRobot robot)  {
         robot.push(KeyCode.ENTER);
         robot.sleep(500);
         robot.push(KeyCode.ENTER);
@@ -109,7 +109,7 @@ class Simulation_Tests {
 
 
     @Test
-    void shoot_at_same_time(FxRobot robot)  {
+    void shootAtSameTime(FxRobot robot)  {
         robot.push(KeyCode.ENTER);
         robot.push(KeyCode.SPACE);
         var b = SIMULATION.all_sprites().stream().filter(p-> p instanceof Projectile).count() == 2;
@@ -117,7 +117,7 @@ class Simulation_Tests {
     }
 
     @Test
-    void move_to_is_actually_moving_the_sprite(FxRobot robot)
+    void moveToIsActuallyMovingTheSprite(FxRobot robot)
     {
         var  M = SIMULATION.getGamemap();
         var P1    = SIMULATION.getPlayer_1();
@@ -131,7 +131,7 @@ class Simulation_Tests {
     }
 
     @Test
-    void get_random_location_always_returning_reachable_tiles(FxRobot robot)
+    void getRandomLocationAlwaysReturningReachableTiles(FxRobot robot)
     {
         var  M = SIMULATION.getGamemap();
         var P1    = SIMULATION.getPlayer_1();
@@ -156,7 +156,7 @@ class Simulation_Tests {
     }
 
     @Test
-    void does_healtbar_decrease_with_damage(FxRobot robot)
+    void doesHealtbarDecreaseWithDamage(FxRobot robot)
     {
 
         var  P2    = SIMULATION.getPlayer_2();
@@ -180,9 +180,8 @@ class Simulation_Tests {
     }
 
     @Test
-    void does_healtbar_increase_with_bonus(FxRobot robot)
+    void doesHealtbarIncreaseWithBonus(FxRobot robot)
     {
-
         var  P2    = SIMULATION.getPlayer_2();
         var  H = P2.getHBar();
 
@@ -204,17 +203,9 @@ class Simulation_Tests {
                 .filter(pictured_object -> pictured_object instanceof Bonus)
                 .map(pictured_object -> (Bonus) pictured_object)
                 .forEach(bonus -> bonus.moveTo(P2.getCurrentPosition()));
-
         robot.sleep(50);
         assertTrue(H.getCurrentHealth() > lifeAfterBeenHit);
 
     }
-
-
-
-
-
-
-
 
 }
