@@ -1,5 +1,5 @@
 map_desert.png
-Row2
+1,2,3,4
 Row3
 Row4
 Row5
