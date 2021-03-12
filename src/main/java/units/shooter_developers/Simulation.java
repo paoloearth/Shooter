@@ -145,6 +145,8 @@ public class Simulation extends Application {
         addKeyHandler_PRESS(_scene,    Player_1, Player_2);
         addKeyHandler_RELEASED(_scene, Player_1,Player_2);
 
+
+
         /* Output the scene */
         _stage.setScene(_scene);
         _stage.show();

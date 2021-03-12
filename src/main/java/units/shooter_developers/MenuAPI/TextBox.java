@@ -1,5 +1,5 @@
 package units.shooter_developers.MenuAPI;
-
+// Visited
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
@@ -35,12 +35,14 @@ class TextBox extends VBox {
         var I = Menu.retrieveImage(commands_url, _nrows, 1);
         I.setPreserveRatio(true);
         I.setFitHeight(0.2*_custom_scale*Menu.getMenuHeight());
-        var hola = I.getFitHeight();
+        var hola = I.getFitHeight();                                                  // Change this name
         DropShadow ds = new DropShadow( 50, Color.WHITE );
         I.setEffect(ds);
         HBox H = createCustomHbox();
         H.getChildren().add(I);
 
+
+        // Use add All?
         getChildren().add(_textField);
         //getChildren().add(H);
         getChildren().add(I);
@@ -48,8 +50,8 @@ class TextBox extends VBox {
 
     private TextField createCustomizedTextField() {
         TextField text_field = new TextField();
-        var background_color = Menu.getColorPalette().dead_color;
-        var default_text_color = Menu.getColorPalette().selected_primary_color;
+        var background_color      = Menu.getColorPalette().dead_color;
+        var default_text_color    = Menu.getColorPalette().selected_primary_color;
         var introduced_text_color = Menu.getColorPalette().clicked_background_color;
         text_field.setStyle("-fx-control-inner-background: #" + background_color.toString().substring(2) + ";" +
                 "-fx-prompt-text-fill: #"+default_text_color.toString().substring(2) + ";" +

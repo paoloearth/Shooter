@@ -1,5 +1,8 @@
 package units.shooter_developers.MenuAPI;
 
+// VISITED
+// Should be better to use more precise exceptions
+
 /*
  *
  *  MENU BASED ON MICHAEL J. SIDERIUS'S ONE:
@@ -81,6 +84,7 @@ public abstract class Menu extends Application {
         this.createRootAndBackground(_stage_width, _stage_height);
     }
 
+    // This function does not use its parameters, we should remove them
     private void createRootAndBackground(double stage_width, double stage_height) {
         _root = new Pane();
 
@@ -88,6 +92,8 @@ public abstract class Menu extends Application {
         _background.setFitHeight(getMenuHeight());
         _background.setX(getPositionX());
         _background.setY(getPositionY());
+
+
         _root.getChildren().add(_background);
     }
 
@@ -105,6 +111,7 @@ public abstract class Menu extends Application {
 
     public abstract void createContent();
 
+    // Move name of config file to custom settings?
     public void readProperties(){
         File configFile = new File("config.ini");
         Properties config;
@@ -237,7 +244,7 @@ public abstract class Menu extends Application {
         var menu_frame = new BorderPane();
         menu_frame.setPrefSize(getMenuWidth(), getMenuHeight());
 
-        menu_frame.setAlignment(disclaimer_object,Pos.BOTTOM_CENTER);
+        BorderPane.setAlignment(disclaimer_object,Pos.BOTTOM_CENTER);
         menu_frame.setBottom(disclaimer_object);
         menu_frame.setDisable(true);
 
@@ -269,7 +276,7 @@ public abstract class Menu extends Application {
         title_object.setFont(Font.font("Times New Roman", FontWeight.BOLD,getMenuWidth()*0.06));
         title_object.setFill(getColorPalette().basic_primary_color);
 
-        menu_frame.setAlignment(title_object,Pos.TOP_CENTER);
+        BorderPane.setAlignment(title_object,Pos.TOP_CENTER);
         menu_frame.setDisable(true);
         menu_frame.setTop(title_object);
 
@@ -366,12 +373,17 @@ public abstract class Menu extends Application {
 
     public String getSelectorValue(String name){
         var selector_object = getSelectorItem(name);
+        return selector_object != null? selector_object.getText() : null;
+         /*
 
+         // Chanced to more compact notation
         if(selector_object != null){
             return selector_object.getText();
         } else {
             return null;
         }
+        */
+
     }
 
     public String getChoiceBoxValue(String name){
@@ -389,6 +401,7 @@ public abstract class Menu extends Application {
     protected static ColorPalette getColorPalette(){
         return _color_palette;
     }
+
 
     protected SelectorItem getSelectorItem(String name){
         return getSelectorItems().stream()

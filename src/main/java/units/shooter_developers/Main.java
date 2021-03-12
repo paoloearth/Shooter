@@ -16,6 +16,7 @@ public class Main extends Application {
 
         stage.initStyle(StageStyle.UNDECORATED);
         GameMenu M = new GameMenu();
+
         M.readProperties();
         M.start(stage);
 

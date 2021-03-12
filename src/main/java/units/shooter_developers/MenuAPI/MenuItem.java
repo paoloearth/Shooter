@@ -1,5 +1,6 @@
 package units.shooter_developers.MenuAPI;
-
+// Visited
+// Remove this when it is not necessary
 import javafx.geometry.Pos;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.ImageView;

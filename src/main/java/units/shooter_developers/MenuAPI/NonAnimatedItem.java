@@ -1,5 +1,6 @@
 package units.shooter_developers.MenuAPI;
 
+//VISITED
 import javafx.beans.property.StringPropertyBase;
 import javafx.geometry.Pos;
 import javafx.scene.SnapshotParameters;
@@ -26,16 +27,11 @@ class NonAnimatedItem extends StackPane {
             public Object getBean() { return null; }
             @Override
             public String getName() { return null; }};
-        //_name_property.setValue(name);
 
         var effective_width_ratio = 0.19;
         var effective_height_ratio = 0.05;
-        if (item_width_ratio >= 0) {
-            effective_width_ratio = item_width_ratio;
-        }
-        if (item_height_ratio >= 0) {
-            effective_height_ratio = item_height_ratio;
-        }
+        if (item_width_ratio >= 0) effective_width_ratio = item_width_ratio;
+        if (item_height_ratio >= 0) effective_height_ratio = item_height_ratio;
 
         Color text_color = Menu.getColorPalette().dead_color;
         Color background_color = Menu.getColorPalette().basic_secondary_color;
@@ -76,6 +72,7 @@ class NonAnimatedItem extends StackPane {
         _name_property.setValue(name);
     }
 
+    // Dead code?
     protected StringPropertyBase getNameAsProperty(){
         return _name_property;
     }
