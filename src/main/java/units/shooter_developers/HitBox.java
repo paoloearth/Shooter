@@ -6,6 +6,8 @@
 package units.shooter_developers;
 
 
+import java.util.Arrays;
+
 public class HitBox {
 
     public enum BOUNDS {TOP, LEFT, BOTTOM, RIGHT}
@@ -105,7 +107,11 @@ public class HitBox {
     }
 
 
-
-
-
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HitBox hitBox = (HitBox) o;
+        return Arrays.equals(box, hitBox.box);
+    }
 }
