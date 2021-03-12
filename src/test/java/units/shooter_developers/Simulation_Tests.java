@@ -203,9 +203,7 @@ class Simulation_Tests {
                 .stream()
                 .filter(pictured_object -> pictured_object instanceof Bonus)
                 .map(pictured_object -> (Bonus) pictured_object)
-                .forEach(bonus -> {
-                    bonus.moveTo(P2.getCurrentPosition());
-                });
+                .forEach(bonus -> bonus.moveTo(P2.getCurrentPosition()));
 
         robot.sleep(50);
         assertTrue(H.getCurrentHealth() > lifeAfterBeenHit);
