@@ -86,19 +86,18 @@ Continuos Integration is handled by both:
 <!-- GETTING STARTED -->
 ## Getting Started :information_source:
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+The usage is straightforward, just follow these simple commands:
 
+```console
+git clone https://github.com/paoloearth/Shooter
+cd Shooter
+gradlew run
+```
 
 <!-- USAGE EXAMPLES -->
 ## Usage :game_die:
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-
-
+To add here gifs of menu/game sessions.
 <!-- ROADMAP -->
 ## Roadmap
 
