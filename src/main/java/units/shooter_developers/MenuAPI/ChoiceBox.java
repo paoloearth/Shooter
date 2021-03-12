@@ -1,6 +1,6 @@
 package units.shooter_developers.MenuAPI;
 
-import javafx.geometry.Insets;
+/* VISITED */
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -12,6 +12,8 @@ import java.util.Map;
 
 class ChoiceBox extends VBox {
 
+
+    /* Can we make final these parameters? */
     private Map<String, String> _dict;
     private int _nrows;
     private double _custom_scale;
@@ -47,22 +49,20 @@ class ChoiceBox extends VBox {
 
         });
 
+        /* Can we use foreach?*/
+        map_image_to_URL.forEach((key, value) -> _selector.addTag(key));
+        /*
         for(var elem : map_image_to_URL.entrySet()){
             _selector.addTag(elem.getKey());
         }
+        // Squeeze these 2 with add all
+        */
+        getChildren().addAll(image_box,_selector);
 
-        getChildren().add(image_box);
-        getChildren().add(_selector);
     }
 
-    public String getValue()
-    {
-        return _selector.getText();
-    }
-
-    public String getName(){
-        return _name;
-    }
+    public String getValue() { return _selector.getText(); }
+    public String getName(){ return _name; }
 }
 
 

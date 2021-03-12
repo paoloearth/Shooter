@@ -25,6 +25,7 @@ public class GameMenu extends Menu {
     public GameMenu(Simulation game_instance){
         super();
         setSimulationInstance(game_instance);
+
     }
 
     @Override
@@ -62,6 +63,8 @@ public class GameMenu extends Menu {
             OptionsMenu options_menu = new OptionsMenu(this);
             options_menu.start(getStage());
         });
+
+
     }
 
     @Override
