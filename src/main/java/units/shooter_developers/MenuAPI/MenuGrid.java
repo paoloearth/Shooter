@@ -1,5 +1,5 @@
 package units.shooter_developers.MenuAPI;
-
+// Visited
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
 
@@ -49,9 +49,16 @@ class MenuGrid extends GridPane {
                 .findFirst()
                 .orElse(null);
 
+
+        // More compact notation
+        return text_box_object==null? null : (TextBox) text_box_object;
+
+        /*
         if(text_box_object == null)
             return null;
         else
             return (TextBox) text_box_object;
+            */
+
     }
 }

@@ -1,8 +1,6 @@
 package units.shooter_developers.MenuAPI;
-
-import com.sun.javafx.sg.prism.NGRectangle;
+// VISITED
 import javafx.beans.property.StringPropertyBase;
-import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 
@@ -15,8 +13,8 @@ class SelectorItem extends HBox {
     private int _selection_index;
     private double _width_selection_item;
     private final String _name;
-    private final double _selection_section_translation;
-    private StringPropertyBase _selection_as_property;
+    private final double _selection_section_translation;  // Is this needed globally?
+    private StringPropertyBase _selection_as_property;   // Is this needed globally?
     private final boolean _show_name;
 
     public SelectorItem(String name, boolean show_name){
@@ -65,6 +63,9 @@ class SelectorItem extends HBox {
             this.getChildren().add(name_text_box);
             this.getChildren().add(long_space);
         }
+        // How about squueze this down?
+        // this.getChildren().addAll(left_arrow_button,short_space_1,selection_text_box,short_space_2,right_arrow_button);
+
         this.getChildren().add(left_arrow_button);
         this.getChildren().add(short_space_1);
         this.getChildren().add(selection_text_box);
@@ -73,18 +74,30 @@ class SelectorItem extends HBox {
     }
 
     private void next() {
+
+        // More compact notation
+        _selection_index = _selection_index == _selection_list.size()-1? 0 : _selection_index+1;
+        /*
         if (_selection_index == _selection_list.size() - 1)
             _selection_index = 0;
         else
             _selection_index += 1;
+            */
+
         updateTagText();
     }
 
     private void previous() {
+
+        // More compact notation
+        _selection_index = _selection_index == 0? _selection_list.size() - 1 :  _selection_index - 1;
+/*
         if (_selection_index == 0)
             _selection_index = _selection_list.size() - 1;
         else
             _selection_index -= 1;
+
+ */
         updateTagText();
     }
 
@@ -101,8 +114,11 @@ class SelectorItem extends HBox {
                 .findFirst()
                 .orElse(null);
 
-        if (!_selection_list.isEmpty())
+        // Added assertion
+        if (!_selection_list.isEmpty()) {
+            assert selection_item != null;
             selection_item.setName(_selection_list.get(_selection_index));
+        }
 
         _selection_as_property.setValue(_selection_list.get(_selection_index));
     }
@@ -118,7 +134,7 @@ class SelectorItem extends HBox {
     public StringPropertyBase getSelectionAsProperty(){
         return _selection_as_property;
     }
-
+ // Dead code?
     protected void setWidthSelectionZone(double scale_width){
         _width_selection_item = scale_width;
     }
