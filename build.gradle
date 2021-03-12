@@ -4,8 +4,9 @@ plugins {
     id 'java'
 }
 
+
 group 'org.shooter_developers'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 repositories {
     mavenCentral()
@@ -29,7 +30,6 @@ javafx {
     modules = ['javafx.controls', 'javafx.fxml']
 }
 
-mainClassName = 'units.shooter_developers.Main'
 
 
 jar {
@@ -40,3 +40,4 @@ jar {
 
 
 
+mainClassName='units.shooter_developers.Main'
