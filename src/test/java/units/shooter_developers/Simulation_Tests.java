@@ -179,6 +179,37 @@ class Simulation_Tests {
 
     }
 
+    @Test
+    void does_healtbar_increase_with_bonus(FxRobot robot)
+    {
+
+        var  P2    = SIMULATION.getPlayer_2();
+        var  H = P2.getHBar();
+
+        robot.push(KeyCode.SPACE);
+
+        SIMULATION.getRoot().getChildren()
+                .stream()
+                .filter(pictured_object -> pictured_object instanceof Projectile)
+                .map(pictured_object -> (Projectile) pictured_object)
+                .forEach(projectile -> {
+                    projectile.setSpeed(0);
+                    projectile.moveTo(P2.getCurrentPosition());
+                });
+
+        robot.sleep(50);
+        var lifeAfterBeenHit = H.getCurrentHealth();
+        SIMULATION.getRoot().getChildren()
+                .stream()
+                .filter(pictured_object -> pictured_object instanceof Bonus)
+                .map(pictured_object -> (Bonus) pictured_object)
+                .forEach(bonus -> bonus.moveTo(P2.getCurrentPosition()));
+
+        robot.sleep(50);
+        assertTrue(H.getCurrentHealth() > lifeAfterBeenHit);
+
+    }
+
 
 
 
