@@ -71,4 +71,5 @@ public abstract class PicturedObject extends MapObject {
     public final void getRemoveProperty(boolean toRemove) {
         _toBeRemoved.set(toRemove);
     }
+
 }
