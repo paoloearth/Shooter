@@ -1,5 +1,7 @@
 package units.shooter_developers.Menu_pages;
-
+/* VISITED
+ *  - Exception should be more specific, here no message is printed except for the stacktrace
+ *  - Naming maybe should be change from primo_secondo to primoSecondo */
 import units.shooter_developers.*;
 import units.shooter_developers.MenuAPI.Menu;
 
@@ -15,15 +17,15 @@ public class Submenu extends Menu {
 
     @Override
     public void createContent(){
-        addTextBox("Player_textbox_1", 0, 0, CustomSettings.URL_COMMANDS_P1, 1, CustomSettings.WASD_SCALE, "Who is Player 1?", "Rajoy");
-        addTextBox("Player_textbox_2", 0, 1, CustomSettings.URL_COMMANDS_P2, 1, CustomSettings.ARROWS_SCALE, "Who is Player 2?", "Zapatero");
+        addTextBox("Player_textbox_1", 0, 0, CustomSettings.URL_COMMANDS_P1, 1, CustomSettings.WASD_SCALE,   "Who is Player 1?", "Fizz");
+        addTextBox("Player_textbox_2", 0, 1, CustomSettings.URL_COMMANDS_P2, 1, CustomSettings.ARROWS_SCALE, "Who is Player 2?", "Buzz");
 
         Map<String, String> Name_URL = generatePlayersUrl();
         addChoiceBox("Player_selection_1", 1, 0, Name_URL, 1,4);
         addChoiceBox("Player_selection_2", 1, 1, Name_URL, 1,4);
 
-        Map<String, String> Map_URL = generateMapsUrl();
-        addChoiceBox("Map_selection", 2, 0,Map_URL, CustomSettings.MAP_SCALE, 1);
+        Map<String, String> mapURL = generateMapsUrl();
+        addChoiceBox("Map_selection", 2, 0,mapURL, CustomSettings.MAP_SCALE, 1);
 
         addFreeItem("Play!", 0.6, 0.8);
 

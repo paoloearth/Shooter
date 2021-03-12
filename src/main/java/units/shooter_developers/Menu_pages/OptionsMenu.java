@@ -57,8 +57,9 @@ public class OptionsMenu extends Menu {
         String width_string;
         String height_string;
 
-       /* Maybe here consider not ignoring matcher.find()
-       *  Exception should be more specific, here no message is printed */
+       /*  - Maybe here consider not ignoring matcher.find()
+        *  - Exception should be more specific, here no message is printed
+        *  */
         try {
             String regex = "\\d+";
             Pattern pattern = Pattern.compile(regex);
