@@ -70,8 +70,6 @@
 * Has multiple maps, from desert to lakes :earth_africa:
 * An ever-expanding set of characters for the players to chose from :space_invader:
 
-
-
 ### Built With :hammer:
 
 Code is written in:
@@ -91,10 +89,6 @@ Continuos Integration is handled by both:
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
-### Prerequisites :memo:
-
-This is an example of how to list things you need to use the software and how to install them.
-
 
 <!-- USAGE EXAMPLES -->
 ## Usage :game_die:
@@ -110,169 +104,15 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 See the [open issues](https://github.com/paoloearth/Shooter/issues) for a list of proposed features (and known issues).
 
-## Prerequisites
-
-- [ ] Learn how to collaborate & the GitHub workflow
-
-- [ ] Basic knowledge of Functional Programming
-
-- [ ] Basic knowledge of Java FX
-
-## Version 1.0
-
-**Idea:**
-
-Working implementation of a 2-players,2-D shooter game where:
-
-- Both players play on the same machine (only 1 client)
-
-- There is collision detection with obstacles (walls, bushes) for both players & projectiles
-
-- One pressed the executable, a game is launched:
-  
-  - No menù, map selection etc.
-
-- Only extra functionalities other than:
-  
-  - "pause" button to stop the game
-  
-  - "exit" button to stop and close 
-
----
-
-**Tentative TASK list:**
-
-- [ ] Set up properly the project (GitHub, tags, branches, issues, versioning etc.)
-
-- [ ] Prototyping: how will the game look?
-  
-  Forget for a moment java constraints and sketch:
-  
-  - the window
-  
-  - the buttons
-  
-  - the player's info (life, bonuses)
-  
-  How will the scale of the players be ?  
-  
-  What kind of elements will be present? 
-
-- [ ] Create a JavaFX interface(functional style)
-  
-  - Components of the interface
-  
-  - Class structure 
-  
-  - Must be responsive! (scale automatically when changing the size of the window)
-    
-    -  [A LayoutSample.java (Release 8) (oracle.com)](https://docs.oracle.com/javase/8/javafx/layout-tutorial/layoutsamplejava.htm#CHDIIDCJ)
-    
-    - [(13) JavaFx BorderPane Resizing - JavaFX Layout Tutorial (2019) - YouTube](https://www.youtube.com/watch?v=pO4J6JflZeg&t=19s)
-
-- [ ] JavaFX map & Objects:  (always keep functional programming in mind)
-  
-  - How do we encode the map? Will it be a set of tiles or there is a better way? How will each tile be? Grid?
-  
-  - How do we encode the objects? Do we use images? png or svg (scalable)? What is the best design? Interface class to abstract objects to then derive?
-  
-  - What work best for interactions between things? 
-  
-  - Is the whole map always visible or is it split in portions depending on the position of the player?
-
-- [ ] JavaFX moving objects (functional style)
-  
-  - How do we move objects in the map in the best way?
-    
-    - [How to create a game loop in JavaFX - learn by creating a top-down space game – Eden Coding](https://edencoding.com/game-loop-javafx/) (recent arcticle: august 2020)
-  
-  - Which set of keys should we use as moving-keys for the 2 players?
-  
-  - Which directions can sprites take?
-  
-  - Animated sprite?
-
-- [ ] JavaFX collision (Functional styles)
-  
-  - How do we handle collisions for both sprites, objects and projectiles?
-  
-  - Border of the map?
-
-- [ ] How do we manage life?
-  
-  - How to measure, increase or decrease life 
-  
-  - How to represent life? Health bar of set of hearths?
-
-- [ ] Animation: eg. loading, stop etc.
-  
-  - [Creating a Sprite Animation with JavaFX - netopyr.com](https://netopyr.com/2012/03/09/creating-a-sprite-animation-with-javafx/)
-
-- [ ] Start a match/End a match/Restart a match# Version 2.0
-
-## Version 1.1 ... 1.9
-
-Same game as above but with new features:
-
-- Menu from which you can do things (e.g. select a map)
-
-- Possibility of selecting the sprites for each player
-
-- Set of new in-game features:
-  
-  - More obstacles
-  
-  - Powerups & their effects
-
-## Version 2.0
-
-**Idea:**
-
-Working implementation of a 2-players,2-D shooter game where:
-
-- Both players play on the **distinct machine on the same LAN**
-
-A server must take care of everything!
-
-More effects, sprites etc.
-
-## Version 3.0
-
-**Idea:**
-
-Multiplayer (e.g 2 vs 2)
-
-More effects, sprites, bonuses, maps
-
-## Version 4.0
-
-**Idea**:
-
-Game server is on the cloud ->  players no more needs to be on the same LAN
 
 
-
----
-
-
-
-## Idea:
-
-- Cespugli rendono invisible il personaggio
-
-- Reti rallentano i proiettili
-
-##### Bonus:
-
-- Proiettili più veloci per x secondi
-
-- Immunità per x secondi 
-
-##### Malus:
-
-
-
-
+- [ ] More effects, sprites, bonuses, maps
+- [ ] Players on distinct machine on the same LAN
+- [ ] Multiplayers (e.g 2 vs 2)
+- [ ] Players on distinct machine on the same LAN
+- [ ] Different game modalities
+- [ ] AI enemies
+- [ ] Game server on the client
 
 
 <!-- LICENSE -->
@@ -280,15 +120,16 @@ Game server is on the cloud ->  players no more needs to be on the same LAN
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-
+---
 
 <!-- CONTACT -->
 ## Contact :telephone:
 
-Paolo Pulcini  - paoloearth@gmail.com
+[Matilde Castelli](https://github.com/matildecastelli) 
 
-Project Link: [https://github.com/paoloearth/Shooter](https://github.com/paoloearth/Shooter)
+[Paolo Pulcini](https://github.com/paoloearth), paoloearth@gmail.com
 
+[José Antonio Fernández Santisteban](https://github.com/jose-dscience), 
 
 
 [product-screenshot]: images/screenshot.png
