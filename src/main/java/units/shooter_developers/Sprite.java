@@ -145,7 +145,7 @@ public class Sprite extends DynamicObject {
     public final HealthBar getHBar() {
         return _healthBar;
     }
-    public final String get_playerName() {
+    public final String getPlayerName() {
         return _playerName;
     }
 

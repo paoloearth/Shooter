@@ -1,5 +1,11 @@
 package units.shooter_developers.Menu_pages;
 
+/* All these should be renamed  following the google standard
+   lowerCamelCase() for methods & non constant values
+
+   Remove this keyword when it is not necessary
+*/
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.util.Pair;
@@ -51,6 +57,8 @@ public class OptionsMenu extends Menu {
         String width_string;
         String height_string;
 
+       /* Maybe here consider not ignoring matcher.find()
+       *  Exception should be more specific, here no message is printed */
         try {
             String regex = "\\d+";
             Pattern pattern = Pattern.compile(regex);

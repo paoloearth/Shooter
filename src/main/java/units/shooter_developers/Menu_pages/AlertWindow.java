@@ -1,5 +1,11 @@
 package units.shooter_developers.Menu_pages;
+// VISITED
 
+/* All these should be renamed  following the google standard
+   lowerCamelCase() for methods & non constant values
+
+   Remove this keyword when it is not necessary
+*/
 import units.shooter_developers.MenuAPI.Menu;
 
 public class AlertWindow extends Menu {
@@ -17,6 +23,7 @@ public class AlertWindow extends Menu {
     @Override
     public void createContent(){
 
+        /* Maybe move this URL to the right place */
         var alert_image = Menu.retrieveImage("alert.png", 1,1);
 
         addCentralImageView(alert_image, 0.7, 0.7);
@@ -25,9 +32,7 @@ public class AlertWindow extends Menu {
         addFreeItem("CONTINUE", 0.76, 0.2);
         addFlashDisclaimer("Game will be reset. Do you want to confirm?");
 
-        /* THIS LOOP CAN MAKE USE OF STREAMS?
-        menu_items.forEach(item -> etc etc)
-         */
+
         getItem("BACK").setOnMouseReleased(event -> {
             OptionsMenu options_menu = new OptionsMenu(this);
             options_menu.start(getStage());
