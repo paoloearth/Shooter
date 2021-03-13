@@ -16,7 +16,6 @@ package units.shooter_developers.MenuAPI;
  */
 
 // COLOCAR NUMEROS Y VALORES ESPECIFICOS EN Custom_Settings
-// USAR DICCIONARIOS PARA LOS SELECTORES ¿? quizás
 
 import javafx.application.Application;
 import javafx.geometry.Pos;

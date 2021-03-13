@@ -24,7 +24,6 @@ public class AlertWindow extends Menu {
     @Override
     public void createContent(){
 
-        /* Maybe move this URL to the right place */
         var alert_image = Menu.retrieveImage(CustomSettings.URL_WARNING_ICON, 1,1);
 
         addCentralImageView(alert_image, 0.7, 0.7);
