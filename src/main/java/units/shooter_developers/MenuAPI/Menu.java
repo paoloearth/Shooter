@@ -80,11 +80,11 @@ public abstract class Menu extends Application {
         _position_width_ratio = other_menu._position_width_ratio;
         _position_height_ratio = other_menu._position_height_ratio;
         _stage = other_menu._stage;
-        this.createRootAndBackground(_stage_width, _stage_height);
+        this.createRootAndBackground();
     }
 
     // This function does not use its parameters, we should remove them
-    private void createRootAndBackground(double stage_width, double stage_height) {
+    private void createRootAndBackground() {
         _root = new Pane();
 
         _background.setFitWidth(getMenuWidth());
@@ -102,7 +102,7 @@ public abstract class Menu extends Application {
         setStage(stage);
         getStage().setMaximized(false);
         setStageDimensions(getMenuWidth(), getMenuHeight());
-        createRootAndBackground(getMenuWidth(), getMenuHeight());
+        createRootAndBackground();
         createContent();
         stage.centerOnScreen();
         show();
