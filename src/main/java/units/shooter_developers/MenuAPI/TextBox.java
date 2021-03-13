@@ -4,7 +4,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
@@ -32,20 +31,14 @@ class TextBox extends VBox {
         _textField = createCustomizedTextField();
         _textField.setPromptText(default_message);
 
-        var I = Menu.retrieveImage(commands_url, _nrows, 1);
-        I.setPreserveRatio(true);
-        I.setFitHeight(0.2*_custom_scale*Menu.getMenuHeight());
-        var hola = I.getFitHeight();                                                  // Change this name
+        var image = Menu.retrieveImage(commands_url, _nrows, 1);
+        image.setPreserveRatio(true);
+        image.setFitHeight(0.2*_custom_scale*Menu.getMenuHeight());
         DropShadow ds = new DropShadow( 50, Color.WHITE );
-        I.setEffect(ds);
-        HBox H = createCustomHbox();
-        H.getChildren().add(I);
+        image.setEffect(ds);
 
-
-        // Use add All?
         getChildren().add(_textField);
-        //getChildren().add(H);
-        getChildren().add(I);
+        getChildren().add(image);
     }
 
     private TextField createCustomizedTextField() {
@@ -58,13 +51,6 @@ class TextBox extends VBox {
                 "-fx-text-fill: #"+introduced_text_color.toString().substring(2) + ";");
 
         return text_field;
-    }
-
-    protected static HBox createCustomHbox() {
-        HBox H = new HBox();
-        H.setMinHeight(0);
-        H.setAlignment(Pos.BOTTOM_CENTER);
-        return H;
     }
 
     protected String getValue()
