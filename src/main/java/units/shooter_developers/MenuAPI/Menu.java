@@ -26,7 +26,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -121,7 +120,11 @@ public abstract class Menu extends Application {
         ImageView background_dark = null;
 
         try {
-            config = readPropertiesFromFile(configFile);
+            FileReader reader;
+            config = new Properties();
+            reader = new FileReader(configFile);
+            config.load(reader);
+            reader.close();
         }catch(Exception e){
             throw new CustomException.FileManagementException(configFile.getPath());
         }
@@ -177,20 +180,6 @@ public abstract class Menu extends Application {
         }
 
         return new Pair<>(width, height);
-    }
-
-    private Properties readPropertiesFromFile(File configFile) {
-        FileReader reader;
-        Properties config = new Properties();
-        try {
-            reader = new FileReader(configFile);
-            config.load(reader);
-            reader.close();
-        }catch (IOException e) {
-            System.out.println("Config file not found. Using default properties.");
-        }
-
-        return config;
     }
 
     public void writeSettings() {
