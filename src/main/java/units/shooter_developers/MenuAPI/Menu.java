@@ -35,6 +35,7 @@ import javafx.stage.Stage;
 import units.shooter_developers.CustomColors;
 import units.shooter_developers.CustomSettings;
 import units.shooter_developers.Simulation;
+import units.shooter_developers.CustomException;
 
 import java.io.File;
 import java.io.FileReader;
@@ -44,6 +45,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Properties;
+
+import static units.shooter_developers.CustomSettings.URL_CONFIG_FILE;
 
 
 public abstract class Menu extends Application {
@@ -111,7 +114,7 @@ public abstract class Menu extends Application {
 
     // Move name of config file to custom settings?
     public void readProperties(){
-        File configFile = new File("config.ini");
+        File configFile = new File(URL_CONFIG_FILE);
         Properties config;
         ImageView background_light = null;
         ImageView background_dark = null;

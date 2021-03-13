@@ -92,6 +92,8 @@ public class CustomSettings {
     public static final String URL_BACKGROUND_LIGHT = "smoke_light.jpg";
     public static final String URL_BACKGROUND_DARK = "smoke_dark.jpg";
 
+    public static final String URL_CONFIG_FILE = "config.ini";
+
     /*  DISPLAYED NAMES */
 
     public static final String ARTIST     = "Artist";
