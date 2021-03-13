@@ -41,10 +41,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 import static units.shooter_developers.CustomSettings.URL_CONFIG_FILE;
 
@@ -377,7 +374,7 @@ public abstract class Menu extends Application {
     }
 
     public MenuItem getItem(String name) throws CustomException.MissingMenuComponent {
-        var item = getItems().stream()
+        final var item = getItems().stream()
                 .filter(e -> e.getName().equals(name))
                 .findFirst()
                 .orElse(null);
@@ -386,19 +383,8 @@ public abstract class Menu extends Application {
         else{return item;}
     }
 
-    public String getSelectorValue(String name){
-        var selector_object = getSelectorItem(name);
-        return selector_object != null? selector_object.getText() : null;
-         /*
-
-         // Chanced to more compact notation
-        if(selector_object != null){
-            return selector_object.getText();
-        } else {
-            return null;
-        }
-        */
-
+    public String getSelectorValue(String name) throws CustomException.MissingMenuComponent {
+        return getSelectorItem(name).getText();
     }
 
     public String getChoiceBoxValue(String name){
@@ -418,11 +404,14 @@ public abstract class Menu extends Application {
     }
 
 
-    protected SelectorItem getSelectorItem(String name){
-        return getSelectorItems().stream()
+    protected SelectorItem getSelectorItem(String name) throws CustomException.MissingMenuComponent {
+        final var selector_item = getSelectorItems().stream()
                 .filter(e -> e.getName().equals(name))
                 .findFirst()
                 .orElse(null);
+
+        if(selector_item == null) {throw new CustomException.MissingMenuComponent("Selector with name \"" + name + "\".", SelectorItem.class);}
+        else return selector_item;
     }
 
     private Title getTitleObject() {
