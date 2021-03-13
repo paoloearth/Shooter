@@ -9,6 +9,7 @@ package units.shooter_developers.Menu_pages;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.util.Pair;
+import units.shooter_developers.CustomException;
 import units.shooter_developers.MenuAPI.Menu;
 
 public class OptionsMenu extends Menu {
@@ -42,18 +43,23 @@ public class OptionsMenu extends Menu {
 
         getStage().setTitle("VIDEO GAME");
 
-        getItem("BACK").setOnMouseReleased(event -> {
-            GameMenu main_menu = new GameMenu(this);
-            main_menu.start(getStage());
-        });
-        getItem("APPLY").setOnMouseReleased(event -> {
-            applyCurrentSettings();
-        });
+        try {
+            getItem("BACK").setOnMouseReleased(event -> {
+                GameMenu main_menu = new GameMenu(this);
+                main_menu.start(getStage());
+            });
+            getItem("APPLY").setOnMouseReleased(event -> {
+                applyCurrentSettings();
+            });
+        } catch (CustomException.MissingMenuComponentException e){
+            System.out.println(e.getMessage() + " Fatal error. Closing application.");
+            Runtime.getRuntime().exit(1);
+        }
     }
 
 
 
-    private Pair<Double, Double> ParseSelectedResolution(String string_containing_resolution){
+    private Pair<Double, Double> ParseSelectedResolution(String string_containing_resolution) throws CustomException.WrongParsingException {
         String width_string;
         String height_string;
 
@@ -74,43 +80,79 @@ public class OptionsMenu extends Menu {
 
             return new Pair<>(width, height);
         }catch(Exception e){
-            return new Pair<>(null, null);
+            throw new CustomException.WrongParsingException(string_containing_resolution, int.class);
         }
 
     }
 
-    private void askConfirmChanges(double width_candidate, double height_candidate, String candidate_color_mode){
+    private void LaunchConfirmChangesPage(double width_candidate, double height_candidate, String candidate_color_mode){
         AlertWindow alert_window = new AlertWindow(this, width_candidate, height_candidate, candidate_color_mode);
         alert_window.start(getStage());
     }
 
     private void applyCurrentSettings(){
-        writeSettings();
-        var selected_resolution = ParseSelectedResolution(getSelectorValue("RESOLUTION"));
-        var candidate_width = selected_resolution.getKey();
-        var candidate_height = selected_resolution.getValue();
-
-        String candidate_color_mode = getSelectorValue("COLOR MODE");
-
-        if (isSimulationRunning()) {
-            if (candidate_width != getMenuWidth() || candidate_height != getMenuHeight())
-                askConfirmChanges(candidate_width, candidate_height, candidate_color_mode);
-            else {
-                setColorMode(candidate_color_mode);
-                writeSettings();
-                OptionsMenu options_menu = new OptionsMenu(this);
-                options_menu.readProperties();
-                options_menu.start(getStage());
-            }
-        }
-        else {
-            setStageDimensions(candidate_width, candidate_height);
-            setColorMode(candidate_color_mode);
+        try {
             writeSettings();
-            OptionsMenu options_menu = new OptionsMenu(this);
-            options_menu.readProperties();
-            options_menu.start(getStage());
+        }catch (CustomException.FileManagementException e){
+            System.out.println(e.getMessage() + " Writing was wrong. Continuing.");
         }
 
+        Pair<Double, Double> selected_resolution = getSelectedResolution();
+
+        String candidate_color_mode = getSelectedColorMode();
+
+        double candidate_width = selected_resolution.getKey();
+        double candidate_height = selected_resolution.getValue();
+
+
+        if (isSimulationRunning() &&
+                ((int)candidate_width != (int)getMenuWidth() ||
+                (int)candidate_height != (int)getMenuHeight())) {
+            LaunchConfirmChangesPage(candidate_width, candidate_height, candidate_color_mode);
+        } else {
+            LaunchChangedOptionsMenu(candidate_width, candidate_height, candidate_color_mode);
+        }
+
+    }
+
+    private void LaunchChangedOptionsMenu(double candidate_width, double candidate_height, String candidate_color_mode) {
+        setStageDimensions(candidate_width, candidate_height);
+        setColorMode(candidate_color_mode);
+
+        try {
+            writeSettings();
+        }catch (CustomException.FileManagementException e){
+            System.out.println(e.getMessage() + " Writing was wrong. Continuing.");
+        }
+
+        OptionsMenu options_menu = new OptionsMenu(this);
+        try {
+            options_menu.readProperties();
+        } catch(CustomException.FileManagementException e){
+            System.out.println(e.getMessage() + " Using default settings.");
+        }
+
+        options_menu.start(getStage());
+    }
+
+    private String getSelectedColorMode() {
+        String candidate_color_mode;
+        try {
+            candidate_color_mode = getSelectorValue("COLOR MODE");
+        }catch (CustomException.MissingMenuComponentException e){
+            System.out.println(e.getMessage() + " Color mode will not be changed. Continuing.");
+            candidate_color_mode = getColorMode();
+        }
+        return candidate_color_mode;
+    }
+
+    private Pair<Double, Double> getSelectedResolution() {
+        var selected_resolution = new Pair<>(getMenuWidth(), getMenuHeight());
+        try {
+            selected_resolution = ParseSelectedResolution(getSelectorValue("RESOLUTION"));
+        }catch (Exception e) {
+            System.out.println(e.getMessage() + " Resolution will not be changed. Continuing.");
+        }
+        return selected_resolution;
     }
 }

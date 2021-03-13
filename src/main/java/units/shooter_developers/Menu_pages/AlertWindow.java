@@ -6,6 +6,8 @@ package units.shooter_developers.Menu_pages;
 
    Remove this keyword when it is not necessary
 */
+import units.shooter_developers.CustomException;
+import units.shooter_developers.CustomSettings;
 import units.shooter_developers.MenuAPI.Menu;
 
 public class AlertWindow extends Menu {
@@ -23,8 +25,7 @@ public class AlertWindow extends Menu {
     @Override
     public void createContent(){
 
-        /* Maybe move this URL to the right place */
-        var alert_image = Menu.retrieveImage("alert.png", 1,1);
+        var alert_image = Menu.retrieveImage(CustomSettings.URL_WARNING_ICON, 1,1);
 
         addCentralImageView(alert_image, 0.7, 0.7);
         addSecondaryTitle("CAUTION!");
@@ -32,19 +33,27 @@ public class AlertWindow extends Menu {
         addFreeItem("CONTINUE", 0.76, 0.2);
         addFlashDisclaimer("Game will be reset. Do you want to confirm?");
 
+        try {
+            getItem("BACK").setOnMouseReleased(event -> {
+                OptionsMenu options_menu = new OptionsMenu(this);
+                options_menu.start(getStage());
+            });
 
-        getItem("BACK").setOnMouseReleased(event -> {
-            OptionsMenu options_menu = new OptionsMenu(this);
-            options_menu.start(getStage());
-        });
-
-        getItem("CONTINUE").setOnMouseReleased(event -> {
-            setStageDimensions(_candidate_width, _candidate_height);
-            setColorMode(_candidate_color_mode);
-            writeSettings();
-            OptionsMenu options_menu = new OptionsMenu();
-            options_menu.start(getStage());
-        });
+            getItem("CONTINUE").setOnMouseReleased(event -> {
+                setStageDimensions(_candidate_width, _candidate_height);
+                setColorMode(_candidate_color_mode);
+                try {
+                    writeSettings();
+                } catch (CustomException.FileManagementException e) {
+                    System.out.println(e.getMessage() + " Writing was wrong. Continuing.");
+                }
+                OptionsMenu options_menu = new OptionsMenu();
+                options_menu.start(getStage());
+            });
+        }catch (CustomException.MissingMenuComponentException e){
+            System.out.println(e.getMessage() + " Fatal error. Closing application.");
+            Runtime.getRuntime().exit(1);
+        }
     }
 
 }

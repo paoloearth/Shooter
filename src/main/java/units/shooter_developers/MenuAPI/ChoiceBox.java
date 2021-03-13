@@ -13,12 +13,11 @@ import java.util.Map;
 class ChoiceBox extends VBox {
 
 
-    /* Can we make final these parameters? */
-    private Map<String, String> _dict;
-    private int _nrows;
-    private double _custom_scale;
-    private SelectorItem _selector;
-    String _name;
+    final private Map<String, String> _dict;
+    final private int _nrows;
+    final private double _custom_scale;
+    final private SelectorItem _selector;
+    final String _name;
 
 
     public ChoiceBox(String name, Map<String, String> map_image_to_URL, int nrows, double scale) {
@@ -32,16 +31,14 @@ class ChoiceBox extends VBox {
         setAlignment(Pos.TOP_CENTER);
         setSpacing(0.01*Menu.getMenuHeight());
 
-        HBox image_box = new HBox();
+        final HBox image_box = new HBox();
         image_box.setMinHeight(0);
         image_box.setAlignment(Pos.BOTTOM_CENTER);
 
         _selector.getSelectionAsProperty().addListener((observable,  oldValue,  selected) ->
         {
-            var image = Menu.retrieveImage(_dict.get(selected), _nrows, 1);
-
+            final var image = Menu.retrieveImage(_dict.get(selected), _nrows, 1);
             image.setPreserveRatio(true);
-
             image.setFitHeight(0.2*_custom_scale*Menu.getMenuHeight());
 
             image_box.getChildren().removeIf(i -> i instanceof ImageView);
@@ -49,14 +46,7 @@ class ChoiceBox extends VBox {
 
         });
 
-        /* Can we use foreach?*/
         map_image_to_URL.forEach((key, value) -> _selector.addTag(key));
-        /*
-        for(var elem : map_image_to_URL.entrySet()){
-            _selector.addTag(elem.getKey());
-        }
-        // Squeeze these 2 with add all
-        */
         getChildren().addAll(image_box,_selector);
 
     }

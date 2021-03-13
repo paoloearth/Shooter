@@ -46,15 +46,7 @@ class MenuBox extends VBox {
         SelectorItem new_item = new SelectorItem(name, true);
         new_item.setTranslateX(0.005 * Menu.getMenuWidth());
 
-
-        // to functional is :
         tag_list.forEach(new_item::addTag);
-        /*
-        for (var tag : tag_list) {
-            new_item.addTag(tag);
-        }
-        */
-
 
         getChildren().addAll(new_item, createSeparator());
     }

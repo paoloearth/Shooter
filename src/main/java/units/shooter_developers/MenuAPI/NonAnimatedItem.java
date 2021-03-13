@@ -28,10 +28,8 @@ class NonAnimatedItem extends StackPane {
             @Override
             public String getName() { return null; }};
 
-        var effective_width_ratio = 0.19;
-        var effective_height_ratio = 0.05;
-        if (item_width_ratio >= 0) effective_width_ratio = item_width_ratio;
-        if (item_height_ratio >= 0) effective_height_ratio = item_height_ratio;
+        var effective_width_ratio = item_width_ratio<0? 0.19 : item_width_ratio;
+        var effective_height_ratio = item_height_ratio<0? 0.05 : item_height_ratio;
 
         Color text_color = Menu.getColorPalette().dead_color;
         Color background_color = Menu.getColorPalette().basic_secondary_color;
@@ -68,11 +66,6 @@ class NonAnimatedItem extends StackPane {
 
     }
 
-    protected void setName(String name){
-        _name_property.setValue(name);
-    }
-
-    // Dead code?
     protected StringPropertyBase getNameAsProperty(){
         return _name_property;
     }
