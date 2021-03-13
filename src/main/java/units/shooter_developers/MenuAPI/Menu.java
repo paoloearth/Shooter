@@ -32,6 +32,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import units.shooter_developers.CustomColors;
 import units.shooter_developers.CustomSettings;
 import units.shooter_developers.Simulation;
@@ -144,15 +145,38 @@ public abstract class Menu extends Application {
         }
     }
 
-    private void setResolution(Properties config) {
+    private void setResolution(Properties config){
+        double width, height;
+
         try{
-            double width = Double.parseDouble(config.getProperty("WIDTH"));
-            double height = Double.parseDouble(config.getProperty("HEIGHT"));
-            setStageDimensions(width, height);
-        } catch (Exception e) {
-            System.out.println("Parse of resolution failed. Using native resolution");
-            setStageDimensions(getScreenWidth(), getScreenHeight());
+            var parsed_resolution = parseResolutionFromStrings(config.getProperty("WIDTH"), config.getProperty("HEIGHT"));
+            width = parsed_resolution.getKey();
+            height = parsed_resolution.getValue();
+        }catch(CustomException.WrongParsingException e) {
+            System.out.println(e.getMessage() + " Using native resolution.");
+            width = getScreenWidth();
+            height = getScreenHeight();
         }
+
+        setStageDimensions(width, height);
+    }
+
+    private Pair<Double, Double> parseResolutionFromStrings(String width_string, String height_string) throws CustomException.WrongParsingException {
+        double width, height;
+
+        try {
+            width = Double.parseDouble(width_string);
+        }catch(Exception e) {
+            throw new CustomException.WrongParsingException(width_string, Double.class);
+        }
+
+        try {
+            height = Double.parseDouble(height_string);
+        }catch(Exception e) {
+            throw new CustomException.WrongParsingException(height_string, Double.class);
+        }
+
+        return new Pair<>(width, height);
     }
 
     private Properties readPropertiesFromFile(File configFile) {

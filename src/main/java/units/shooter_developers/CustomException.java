@@ -1,5 +1,7 @@
 package units.shooter_developers;
 
+import java.lang.reflect.Type;
+
 public class CustomException{
 
     public static class FileManagementException extends ExceptionModel{
@@ -22,6 +24,13 @@ public class CustomException{
     public static class MenuComponentNotFound extends ExceptionModel{
         MenuComponentNotFound(String component_descriptor){
             super("ERROR: The following menu component was not found: " + component_descriptor);
+        }
+
+    }
+
+    public static class WrongParsingException extends ExceptionModel{
+        public WrongParsingException(String string_to_parse_from, Type destination_type){
+            super("ERROR: Parsing of string \"" + string_to_parse_from + "\" to type " + destination_type + " was wrong.");
         }
 
     }
