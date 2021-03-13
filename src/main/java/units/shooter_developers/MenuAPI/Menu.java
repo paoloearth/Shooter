@@ -83,7 +83,6 @@ public abstract class Menu extends Application {
         this.createRootAndBackground();
     }
 
-    // This function does not use its parameters, we should remove them
     private void createRootAndBackground() {
         _root = new Pane();
 

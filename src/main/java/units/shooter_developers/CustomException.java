@@ -2,9 +2,9 @@ package units.shooter_developers;
 
 public class CustomException{
 
-    public static class IncorrectFileName extends ExceptionModel{
-        IncorrectFileName(String msg){
-            super(msg);
+    public static class FileManageException extends ExceptionModel{
+        FileManageException(String file_name){
+            super("ERROR: There was a problem by using the file: " + file_name);
         }
     }
 
