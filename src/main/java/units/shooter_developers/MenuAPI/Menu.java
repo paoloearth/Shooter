@@ -491,7 +491,7 @@ public abstract class Menu extends Application {
         try{
             return getItemsBox().getSelectorItems();
         }catch(CustomException.MissingMenuComponent e){
-            return new ArrayList<SelectorItem>();
+            return new ArrayList<>();
         }
     }
 
@@ -518,7 +518,7 @@ public abstract class Menu extends Application {
         _position_height_ratio = scaled_position_Y;
     }
 
-    public void scaleMenu(double width_scale, double height_scale){
+    public void setMenuScale(double width_scale, double height_scale){
         _width_scale = width_scale;
         _height_scale = height_scale;
     }
@@ -556,13 +556,6 @@ public abstract class Menu extends Application {
         var image_wrapped =  new ImageView(image);
         image_wrapped.setViewport(new Rectangle2D( 0, 0, image.getWidth()/number_of_columns, image.getHeight()/number_of_rows));
         return image_wrapped;
-    }
-
-    static private Node retrieveFirstObjectOfType(Object type, Pane node_set){
-        return node_set.getChildren().stream()
-                .filter(e -> e instanceof MenuGrid)
-                .findFirst()
-                .orElse(null);
     }
 
 

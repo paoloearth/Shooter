@@ -81,8 +81,8 @@ public class GameMenu extends Menu {
     }
 
     @Override
-    public void scaleMenu(double width_scale, double height_scale){
-        super.scaleMenu(width_scale, height_scale);
+    public void setMenuScale(double width_scale, double height_scale){
+        super.setMenuScale(width_scale, height_scale);
         GameMenu new_menu = new GameMenu(this);
         new_menu.start(getStage());
     }
