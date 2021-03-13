@@ -230,7 +230,7 @@ public abstract class Menu extends Application {
     }
 
     public void setTitle(String title){
-        removeTitle();
+        removeTitleIfItIs();
 
         Title title_object = new Title(title);
 
@@ -240,11 +240,11 @@ public abstract class Menu extends Application {
         _root.getChildren().add(title_object);
     }
 
-    public void removeTitle(){
-        var title_object = getTitleObject();
-
-        if(title_object != null)
+    public void removeTitleIfItIs(){
+        try {
+            var title_object = getTitleObject();
             _root.getChildren().remove(title_object);
+        }catch(CustomException.MissingMenuComponent e){}
     }
 
     public void addFlashDisclaimer(String disclaimer_text){
@@ -414,11 +414,14 @@ public abstract class Menu extends Application {
         else return selector_item;
     }
 
-    private Title getTitleObject() {
-        return (Title)_root.getChildren().stream()
+    private Title getTitleObject() throws CustomException.MissingMenuComponent {
+        final var title_object = (Title)_root.getChildren().stream()
                 .filter(e -> e instanceof Title)
                 .findFirst()
                 .orElse(null);
+
+        if(title_object == null){throw new CustomException.MissingMenuComponent("Main title object.", Title.class);}
+        else return title_object;
     }
 
     private MenuBox getItemsBox() {
