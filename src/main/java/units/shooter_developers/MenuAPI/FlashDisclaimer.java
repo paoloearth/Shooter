@@ -19,7 +19,7 @@ class FlashDisclaimer extends StackPane {
         disclaimer_text.setFill(Menu.getColorPalette().basic_primary_color);
         textAnimation(disclaimer_text);
         setAlignment(disclaimer_text, Pos.TOP_CENTER);
-        
+
         getChildren().add(disclaimer_text);
     }
 
