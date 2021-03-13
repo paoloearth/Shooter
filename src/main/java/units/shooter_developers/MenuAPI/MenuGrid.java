@@ -47,7 +47,7 @@ class MenuGrid extends GridPane {
                 .filter(e -> ((TextBox) e).getName().equals(name))
                 .findFirst()
                 .orElse(null);
-        
+
         if(text_box_object == null){throw new CustomException.MissingMenuComponentException("Text box with name \"" + name + "\".", TextBox.class);}
         else{return text_box_object;}
 
