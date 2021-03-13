@@ -52,7 +52,7 @@ public class Submenu extends Menu {
                     e.printStackTrace();
                 }
             });
-        }catch (CustomException.MissingMenuComponent e){
+        }catch (CustomException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + " Fatal error. Closing application.");
             Runtime.getRuntime().exit(1);
         }

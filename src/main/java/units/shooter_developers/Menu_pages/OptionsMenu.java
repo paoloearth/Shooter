@@ -51,7 +51,7 @@ public class OptionsMenu extends Menu {
             getItem("APPLY").setOnMouseReleased(event -> {
                 applyCurrentSettings();
             });
-        } catch (CustomException.MissingMenuComponent e){
+        } catch (CustomException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + " Fatal error. Closing application.");
             Runtime.getRuntime().exit(1);
         }
@@ -139,7 +139,7 @@ public class OptionsMenu extends Menu {
         String candidate_color_mode;
         try {
             candidate_color_mode = getSelectorValue("COLOR MODE");
-        }catch (CustomException.MissingMenuComponent e){
+        }catch (CustomException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + " Color mode will not be changed. Continuing.");
             candidate_color_mode = getColorMode();
         }

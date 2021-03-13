@@ -50,7 +50,7 @@ public class AlertWindow extends Menu {
                 OptionsMenu options_menu = new OptionsMenu();
                 options_menu.start(getStage());
             });
-        }catch (CustomException.MissingMenuComponent e){
+        }catch (CustomException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + " Fatal error. Closing application.");
             Runtime.getRuntime().exit(1);
         }

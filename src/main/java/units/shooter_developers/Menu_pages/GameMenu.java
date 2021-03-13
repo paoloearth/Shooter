@@ -54,7 +54,7 @@ public class GameMenu extends Menu {
                     getStage().show();
                     getStage().toFront();
                 });
-            } catch (CustomException.MissingMenuComponent e){
+            } catch (CustomException.MissingMenuComponentException e){
                 System.out.println(e.getMessage() + " Fatal error. Closing application");
                 Runtime.getRuntime().exit(1);
             }
@@ -72,7 +72,7 @@ public class GameMenu extends Menu {
                 OptionsMenu options_menu = new OptionsMenu(this);
                 options_menu.start(getStage());
             });
-        } catch (CustomException.MissingMenuComponent e){
+        } catch (CustomException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + " Fatal error. Closing application");
             Runtime.getRuntime().exit(1);
         }

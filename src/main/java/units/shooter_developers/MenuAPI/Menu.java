@@ -203,7 +203,7 @@ public abstract class Menu extends Application {
         generateMenuBoxIfNotExist();
         try {
             getItemsBox().addItem(new_menu_item);
-        }catch(CustomException.MissingMenuComponent e){
+        }catch(CustomException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + "Main item box object was not found neither created. Fatal error. Closing application");
             Runtime.getRuntime().exit(1);
         }
@@ -221,7 +221,7 @@ public abstract class Menu extends Application {
         generateMenuBoxIfNotExist();
         try {
             getItemsBox().addNonAnimatedItem(name);
-        }catch(CustomException.MissingMenuComponent e){
+        }catch(CustomException.MissingMenuComponentException e){
         System.out.println(e.getMessage() + "Main item box object was not found neither created. Fatal error. Closing application");
         Runtime.getRuntime().exit(1);
     }
@@ -234,7 +234,7 @@ public abstract class Menu extends Application {
 
         try{
             getItemsBox().addSelectorItem(name, tag_list);
-        }catch(CustomException.MissingMenuComponent e){
+        }catch(CustomException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + "Main item box object was not found neither created. Fatal error. Closing application");
             Runtime.getRuntime().exit(1);
         }
@@ -259,7 +259,7 @@ public abstract class Menu extends Application {
         try {
             var title_object = getTitleObject();
             _root.getChildren().remove(title_object);
-        }catch(CustomException.MissingMenuComponent e){}
+        }catch(CustomException.MissingMenuComponentException e){}
     }
 
     public void addFlashDisclaimer(String disclaimer_text){
@@ -388,17 +388,17 @@ public abstract class Menu extends Application {
         return _color_mode;
     }
 
-    public MenuItem getItem(String name) throws CustomException.MissingMenuComponent {
+    public MenuItem getItem(String name) throws CustomException.MissingMenuComponentException {
         final var item = getItems().stream()
                 .filter(e -> e.getName().equals(name))
                 .findFirst()
                 .orElse(null);
 
-        if(item == null){throw new CustomException.MissingMenuComponent("Item with name \"" +name+ "\".", MenuItem.class);}
+        if(item == null){throw new CustomException.MissingMenuComponentException("Item with name \"" +name+ "\".", MenuItem.class);}
         else{return item;}
     }
 
-    public String getSelectorValue(String name) throws CustomException.MissingMenuComponent {
+    public String getSelectorValue(String name) throws CustomException.MissingMenuComponentException {
         return getSelectorItem(name).getText();
     }
 
@@ -419,33 +419,33 @@ public abstract class Menu extends Application {
     }
 
 
-    protected SelectorItem getSelectorItem(String name) throws CustomException.MissingMenuComponent {
+    protected SelectorItem getSelectorItem(String name) throws CustomException.MissingMenuComponentException {
         final var selector_item = getSelectorItems().stream()
                 .filter(e -> e.getName().equals(name))
                 .findFirst()
                 .orElse(null);
 
-        if(selector_item == null) {throw new CustomException.MissingMenuComponent("Selector with name \"" + name + "\".", SelectorItem.class);}
+        if(selector_item == null) {throw new CustomException.MissingMenuComponentException("Selector with name \"" + name + "\".", SelectorItem.class);}
         else return selector_item;
     }
 
-    private Title getTitleObject() throws CustomException.MissingMenuComponent {
+    private Title getTitleObject() throws CustomException.MissingMenuComponentException {
         final var title_object = (Title)_root.getChildren().stream()
                 .filter(e -> e instanceof Title)
                 .findFirst()
                 .orElse(null);
 
-        if(title_object == null){throw new CustomException.MissingMenuComponent("Main title object.", Title.class);}
+        if(title_object == null){throw new CustomException.MissingMenuComponentException("Main title object.", Title.class);}
         else return title_object;
     }
 
-    private MenuBox getItemsBox() throws CustomException.MissingMenuComponent {
+    private MenuBox getItemsBox() throws CustomException.MissingMenuComponentException {
         var menu_box_object = (MenuBox)_root.getChildren().parallelStream()
                 .filter(e -> e instanceof MenuBox)
                 .findFirst()
                 .orElse(null);
 
-        if(menu_box_object == null){throw new CustomException.MissingMenuComponent("Main items box object.", MenuBox.class);}
+        if(menu_box_object == null){throw new CustomException.MissingMenuComponentException("Main items box object.", MenuBox.class);}
         else{return menu_box_object;}
     }
 
@@ -453,7 +453,7 @@ public abstract class Menu extends Application {
         var item_list_from_box = new ArrayList<MenuItem>();
         try {
             item_list_from_box = getItemsBox().getItems();
-        }catch(CustomException.MissingMenuComponent ignored){}
+        }catch(CustomException.MissingMenuComponentException ignored){}
 
         //add items not contained in items box to the list
         ArrayList<MenuItem> full_item_list = item_list_from_box;
@@ -490,7 +490,7 @@ public abstract class Menu extends Application {
     private ArrayList<SelectorItem> getSelectorItems(){
         try{
             return getItemsBox().getSelectorItems();
-        }catch(CustomException.MissingMenuComponent e){
+        }catch(CustomException.MissingMenuComponentException e){
             return new ArrayList<>();
         }
     }
