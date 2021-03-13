@@ -201,7 +201,12 @@ public abstract class Menu extends Application {
 
     public void addItem(String new_menu_item){
         generateMenuBoxIfNotExist();
-        getItemsBox().addItem(new_menu_item);
+        try {
+            getItemsBox().addItem(new_menu_item);
+        }catch(CustomException.MissingMenuComponent e){
+            System.out.println(e.getMessage() + "Main item box object was not found neither created. Fatal error. Closing application");
+            Runtime.getRuntime().exit(1);
+        }
     }
 
     public void addFreeItem(String new_menu_item, double position_ratio_X, double position_ratio_Y){
@@ -214,7 +219,12 @@ public abstract class Menu extends Application {
 
     public void addNonAnimatedItem(String name){
         generateMenuBoxIfNotExist();
-        getItemsBox().addNonAnimatedItem(name);
+        try {
+            getItemsBox().addNonAnimatedItem(name);
+        }catch(CustomException.MissingMenuComponent e){
+        System.out.println(e.getMessage() + "Main item box object was not found neither created. Fatal error. Closing application");
+        Runtime.getRuntime().exit(1);
+    }
     }
 
     public void addSelectorItem(String name, String ... selection_tags){
@@ -222,7 +232,12 @@ public abstract class Menu extends Application {
         ArrayList<String> tag_list= new ArrayList<>();
         Collections.addAll(tag_list, selection_tags);
 
-        getItemsBox().addSelectorItem(name, tag_list);
+        try{
+            getItemsBox().addSelectorItem(name, tag_list);
+        }catch(CustomException.MissingMenuComponent e){
+            System.out.println(e.getMessage() + "Main item box object was not found neither created. Fatal error. Closing application");
+            Runtime.getRuntime().exit(1);
+        }
     }
 
     public void addGenericNode(Node generic_node){
@@ -424,17 +439,21 @@ public abstract class Menu extends Application {
         else return title_object;
     }
 
-    private MenuBox getItemsBox() {
-        return (MenuBox)_root.getChildren().parallelStream()
+    private MenuBox getItemsBox() throws CustomException.MissingMenuComponent {
+        var menu_box_object = (MenuBox)_root.getChildren().parallelStream()
                 .filter(e -> e instanceof MenuBox)
                 .findFirst()
                 .orElse(null);
+
+        if(menu_box_object == null){throw new CustomException.MissingMenuComponent("Main items box object.", MenuBox.class);}
+        else{return menu_box_object;}
     }
 
     private ArrayList<MenuItem> getItems(){
         var item_list_from_box = new ArrayList<MenuItem>();
-        if(getItemsBox() != null)
+        try {
             item_list_from_box = getItemsBox().getItems();
+        }catch(CustomException.MissingMenuComponent ignored){}
 
         //add items not contained in items box to the list
         ArrayList<MenuItem> full_item_list = item_list_from_box;
@@ -469,7 +488,11 @@ public abstract class Menu extends Application {
     }
 
     private ArrayList<SelectorItem> getSelectorItems(){
-        return getItemsBox().getSelectorItems();
+        try{
+            return getItemsBox().getSelectorItems();
+        }catch(CustomException.MissingMenuComponent e){
+            return new ArrayList<SelectorItem>();
+        }
     }
 
 
