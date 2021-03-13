@@ -263,7 +263,7 @@ public abstract class Menu extends Application {
     }
 
     public void addFlashDisclaimer(String disclaimer_text){
-        var disclaimer_object = new FlashDisclaimer(this, disclaimer_text);
+        var disclaimer_object = new FlashDisclaimer(disclaimer_text);
 
         var menu_frame = new BorderPane();
         menu_frame.setPrefSize(getMenuWidth(), getMenuHeight());
