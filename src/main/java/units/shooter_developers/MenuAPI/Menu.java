@@ -407,14 +407,21 @@ public abstract class Menu extends Application {
         try{
             value = getChoiceBox(name).getValue();
         }catch(CustomException.MissingMenuComponentException e){
-            System.out.println(e.getMessage() + " Fatal error. Closing application");
+            System.out.println(e.getMessage() + " Fatal error. Closing application.");
             Runtime.getRuntime().exit(1);
         }
         return value;
     }
 
     public String getTextBoxValue(String name){
-        return getTextBox(name).getValue();
+        String value = "";
+        try{
+            value = getTextBox(name).getValue();
+        }catch(CustomException.MissingMenuComponentException e){
+            System.out.println(e.getMessage() + " Fatal error. Closing application.");
+            Runtime.getRuntime().exit(1);
+        }
+        return value;
     }
 
     public static Simulation getSimulationInstance(){
@@ -476,7 +483,7 @@ public abstract class Menu extends Application {
         return menu_grid.getChoiceBox(name);
     }
 
-    private TextBox getTextBox(String name){
+    private TextBox getTextBox(String name) throws CustomException.MissingMenuComponentException {
         var menu_grid = getMenuGridAndCreateIfNotExist();
         return menu_grid.getTextBox(name);
     }

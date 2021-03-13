@@ -41,23 +41,16 @@ class MenuGrid extends GridPane {
         add(text_box, col, row);
     }
 
-    public TextBox getTextBox(String name){
-        final var text_box_object = getChildren().parallelStream()
+    public TextBox getTextBox(String name) throws CustomException.MissingMenuComponentException {
+        final var text_box_object = (TextBox)getChildren().parallelStream()
                 .filter(e -> e instanceof TextBox)
                 .filter(e -> ((TextBox) e).getName().equals(name))
                 .findFirst()
                 .orElse(null);
 
 
-        // More compact notation
-        return text_box_object==null? null : (TextBox) text_box_object;
-
-        /*
-        if(text_box_object == null)
-            return null;
-        else
-            return (TextBox) text_box_object;
-            */
+        if(text_box_object == null){throw new CustomException.MissingMenuComponentException("Text box with name \"" + name + "\".", TextBox.class);}
+        else{return text_box_object;}
 
     }
 }
