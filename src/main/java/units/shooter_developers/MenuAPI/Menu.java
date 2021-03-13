@@ -182,7 +182,7 @@ public abstract class Menu extends Application {
         return new Pair<>(width, height);
     }
 
-    public void writeSettings() {
+    public void writeSettings() throws CustomException.FileManagementException {
         Properties config = new Properties();
 
         config.setProperty("COLOR MODE", getColorMode());
@@ -195,7 +195,7 @@ public abstract class Menu extends Application {
             config.store(writer, "Game settings");
             writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new CustomException.FileManagementException(configFile.getPath());
         }
     }
 

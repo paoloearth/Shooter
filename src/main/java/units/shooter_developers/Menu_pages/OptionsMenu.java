@@ -87,7 +87,12 @@ public class OptionsMenu extends Menu {
     }
 
     private void applyCurrentSettings(){
-        writeSettings();
+        try {
+            writeSettings();
+        }catch (CustomException.FileManagementException e){
+            System.out.println(e.getMessage() + " Writting was wrong. Continuing.");
+        }
+
         var selected_resolution = ParseSelectedResolution(getSelectorValue("RESOLUTION"));
         var candidate_width = selected_resolution.getKey();
         var candidate_height = selected_resolution.getValue();
@@ -113,7 +118,11 @@ public class OptionsMenu extends Menu {
         else {
             setStageDimensions(candidate_width, candidate_height);
             setColorMode(candidate_color_mode);
-            writeSettings();
+            try {
+                writeSettings();
+            }catch (CustomException.FileManagementException e){
+                System.out.println(e.getMessage() + " Writting was wrong. Continuing.");
+            }
             OptionsMenu options_menu = new OptionsMenu(this);
             try {
                 options_menu.readProperties();

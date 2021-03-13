@@ -6,6 +6,7 @@ package units.shooter_developers.Menu_pages;
 
    Remove this keyword when it is not necessary
 */
+import units.shooter_developers.CustomException;
 import units.shooter_developers.CustomSettings;
 import units.shooter_developers.MenuAPI.Menu;
 
@@ -41,7 +42,11 @@ public class AlertWindow extends Menu {
         getItem("CONTINUE").setOnMouseReleased(event -> {
             setStageDimensions(_candidate_width, _candidate_height);
             setColorMode(_candidate_color_mode);
-            writeSettings();
+            try {
+                writeSettings();
+            }catch(CustomException.FileManagementException e){
+                System.out.println(e.getMessage() + " Writing was wrong. Continuing.");
+            }
             OptionsMenu options_menu = new OptionsMenu();
             options_menu.start(getStage());
         });
