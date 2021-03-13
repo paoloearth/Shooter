@@ -113,24 +113,22 @@ public abstract class Menu extends Application {
     public abstract void createContent();
 
     // Move name of config file to custom settings?
-    public void readProperties(){
+    public void readProperties() throws CustomException.FileManagementException{
         File configFile = new File(URL_CONFIG_FILE);
         Properties config;
         ImageView background_light = null;
         ImageView background_dark = null;
 
-        config = readPropertiesFromFile(configFile);
+        try {
+            config = readPropertiesFromFile(configFile);
+        }catch(Exception e){
+            throw new CustomException.FileManagementException(configFile.getPath());
+        }
 
         setResolution(config);
 
-        try{
-            background_light = new ImageView(CustomSettings.URL_BACKGROUND_LIGHT);
-            background_dark = new ImageView(CustomSettings.URL_BACKGROUND_DARK);
-        } catch(Exception e){
-            System.out.println("Background images not found!");
-            var rectangle_image = new Rectangle(2, 2).snapshot(null, null);
-            _background = new ImageView(rectangle_image);
-        }
+        background_dark = retrieveImage(CustomSettings.URL_BACKGROUND_DARK, 1, 1);
+        background_light = retrieveImage(CustomSettings.URL_BACKGROUND_LIGHT, 1, 1);
 
         var color_mode = config.getProperty("COLOR MODE");
         color_mode = color_mode == null? "" :  color_mode;

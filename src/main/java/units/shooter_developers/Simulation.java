@@ -252,7 +252,11 @@ public class Simulation extends Application {
                     case ESCAPE -> {
                         var game_menu = new GameMenu(this);
                         stopSimulation();
-                        game_menu.readProperties();
+                        try {
+                            game_menu.readProperties();
+                        } catch (CustomException.FileManagementException e) {
+                            System.out.println(e.getMessage() + " Using default settings.");
+                        }
                         game_menu.start(_stage);
                         startSimulation();
                     }

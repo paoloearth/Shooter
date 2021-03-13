@@ -6,9 +6,11 @@ package units.shooter_developers.Menu_pages;
    Remove this keyword when it is not necessary
 */
 
+import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.util.Pair;
+import units.shooter_developers.CustomException;
 import units.shooter_developers.MenuAPI.Menu;
 
 public class OptionsMenu extends Menu {
@@ -96,10 +98,15 @@ public class OptionsMenu extends Menu {
             if (candidate_width != getMenuWidth() || candidate_height != getMenuHeight())
                 askConfirmChanges(candidate_width, candidate_height, candidate_color_mode);
             else {
-                setColorMode(candidate_color_mode);
-                writeSettings();
                 OptionsMenu options_menu = new OptionsMenu(this);
-                options_menu.readProperties();
+                try {
+                    setColorMode(candidate_color_mode);
+                    writeSettings();
+                    options_menu.readProperties();
+                }catch(CustomException.FileManagementException e){
+                    System.out.println(e.getMessage() + " Using default settings.");
+                }
+
                 options_menu.start(getStage());
             }
         }
@@ -108,7 +115,11 @@ public class OptionsMenu extends Menu {
             setColorMode(candidate_color_mode);
             writeSettings();
             OptionsMenu options_menu = new OptionsMenu(this);
-            options_menu.readProperties();
+            try {
+                options_menu.readProperties();
+            } catch(CustomException.FileManagementException e){
+                System.out.println(e.getMessage() + " Using default settings.");
+            }
             options_menu.start(getStage());
         }
 

@@ -2,8 +2,8 @@ package units.shooter_developers;
 
 public class CustomException{
 
-    public static class FileManageException extends ExceptionModel{
-        FileManageException(String file_name){
+    public static class FileManagementException extends ExceptionModel{
+        public FileManagementException(String file_name){
             super("ERROR: There was a problem by using the file: " + file_name);
         }
     }
