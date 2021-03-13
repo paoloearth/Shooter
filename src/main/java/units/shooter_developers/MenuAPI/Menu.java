@@ -403,7 +403,14 @@ public abstract class Menu extends Application {
     }
 
     public String getChoiceBoxValue(String name){
-        return getChoiceBox(name).getValue();
+        String value = "";
+        try{
+            value = getChoiceBox(name).getValue();
+        }catch(CustomException.MissingMenuComponentException e){
+            System.out.println(e.getMessage() + " Fatal error. Closing application");
+            Runtime.getRuntime().exit(1);
+        }
+        return value;
     }
 
     public String getTextBoxValue(String name){
@@ -464,7 +471,7 @@ public abstract class Menu extends Application {
         return full_item_list;
     }
 
-    private ChoiceBox getChoiceBox(String name){
+    private ChoiceBox getChoiceBox(String name) throws CustomException.MissingMenuComponentException {
         var menu_grid = getMenuGridAndCreateIfNotExist();
         return menu_grid.getChoiceBox(name);
     }
