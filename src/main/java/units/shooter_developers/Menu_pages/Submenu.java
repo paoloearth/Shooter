@@ -29,28 +29,33 @@ public class Submenu extends Menu {
 
         addFreeItem("Play!", 0.6, 0.8);
 
-        getItem("Play!").setOnMouseReleased(event -> {
-            var player_names = new ArrayList<String>();
-            player_names.add(getTextBoxValue("Player_textbox_1"));
-            player_names.add(getTextBoxValue("Player_textbox_2"));
+        try {
+            getItem("Play!").setOnMouseReleased(event -> {
+                var player_names = new ArrayList<String>();
+                player_names.add(getTextBoxValue("Player_textbox_1"));
+                player_names.add(getTextBoxValue("Player_textbox_2"));
 
-            ArrayList<String> Players_URL = new ArrayList<String>();
-            Players_URL.add(Name_URL.get(getChoiceBoxValue("Player_selection_1")));
-            Players_URL.add(Name_URL.get(getChoiceBoxValue("Player_selection_2")));
+                ArrayList<String> Players_URL = new ArrayList<String>();
+                Players_URL.add(Name_URL.get(getChoiceBoxValue("Player_selection_1")));
+                Players_URL.add(Name_URL.get(getChoiceBoxValue("Player_selection_2")));
 
-            Map<String, String> Map_CSV = generateMapDataUrlDictionary();
-            ArrayList<String> map_data = new ArrayList<String>();
-            map_data.add(Map_CSV.get(getChoiceBoxValue("Map_selection")));
+                Map<String, String> Map_CSV = generateMapDataUrlDictionary();
+                ArrayList<String> map_data = new ArrayList<String>();
+                map_data.add(Map_CSV.get(getChoiceBoxValue("Map_selection")));
 
-            setSimulationInstance(new Simulation(player_names, Players_URL, map_data));
-            try {
-                getStage().close();
-                getSimulationInstance().start(getStage());
-                getStage().setAlwaysOnTop(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+                setSimulationInstance(new Simulation(player_names, Players_URL, map_data));
+                try {
+                    getStage().close();
+                    getSimulationInstance().start(getStage());
+                    getStage().setAlwaysOnTop(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }catch (CustomException.MissingMenuComponent e){
+            System.out.println(e.getMessage() + " Fatal error. Closing application.");
+            Runtime.getRuntime().exit(1);
+        }
     }
 
     private Map<String, String> generateMapDataUrlDictionary() {

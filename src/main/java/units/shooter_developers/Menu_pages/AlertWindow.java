@@ -33,23 +33,27 @@ public class AlertWindow extends Menu {
         addFreeItem("CONTINUE", 0.76, 0.2);
         addFlashDisclaimer("Game will be reset. Do you want to confirm?");
 
+        try {
+            getItem("BACK").setOnMouseReleased(event -> {
+                OptionsMenu options_menu = new OptionsMenu(this);
+                options_menu.start(getStage());
+            });
 
-        getItem("BACK").setOnMouseReleased(event -> {
-            OptionsMenu options_menu = new OptionsMenu(this);
-            options_menu.start(getStage());
-        });
-
-        getItem("CONTINUE").setOnMouseReleased(event -> {
-            setStageDimensions(_candidate_width, _candidate_height);
-            setColorMode(_candidate_color_mode);
-            try {
-                writeSettings();
-            }catch(CustomException.FileManagementException e){
-                System.out.println(e.getMessage() + " Writing was wrong. Continuing.");
-            }
-            OptionsMenu options_menu = new OptionsMenu();
-            options_menu.start(getStage());
-        });
+            getItem("CONTINUE").setOnMouseReleased(event -> {
+                setStageDimensions(_candidate_width, _candidate_height);
+                setColorMode(_candidate_color_mode);
+                try {
+                    writeSettings();
+                } catch (CustomException.FileManagementException e) {
+                    System.out.println(e.getMessage() + " Writing was wrong. Continuing.");
+                }
+                OptionsMenu options_menu = new OptionsMenu();
+                options_menu.start(getStage());
+            });
+        }catch (CustomException.MissingMenuComponent e){
+            System.out.println(e.getMessage() + " Fatal error. Closing application.");
+            Runtime.getRuntime().exit(1);
+        }
     }
 
 }

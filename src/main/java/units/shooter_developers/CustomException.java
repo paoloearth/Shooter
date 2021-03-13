@@ -21,9 +21,9 @@ public class CustomException{
         MyException(String msg){super(msg);}
     }
 
-    public static class MenuComponentNotFound extends ExceptionModel{
-        MenuComponentNotFound(String component_descriptor){
-            super("ERROR: The following menu component was not found: " + component_descriptor);
+    public static class MissingMenuComponent extends ExceptionModel{
+        public MissingMenuComponent(String component_descriptor, Type component_type){
+            super("ERROR: The following menu component of type " + component_type + " was not found: " + component_descriptor);
         }
 
     }

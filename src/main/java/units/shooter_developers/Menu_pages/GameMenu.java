@@ -8,6 +8,7 @@ package units.shooter_developers.Menu_pages;
    Remove this keyword when it is not necessary
 */
 
+import units.shooter_developers.CustomException;
 import units.shooter_developers.MenuAPI.Menu;
 import units.shooter_developers.Simulation;
 
@@ -44,25 +45,37 @@ public class GameMenu extends Menu {
         getStage().setTitle("VIDEO GAME");
         setTitle("C A M P A I G N");
 
-        getItem("NEW GAME").setOnMouseReleased(event -> {
-            Submenu submenu_launch_game = new Submenu(this);
-            submenu_launch_game.start(getStage());
-        });
+
         if(isSimulationRunning()) {
-            getItem("CONTINUE").setOnMouseReleased(event -> {
-                getStage().close();
-                getStage().setScene(getSimulationInstance().getScene());
-                getStage().show();
-                getStage().toFront();
-            });
+            try {
+                getItem("CONTINUE").setOnMouseReleased(event -> {
+                    getStage().close();
+                    getStage().setScene(getSimulationInstance().getScene());
+                    getStage().show();
+                    getStage().toFront();
+                });
+            } catch (CustomException.MissingMenuComponent e){
+                System.out.println(e.getMessage() + " Fatal error. Closing application");
+                Runtime.getRuntime().exit(1);
+            }
         }
-        getItem("EXIT").setOnMouseReleased(event -> {
-            getStage().close();
-        });
-        getItem("OPTIONS").setOnMouseReleased(event -> {
-            OptionsMenu options_menu = new OptionsMenu(this);
-            options_menu.start(getStage());
-        });
+
+        try {
+            getItem("NEW GAME").setOnMouseReleased(event -> {
+                Submenu submenu_launch_game = new Submenu(this);
+                submenu_launch_game.start(getStage());
+            });
+            getItem("EXIT").setOnMouseReleased(event -> {
+                getStage().close();
+            });
+            getItem("OPTIONS").setOnMouseReleased(event -> {
+                OptionsMenu options_menu = new OptionsMenu(this);
+                options_menu.start(getStage());
+            });
+        } catch (CustomException.MissingMenuComponent e){
+            System.out.println(e.getMessage() + " Fatal error. Closing application");
+            Runtime.getRuntime().exit(1);
+        }
 
 
     }

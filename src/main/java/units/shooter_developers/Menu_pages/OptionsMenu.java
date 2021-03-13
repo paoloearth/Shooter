@@ -44,13 +44,18 @@ public class OptionsMenu extends Menu {
 
         getStage().setTitle("VIDEO GAME");
 
-        getItem("BACK").setOnMouseReleased(event -> {
-            GameMenu main_menu = new GameMenu(this);
-            main_menu.start(getStage());
-        });
-        getItem("APPLY").setOnMouseReleased(event -> {
-            applyCurrentSettings();
-        });
+        try {
+            getItem("BACK").setOnMouseReleased(event -> {
+                GameMenu main_menu = new GameMenu(this);
+                main_menu.start(getStage());
+            });
+            getItem("APPLY").setOnMouseReleased(event -> {
+                applyCurrentSettings();
+            });
+        } catch (CustomException.MissingMenuComponent e){
+            System.out.println(e.getMessage() + " Fatal error. Closing application.");
+            Runtime.getRuntime().exit(1);
+        }
     }
 
 

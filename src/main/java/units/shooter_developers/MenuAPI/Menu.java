@@ -376,11 +376,14 @@ public abstract class Menu extends Application {
         return _color_mode;
     }
 
-    public MenuItem getItem(String name){
-        return getItems().stream()
+    public MenuItem getItem(String name) throws CustomException.MissingMenuComponent {
+        var item = getItems().stream()
                 .filter(e -> e.getName().equals(name))
                 .findFirst()
                 .orElse(null);
+
+        if(item == null){throw new CustomException.MissingMenuComponent("Item with name \"" +name+ "\".", MenuItem.class);}
+        else{return item;}
     }
 
     public String getSelectorValue(String name){
