@@ -87,6 +87,8 @@ public class CustomSettings {
    // public static final String URL_BACKGROUND_LIGHT = "menu_light.jpg";
    // public static final String URL_BACKGROUND_DARK = "menu_dark.jpeg";
 
+    public static final String URL_WARNING_ICON = "alert.png";
+
     public static final String URL_BACKGROUND_LIGHT = "smoke_light.jpg";
     public static final String URL_BACKGROUND_DARK = "smoke_dark.jpg";
 

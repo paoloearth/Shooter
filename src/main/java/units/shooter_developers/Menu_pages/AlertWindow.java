@@ -6,6 +6,7 @@ package units.shooter_developers.Menu_pages;
 
    Remove this keyword when it is not necessary
 */
+import units.shooter_developers.CustomSettings;
 import units.shooter_developers.MenuAPI.Menu;
 
 public class AlertWindow extends Menu {
@@ -24,7 +25,7 @@ public class AlertWindow extends Menu {
     public void createContent(){
 
         /* Maybe move this URL to the right place */
-        var alert_image = Menu.retrieveImage("alert.png", 1,1);
+        var alert_image = Menu.retrieveImage(CustomSettings.URL_WARNING_ICON, 1,1);
 
         addCentralImageView(alert_image, 0.7, 0.7);
         addSecondaryTitle("CAUTION!");
