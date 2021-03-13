@@ -24,7 +24,7 @@ class Title extends StackPane {
 
         setAlignment(Pos.CENTER);
 
-        //Text is transformed into an image and redimensionated
+        //Text is transformed into an image and dimensioned
         var params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);
         var textImage = new ImageView(text.snapshot(params, null));
