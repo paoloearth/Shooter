@@ -94,6 +94,7 @@ public class CustomSettings {
     //public static final String URL_BACKGROUND_DARK = "Desheret.jpg";
 
     public static final String URL_WARNING_ICON = "alert.png";
+    public static final String URL_FIREWORKS = "fireworks.png";
 
     public static final String URL_CONFIG_FILE = "config.ini";
 

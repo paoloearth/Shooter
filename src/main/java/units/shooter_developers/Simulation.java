@@ -10,7 +10,6 @@ import javafx.util.Pair;
 import units.shooter_developers.Menu_pages.GameMenu;
 import units.shooter_developers.Menu_pages.WinnerWindow;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -124,7 +123,7 @@ public class Simulation extends Application {
 
 
     /* ---------------------------------- FIRST THINGS EXECUTED ---------------------------------- */
-    public void start(Stage stage) throws  IOException{
+    public void start(Stage stage){
         this._stage = stage;
         stage.centerOnScreen();
 
@@ -218,7 +217,7 @@ public class Simulation extends Application {
 
 
     private void launch_winner_window(Sprite winner) {
-        var win_screen = new WinnerWindow(WIDTH, HEIGHT, winner);
+        var win_screen = new WinnerWindow(winner);
         stopSimulation();
         win_screen.start(_stage);
     }
