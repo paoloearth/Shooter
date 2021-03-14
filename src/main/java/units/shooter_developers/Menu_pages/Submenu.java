@@ -1,6 +1,10 @@
 package units.shooter_developers.Menu_pages;
 /* VISITED
  *  - Exception should be more specific, here no message is printed except for the stacktrace
+ *    + native message of exception contains the specific information about the exception. In this case
+ *    + only reading exceptions can be thrown. The message of the thrown exception explains the file which
+ *    + generated the problem, which is shown with getMessage() method. Additional information would be redundant.
+ *
  *  - Naming maybe should be change from primo_secondo to primoSecondo */
 import units.shooter_developers.*;
 import units.shooter_developers.MenuAPI.Menu;
@@ -44,13 +48,9 @@ public class Submenu extends Menu {
                 map_data.add(Map_CSV.get(getChoiceBoxValue("Map_selection")));
 
                 setSimulationInstance(new Simulation(player_names, Players_URL, map_data));
-                try {
-                    getStage().close();
-                    getSimulationInstance().start(getStage());
-                    getStage().setAlwaysOnTop(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                getStage().close();
+                getSimulationInstance().start(getStage());
+                getStage().setAlwaysOnTop(true);
             });
         }catch (CustomException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + " Fatal error. Closing application.");

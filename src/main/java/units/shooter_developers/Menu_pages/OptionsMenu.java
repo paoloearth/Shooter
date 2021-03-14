@@ -64,7 +64,17 @@ public class OptionsMenu extends Menu {
         String height_string;
 
        /*  - Maybe here consider not ignoring matcher.find()
-        *  - Exception should be more specific, here no message is printed
+        *    + Matcher makes part of the global parse of resolution-containing string to width and height.
+        *    + I think is not neccessary any additional level (like specific exception) to the matcher since
+        *    + the exception is generated with the full original string (for example "1900x900 (native)"), being
+        *    + easy to the user to identify the origin of the exception as the string.
+        *
+        *  - Message is not printed.
+        *    + Message is automatically generated when exception is thrown. A more specific in-context message which contains the
+        *    native exception message is printed in each of possibles uses of the exception.
+        *    + It not makes sense to print message here since the exception could be ignored or evicted in certain situations
+        *    + depending on the context. I don't want to force the user to deal with a undesired message.
+        *
         *  */
         try {
             String regex = "\\d+";
