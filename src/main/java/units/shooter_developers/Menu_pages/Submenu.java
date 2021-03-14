@@ -25,8 +25,15 @@ public class Submenu extends Menu {
         addTextBox("Player_textbox_2", 0, 1, CustomSettings.URL_COMMANDS_P2, 1, CustomSettings.ARROWS_SCALE, "Who is Player 2?", "Buzz");
 
         Map<String, String> Name_URL = generatePlayersUrl();
-        addChoiceBox("Player_selection_1", 1, 0, Name_URL, 1,4);
-        addChoiceBox("Player_selection_2", 1, 1, Name_URL, 1,4);
+        try {
+            addChoiceBox("Player_selection_1", 1, 0, Name_URL, 1, 4, 0);
+            addChoiceBox("Player_selection_2", 1, 1, Name_URL, 1, 4, 1);
+        }catch(CustomException.IndexOutOfRange e){
+            System.out.println(e.getMessage() + " Using default index. Continuing.");
+            addChoiceBox("Player_selection_1", 1, 0, Name_URL, 1, 4);
+            addChoiceBox("Player_selection_2", 1, 1, Name_URL, 1, 4);
+
+        }
 
         Map<String, String> mapURL = generateMapsUrl();
         addChoiceBox("Map_selection", 2, 0,mapURL, CustomSettings.MAP_SCALE, 1);

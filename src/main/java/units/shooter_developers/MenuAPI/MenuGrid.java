@@ -25,6 +25,11 @@ class MenuGrid extends GridPane {
         add(choice_box, col, row);
     }
 
+    public void addChoiceBox(String name, int row, int col, Map<String, String> map_image_to_URL, double scale, int number_of_rows_spritesheet, int default_index) throws CustomException.IndexOutOfRange {
+        final ChoiceBox choice_box = new ChoiceBox(name, map_image_to_URL, number_of_rows_spritesheet, scale, default_index);
+        add(choice_box, col, row);
+    }
+
     public ChoiceBox getChoiceBox(String name) throws CustomException.MissingMenuComponentException {
         final var choice_box_object = (ChoiceBox) getChildren().parallelStream()
                 .filter(e -> e instanceof ChoiceBox)

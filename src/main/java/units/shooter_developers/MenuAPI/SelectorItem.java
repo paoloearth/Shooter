@@ -3,16 +3,17 @@ package units.shooter_developers.MenuAPI;
 import javafx.beans.property.StringPropertyBase;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
+import units.shooter_developers.CustomException;
 
 import java.util.ArrayList;
 
 /************************ SELECTOR ITEM ****************************************/
 
 class SelectorItem extends HBox {
-    private final ArrayList<String> _selection_list;
+    private ArrayList<String> _selection_list = null;
     private int _selection_index;
     private final String _name;
-    private final StringPropertyBase _selection_as_property;   // Is this needed globally?
+    private StringPropertyBase _selection_as_property = null;
 
     public SelectorItem(String name, boolean show_name){
         this(name, 0.25, show_name);
@@ -71,20 +72,30 @@ class SelectorItem extends HBox {
         _selection_as_property.setValue(_selection_list.get(_selection_index));
     }
 
-    public void addTag(String selection_tag) {
+    protected void addTag(String selection_tag) {
         _selection_list.add(selection_tag);
         _selection_as_property.setValue(_selection_list.get(_selection_index));
     }
 
-    public String getText() {
+    protected String getText() {
         return _selection_as_property.getValue();
     }
 
-    public String getName() {
+    protected String getName() {
         return _name;
     }
 
-    public StringPropertyBase getSelectionAsProperty(){
+    protected StringPropertyBase getSelectionAsProperty(){
         return _selection_as_property;
+    }
+
+    protected void setDefaultIndex(int index) throws CustomException.IndexOutOfRange {
+        if(index >= _selection_list.size()){throw new CustomException.IndexOutOfRange(
+                "Menu selector item",
+                _selection_list.size()-1,
+                index, SelectorItem.class);}
+
+        _selection_index = index;
+        _selection_as_property.setValue(_selection_list.get(_selection_index));
     }
 }

@@ -312,6 +312,11 @@ public abstract class Menu extends Application {
         menu_grid_object.addChoiceBox(name, row, col, map_image_to_URL, scale, spritesheet_number_of_rows);
     }
 
+    public void addChoiceBox(String name, int row, int col, Map<String, String> map_image_to_URL, double scale, int spritesheet_number_of_rows, int default_index) throws CustomException.IndexOutOfRange {
+        MenuGrid menu_grid_object = getMenuGridAndCreateIfNotExist();
+        menu_grid_object.addChoiceBox(name, row, col, map_image_to_URL, scale, spritesheet_number_of_rows, default_index);
+    }
+
     public void addTextBox(String name, int row, int col, String commands_url, int number_of_rows_spritesheet, double scale, String default_message, String default_content){
         MenuGrid menu_grid_object = getMenuGridAndCreateIfNotExist();
 
@@ -550,6 +555,11 @@ public abstract class Menu extends Application {
     public void setSimulationInstance(Simulation simulation_instance){
         _simulation_instance = simulation_instance;
         _simulation_running = true;
+    }
+
+    public void setDefaultIndexForSelectorItem(String name, int index) throws CustomException.MissingMenuComponentException, CustomException.IndexOutOfRange {
+        var selector_object = getSelectorItem(name);
+        selector_object.setDefaultIndex(index);
     }
 
     /** OTHER **/

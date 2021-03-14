@@ -2,9 +2,11 @@ package units.shooter_developers.MenuAPI;
 
 /* VISITED */
 import javafx.geometry.Pos;
+import javafx.scene.chart.ScatterChart;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import units.shooter_developers.CustomException;
 
 import java.util.Map;
 
@@ -18,7 +20,6 @@ class ChoiceBox extends VBox {
     final private double _custom_scale;
     final private SelectorItem _selector;
     final String _name;
-
 
     public ChoiceBox(String name, Map<String, String> map_image_to_URL, int nrows, double scale) {
         _name = name;
@@ -49,6 +50,11 @@ class ChoiceBox extends VBox {
         map_image_to_URL.forEach((key, value) -> _selector.addTag(key));
         getChildren().addAll(image_box,_selector);
 
+    }
+
+    public ChoiceBox(String name, Map<String, String> map_image_to_URL, int nrows, double scale, int default_index) throws CustomException.IndexOutOfRange {
+        this(name, map_image_to_URL, nrows, scale);
+        _selector.setDefaultIndex(default_index);
     }
 
     public String getValue() { return _selector.getText(); }
