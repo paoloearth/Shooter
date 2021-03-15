@@ -23,48 +23,28 @@ public class Simulation extends Application {
     private final Pane root = new Pane();
     private  Stage _stage;
 
-    /* Sprites */
     private Sprite Player_1 ;
     private Sprite Player_2;
 
-    /* Timers and scene */
     private Scene _scene;
     private AnimationTimer _timer;
 
-    /* Window dimensions */
-    private double HEIGHT;
-    private double WIDTH;
+    private double _height;
+    private double _width;
 
-    /* Scaling */
     private Pair<Double,Double> scaling_factors;
 
-    /* Map */
-   private GameMap gamemap;
+   private GameMap _gameMap;
 
-    /* Map */
-    private final List<String> _players_names;
-    private final List<String> _players_urls_sprite;
-    private final List<String> _map_url;
-
+    private final List<String> _playersNames;
+    private final List<String> _playersUrlsSprite;
+    private final List<String> _mapUrl;
 
     public Simulation(List<String> players_names ,  List<String> players_urls_sprite,List<String> map_url )
     {
-        this._players_names = players_names;
-        this._players_urls_sprite = players_urls_sprite;
-        this._map_url = map_url;
-    }
-
-    public String get_i_player_name(int index)
-    {
-        return _players_names.get(index);
-    }
-    public String get_i_urls_sprite(int index)
-    {
-        return _players_urls_sprite.get(index);
-    }
-    public String get_map_url()
-    {
-        return _map_url.get(0);
+        this._playersNames = players_names;
+        this._playersUrlsSprite = players_urls_sprite;
+        this._mapUrl = map_url;
     }
 
 
@@ -77,14 +57,12 @@ public class Simulation extends Application {
     }
 
     private void create_bonus(){
-        new Bonus(root, gamemap, CustomSettings.URL_HEART,1,10,10, scaling_factors);
+        new Bonus(root, _gameMap, CustomSettings.URL_HEART,1,10,10, scaling_factors);
     }
 
     private void create_teleports() {
-
-        var T1  = new Teleport(root,  CustomSettings.URL_TELEPORT, gamemap, scaling_factors, "" + CustomSettings.TELEPORT_CODE + '0');
-        var T2  = new Teleport(root,  CustomSettings.URL_TELEPORT, gamemap, scaling_factors, "" + CustomSettings.TELEPORT_CODE + '1');
-
+        var T1  = new Teleport(root,  CustomSettings.URL_TELEPORT, _gameMap, scaling_factors, "" + CustomSettings.TELEPORT_CODE + '0');
+        var T2  = new Teleport(root,  CustomSettings.URL_TELEPORT, _gameMap, scaling_factors, "" + CustomSettings.TELEPORT_CODE + '1');
 
         T1.setDestination(T2);
         T2.setDestination(T1);
@@ -93,28 +71,20 @@ public class Simulation extends Application {
 
     private void create_map() {
         var MR = new MapReader();
-        gamemap = MR.makeMapFromFileContent(get_map_url(), WIDTH,HEIGHT);
-        root.getChildren().add(gamemap.getCells());
-
-    }
-
+        _gameMap = MR.makeMapFromFileContent(getMapUrl(), _width, _height);
+        root.getChildren().add(_gameMap.getCells()); }
 
     private void create_players() {
-    Player_1 = new Sprite(root, gamemap, scaling_factors, get_i_urls_sprite(0),4, 1 ,  "" + CustomSettings.PLAYER_CODE + '0', Direction.RIGHT, get_i_player_name(0));
-    Player_2 = new Sprite(root, gamemap, scaling_factors, get_i_urls_sprite(1),    4, 1,   "" + CustomSettings.PLAYER_CODE + '1', Direction.LEFT, get_i_player_name(1));
+    Player_1 = new Sprite(root, _gameMap, scaling_factors, getIUrlsSprite(0),4, 1 ,  "" + CustomSettings.PLAYER_CODE + '0', Direction.RIGHT, getIPlayerName(0));
+    Player_2 = new Sprite(root, _gameMap, scaling_factors, getIUrlsSprite(1),    4, 1,   "" + CustomSettings.PLAYER_CODE + '1', Direction.LEFT, getIPlayerName(1));
     }
 
     private void create_frame() {
-
-
-        WIDTH =  _stage.getWidth();
-        HEIGHT = _stage.getHeight();
-
+        _width =  _stage.getWidth();
+        _height = _stage.getHeight();
 
         /* Compute the scaling factor that will be used to update some parameters at RUNTIME*/
-        scaling_factors = new Pair<>(  WIDTH / CustomSettings.DEFAULT_X,  HEIGHT / CustomSettings.DEFAULT_Y);
-
-
+        scaling_factors = new Pair<>(  _width / CustomSettings.DEFAULT_X,  _height / CustomSettings.DEFAULT_Y);
     }
 
     public Scene getScene(){
@@ -124,85 +94,48 @@ public class Simulation extends Application {
 
     /* ---------------------------------- FIRST THINGS EXECUTED ---------------------------------- */
     public void start(Stage stage){
-        this._stage = stage;
+        _stage = stage;
         stage.centerOnScreen();
 
-        /* Set the stage title of the game */
-        _stage.setTitle("Shooter");
+        _stage.setTitle(CustomSettings.WINDOW_NAME);
         _stage.setResizable(false);
 
-        /* Create a new scene & fill it with necessary material */
         createContent();
-
-        /* Add root to the scene */
         _scene = new Scene(root);
 
-        /* Start the game */
         GAME();
 
-        /* Set the listeners to capture the movements of the player */
         addKeyHandler_PRESS(_scene,    Player_1, Player_2);
         addKeyHandler_RELEASED(_scene, Player_1,Player_2);
 
-
-
-        /* Output the scene */
         _stage.setScene(_scene);
         _stage.show();
     }
 
-    /* ---------------------------------- GAME LOOP ---------------------------------- */
+    /* Game Loop and Core Functions */
     private void GAME() {
-
-
-        /* Create timer */
-
         _timer = new AnimationTimer() {
             private long last_update = 0;
             @Override
             public void handle(long now) {
-
                 if(now-last_update >= 4_000_000) {
-
                     all_sprites().forEach(
                             s -> {
-                                if(s instanceof DynamicObject) ((DynamicObject) s).defaultMovement(gamemap);
+                                if(s instanceof DynamicObject) ((DynamicObject) s).defaultMovement(_gameMap);
                                 all_players().forEach(s::action);
-                                }
-                    );
-                    try {
-                        remove_dead_objects();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
+                                });
+                    cleanDeadObjectsAndCheckForVictory();
                     last_update = now;
                 }
-
             }
         };
 
         startSimulation();
     }
 
-    public void startSimulation(){
-        _timer.start();
-    }
-
-    public void stopSimulation(){
-        _timer.stop();
-    }
-
-
-
-    private void remove_dead_objects() {
-
-     clean_dead_objects();
-     if(all_players().size()==1)  launch_winner_window(all_players().iterator().next());
-    }
-
-    private void clean_dead_objects() {
+    private void cleanDeadObjectsAndCheckForVictory() {
         root.getChildren().removeIf(node -> (node instanceof PicturedObject) && ((PicturedObject) node).hasToBeRemoved());
+        if(all_players().size()==1)  launch_winner_window(all_players().iterator().next());
     }
 
     protected List<PicturedObject> all_sprites()
@@ -223,14 +156,10 @@ public class Simulation extends Application {
     }
 
 
-    /* ---------------------------------- MAIN ---------------------------------- */
-    public static void main(String[] args) {
-        launch(args);
-    }
 
 
-    /* ---------------------------------- HANDLE PLAYERS MOVEMENTS ---------------------------------- */
 
+    /* Handle Player Movements */
     private void addKeyHandler_PRESS(Scene scene, Sprite s, Sprite p)
     {
         scene.addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
@@ -249,34 +178,11 @@ public class Simulation extends Application {
                     case SPACE -> s.shoot(root);
 
                     case ESCAPE -> {
-                        var game_menu = new GameMenu(this);
-                        stopSimulation();
-                        try {
-                            game_menu.readProperties();
-                        } catch (CustomException.FileManagementException e) {
-                            System.out.println(e.getMessage() + " Using default settings.");
-                        }
-                        game_menu.start(_stage);
-                        startSimulation();
-                    }
-                    /*  remove where are not necessary any more                                 */
-                    case P -> {
-                        var game_menu = new GameMenu(this);
-                    }
-                    case R -> {
-                        var game_menu = new GameMenu(this);
-                        startSimulation();
+                        handleEscape();
                     }
                 }
             }
         });}
-
-
-
-
-
-
-
 
     private void addKeyHandler_RELEASED(Scene scene, Sprite p, Sprite s)
     {
@@ -296,16 +202,44 @@ public class Simulation extends Application {
             }
         });}
 
-    public double getHEIGHT() {
-        return HEIGHT;
+    private void handleEscape() {
+        var game_menu = new GameMenu(this);
+        stopSimulation();
+        try {
+            game_menu.readProperties();
+        } catch (CustomException.FileManagementException e) {
+            System.out.println(e.getMessage() + " Using default settings.");
+        }
+        game_menu.start(_stage);
+        startSimulation();
     }
-    public double getWIDTH() {
-        return WIDTH;
+
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+
+    /* Getters */
+    public double get_height() {
+        return _height;
+    }
+    public double get_width() {
+        return _width;
     }
     public Pane getRoot() { return root; }
     public Sprite getPlayer_1() { return Player_1; }
     public Sprite getPlayer_2() { return Player_2; }
-    public GameMap getGamemap(){return gamemap;}
+    public GameMap get_gameMap(){return _gameMap;}
+    public String getIPlayerName(int index) { return _playersNames.get(index); }
+    public String getIUrlsSprite(int index) { return _playersUrlsSprite.get(index); }
+    public String getMapUrl() { return _mapUrl.get(0); }
+
+    public void startSimulation(){ _timer.start(); }
+    public void stopSimulation(){ _timer.stop(); }
+
+
+
 }
 
 
