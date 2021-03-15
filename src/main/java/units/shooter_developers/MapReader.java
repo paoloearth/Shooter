@@ -1,7 +1,7 @@
 package units.shooter_developers;
 import javafx.scene.image.Image;
 import javafx.util.Pair;
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -36,7 +36,9 @@ public class MapReader {
 
     public GameMap makeMapFromFileContent(String URL, double width, double height)
     {
-        List<String[]> lines = readLinesFromFile(URL);
+        Optional<List<String[]>> optionalLines = Optional.ofNullable(readLinesFromFile(URL));
+        if(optionalLines.isEmpty()) throw new CustomUncheckedException.FileIsEmptyException(" The file is empty ");
+        List<String[]> lines = optionalLines.get();
 
        /* 0. Spritesheet URL */
         String tileSetURL = lines.get(CustomSettings.URL_TILESET_INDEX)[0];
@@ -85,22 +87,21 @@ public class MapReader {
 
     protected List<String[]> readLinesFromFile(String url) {
         List<String[]> rows = new ArrayList<>();
-        URL filePath = ClassLoader.getSystemResource(url);
+        Optional<URL> filePath= Optional.ofNullable(ClassLoader.getSystemResource(url));
+        if(filePath.isEmpty()) throw new CustomUncheckedException.FileUrlException("URL :[ "+ url +" ] is not found and filePath return null ");
        try(Stream<String> lines =
-                   Files.lines(Paths.get(filePath.toURI()))){
+                   Files.lines(Paths.get(filePath.get().toURI()))){
                    rows = lines.parallel().map(l -> l.split(CustomSettings.FILE_SEPARATOR)).collect(Collectors.toList());
        }
-       catch(FileNotFoundException e){ System.out.println(url + ": was not found \n");e.printStackTrace(); }
        catch(IOException e){ System.out.println(url + ": problems interacting with the map file \n"); e.printStackTrace();}
-       catch(NullPointerException e){ System.out.println("FilePath is null. Check the url of the resource. \n"); e.printStackTrace();}
-       catch(URISyntaxException e){ System.out.println("Wrong url"+url+" format of map file \n"); e.printStackTrace();}
+       catch(URISyntaxException e){ System.out.println("Wrong url format of map file \n"); e.printStackTrace();}
 
        return rows;
     }
 
     protected Image getTilesetFromURL(String URL) {
         try { return new Image(URL); }
-        catch (IllegalArgumentException | NullPointerException e)
+        catch (IllegalArgumentException e)
         {
             System.out.println("Image of the tileset was not found. \n" + e);
             return new Image(URL);

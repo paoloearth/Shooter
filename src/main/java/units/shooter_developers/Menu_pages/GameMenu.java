@@ -8,7 +8,7 @@ package units.shooter_developers.Menu_pages;
    Remove this keyword when it is not necessary
 */
 
-import units.shooter_developers.CustomException;
+import units.shooter_developers.CustomCheckedException;
 import units.shooter_developers.MenuAPI.Menu;
 import units.shooter_developers.Simulation;
 
@@ -54,7 +54,7 @@ public class GameMenu extends Menu {
                     getStage().show();
                     getStage().toFront();
                 });
-            } catch (CustomException.MissingMenuComponentException e){
+            } catch (CustomCheckedException.MissingMenuComponentException e){
                 System.out.println(e.getMessage() + " Fatal error. Closing application");
                 Runtime.getRuntime().exit(1);
             }
@@ -72,7 +72,7 @@ public class GameMenu extends Menu {
                 OptionsMenu options_menu = new OptionsMenu(this);
                 options_menu.start(getStage());
             });
-        } catch (CustomException.MissingMenuComponentException e){
+        } catch (CustomCheckedException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + " Fatal error. Closing application");
             Runtime.getRuntime().exit(1);
         }

@@ -9,7 +9,7 @@ package units.shooter_developers.Menu_pages;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.util.Pair;
-import units.shooter_developers.CustomException;
+import units.shooter_developers.CustomCheckedException;
 import units.shooter_developers.MenuAPI.Menu;
 
 public class OptionsMenu extends Menu {
@@ -51,7 +51,7 @@ public class OptionsMenu extends Menu {
             getItem("APPLY").setOnMouseReleased(event -> {
                 applyCurrentSettings();
             });
-        } catch (CustomException.MissingMenuComponentException e){
+        } catch (CustomCheckedException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + " Fatal error. Closing application.");
             Runtime.getRuntime().exit(1);
         }
@@ -59,7 +59,7 @@ public class OptionsMenu extends Menu {
 
 
 
-    private Pair<Double, Double> ParseSelectedResolution(String string_containing_resolution) throws CustomException.WrongParsingException {
+    private Pair<Double, Double> ParseSelectedResolution(String string_containing_resolution) throws CustomCheckedException.WrongParsingException {
         String width_string;
         String height_string;
 
@@ -90,7 +90,7 @@ public class OptionsMenu extends Menu {
 
             return new Pair<>(width, height);
         }catch(Exception e){
-            throw new CustomException.WrongParsingException(string_containing_resolution, int.class);
+            throw new CustomCheckedException.WrongParsingException(string_containing_resolution, int.class);
         }
 
     }
@@ -103,7 +103,7 @@ public class OptionsMenu extends Menu {
     private void applyCurrentSettings(){
         try {
             writeSettings();
-        }catch (CustomException.FileManagementException e){
+        }catch (CustomCheckedException.FileManagementException e){
             System.out.println(e.getMessage() + " Writing was wrong. Continuing.");
         }
 
@@ -131,14 +131,14 @@ public class OptionsMenu extends Menu {
 
         try {
             writeSettings();
-        }catch (CustomException.FileManagementException e){
+        }catch (CustomCheckedException.FileManagementException e){
             System.out.println(e.getMessage() + " Writing was wrong. Continuing.");
         }
 
         OptionsMenu options_menu = new OptionsMenu(this);
         try {
             options_menu.readProperties();
-        } catch(CustomException.FileManagementException e){
+        } catch(CustomCheckedException.FileManagementException e){
             System.out.println(e.getMessage() + " Using default settings.");
         }
 
@@ -149,7 +149,7 @@ public class OptionsMenu extends Menu {
         String candidate_color_mode;
         try {
             candidate_color_mode = getSelectorValue("COLOR MODE");
-        }catch (CustomException.MissingMenuComponentException e){
+        }catch (CustomCheckedException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + " Color mode will not be changed. Continuing.");
             candidate_color_mode = getColorMode();
         }
