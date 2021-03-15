@@ -4,8 +4,10 @@ import javafx.util.Pair;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.List;
@@ -83,16 +85,17 @@ public class MapReader {
         return A;
     }
 
-    protected List<String[]> readLinesFromFile(String URL) {
+    protected List<String[]> readLinesFromFile(String url) {
         List<String[]> rows = new ArrayList<>();
+        URL filePath = ClassLoader.getSystemResource(url);
        try(Stream<String> lines =
-                   Files.lines(Paths.get(ClassLoader.getSystemResource(URL).toURI()), Charset.defaultCharset())){
+                   Files.lines(Paths.get(filePath.toURI()))){
                    rows = lines.parallel().map(l -> l.split(CustomSettings.FILE_SEPARATOR)).collect(Collectors.toList());
        }
-       catch(FileNotFoundException e){ System.out.println(URL + ": was not found \n");e.printStackTrace(); }
-       catch(IOException e){ System.out.println(URL + ": problems interacting with the map file \n"); e.printStackTrace();}
-       catch(NullPointerException e){ System.out.println("FilePath is null. Check the resource. \n"); e.printStackTrace();}
-       catch(URISyntaxException e){ System.out.println("Wrong URL"+URL+" format of map file \n"); e.printStackTrace();}
+       catch(FileNotFoundException e){ System.out.println(url + ": was not found \n");e.printStackTrace(); }
+       catch(IOException e){ System.out.println(url + ": problems interacting with the map file \n"); e.printStackTrace();}
+       catch(NullPointerException e){ System.out.println("FilePath is null. Check the url of the resource. \n"); e.printStackTrace();}
+       catch(URISyntaxException e){ System.out.println("Wrong url"+url+" format of map file \n"); e.printStackTrace();}
 
        return rows;
     }

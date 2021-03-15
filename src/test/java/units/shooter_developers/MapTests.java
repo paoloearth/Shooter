@@ -58,7 +58,7 @@ class MapTest {
 
     @Test
     void canTransformURLInImage(){
-        var b = MR.readImage(lines.get(CustomSettings.URL_TILESET_INDEX)[0]) != null;
+        var b = MR.getTilesetFromURL(lines.get(CustomSettings.URL_TILESET_INDEX)[0]) != null;
         assertTrue(b);
     }
 
