@@ -241,6 +241,24 @@ public abstract class Menu extends Application {
         }
     }
 
+    public void addSelectorItem(String name, int default_index, String ... selection_tags){
+        generateMenuBoxIfNotExist();
+        ArrayList<String> tag_list= new ArrayList<>();
+        Collections.addAll(tag_list, selection_tags);
+
+        MenuBox menu_box = null;
+        try{
+            menu_box = getItemsBox();
+            menu_box.addSelectorItem(name, default_index, tag_list);
+        }catch(CustomCheckedException.MissingMenuComponentException e){
+            System.out.println(e.getMessage() + "Selector item box object was not found neither created. Fatal error. Closing application");
+            Runtime.getRuntime().exit(1);
+        }catch(CustomCheckedException.IndexOutOfRange e){
+            System.out.println(e.getMessage() + "Index not set. Using default construction indexing. Continuing.");
+            menu_box.addSelectorItem(name, tag_list);
+        }
+    }
+
     public void addGenericNode(Node generic_node){
         _root.getChildren().add(generic_node);
     }
@@ -311,6 +329,11 @@ public abstract class Menu extends Application {
     public void addChoiceBox(String name, int row, int col, Map<String, String> map_image_to_URL, double scale, int spritesheet_number_of_rows){
         MenuGrid menu_grid_object = getMenuGridAndCreateIfNotExist();
         menu_grid_object.addChoiceBox(name, row, col, map_image_to_URL, scale, spritesheet_number_of_rows);
+    }
+
+    public void addChoiceBox(String name, int row, int col, Map<String, String> map_image_to_URL, double scale, int spritesheet_number_of_rows, int default_index) throws CustomCheckedException.IndexOutOfRange {
+        MenuGrid menu_grid_object = getMenuGridAndCreateIfNotExist();
+        menu_grid_object.addChoiceBox(name, row, col, map_image_to_URL, scale, spritesheet_number_of_rows, default_index);
     }
 
     public void addTextBox(String name, int row, int col, String commands_url, int number_of_rows_spritesheet, double scale, String default_message, String default_content){
@@ -551,6 +574,11 @@ public abstract class Menu extends Application {
     public void setSimulationInstance(Simulation simulation_instance){
         _simulation_instance = simulation_instance;
         _simulation_running = true;
+    }
+
+    public void setDefaultIndexForSelectorItem(String name, int index) throws CustomCheckedException.MissingMenuComponentException, CustomCheckedException.IndexOutOfRange {
+        var selector_object = getSelectorItem(name);
+        selector_object.setDefaultIndex(index);
     }
 
     /** OTHER **/

@@ -26,7 +26,9 @@ public class OptionsMenu extends Menu {
     public void createContent(){
 
         setTitle("O P T I O N S");
-        this.addSelectorItem("COLOR MODE", "dark", "light");
+
+        int default_index = getColorMode()=="dark"? 0: 1;
+        this.addSelectorItem("COLOR MODE", default_index,  "dark", "light");
 
         this.addSelectorItem("RESOLUTION",
                 (int) getStageWidth() + "x" + (int) getStageHeight() + " (current)",
@@ -62,20 +64,7 @@ public class OptionsMenu extends Menu {
     private Pair<Double, Double> ParseSelectedResolution(String string_containing_resolution) throws CustomCheckedException.WrongParsingException {
         String width_string;
         String height_string;
-
-       /*  - Maybe here consider not ignoring matcher.find()
-        *    + Matcher makes part of the global parse of resolution-containing string to width and height.
-        *    + I think is not neccessary any additional level (like specific exception) to the matcher since
-        *    + the exception is generated with the full original string (for example "1900x900 (native)"), being
-        *    + easy to the user to identify the origin of the exception as the string.
-        *
-        *  - Message is not printed.
-        *    + Message is automatically generated when exception is thrown. A more specific in-context message which contains the
-        *    native exception message is printed in each of possibles uses of the exception.
-        *    + It not makes sense to print message here since the exception could be ignored or evicted in certain situations
-        *    + depending on the context. I don't want to force the user to deal with a undesired message.
-        *
-        *  */
+        
         try {
             String regex = "\\d+";
             Pattern pattern = Pattern.compile(regex);

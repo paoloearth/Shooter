@@ -10,9 +10,20 @@ public class CustomCheckedException {
         }
     }
 
-    public static class MissingMenuComponentException extends Exception {
-        public MissingMenuComponentException(String component_descriptor, Type component_type){
-            super("ERROR: The following menu component of type " + component_type + " was not found: " + component_descriptor);
+    public static class NegativeNumberException extends Exception{
+        NegativeNumberException(String msg){
+            super(msg);
+        }
+
+    }
+
+    public static class MyException extends Exception{
+        MyException(String msg){super(msg);}
+    }
+
+    public static class MissingMenuComponentException extends Exception{
+        public MissingMenuComponentException(String component_description, Type component_type){
+            super("ERROR: The following menu component of type " + component_type + " was not found: " + component_description);
         }
 
     }
@@ -20,6 +31,13 @@ public class CustomCheckedException {
     public static class WrongParsingException extends Exception {
         public WrongParsingException(String string_to_parse_from, Type destination_type){
             super("ERROR: Parsing of string \"" + string_to_parse_from + "\" to type " + destination_type + " was wrong.");
+        }
+
+    }
+
+    public static class IndexOutOfRange extends Exception{
+        public IndexOutOfRange(String object_description, int max_index, int current_index, Type object_type){
+            super("ERROR: Maximum index was [" + max_index + "] but [" + current_index + "] was provided in the following object of type "+ object_type +": " + object_description + ".");
         }
 
     }
