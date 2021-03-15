@@ -10,10 +10,10 @@ import java.util.ArrayList;
 /************************ SELECTOR ITEM ****************************************/
 
 class SelectorItem extends HBox {
-    private ArrayList<String> _selectionList;
+    private final ArrayList<String> _selectionList;
     private int _selectionIndex;
     private final String _name;
-    private StringPropertyBase _selectionAsProperty;
+    private final StringPropertyBase _selectionAsProperty;
 
     public SelectorItem(String name, boolean showName){
         this(name, 0.25, showName);
@@ -36,9 +36,7 @@ class SelectorItem extends HBox {
         final var longSpace = new Rectangle(selectionSectionTranslation * Menu.getMenuWidth(), 0);
 
         MenuItem leftArrowButton = new MenuItem("<", 0.04, -1);
-        leftArrowButton.setOnMouseReleased(event -> {
-            previous();
-        });
+        leftArrowButton.setOnMouseReleased(event -> previous());
 
         final var shortSpace1 = new Rectangle(0.01 * Menu.getMenuWidth(), 0);
 
@@ -49,7 +47,7 @@ class SelectorItem extends HBox {
         final var shortSpace2 = new Rectangle(0.01 * Menu.getMenuWidth(), 0);
 
         final MenuItem rightArrowButton = new MenuItem(">", 0.04, -1);
-        rightArrowButton.setOnMouseReleased(event -> {next();});
+        rightArrowButton.setOnMouseReleased(event -> next());
 
         if(showName) {
             this.getChildren().add(nameTextBox);

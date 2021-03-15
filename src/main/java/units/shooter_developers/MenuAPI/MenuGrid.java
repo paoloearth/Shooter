@@ -37,7 +37,7 @@ class MenuGrid extends GridPane {
                 .findFirst()
                 .orElse(null);
 
-        if(choiceBoxObject == null){throw new CustomCheckedException.MissingMenuComponentException("Choice box with name \"" + name + "\".", ChoiceBox.class);}
+        if(choiceBoxObject == null){throw new CustomCheckedException.MissingMenuComponentException(" Choice box with name \"" + name + "\".", ChoiceBox.class);}
         else{return choiceBoxObject;}
     }
 
@@ -53,7 +53,7 @@ class MenuGrid extends GridPane {
                 .findFirst()
                 .orElse(null);
 
-        if(textBoxObject == null){throw new CustomCheckedException.MissingMenuComponentException("Text box with name \"" + name + "\".", TextBox.class);}
+        if(textBoxObject == null){throw new CustomCheckedException.MissingMenuComponentException(" Text box with name \"" + name + "\".", TextBox.class);}
         else{return textBoxObject;}
 
     }

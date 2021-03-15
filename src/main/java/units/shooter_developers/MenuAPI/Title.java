@@ -1,5 +1,5 @@
 package units.shooter_developers.MenuAPI;
-    
+
 import javafx.geometry.Pos;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.ImageView;

@@ -56,9 +56,7 @@ public class GameMenu extends Menu {
                 Submenu submenuLaunchGame = new Submenu(this);
                 submenuLaunchGame.start(getStage());
             });
-            getItem("EXIT").setOnMouseReleased(event -> {
-                getStage().close();
-            });
+            getItem("EXIT").setOnMouseReleased(event -> getStage().close());
             getItem("OPTIONS").setOnMouseReleased(event -> {
                 OptionsMenu optionsMenu = new OptionsMenu(this);
                 optionsMenu.start(getStage());

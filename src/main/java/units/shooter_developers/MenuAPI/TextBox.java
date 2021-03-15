@@ -63,7 +63,7 @@ class TextBox extends VBox {
 
     protected String getValue()
     {
-        if(_textField.getText() == "")
+        if(_textField.getText().equals(""))
             return _defaultTextfieldContent;
         else
             return _textField.getText();

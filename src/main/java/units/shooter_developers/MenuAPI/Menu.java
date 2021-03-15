@@ -107,8 +107,8 @@ public abstract class Menu extends Application {
     public void readProperties() throws CustomCheckedException.FileManagementException{
         File configFile = new File(URL_CONFIG_FILE);
         Properties config;
-        ImageView backgroundLight = null;
-        ImageView backgroundDark = null;
+        ImageView backgroundLight;
+        ImageView backgroundDark;
 
         try {
             FileReader reader;
@@ -130,12 +130,10 @@ public abstract class Menu extends Application {
 
         if(colorMode.equals("light")){
             setColorMode("light");
-            if(backgroundLight != null)
-                _background = backgroundLight;
+            _background = backgroundLight;
         } else {
             setColorMode("dark");
-            if(backgroundDark != null)
-                _background = backgroundDark;
+            _background = backgroundDark;
         }
     }
 
@@ -272,7 +270,9 @@ public abstract class Menu extends Application {
         try {
             var title_object = getTitleObject();
             _root.getChildren().remove(title_object);
-        }catch(CustomCheckedException.MissingMenuComponentException e){}
+        }catch(CustomCheckedException.MissingMenuComponentException e){
+            System.out.println(e.getMessage() + " Title is not set. Ignoring its deletion. Continuing.");
+        }
     }
 
     public void addFlashDisclaimer(String disclaimer_text){
@@ -555,7 +555,7 @@ public abstract class Menu extends Application {
     }
 
     public static void setColorMode(String colorMode){
-        if(colorMode == "light"){
+        if(colorMode.equals("light")){
             _colorMode = "light";
             getColorPalette().setLight();
         } else {

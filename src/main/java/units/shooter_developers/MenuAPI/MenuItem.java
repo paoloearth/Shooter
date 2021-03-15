@@ -64,13 +64,9 @@ public class MenuItem extends StackPane {
             text.setFill(Menu.getColorPalette().basic_primary_color);
         });
 
-        setOnMousePressed(event -> {
-            box.setFill(Menu.getColorPalette().clicked_background_color);
-        });
+        setOnMousePressed(event -> box.setFill(Menu.getColorPalette().clicked_background_color));
 
-        setOnMouseReleased(event -> {
-            box.setFill(gradient);
-        });
+        setOnMouseReleased(event -> box.setFill(gradient));
 
         getChildren().addAll(box, textImage);
 

@@ -22,7 +22,7 @@ public class OptionsMenu extends Menu {
 
         setTitle("O P T I O N S");
 
-        int defaultIndex = getColorMode()=="dark"? 0: 1;
+        int defaultIndex = getColorMode().equals("dark") ? 0: 1;
         this.addSelectorItem("COLOR MODE", defaultIndex,  "dark", "light");
 
         this.addSelectorItem("RESOLUTION",
@@ -45,9 +45,7 @@ public class OptionsMenu extends Menu {
                 GameMenu mainMenu = new GameMenu(this);
                 mainMenu.start(getStage());
             });
-            getItem("APPLY").setOnMouseReleased(event -> {
-                applyCurrentSettings();
-            });
+            getItem("APPLY").setOnMouseReleased(event -> applyCurrentSettings());
         } catch (CustomCheckedException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + " Fatal error. Closing application.");
             Runtime.getRuntime().exit(1);

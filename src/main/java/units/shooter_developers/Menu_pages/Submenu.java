@@ -39,7 +39,7 @@ public class Submenu extends Menu {
                 playerNames.add(getTextBoxValue("Player_textbox_1"));
                 playerNames.add(getTextBoxValue("Player_textbox_2"));
 
-                ArrayList<String> playersUrl = new ArrayList<String>();
+                ArrayList<String> playersUrl = new ArrayList<>();
                 playersUrl.add(nameUrl.get(getChoiceBoxValue("Player_selection_1")));
                 playersUrl.add(nameUrl.get(getChoiceBoxValue("Player_selection_2")));
 
