@@ -213,6 +213,7 @@ public abstract class Menu extends Application {
         MenuItem new_item = new MenuItem(new_menu_item);
         new_item.setTranslateX(position_ratio_X*getMenuWidth());
         new_item.setTranslateY(position_ratio_Y*getMenuHeight());
+        new_item.setAlignment(Pos.CENTER);
 
         addGenericNode(new_item);
     }
