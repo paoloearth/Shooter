@@ -52,7 +52,7 @@ public class Submenu extends Menu {
                 getSimulationInstance().start(getStage());
                 getStage().setAlwaysOnTop(true);
             });
-        }catch (CustomException.MissingMenuComponentException e){
+        }catch (CustomCheckedException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + " Fatal error. Closing application.");
             Runtime.getRuntime().exit(1);
         }

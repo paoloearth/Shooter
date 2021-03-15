@@ -1,7 +1,7 @@
 package units.shooter_developers.Menu_pages;
 // VISITED
 
-import units.shooter_developers.CustomException;
+import units.shooter_developers.CustomCheckedException;
 import units.shooter_developers.CustomSettings;
 import units.shooter_developers.MenuAPI.Menu;
 
@@ -39,13 +39,13 @@ public class AlertWindow extends Menu {
                 setColorMode(_candidate_color_mode);
                 try {
                     writeSettings();
-                } catch (CustomException.FileManagementException e) {
+                } catch (CustomCheckedException.FileManagementException e) {
                     System.out.println(e.getMessage() + " Writing was wrong. Continuing.");
                 }
                 OptionsMenu options_menu = new OptionsMenu();
                 options_menu.start(getStage());
             });
-        }catch (CustomException.MissingMenuComponentException e){
+        }catch (CustomCheckedException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + " Fatal error. Closing application.");
             Runtime.getRuntime().exit(1);
         }

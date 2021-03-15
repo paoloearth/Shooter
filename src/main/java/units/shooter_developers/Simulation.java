@@ -207,7 +207,7 @@ public class Simulation extends Application {
         stopSimulation();
         try {
             game_menu.readProperties();
-        } catch (CustomException.FileManagementException e) {
+        } catch (CustomCheckedException.FileManagementException e) {
             System.out.println(e.getMessage() + " Using default settings.");
         }
         game_menu.start(_stage);
