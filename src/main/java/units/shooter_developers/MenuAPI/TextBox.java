@@ -1,5 +1,7 @@
 package units.shooter_developers.MenuAPI;
-// Visited
+
+import units.shooter_developers.CustomCheckedException;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
@@ -8,17 +10,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import units.shooter_developers.CustomCheckedException;
 
 class TextBox extends VBox {
 
     TextField _textField;
-    int _nrows;
-    double _custom_scale;
     String _name;
-    String _default_textfield_content;
+    String _defaultTextfieldContent;
 
-    protected TextBox(String name, String commands_url, int nrows, double scale, String default_message, String default_content)
+    protected TextBox(String name, String imageUrl, int rowWithinSpritesheet, double imageScale, String defaultMessage, String defaultContent)
     {
         super();
         setAlignment(Pos.TOP_CENTER);
@@ -26,25 +25,23 @@ class TextBox extends VBox {
         setSpacing(10);
         setFillWidth(false);
 
-        _nrows = nrows;
-        _custom_scale = scale;
         _name = name;
-        _default_textfield_content = default_content;
+        _defaultTextfieldContent = defaultContent;
 
         _textField = createCustomizedTextField();
-        _textField.setPromptText(default_message);
+        _textField.setPromptText(defaultMessage);
 
         ImageView image;
 
         try {
-            image = Menu.retrieveImage(commands_url, _nrows, 1);
+            image = Menu.retrieveImage(imageUrl, rowWithinSpritesheet, 1);
         }catch (CustomCheckedException.FileManagementException e){
             System.out.println(e.getMessage() + " TextBox's image image not found. Using alternative one. Continuing");
             image = new ImageView(new Rectangle(10, 10).snapshot(null, null));
         }
 
         image.setPreserveRatio(true);
-        image.setFitHeight(0.2*_custom_scale*Menu.getMenuHeight());
+        image.setFitHeight(0.2* imageScale *Menu.getMenuHeight());
         DropShadow ds = new DropShadow( 50, Color.WHITE );
         image.setEffect(ds);
 
@@ -67,7 +64,7 @@ class TextBox extends VBox {
     protected String getValue()
     {
         if(_textField.getText() == "")
-            return _default_textfield_content;
+            return _defaultTextfieldContent;
         else
             return _textField.getText();
     }
