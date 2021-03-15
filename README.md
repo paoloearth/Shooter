@@ -108,10 +108,10 @@ See the [open issues](https://github.com/paoloearth/Shooter/issues) for a list o
 - [ ] More effects, sprites, bonuses, maps
 - [ ] Players on distinct machine on the same LAN
 - [ ] Multiplayers (e.g 2 vs 2)
-- [ ] Players on distinct machine on the same LAN
+- [ ] Players on distinct machine on the distinct LAN
 - [ ] Different game modalities
 - [ ] AI enemies
-- [ ] Game server on the client
+- [ ] Game server on the cloud
 
 
 <!-- LICENSE -->
