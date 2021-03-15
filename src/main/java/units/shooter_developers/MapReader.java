@@ -5,9 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.List;
@@ -80,7 +78,7 @@ public class MapReader {
             A = Arrays.stream(S).parallel().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
         }catch (NumberFormatException e)
         {
-                System.out.println("Value read cannot be parsed into an integer" + e);;
+                System.out.println("Value read cannot be parsed into an integer" + e);
         }
         return A;
     }
