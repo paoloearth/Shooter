@@ -1,13 +1,5 @@
 package units.shooter_developers.Menu_pages;
 
-// VISITED
-
-/* All these should be renamed  following the google standard
-   lowerCamelCase() for methods & non constant values
-
-   Remove this keyword when it is not necessary
-*/
-
 import units.shooter_developers.CustomCheckedException;
 import units.shooter_developers.MenuAPI.Menu;
 import units.shooter_developers.Simulation;

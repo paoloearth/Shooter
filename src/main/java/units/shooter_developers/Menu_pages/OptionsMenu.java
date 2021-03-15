@@ -1,10 +1,11 @@
 package units.shooter_developers.Menu_pages;
 
+import units.shooter_developers.CustomCheckedException;
+import units.shooter_developers.MenuAPI.Menu;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.util.Pair;
-import units.shooter_developers.CustomCheckedException;
-import units.shooter_developers.MenuAPI.Menu;
 
 public class OptionsMenu extends Menu {
 

@@ -1,11 +1,11 @@
 package units.shooter_developers.Menu_pages;
-// VISITED
 
-import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
 import units.shooter_developers.CustomCheckedException;
 import units.shooter_developers.CustomSettings;
 import units.shooter_developers.MenuAPI.Menu;
+
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 
 public class AlertWindow extends Menu {
     double _candidateWidth;
