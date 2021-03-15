@@ -125,7 +125,7 @@ class SimulationTests {
         HitBox original_position = P1.getHitbox();
 
         Coordinates C = M.convert_tiles_in_pixel(M.getRandomLocation());
-        SIMULATION.getPlayer_1().moveTo(C);
+        SIMULATION.getPlayer_1().positionTo(C);
 
         assertNotSame(P1.getHitbox(), original_position);
     }
@@ -143,7 +143,7 @@ class SimulationTests {
 
                    var number_of_movements=  P1_MOVEMENTS.stream().map(keyCode ->
                     {
-                        P1.moveTo(C);
+                        P1.positionTo(C);
                         HitBox b = P1.getHitbox();
                         robot.push(keyCode);
                         return P1.getHitbox() !=  b;
@@ -171,7 +171,7 @@ class SimulationTests {
                                           .map(pictured_object -> (Projectile) pictured_object)
                                           .forEach(projectile -> {
                                             projectile.setSpeed(0);
-                                            projectile.moveTo(P2.getCurrentPosition());
+                                            projectile.positionTo(P2.getCurrentPosition());
                                           });
 
          robot.sleep(50);
@@ -193,7 +193,7 @@ class SimulationTests {
                 .map(pictured_object -> (Projectile) pictured_object)
                 .forEach(projectile -> {
                     projectile.setSpeed(0);
-                    projectile.moveTo(P2.getCurrentPosition());
+                    projectile.positionTo(P2.getCurrentPosition());
                 });
 
         robot.sleep(50);
@@ -202,7 +202,7 @@ class SimulationTests {
                 .stream()
                 .filter(pictured_object -> pictured_object instanceof Bonus)
                 .map(pictured_object -> (Bonus) pictured_object)
-                .forEach(bonus -> bonus.moveTo(P2.getCurrentPosition()));
+                .forEach(bonus -> bonus.positionTo(P2.getCurrentPosition()));
         robot.sleep(50);
         assertTrue(H.getCurrentHealth() > lifeAfterBeenHit);
 

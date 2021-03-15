@@ -21,7 +21,7 @@ public class HealthBar extends MapObject {
         healthPercentage = new SimpleDoubleProperty(get_width());
         remainingLifeRectangle.widthProperty().bind(healthPercentage);
 
-        moveTo(getDefaultHBarPosition(S));
+        positionTo(getDefaultHBarPosition(S));
 
         addNodes(lostLifeRectangle, remainingLifeRectangle);
     }

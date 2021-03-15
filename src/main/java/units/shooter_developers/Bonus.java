@@ -31,7 +31,7 @@ public class Bonus extends PicturedObject {
     }
 
     /* Movement & action management */
-    private void pushInsideBorder() { moveTo(new Coordinates(getInMapXPosition(), getInMapYPosition())); }
+    private void pushInsideBorder() { positionTo(new Coordinates(getInMapXPosition(), getInMapYPosition())); }
 
     private double getInMapXPosition() { return getCurrentXPosition()- getScaledWidth(); }
 
@@ -50,7 +50,7 @@ public class Bonus extends PicturedObject {
 
     public void generate()
     {
-        moveTo(_map.getRandomLocation());
+        positionTo(_map.getRandomLocation());
         if (getHitbox().isOutOfMap(_map)) pushInsideBorder();
         _waitingTime.play();
 

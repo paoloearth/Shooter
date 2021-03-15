@@ -16,7 +16,7 @@ public abstract class MapObject extends Pane {
     MapObject(double width, double height) { setDimensions(width,height);}
 
     /* Movement & action management */
-    protected final void moveTo(Coordinates coordinates) { relocate(coordinates.getX(),coordinates.getY()); }
+    protected final void positionTo(Coordinates coordinates) { relocate(coordinates.getX(),coordinates.getY()); }
 
     public final double getCurrentXPosition() { return getLayoutX(); }
 
