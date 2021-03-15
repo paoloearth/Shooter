@@ -6,6 +6,7 @@ import javafx.scene.chart.ScatterChart;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import units.shooter_developers.CustomCheckedException;
 
 import java.util.Map;
@@ -38,7 +39,14 @@ class ChoiceBox extends VBox {
 
         _selector.getSelectionAsProperty().addListener((observable,  oldValue,  selected) ->
         {
-            final var image = Menu.retrieveImage(_dict.get(selected), _nrows, 1);
+            ImageView image;
+            try {
+                image = Menu.retrieveImage(_dict.get(selected), _nrows, 1);
+            }catch (CustomCheckedException.FileManagementException e){
+                System.out.println(e.getMessage() + " ChoiceBox's image image not found. Using alternative one. Continuing");
+                image = new ImageView(new Rectangle(10, 10).snapshot(null, null));
+            }
+
             image.setPreserveRatio(true);
             image.setFitHeight(0.2*_custom_scale*Menu.getMenuHeight());
 

@@ -593,12 +593,15 @@ public abstract class Menu extends Application {
         return _simulation_running;
     }
 
-    public static ImageView retrieveImage(String URL, int number_of_rows, int number_of_columns)
-    {
-        var image = new Image(URL);
-        var image_wrapped =  new ImageView(image);
-        image_wrapped.setViewport(new Rectangle2D( 0, 0, image.getWidth()/number_of_columns, image.getHeight()/number_of_rows));
-        return image_wrapped;
+    public static ImageView retrieveImage(String URL, int number_of_rows, int number_of_columns) throws CustomCheckedException.FileManagementException {
+        try {
+            var image = new Image(URL);
+            var image_wrapped = new ImageView(image);
+            image_wrapped.setViewport(new Rectangle2D(0, 0, image.getWidth() / number_of_columns, image.getHeight() / number_of_rows));
+            return image_wrapped;
+        }catch(Exception e){
+            throw new CustomCheckedException.FileManagementException(URL);
+        }
     }
 
 

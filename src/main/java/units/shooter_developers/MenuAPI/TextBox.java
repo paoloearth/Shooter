@@ -4,8 +4,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import units.shooter_developers.CustomCheckedException;
 
 class TextBox extends VBox {
 
@@ -31,7 +34,15 @@ class TextBox extends VBox {
         _textField = createCustomizedTextField();
         _textField.setPromptText(default_message);
 
-        var image = Menu.retrieveImage(commands_url, _nrows, 1);
+        ImageView image;
+
+        try {
+            image = Menu.retrieveImage(commands_url, _nrows, 1);
+        }catch (CustomCheckedException.FileManagementException e){
+            System.out.println(e.getMessage() + " TextBox's image image not found. Using alternative one. Continuing");
+            image = new ImageView(new Rectangle(10, 10).snapshot(null, null));
+        }
+
         image.setPreserveRatio(true);
         image.setFitHeight(0.2*_custom_scale*Menu.getMenuHeight());
         DropShadow ds = new DropShadow( 50, Color.WHITE );
