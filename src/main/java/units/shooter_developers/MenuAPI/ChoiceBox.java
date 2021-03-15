@@ -1,14 +1,12 @@
 package units.shooter_developers.MenuAPI;
 
-/* VISITED */
+import units.shooter_developers.CustomCheckedException;
+
 import javafx.geometry.Pos;
-import javafx.scene.chart.ScatterChart;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
-import units.shooter_developers.CustomCheckedException;
-
 import java.util.Map;
 
 
@@ -17,51 +15,51 @@ class ChoiceBox extends VBox {
 
 
     final private Map<String, String> _dict;
-    final private int _nrows;
-    final private double _custom_scale;
+    final private int _spritesheetRow;
+    final private double _customScale;
     final private SelectorItem _selector;
     final String _name;
 
-    public ChoiceBox(String name, Map<String, String> map_image_to_URL, int nrows, double scale) {
+    public ChoiceBox(String name, Map<String, String> mapImageToURL, int spritesheetRow, double scale) {
         _name = name;
-        _nrows = nrows;
-        _custom_scale = scale;
+        _spritesheetRow = spritesheetRow;
+        _customScale = scale;
         _selector = new SelectorItem("ChoiceBox_selector", 0.1, false);
         _selector.setAlignment(Pos.BASELINE_CENTER);
-        _dict = map_image_to_URL;
+        _dict = mapImageToURL;
 
         setAlignment(Pos.TOP_CENTER);
         setSpacing(0.01*Menu.getMenuHeight());
 
-        final HBox image_box = new HBox();
-        image_box.setMinHeight(0);
-        image_box.setAlignment(Pos.BOTTOM_CENTER);
+        final HBox imageBox = new HBox();
+        imageBox.setMinHeight(0);
+        imageBox.setAlignment(Pos.BOTTOM_CENTER);
 
         _selector.getSelectionAsProperty().addListener((observable,  oldValue,  selected) ->
         {
             ImageView image;
             try {
-                image = Menu.retrieveImage(_dict.get(selected), _nrows, 1);
+                image = Menu.retrieveImage(_dict.get(selected), _spritesheetRow, 1);
             }catch (CustomCheckedException.FileManagementException e){
                 System.out.println(e.getMessage() + " ChoiceBox's image image not found. Using alternative one. Continuing");
                 image = new ImageView(new Rectangle(10, 10).snapshot(null, null));
             }
 
             image.setPreserveRatio(true);
-            image.setFitHeight(0.2*_custom_scale*Menu.getMenuHeight());
+            image.setFitHeight(0.2* _customScale *Menu.getMenuHeight());
 
-            image_box.getChildren().removeIf(i -> i instanceof ImageView);
-            image_box.getChildren().add(image);
+            imageBox.getChildren().removeIf(i -> i instanceof ImageView);
+            imageBox.getChildren().add(image);
 
         });
 
-        map_image_to_URL.forEach((key, value) -> _selector.addTag(key));
-        getChildren().addAll(image_box,_selector);
+        mapImageToURL.forEach((key, value) -> _selector.addTag(key));
+        getChildren().addAll(imageBox,_selector);
 
     }
 
-    public ChoiceBox(String name, Map<String, String> map_image_to_URL, int nrows, double scale, int default_index) throws CustomCheckedException.IndexOutOfRange {
-        this(name, map_image_to_URL, nrows, scale);
+    public ChoiceBox(String name, Map<String, String> mapImageToUrl, int nrows, double scale, int default_index) throws CustomCheckedException.IndexOutOfRange {
+        this(name, mapImageToUrl, nrows, scale);
         _selector.setDefaultIndex(default_index);
     }
 
