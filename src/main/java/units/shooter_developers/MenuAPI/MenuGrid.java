@@ -2,7 +2,7 @@ package units.shooter_developers.MenuAPI;
 // Visited
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
-import units.shooter_developers.CustomException;
+import units.shooter_developers.CustomCheckedException;
 
 import java.util.Map;
 
@@ -25,19 +25,19 @@ class MenuGrid extends GridPane {
         add(choice_box, col, row);
     }
 
-    public void addChoiceBox(String name, int row, int col, Map<String, String> map_image_to_URL, double scale, int number_of_rows_spritesheet, int default_index) throws CustomException.IndexOutOfRange {
+    public void addChoiceBox(String name, int row, int col, Map<String, String> map_image_to_URL, double scale, int number_of_rows_spritesheet, int default_index) throws CustomCheckedException.IndexOutOfRange {
         final ChoiceBox choice_box = new ChoiceBox(name, map_image_to_URL, number_of_rows_spritesheet, scale, default_index);
         add(choice_box, col, row);
     }
 
-    public ChoiceBox getChoiceBox(String name) throws CustomException.MissingMenuComponentException {
+    public ChoiceBox getChoiceBox(String name) throws CustomCheckedException.MissingMenuComponentException {
         final var choice_box_object = (ChoiceBox) getChildren().parallelStream()
                 .filter(e -> e instanceof ChoiceBox)
                 .filter(e -> ((ChoiceBox) e).getName().equals(name))
                 .findFirst()
                 .orElse(null);
 
-        if(choice_box_object == null){throw new CustomException.MissingMenuComponentException("Choice box with name \"" + name + "\".", ChoiceBox.class);}
+        if(choice_box_object == null){throw new CustomCheckedException.MissingMenuComponentException("Choice box with name \"" + name + "\".", ChoiceBox.class);}
         else{return choice_box_object;}
     }
 
@@ -46,14 +46,14 @@ class MenuGrid extends GridPane {
         add(text_box, col, row);
     }
 
-    public TextBox getTextBox(String name) throws CustomException.MissingMenuComponentException {
+    public TextBox getTextBox(String name) throws CustomCheckedException.MissingMenuComponentException {
         final var text_box_object = (TextBox)getChildren().parallelStream()
                 .filter(e -> e instanceof TextBox)
                 .filter(e -> ((TextBox) e).getName().equals(name))
                 .findFirst()
                 .orElse(null);
 
-        if(text_box_object == null){throw new CustomException.MissingMenuComponentException("Text box with name \"" + name + "\".", TextBox.class);}
+        if(text_box_object == null){throw new CustomCheckedException.MissingMenuComponentException("Text box with name \"" + name + "\".", TextBox.class);}
         else{return text_box_object;}
 
     }

@@ -35,7 +35,7 @@ import javafx.util.Pair;
 import units.shooter_developers.CustomColors;
 import units.shooter_developers.CustomSettings;
 import units.shooter_developers.Simulation;
-import units.shooter_developers.CustomException;
+import units.shooter_developers.CustomCheckedException;
 
 import java.io.File;
 import java.io.FileReader;
@@ -110,7 +110,7 @@ public abstract class Menu extends Application {
     public abstract void createContent();
 
     // Move name of config file to custom settings?
-    public void readProperties() throws CustomException.FileManagementException{
+    public void readProperties() throws CustomCheckedException.FileManagementException{
         File configFile = new File(URL_CONFIG_FILE);
         Properties config;
         ImageView background_light = null;
@@ -123,7 +123,7 @@ public abstract class Menu extends Application {
             config.load(reader);
             reader.close();
         }catch(Exception e){
-            throw new CustomException.FileManagementException(configFile.getPath());
+            throw new CustomCheckedException.FileManagementException(configFile.getPath());
         }
 
         setResolution(config);
@@ -152,7 +152,7 @@ public abstract class Menu extends Application {
             var parsed_resolution = parseResolutionFromStrings(config.getProperty("WIDTH"), config.getProperty("HEIGHT"));
             width = parsed_resolution.getKey();
             height = parsed_resolution.getValue();
-        }catch(CustomException.WrongParsingException e) {
+        }catch(CustomCheckedException.WrongParsingException e) {
             System.out.println(e.getMessage() + " Using native resolution.");
             width = getScreenWidth();
             height = getScreenHeight();
@@ -161,25 +161,25 @@ public abstract class Menu extends Application {
         setStageDimensions(width, height);
     }
 
-    private Pair<Double, Double> parseResolutionFromStrings(String width_string, String height_string) throws CustomException.WrongParsingException {
+    private Pair<Double, Double> parseResolutionFromStrings(String width_string, String height_string) throws CustomCheckedException.WrongParsingException {
         double width, height;
 
         try {
             width = Double.parseDouble(width_string);
         }catch(Exception e) {
-            throw new CustomException.WrongParsingException(width_string, Double.class);
+            throw new CustomCheckedException.WrongParsingException(width_string, Double.class);
         }
 
         try {
             height = Double.parseDouble(height_string);
         }catch(Exception e) {
-            throw new CustomException.WrongParsingException(height_string, Double.class);
+            throw new CustomCheckedException.WrongParsingException(height_string, Double.class);
         }
 
         return new Pair<>(width, height);
     }
 
-    public void writeSettings() throws CustomException.FileManagementException {
+    public void writeSettings() throws CustomCheckedException.FileManagementException {
         Properties config = new Properties();
 
         config.setProperty("COLOR MODE", getColorMode());
@@ -192,7 +192,7 @@ public abstract class Menu extends Application {
             config.store(writer, "Game settings");
             writer.close();
         } catch (IOException e) {
-            throw new CustomException.FileManagementException(configFile.getPath());
+            throw new CustomCheckedException.FileManagementException(configFile.getPath());
         }
     }
 
@@ -203,7 +203,7 @@ public abstract class Menu extends Application {
         generateMenuBoxIfNotExist();
         try {
             getItemsBox().addItem(new_menu_item);
-        }catch(CustomException.MissingMenuComponentException e){
+        }catch(CustomCheckedException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + "Main item box object was not found neither created. Fatal error. Closing application");
             Runtime.getRuntime().exit(1);
         }
@@ -213,6 +213,7 @@ public abstract class Menu extends Application {
         MenuItem new_item = new MenuItem(new_menu_item);
         new_item.setTranslateX(position_ratio_X*getMenuWidth());
         new_item.setTranslateY(position_ratio_Y*getMenuHeight());
+        new_item.setAlignment(Pos.CENTER);
 
         addGenericNode(new_item);
     }
@@ -221,7 +222,7 @@ public abstract class Menu extends Application {
         generateMenuBoxIfNotExist();
         try {
             getItemsBox().addNonAnimatedItem(name);
-        }catch(CustomException.MissingMenuComponentException e){
+        }catch(CustomCheckedException.MissingMenuComponentException e){
         System.out.println(e.getMessage() + "Main item box object was not found neither created. Fatal error. Closing application");
         Runtime.getRuntime().exit(1);
     }
@@ -234,7 +235,7 @@ public abstract class Menu extends Application {
 
         try{
             getItemsBox().addSelectorItem(name, tag_list);
-        }catch(CustomException.MissingMenuComponentException e){
+        }catch(CustomCheckedException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + "Main item box object was not found neither created. Fatal error. Closing application");
             Runtime.getRuntime().exit(1);
         }
@@ -249,10 +250,10 @@ public abstract class Menu extends Application {
         try{
             menu_box = getItemsBox();
             menu_box.addSelectorItem(name, default_index, tag_list);
-        }catch(CustomException.MissingMenuComponentException e){
+        }catch(CustomCheckedException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + "Selector item box object was not found neither created. Fatal error. Closing application");
             Runtime.getRuntime().exit(1);
-        }catch(CustomException.IndexOutOfRange e){
+        }catch(CustomCheckedException.IndexOutOfRange e){
             System.out.println(e.getMessage() + "Index not set. Using default construction indexing. Continuing.");
             menu_box.addSelectorItem(name, tag_list);
         }
@@ -277,7 +278,7 @@ public abstract class Menu extends Application {
         try {
             var title_object = getTitleObject();
             _root.getChildren().remove(title_object);
-        }catch(CustomException.MissingMenuComponentException e){}
+        }catch(CustomCheckedException.MissingMenuComponentException e){}
     }
 
     public void addFlashDisclaimer(String disclaimer_text){
@@ -330,7 +331,7 @@ public abstract class Menu extends Application {
         menu_grid_object.addChoiceBox(name, row, col, map_image_to_URL, scale, spritesheet_number_of_rows);
     }
 
-    public void addChoiceBox(String name, int row, int col, Map<String, String> map_image_to_URL, double scale, int spritesheet_number_of_rows, int default_index) throws CustomException.IndexOutOfRange {
+    public void addChoiceBox(String name, int row, int col, Map<String, String> map_image_to_URL, double scale, int spritesheet_number_of_rows, int default_index) throws CustomCheckedException.IndexOutOfRange {
         MenuGrid menu_grid_object = getMenuGridAndCreateIfNotExist();
         menu_grid_object.addChoiceBox(name, row, col, map_image_to_URL, scale, spritesheet_number_of_rows, default_index);
     }
@@ -411,17 +412,17 @@ public abstract class Menu extends Application {
         return _color_mode;
     }
 
-    public MenuItem getItem(String name) throws CustomException.MissingMenuComponentException {
+    public MenuItem getItem(String name) throws CustomCheckedException.MissingMenuComponentException {
         final var item = getItems().stream()
                 .filter(e -> e.getName().equals(name))
                 .findFirst()
                 .orElse(null);
 
-        if(item == null){throw new CustomException.MissingMenuComponentException("Item with name \"" +name+ "\".", MenuItem.class);}
+        if(item == null){throw new CustomCheckedException.MissingMenuComponentException("Item with name \"" +name+ "\".", MenuItem.class);}
         else{return item;}
     }
 
-    public String getSelectorValue(String name) throws CustomException.MissingMenuComponentException {
+    public String getSelectorValue(String name) throws CustomCheckedException.MissingMenuComponentException {
         return getSelectorItem(name).getText();
     }
 
@@ -429,7 +430,7 @@ public abstract class Menu extends Application {
         String value = "";
         try{
             value = getChoiceBox(name).getValue();
-        }catch(CustomException.MissingMenuComponentException e){
+        }catch(CustomCheckedException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + " Fatal error. Closing application.");
             Runtime.getRuntime().exit(1);
         }
@@ -440,7 +441,7 @@ public abstract class Menu extends Application {
         String value = "";
         try{
             value = getTextBox(name).getValue();
-        }catch(CustomException.MissingMenuComponentException e){
+        }catch(CustomCheckedException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + " Fatal error. Closing application.");
             Runtime.getRuntime().exit(1);
         }
@@ -456,33 +457,33 @@ public abstract class Menu extends Application {
     }
 
 
-    protected SelectorItem getSelectorItem(String name) throws CustomException.MissingMenuComponentException {
+    protected SelectorItem getSelectorItem(String name) throws CustomCheckedException.MissingMenuComponentException {
         final var selector_item = getSelectorItems().stream()
                 .filter(e -> e.getName().equals(name))
                 .findFirst()
                 .orElse(null);
 
-        if(selector_item == null) {throw new CustomException.MissingMenuComponentException("Selector with name \"" + name + "\".", SelectorItem.class);}
+        if(selector_item == null) {throw new CustomCheckedException.MissingMenuComponentException("Selector with name \"" + name + "\".", SelectorItem.class);}
         else return selector_item;
     }
 
-    private Title getTitleObject() throws CustomException.MissingMenuComponentException {
+    private Title getTitleObject() throws CustomCheckedException.MissingMenuComponentException {
         final var title_object = (Title)_root.getChildren().stream()
                 .filter(e -> e instanceof Title)
                 .findFirst()
                 .orElse(null);
 
-        if(title_object == null){throw new CustomException.MissingMenuComponentException("Main title object.", Title.class);}
+        if(title_object == null){throw new CustomCheckedException.MissingMenuComponentException("Main title object.", Title.class);}
         else return title_object;
     }
 
-    private MenuBox getItemsBox() throws CustomException.MissingMenuComponentException {
+    private MenuBox getItemsBox() throws CustomCheckedException.MissingMenuComponentException {
         var menu_box_object = (MenuBox)_root.getChildren().parallelStream()
                 .filter(e -> e instanceof MenuBox)
                 .findFirst()
                 .orElse(null);
 
-        if(menu_box_object == null){throw new CustomException.MissingMenuComponentException("Main items box object.", MenuBox.class);}
+        if(menu_box_object == null){throw new CustomCheckedException.MissingMenuComponentException("Main items box object.", MenuBox.class);}
         else{return menu_box_object;}
     }
 
@@ -490,7 +491,7 @@ public abstract class Menu extends Application {
         var item_list_from_box = new ArrayList<MenuItem>();
         try {
             item_list_from_box = getItemsBox().getItems();
-        }catch(CustomException.MissingMenuComponentException ignored){}
+        }catch(CustomCheckedException.MissingMenuComponentException ignored){}
 
         //add items not contained in items box to the list
         ArrayList<MenuItem> full_item_list = item_list_from_box;
@@ -501,12 +502,12 @@ public abstract class Menu extends Application {
         return full_item_list;
     }
 
-    private ChoiceBox getChoiceBox(String name) throws CustomException.MissingMenuComponentException {
+    private ChoiceBox getChoiceBox(String name) throws CustomCheckedException.MissingMenuComponentException {
         var menu_grid = getMenuGridAndCreateIfNotExist();
         return menu_grid.getChoiceBox(name);
     }
 
-    private TextBox getTextBox(String name) throws CustomException.MissingMenuComponentException {
+    private TextBox getTextBox(String name) throws CustomCheckedException.MissingMenuComponentException {
         var menu_grid = getMenuGridAndCreateIfNotExist();
         return menu_grid.getTextBox(name);
     }
@@ -527,7 +528,7 @@ public abstract class Menu extends Application {
     private ArrayList<SelectorItem> getSelectorItems(){
         try{
             return getItemsBox().getSelectorItems();
-        }catch(CustomException.MissingMenuComponentException e){
+        }catch(CustomCheckedException.MissingMenuComponentException e){
             return new ArrayList<>();
         }
     }
@@ -575,7 +576,7 @@ public abstract class Menu extends Application {
         _simulation_running = true;
     }
 
-    public void setDefaultIndexForSelectorItem(String name, int index) throws CustomException.MissingMenuComponentException, CustomException.IndexOutOfRange {
+    public void setDefaultIndexForSelectorItem(String name, int index) throws CustomCheckedException.MissingMenuComponentException, CustomCheckedException.IndexOutOfRange {
         var selector_object = getSelectorItem(name);
         selector_object.setDefaultIndex(index);
     }

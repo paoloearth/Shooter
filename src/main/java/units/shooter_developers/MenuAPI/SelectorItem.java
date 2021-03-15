@@ -3,7 +3,7 @@ package units.shooter_developers.MenuAPI;
 import javafx.beans.property.StringPropertyBase;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
-import units.shooter_developers.CustomException;
+import units.shooter_developers.CustomCheckedException;
 
 import java.util.ArrayList;
 
@@ -89,8 +89,8 @@ class SelectorItem extends HBox {
         return _selection_as_property;
     }
 
-    protected void setDefaultIndex(int index) throws CustomException.IndexOutOfRange {
-        if(index >= _selection_list.size()){throw new CustomException.IndexOutOfRange(
+    protected void setDefaultIndex(int index) throws CustomCheckedException.IndexOutOfRange {
+        if(index >= _selection_list.size()){throw new CustomCheckedException.IndexOutOfRange(
                 "Menu selector item",
                 _selection_list.size()-1,
                 index, SelectorItem.class);}

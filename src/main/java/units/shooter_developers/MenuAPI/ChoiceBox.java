@@ -6,7 +6,7 @@ import javafx.scene.chart.ScatterChart;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import units.shooter_developers.CustomException;
+import units.shooter_developers.CustomCheckedException;
 
 import java.util.Map;
 
@@ -52,7 +52,7 @@ class ChoiceBox extends VBox {
 
     }
 
-    public ChoiceBox(String name, Map<String, String> map_image_to_URL, int nrows, double scale, int default_index) throws CustomException.IndexOutOfRange {
+    public ChoiceBox(String name, Map<String, String> map_image_to_URL, int nrows, double scale, int default_index) throws CustomCheckedException.IndexOutOfRange {
         this(name, map_image_to_URL, nrows, scale);
         _selector.setDefaultIndex(default_index);
     }

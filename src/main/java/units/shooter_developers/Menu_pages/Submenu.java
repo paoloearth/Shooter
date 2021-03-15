@@ -28,7 +28,7 @@ public class Submenu extends Menu {
         try {
             addChoiceBox("Player_selection_1", 1, 0, Name_URL, 1, 4, 0);
             addChoiceBox("Player_selection_2", 1, 1, Name_URL, 1, 4, 1);
-        }catch(CustomException.IndexOutOfRange e){
+        }catch(CustomCheckedException.IndexOutOfRange e){
             System.out.println(e.getMessage() + " Using default index. Continuing.");
             addChoiceBox("Player_selection_1", 1, 0, Name_URL, 1, 4);
             addChoiceBox("Player_selection_2", 1, 1, Name_URL, 1, 4);
@@ -38,10 +38,10 @@ public class Submenu extends Menu {
         Map<String, String> mapURL = generateMapsUrl();
         addChoiceBox("Map_selection", 2, 0,mapURL, CustomSettings.MAP_SCALE, 1);
 
-        addFreeItem("Play!", 0.6, 0.8);
+        addFreeItem("START", 0.6, 0.8);
 
         try {
-            getItem("Play!").setOnMouseReleased(event -> {
+            getItem("START").setOnMouseReleased(event -> {
                 var player_names = new ArrayList<String>();
                 player_names.add(getTextBoxValue("Player_textbox_1"));
                 player_names.add(getTextBoxValue("Player_textbox_2"));
@@ -59,7 +59,7 @@ public class Submenu extends Menu {
                 getSimulationInstance().start(getStage());
                 getStage().setAlwaysOnTop(true);
             });
-        }catch (CustomException.MissingMenuComponentException e){
+        }catch (CustomCheckedException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + " Fatal error. Closing application.");
             Runtime.getRuntime().exit(1);
         }

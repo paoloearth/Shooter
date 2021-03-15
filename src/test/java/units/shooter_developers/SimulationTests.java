@@ -50,11 +50,11 @@ class SimulationTests {
 
     @Test
     void widthIsCorrectWidth() {
-      Assertions.assertThat(SIMULATION.getWIDTH()).isEqualTo(1000);
+      Assertions.assertThat(SIMULATION.get_width()).isEqualTo(1000);
     }
 
     @Test
-    void heightIsCorrectHeight() { Assertions.assertThat(SIMULATION.getHEIGHT()).isEqualTo(600); }
+    void heightIsCorrectHeight() { Assertions.assertThat(SIMULATION.get_height()).isEqualTo(600); }
 
 
    @Test
@@ -119,7 +119,7 @@ class SimulationTests {
     @Test
     void moveToIsActuallyMovingTheSprite(FxRobot robot)
     {
-        var  M = SIMULATION.getGamemap();
+        var  M = SIMULATION.get_gameMap();
         var P1    = SIMULATION.getPlayer_1();
 
         HitBox original_position = P1.getHitbox();
@@ -133,7 +133,7 @@ class SimulationTests {
     @Test
     void getRandomLocationAlwaysReturningReachableTiles(FxRobot robot)
     {
-        var  M = SIMULATION.getGamemap();
+        var  M = SIMULATION.get_gameMap();
         var P1    = SIMULATION.getPlayer_1();
 
         IntStream.range(0,2).forEach(

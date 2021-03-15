@@ -3,7 +3,7 @@ package units.shooter_developers.MenuAPI;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import units.shooter_developers.CustomException;
+import units.shooter_developers.CustomCheckedException;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -52,7 +52,7 @@ class MenuBox extends VBox {
         getChildren().addAll(new_item, createSeparator());
     }
 
-    protected void addSelectorItem(String name, int default_index, ArrayList<String> tag_list) throws CustomException.IndexOutOfRange {
+    protected void addSelectorItem(String name, int default_index, ArrayList<String> tag_list) throws CustomCheckedException.IndexOutOfRange {
         SelectorItem new_item = new SelectorItem(name, true);
         new_item.setTranslateX(0.005 * Menu.getMenuWidth());
 
