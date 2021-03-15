@@ -1,11 +1,4 @@
 package units.shooter_developers.Menu_pages;
-/* VISITED
- *  - Exception should be more specific, here no message is printed except for the stacktrace
- *    + native message of exception contains the specific information about the exception. In this case
- *    + only reading exceptions can be thrown. The message of the thrown exception explains the file which
- *    + generated the problem, which is shown with getMessage() method. Additional information would be redundant.
- *
- *  - Naming maybe should be change from primo_secondo to primoSecondo */
 import units.shooter_developers.*;
 import units.shooter_developers.MenuAPI.Menu;
 
@@ -15,8 +8,8 @@ import java.util.Map;
 
 public class Submenu extends Menu {
 
-    public Submenu(Menu other_menu){
-        super(other_menu);
+    public Submenu(Menu otherMenu){
+        super(otherMenu);
     }
 
     @Override
@@ -24,14 +17,14 @@ public class Submenu extends Menu {
         addTextBox("Player_textbox_1", 0, 0, CustomSettings.URL_COMMANDS_P1, 1, CustomSettings.WASD_SCALE,   "Who is Player 1?", "Fizz");
         addTextBox("Player_textbox_2", 0, 1, CustomSettings.URL_COMMANDS_P2, 1, CustomSettings.ARROWS_SCALE, "Who is Player 2?", "Buzz");
 
-        Map<String, String> Name_URL = generatePlayersUrl();
+        Map<String, String> nameUrl = generatePlayersUrl();
         try {
-            addChoiceBox("Player_selection_1", 1, 0, Name_URL, 1, 4, 0);
-            addChoiceBox("Player_selection_2", 1, 1, Name_URL, 1, 4, 1);
+            addChoiceBox("Player_selection_1", 1, 0, nameUrl, 1, 4, 0);
+            addChoiceBox("Player_selection_2", 1, 1, nameUrl, 1, 4, 1);
         }catch(CustomCheckedException.IndexOutOfRange e){
             System.out.println(e.getMessage() + " Using default index. Continuing.");
-            addChoiceBox("Player_selection_1", 1, 0, Name_URL, 1, 4);
-            addChoiceBox("Player_selection_2", 1, 1, Name_URL, 1, 4);
+            addChoiceBox("Player_selection_1", 1, 0, nameUrl, 1, 4);
+            addChoiceBox("Player_selection_2", 1, 1, nameUrl, 1, 4);
 
         }
 
@@ -42,19 +35,19 @@ public class Submenu extends Menu {
 
         try {
             getItem("START").setOnMouseReleased(event -> {
-                var player_names = new ArrayList<String>();
-                player_names.add(getTextBoxValue("Player_textbox_1"));
-                player_names.add(getTextBoxValue("Player_textbox_2"));
+                var playerNames = new ArrayList<String>();
+                playerNames.add(getTextBoxValue("Player_textbox_1"));
+                playerNames.add(getTextBoxValue("Player_textbox_2"));
 
-                ArrayList<String> Players_URL = new ArrayList<String>();
-                Players_URL.add(Name_URL.get(getChoiceBoxValue("Player_selection_1")));
-                Players_URL.add(Name_URL.get(getChoiceBoxValue("Player_selection_2")));
+                ArrayList<String> playersUrl = new ArrayList<String>();
+                playersUrl.add(nameUrl.get(getChoiceBoxValue("Player_selection_1")));
+                playersUrl.add(nameUrl.get(getChoiceBoxValue("Player_selection_2")));
 
-                Map<String, String> Map_CSV = generateMapDataUrlDictionary();
-                ArrayList<String> map_data = new ArrayList<String>();
-                map_data.add(Map_CSV.get(getChoiceBoxValue("Map_selection")));
+                Map<String, String> mapCsv = generateMapDataUrlDictionary();
+                ArrayList<String> mapData = new ArrayList<>();
+                mapData.add(mapCsv.get(getChoiceBoxValue("Map_selection")));
 
-                setSimulationInstance(new Simulation(player_names, Players_URL, map_data));
+                setSimulationInstance(new Simulation(playerNames, playersUrl, mapData));
                 getStage().close();
                 getSimulationInstance().start(getStage());
                 getStage().setAlwaysOnTop(true);
@@ -66,25 +59,25 @@ public class Submenu extends Menu {
     }
 
     private Map<String, String> generateMapDataUrlDictionary() {
-        Map<String, String> Map_CSV;
-        Map_CSV = new Hashtable<>();
-        Map_CSV.put(CustomSettings.ISLAND, CustomSettings.URL_MAP_ISLAND_CSV);
-        Map_CSV.put(CustomSettings.DESERT, CustomSettings.URL_MAP_DESERT_CSV);
-        return Map_CSV;
+        Map<String, String> mapCsv;
+        mapCsv = new Hashtable<>();
+        mapCsv.put(CustomSettings.ISLAND, CustomSettings.URL_MAP_ISLAND_CSV);
+        mapCsv.put(CustomSettings.DESERT, CustomSettings.URL_MAP_DESERT_CSV);
+        return mapCsv;
     }
 
     private Map<String, String> generateMapsUrl() {
-        Map<String, String> Map_URL = new Hashtable<>();
-        Map_URL.put(CustomSettings.ISLAND, CustomSettings.URL_MAP_ISLAND_PNG);
-        Map_URL.put(CustomSettings.DESERT, CustomSettings.URL_MAP_DESERT_PNG);
-        return Map_URL;
+        Map<String, String> mapUrl = new Hashtable<>();
+        mapUrl.put(CustomSettings.ISLAND, CustomSettings.URL_MAP_ISLAND_PNG);
+        mapUrl.put(CustomSettings.DESERT, CustomSettings.URL_MAP_DESERT_PNG);
+        return mapUrl;
     }
 
     private Map<String, String> generatePlayersUrl() {
-        Map<String, String> Name_URL = new Hashtable<>();
-        Name_URL.put(CustomSettings.ARTIST, CustomSettings.URL_ARTIST);
-        Name_URL.put(CustomSettings.ASTROLOGER, CustomSettings.URL_ASTROLOGER);
-        Name_URL.put(CustomSettings.WARRIOR, CustomSettings.URL_WARRIOR);
-        return Name_URL;
+        Map<String, String> nameUrl = new Hashtable<>();
+        nameUrl.put(CustomSettings.ARTIST, CustomSettings.URL_ARTIST);
+        nameUrl.put(CustomSettings.ASTROLOGER, CustomSettings.URL_ASTROLOGER);
+        nameUrl.put(CustomSettings.WARRIOR, CustomSettings.URL_WARRIOR);
+        return nameUrl;
     }
 }
