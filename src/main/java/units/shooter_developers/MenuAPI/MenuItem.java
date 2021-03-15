@@ -23,21 +23,21 @@ public class MenuItem extends StackPane {
         this(name, -1, -1);
     }
 
-    public MenuItem(String name, double item_width_ratio, double item_height_ratio) {
-        final var effective_item_width = item_width_ratio<0? 0.19 : item_width_ratio;
-        final var effective_item_height = item_height_ratio<0? 0.05 : item_height_ratio;
+    public MenuItem(String name, double itemWidthRatio, double itemHeightRatio) {
+        final var effectiveItemWidth = itemWidthRatio<0? 0.19 : itemWidthRatio;
+        final var effectiveItemHeight = itemHeightRatio<0? 0.05 : itemHeightRatio;
 
         _name = name;
 
-        this.setMaxWidth(effective_item_width * Menu.getMenuWidth());
-        this.setMaxHeight(effective_item_height * Menu.getMenuHeight());
+        this.setMaxWidth(effectiveItemWidth * Menu.getMenuWidth());
+        this.setMaxHeight(effectiveItemHeight * Menu.getMenuHeight());
 
         LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop(0, Menu.getColorPalette().selected_secondary_color),
                 new Stop(0.1, Menu.getColorPalette().basic_secondary_color),
                 new Stop(0.9, Menu.getColorPalette().basic_secondary_color),
                 new Stop(1, Menu.getColorPalette().selected_secondary_color));
 
-        Rectangle box = new Rectangle(effective_item_width* Menu.getMenuWidth(),effective_item_height* Menu.getMenuHeight());
+        Rectangle box = new Rectangle(effectiveItemWidth* Menu.getMenuWidth(),effectiveItemHeight* Menu.getMenuHeight());
         box.setOpacity(0.4);
 
         Text text = new Text(name);
