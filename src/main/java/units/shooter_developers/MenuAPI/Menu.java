@@ -240,6 +240,24 @@ public abstract class Menu extends Application {
         }
     }
 
+    public void addSelectorItem(String name, int default_index, String ... selection_tags){
+        generateMenuBoxIfNotExist();
+        ArrayList<String> tag_list= new ArrayList<>();
+        Collections.addAll(tag_list, selection_tags);
+
+        MenuBox menu_box = null;
+        try{
+            menu_box = getItemsBox();
+            menu_box.addSelectorItem(name, default_index, tag_list);
+        }catch(CustomException.MissingMenuComponentException e){
+            System.out.println(e.getMessage() + "Selector item box object was not found neither created. Fatal error. Closing application");
+            Runtime.getRuntime().exit(1);
+        }catch(CustomException.IndexOutOfRange e){
+            System.out.println(e.getMessage() + "Index not set. Using default construction indexing. Continuing.");
+            menu_box.addSelectorItem(name, tag_list);
+        }
+    }
+
     public void addGenericNode(Node generic_node){
         _root.getChildren().add(generic_node);
     }

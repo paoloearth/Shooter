@@ -26,7 +26,9 @@ public class OptionsMenu extends Menu {
     public void createContent(){
 
         setTitle("O P T I O N S");
-        this.addSelectorItem("COLOR MODE", "dark", "light");
+
+        int default_index = getColorMode()=="dark"? 0: 1;
+        this.addSelectorItem("COLOR MODE", default_index,  "dark", "light");
 
         this.addSelectorItem("RESOLUTION",
                 (int) getStageWidth() + "x" + (int) getStageHeight() + " (current)",
