@@ -39,7 +39,6 @@ public class GameMenu extends Menu {
         }
 
         this.addItem("NEW GAME");
-        this.addItem("NEW LAN-GAME");
         this.addItem("OPTIONS");
         this.addItem("EXIT");
         getStage().setTitle("VIDEO GAME");
