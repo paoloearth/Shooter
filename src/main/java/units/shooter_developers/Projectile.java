@@ -22,7 +22,7 @@ public class Projectile extends DynamicObject {
 
         setInitialAndTranslateDirection(S.getCurrentDirection());
 
-        moveTo(getBiasedStartingPosition(S));
+        positionTo(getBiasedStartingPosition(S));
 
         addNodes(getPicture());
     }
@@ -31,7 +31,7 @@ public class Projectile extends DynamicObject {
     private void translate(GameMap M)
     {
         if(illegalMove(M)) getRemoveProperty(true);
-        else moveTo(getFutureCoordinates());
+        else positionTo(getFutureCoordinates());
     }
 
     @Override

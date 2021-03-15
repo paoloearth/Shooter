@@ -20,7 +20,7 @@ public class Teleport extends PicturedObject {
 
         rotationAnimation();
 
-        moveTo(M.get_position_of(ID));
+        positionTo(M.get_position_of(ID));
 
         simulationRoot.getChildren().add(this);
     }
@@ -35,7 +35,7 @@ public class Teleport extends PicturedObject {
 
     @Override
     public void action(Sprite S) {
-        if(intersect(S)) S.moveTo(destination);
+        if(intersect(S)) S.positionTo(destination);
     }
 
     protected final void setDestination(Teleport T)

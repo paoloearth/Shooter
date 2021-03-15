@@ -40,7 +40,7 @@ public class Sprite extends DynamicObject {
         _healthBar = new HealthBar(this);
         geToBeRemovedProperty().bind(_healthBar.isRemainingLifeZero());
 
-        moveTo(M.get_position_of(id));
+        positionTo(M.get_position_of(id));
 
         addNodes(_healthBar, getPicture());
         simulationRoot.getChildren().add(this);
@@ -70,7 +70,7 @@ public class Sprite extends DynamicObject {
 
             updateDirection(destination);
 
-            if (!(illegalMove(M))) moveTo(destination);
+            if (!(illegalMove(M))) positionTo(destination);
         }
 
     }
