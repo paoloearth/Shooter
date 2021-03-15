@@ -1,10 +1,10 @@
 package units.shooter_developers.MenuAPI;
-// Visited
+
+import units.shooter_developers.CustomCheckedException;
+
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import units.shooter_developers.CustomCheckedException;
-
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -23,44 +23,44 @@ class MenuBox extends VBox {
     private Line createSeparator() {
         Color separator_color = Menu.getColorPalette().dead_color;
 
-        Line separator_line = new Line();
-        separator_line.setEndX(0.2 * Menu.getMenuWidth());
-        separator_line.setStroke(separator_color);
-        return separator_line;
+        Line separatorLine = new Line();
+        separatorLine.setEndX(0.2 * Menu.getMenuWidth());
+        separatorLine.setStroke(separator_color);
+        return separatorLine;
     }
 
-    protected void addItem(String new_menu_item) {
-        MenuItem new_item = new MenuItem(new_menu_item);
-        new_item.setTranslateX(0.005 * Menu.getMenuWidth());
+    protected void addItem(String newMenuItem) {
+        MenuItem menuItem = new MenuItem(newMenuItem);
+        menuItem.setTranslateX(0.005 * Menu.getMenuWidth());
 
-        getChildren().addAll(new_item, createSeparator());
+        getChildren().addAll(menuItem, createSeparator());
     }
 
-    protected void addNonAnimatedItem(String new_menu_item) {
-        NonAnimatedItem new_item = new NonAnimatedItem(new_menu_item);
-        new_item.setTranslateX(0.005 * Menu.getMenuWidth());
+    protected void addNonAnimatedItem(String newMenuItem) {
+        NonAnimatedItem newItem = new NonAnimatedItem(newMenuItem);
+        newItem.setTranslateX(0.005 * Menu.getMenuWidth());
 
-        getChildren().addAll(new_item, createSeparator());
+        getChildren().addAll(newItem, createSeparator());
     }
 
-    protected void addSelectorItem(String name, ArrayList<String> tag_list) {
-        SelectorItem new_item = new SelectorItem(name, true);
-        new_item.setTranslateX(0.005 * Menu.getMenuWidth());
+    protected void addSelectorItem(String name, ArrayList<String> tagList) {
+        SelectorItem newItem = new SelectorItem(name, true);
+        newItem.setTranslateX(0.005 * Menu.getMenuWidth());
 
-        tag_list.forEach(new_item::addTag);
+        tagList.forEach(newItem::addTag);
 
-        getChildren().addAll(new_item, createSeparator());
+        getChildren().addAll(newItem, createSeparator());
     }
 
-    protected void addSelectorItem(String name, int default_index, ArrayList<String> tag_list) throws CustomCheckedException.IndexOutOfRange {
-        SelectorItem new_item = new SelectorItem(name, true);
-        new_item.setTranslateX(0.005 * Menu.getMenuWidth());
+    protected void addSelectorItem(String name, int defaultIndex, ArrayList<String> tagList) throws CustomCheckedException.IndexOutOfRange {
+        SelectorItem newItem = new SelectorItem(name, true);
+        newItem.setTranslateX(0.005 * Menu.getMenuWidth());
 
-        tag_list.forEach(new_item::addTag);
+        tagList.forEach(newItem::addTag);
 
-        new_item.setDefaultIndex(default_index);
+        newItem.setDefaultIndex(defaultIndex);
 
-        getChildren().addAll(new_item, createSeparator());
+        getChildren().addAll(newItem, createSeparator());
     }
 
 

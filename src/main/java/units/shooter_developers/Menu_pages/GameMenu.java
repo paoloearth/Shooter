@@ -1,13 +1,5 @@
 package units.shooter_developers.Menu_pages;
 
-// VISITED
-
-/* All these should be renamed  following the google standard
-   lowerCamelCase() for methods & non constant values
-
-   Remove this keyword when it is not necessary
-*/
-
 import units.shooter_developers.CustomCheckedException;
 import units.shooter_developers.MenuAPI.Menu;
 import units.shooter_developers.Simulation;
@@ -19,13 +11,13 @@ public class GameMenu extends Menu {
         super();
     }
 
-    public GameMenu(Menu other_menu){
-        super(other_menu);
+    public GameMenu(Menu otherMenu){
+        super(otherMenu);
     }
 
-    public GameMenu(Simulation game_instance){
+    public GameMenu(Simulation gameInstance){
         super();
-        setSimulationInstance(game_instance);
+        setSimulationInstance(gameInstance);
 
     }
 
@@ -61,15 +53,13 @@ public class GameMenu extends Menu {
 
         try {
             getItem("NEW GAME").setOnMouseReleased(event -> {
-                Submenu submenu_launch_game = new Submenu(this);
-                submenu_launch_game.start(getStage());
+                Submenu submenuLaunchGame = new Submenu(this);
+                submenuLaunchGame.start(getStage());
             });
-            getItem("EXIT").setOnMouseReleased(event -> {
-                getStage().close();
-            });
+            getItem("EXIT").setOnMouseReleased(event -> getStage().close());
             getItem("OPTIONS").setOnMouseReleased(event -> {
-                OptionsMenu options_menu = new OptionsMenu(this);
-                options_menu.start(getStage());
+                OptionsMenu optionsMenu = new OptionsMenu(this);
+                optionsMenu.start(getStage());
             });
         } catch (CustomCheckedException.MissingMenuComponentException e){
             System.out.println(e.getMessage() + " Fatal error. Closing application");
@@ -80,17 +70,17 @@ public class GameMenu extends Menu {
     }
 
     @Override
-    public void setMenuScale(double width_scale, double height_scale){
-        super.setMenuScale(width_scale, height_scale);
-        GameMenu new_menu = new GameMenu(this);
-        new_menu.start(getStage());
+    public void setMenuScale(double widthScale, double heightScale){
+        super.setMenuScale(widthScale, heightScale);
+        GameMenu newMenu = new GameMenu(this);
+        newMenu.start(getStage());
     }
 
     @Override
-    public void setScaledPosition(double scaled_position_X, double scaled_position_Y){
-        super.setScaledPosition(scaled_position_X, scaled_position_Y);
-        GameMenu new_menu = new GameMenu(this);
-        new_menu.start(getStage());
+    public void setScaledPosition(double scaledPositionX, double scaledPositionY){
+        super.setScaledPosition(scaledPositionX, scaledPositionY);
+        GameMenu newMenu = new GameMenu(this);
+        newMenu.start(getStage());
     }
 
     public static void main(String[] args) {

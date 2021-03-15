@@ -1,6 +1,5 @@
 package units.shooter_developers.MenuAPI;
 
-//VISITED
 import javafx.beans.property.StringPropertyBase;
 import javafx.geometry.Pos;
 import javafx.scene.SnapshotParameters;
@@ -15,45 +14,42 @@ import javafx.scene.text.Text;
 /************************ NON-ANIMATED ITEM ****************************************/
 
 class NonAnimatedItem extends StackPane {
-    StringPropertyBase _name_property;
+    StringPropertyBase _nameProperty;
 
     public NonAnimatedItem(String name) {
         this(name, -1, -1);
     }
 
-    protected NonAnimatedItem(String name, double item_width_ratio, double item_height_ratio) {
-        _name_property = new StringPropertyBase() {
+    protected NonAnimatedItem(String name, double itemWidthRatio, double itemHeightRatio) {
+        _nameProperty = new StringPropertyBase() {
             @Override
             public Object getBean() { return null; }
             @Override
             public String getName() { return null; }};
 
-        var effective_width_ratio = item_width_ratio<0? 0.19 : item_width_ratio;
-        var effective_height_ratio = item_height_ratio<0? 0.05 : item_height_ratio;
+        var effectiveWidthRatio = itemWidthRatio<0? 0.19 : itemWidthRatio;
+        var effectiveHeightRatio = itemHeightRatio<0? 0.05 : itemHeightRatio;
 
-        Color text_color = Menu.getColorPalette().dead_color;
-        Color background_color = Menu.getColorPalette().basic_secondary_color;
+        Color textColor = Menu.getColorPalette().dead_color;
+        Color backgroundColor = Menu.getColorPalette().basic_secondary_color;
 
-        Rectangle box = new Rectangle(effective_width_ratio * Menu.getMenuWidth(), effective_height_ratio * Menu.getMenuHeight());
+        Rectangle box = new Rectangle(effectiveWidthRatio * Menu.getMenuWidth(), effectiveHeightRatio * Menu.getMenuHeight());
         box.setOpacity(0.3);
-        box.setFill(background_color);
+        box.setFill(backgroundColor);
 
-        Text text = new Text(_name_property.getValue());
-        text.setFill(text_color);
-        text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, 0.0333 * Menu.getMenuHeight()));
         var params = new SnapshotParameters();
 
         getChildren().add(box);
 
-        _name_property.addListener((observable,  oldValue,  selected) -> {
+        _nameProperty.addListener((observable, oldValue, selected) -> {
             getChildren().removeIf(e -> e instanceof ImageView);
-            Text new_text = new Text(_name_property.getValue());
-            new_text.setFill(text_color);
-            new_text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, 0.0333 * Menu.getMenuHeight()));
+            Text newText = new Text(_nameProperty.getValue());
+            newText.setFill(textColor);
+            newText.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, 0.0333 * Menu.getMenuHeight()));
 
             //Text is transformed into an image and resized
             params.setFill(Color.TRANSPARENT);
-            var textImage = new ImageView(new_text.snapshot(params, null));
+            var textImage = new ImageView(newText.snapshot(params, null));
             if (textImage.getBoundsInLocal().getWidth() > box.getWidth())
                 textImage.setFitWidth(box.getWidth());
 
@@ -61,13 +57,13 @@ class NonAnimatedItem extends StackPane {
             getChildren().add(textImage);
         });
 
-        _name_property.setValue(name);
+        _nameProperty.setValue(name);
 
 
     }
 
     protected StringPropertyBase getNameAsProperty(){
-        return _name_property;
+        return _nameProperty;
     }
 
 

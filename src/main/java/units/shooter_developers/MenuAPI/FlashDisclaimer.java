@@ -1,5 +1,4 @@
 package units.shooter_developers.MenuAPI;
-// VISITED
 
 import javafx.animation.FadeTransition;
 import javafx.animation.Transition;
@@ -14,13 +13,13 @@ import javafx.util.Duration;
 
 class FlashDisclaimer extends StackPane {
     FlashDisclaimer(String text) {
-        Text disclaimer_text = new Text(text);
-        disclaimer_text.setFont(Font.font("Times New Roman", FontWeight.BOLD, Menu.getMenuWidth() * 0.025));
-        disclaimer_text.setFill(Menu.getColorPalette().basic_primary_color);
-        textAnimation(disclaimer_text);
-        setAlignment(disclaimer_text, Pos.TOP_CENTER);
+        Text disclaimerText = new Text(text);
+        disclaimerText.setFont(Font.font("Times New Roman", FontWeight.BOLD, Menu.getMenuWidth() * 0.025));
+        disclaimerText.setFill(Menu.getColorPalette().basic_primary_color);
+        textAnimation(disclaimerText);
+        setAlignment(disclaimerText, Pos.TOP_CENTER);
 
-        getChildren().add(disclaimer_text);
+        getChildren().add(disclaimerText);
     }
 
     private void textAnimation(Text bottom) {
