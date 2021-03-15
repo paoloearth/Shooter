@@ -30,7 +30,16 @@ public abstract class PicturedObject extends MapObject {
     }
 
     /* Image management */
-    protected static Image retrieveImage(String URL) { return new Image(URL); }
+    protected static Image retrieveImage(String URL) {
+    try {
+        return new Image(URL);
+    }
+    catch (NullPointerException | IllegalArgumentException e)
+    {
+        System.out.println("Image of the tileset was not found. \n" + e);
+        return new Image(URL); }
+    }
+
 
 
     protected final void scalePicture() {
@@ -40,7 +49,6 @@ public abstract class PicturedObject extends MapObject {
     }
 
     protected  final double getScaledHeight() { return _picture.getFitHeight(); }
-
     protected  final double getScaledWidth() { return   _picture.getFitWidth(); }
 
 

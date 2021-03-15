@@ -53,7 +53,6 @@ public class MapReader {
         Set<Integer> passableCodes   = fromIntListToSet(parseStringArrayToIntArray(lines.get(CustomSettings.PASSABLE_TILES_INDEX)));
         Set<Integer> unpassableCodes = fromIntListToSet(parseStringArrayToIntArray(lines.get(CustomSettings.NOT_PASSABLE_TILES_FOR_P_INDEX)));
 
-
         /*   4. P1_start_X, P1_start_Y,P2_start_X, P2_start_X
              5. T1_start_X;T1_start_Y; T2_start_X, T2_start_Y */
         Map<String, Coordinates> coordinateDictionary = new HashMap<>();
@@ -68,17 +67,21 @@ public class MapReader {
                            columns,rows,
                            passableCodes,unpassableCodes,
                            mapTileComposition, coordinateDictionary);
-
     }
 
 
     protected Set<Integer> fromIntListToSet(List<Integer> S) { return new HashSet<>(S); }
 
     protected List<Integer> parseStringArrayToIntArray(String[] S) {
-        return Arrays.stream(S).parallel().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
+        List<Integer> A = new ArrayList<>();
+        try {
+            A = Arrays.stream(S).parallel().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
+        }catch (NumberFormatException e)
+        {
+                System.out.println("Value read cannot be parsed into an integer" + e);;
+        }
+        return A;
     }
-
-
 
     protected List<String[]> readLinesFromFile(String URL) {
         List<String[]> rows = new ArrayList<>();
@@ -86,29 +89,23 @@ public class MapReader {
                    Files.lines(Paths.get(ClassLoader.getSystemResource(URL).toURI()), Charset.defaultCharset())){
                    rows = lines.parallel().map(l -> l.split(CustomSettings.FILE_SEPARATOR)).collect(Collectors.toList());
        }
-       catch(FileNotFoundException e){ System.out.println(URL + ": was not found "); }
-       catch(IOException e){ System.out.println(URL + ": problems interacting with the map file "); }
-       catch(NullPointerException e){ System.out.println("Map File "+URL+" is null ");}
-       catch(URISyntaxException e){ System.out.println("Wrong URL"+URL+" format of map file ");}
+       catch(FileNotFoundException e){ System.out.println(URL + ": was not found \n");e.printStackTrace(); }
+       catch(IOException e){ System.out.println(URL + ": problems interacting with the map file \n"); e.printStackTrace();}
+       catch(NullPointerException e){ System.out.println("FilePath is null. Check the resource. \n"); e.printStackTrace();}
+       catch(URISyntaxException e){ System.out.println("Wrong URL"+URL+" format of map file \n"); e.printStackTrace();}
 
        return rows;
     }
 
-
     protected Image getTilesetFromURL(String URL) {
-        try { return readImage(URL); }
+        try { return new Image(URL); }
         catch (IllegalArgumentException | NullPointerException e)
         {
-            System.out.println("Image " +URL + " was not found. Set URL to default");
-            URL = "TileSet.png";
+            System.out.println("Image of the tileset was not found. \n" + e);
+            return new Image(URL);
         }
-        return readImage(URL);
     }
-    protected Image readImage(String URL) throws IllegalArgumentException, NullPointerException
-    {
-        return new Image(URL);
-    }
-    
+
 
     protected List<String[]> retrieveMapWithoutMetadata(List<String[]> lines, int numberOfRowsToSkip) {
         return lines.stream().skip(numberOfRowsToSkip).collect(Collectors.toList());
@@ -119,6 +116,5 @@ public class MapReader {
                 new Pair<>(ID+String.valueOf(i/2),new Coordinates(l.get(i), l.get(i+1))))
                 .forEach(pair->dictionaryToFill.put(pair.getKey(), pair.getValue()));
     }
-
 
 }

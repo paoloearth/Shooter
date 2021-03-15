@@ -31,10 +31,10 @@ public class Submenu extends Menu {
         Map<String, String> mapURL = generateMapsUrl();
         addChoiceBox("Map_selection", 2, 0,mapURL, CustomSettings.MAP_SCALE, 1);
 
-        addFreeItem("Play!", 0.6, 0.8);
+        addFreeItem("START", 0.6, 0.8);
 
         try {
-            getItem("Play!").setOnMouseReleased(event -> {
+            getItem("START").setOnMouseReleased(event -> {
                 var player_names = new ArrayList<String>();
                 player_names.add(getTextBoxValue("Player_textbox_1"));
                 player_names.add(getTextBoxValue("Player_textbox_2"));
