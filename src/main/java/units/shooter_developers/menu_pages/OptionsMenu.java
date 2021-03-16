@@ -92,7 +92,7 @@ public class OptionsMenu extends Menu {
         try {
             writeSettings();
         }catch (CustomCheckedException.FileManagementException e){
-            System.out.println(e.toString() + " Writing was wrong. Continuing.");
+            System.err.println(e.toString() + " Writing was wrong. Continuing.");
         }
 
         Pair<Double, Double> selectedResolution = getSelectedResolution();
@@ -120,14 +120,14 @@ public class OptionsMenu extends Menu {
         try {
             writeSettings();
         }catch (CustomCheckedException.FileManagementException e){
-            System.out.println(e.toString() + " Writing was wrong. Continuing.");
+            System.err.println(e.toString() + " Writing was wrong. Continuing.");
         }
 
         OptionsMenu optionsMenu = new OptionsMenu(this);
         try {
             optionsMenu.readProperties();
         } catch(CustomCheckedException.FileManagementException e){
-            System.out.println(e.toString() + " Using default settings.");
+            System.err.println(e.toString() + " Using default settings.");
         }
 
         optionsMenu.start(getStage());
@@ -138,7 +138,7 @@ public class OptionsMenu extends Menu {
         try {
             candidateColorMode = getSelectorValue("COLOR MODE");
         }catch (CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.toString() + " Color mode will not be changed. Continuing.");
+            System.err.println(e.toString() + " Color mode will not be changed. Continuing.");
             candidateColorMode = getColorMode();
         }
         return candidateColorMode;
@@ -149,7 +149,7 @@ public class OptionsMenu extends Menu {
         try {
             selectedResolution = ParseSelectedResolution(getSelectorValue("RESOLUTION"));
         }catch (Exception e) {
-            System.out.println(e.toString() + " Resolution will not be changed. Continuing.");
+            System.err.println(e.toString() + " Resolution will not be changed. Continuing.");
         }
         return selectedResolution;
     }

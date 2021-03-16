@@ -124,9 +124,7 @@ public abstract class Menu extends Application {
             reader = new FileReader(configFile);
             config.load(reader);
             reader.close();
-        }catch(Exception e){
-            System.err.println(configFile.getPath() + " not found. Using default settings.");
-        }
+        }catch(Exception ignored){ }
 
         setResolution(config);
         try {
