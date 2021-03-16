@@ -95,9 +95,9 @@ gradlew run
 ```
 
 <!-- USAGE EXAMPLES -->
-## Usage :game_die:
+<!-- ## Usage :game_die: --> 
+<!-- To add here gifs of menu/game sessions. --> 
 
-To add here gifs of menu/game sessions.
 <!-- ROADMAP -->
 ## Roadmap
 
