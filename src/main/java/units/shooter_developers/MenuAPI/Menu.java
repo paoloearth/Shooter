@@ -12,6 +12,7 @@ package units.shooter_developers.MenuAPI;
  *  https://github.com/Siderim/video-game-menu/
  */
 
+import javafx.scene.shape.Rectangle;
 import units.shooter_developers.CustomColors;
 import units.shooter_developers.CustomSettings;
 import units.shooter_developers.Simulation;
@@ -121,9 +122,19 @@ public abstract class Menu extends Application {
         }
 
         setResolution(config);
+        try {
+            backgroundDark = retrieveImage(CustomSettings.URL_BACKGROUND_DARK, 1, 1);
+            backgroundLight = retrieveImage(CustomSettings.URL_BACKGROUND_LIGHT, 1, 1);
+        }catch(CustomCheckedException.FileManagementException e){
+            System.out.println(e.toString() + " Some background were not found. Using default texture.");
+            var rectangle = new Rectangle(10, 10);
 
-        backgroundDark = retrieveImage(CustomSettings.URL_BACKGROUND_DARK, 1, 1);
-        backgroundLight = retrieveImage(CustomSettings.URL_BACKGROUND_LIGHT, 1, 1);
+            rectangle.setFill(Color.WHITE);
+            backgroundDark = new ImageView((rectangle).snapshot(null, null));
+
+            rectangle.setFill(Color.BLACK);
+            backgroundLight = new ImageView(rectangle.snapshot(null, null));
+        }
 
         var colorMode = config.getProperty("COLOR MODE");
         colorMode = colorMode == null? "" :  colorMode;
@@ -196,7 +207,7 @@ public abstract class Menu extends Application {
         try {
             getItemsBox().addItem(newMenuItem);
         }catch(CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.toString() + "Main item box object was not found neither created. Fatal error. Closing application");
+            System.out.println(e.toString() + " Main item box object was not found neither created. Fatal error. Closing application");
             Runtime.getRuntime().exit(1);
         }
     }
@@ -215,7 +226,7 @@ public abstract class Menu extends Application {
         try {
             getItemsBox().addNonAnimatedItem(name);
         }catch(CustomCheckedException.MissingMenuComponentException e){
-        System.out.println(e.toString() + "Main item box object was not found neither created. Fatal error. Closing application");
+        System.out.println(e.toString() + " Main item box object was not found neither created. Fatal error. Closing application");
         Runtime.getRuntime().exit(1);
     }
     }
@@ -228,7 +239,7 @@ public abstract class Menu extends Application {
         try{
             getItemsBox().addSelectorItem(name, tagList);
         }catch(CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.toString() + "Main item box object was not found neither created. Fatal error. Closing application");
+            System.out.println(e.toString() + " Main item box object was not found neither created. Fatal error. Closing application");
             Runtime.getRuntime().exit(1);
         }
     }
@@ -243,10 +254,10 @@ public abstract class Menu extends Application {
             menu_box = getItemsBox();
             menu_box.addSelectorItem(name, defaultIndex, tagList);
         }catch(CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.toString() + "Selector item box object was not found neither created. Fatal error. Closing application");
+            System.out.println(e.toString() + " Selector item box object was not found neither created. Fatal error. Closing application");
             Runtime.getRuntime().exit(1);
         }catch(CustomCheckedException.IndexOutOfRange e){
-            System.out.println(e.toString() + "Index not set. Using default construction indexing. Continuing.");
+            System.out.println(e.toString() + " Index not set. Using default construction indexing. Continuing.");
             menu_box.addSelectorItem(name, tagList);
         }
     }

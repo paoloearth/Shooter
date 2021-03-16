@@ -6,7 +6,7 @@ public class CustomCheckedException {
 
     public static class FileManagementException extends Exception {
         public FileManagementException(String file_name){
-            super("ERROR: There was a problem by using the file: " + file_name);
+            super("ERROR: There was a problem by using the file: " + file_name + ".");
         }
     }
 
