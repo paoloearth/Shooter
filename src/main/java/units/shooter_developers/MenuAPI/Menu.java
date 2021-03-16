@@ -256,7 +256,7 @@ public abstract class Menu extends Application {
         }catch(CustomCheckedException.MissingMenuComponentException e){
             System.out.println(e.toString() + " Selector item box object was not found neither created. Fatal error. Closing application");
             Runtime.getRuntime().exit(1);
-        }catch(CustomCheckedException.IndexOutOfRange e){
+        }catch(CustomCheckedException.IndexOutOfRangeException e){
             System.out.println(e.toString() + " Index not set. Using default construction indexing. Continuing.");
             menu_box.addSelectorItem(name, tagList);
         }
@@ -334,7 +334,7 @@ public abstract class Menu extends Application {
         menuGridObject.addChoiceBox(name, row, col, mapImageToUrl, scale, spritesheetNumberOfRows);
     }
 
-    public void addChoiceBox(String name, int row, int col, Map<String, String> mapImageToUrl, double scale, int spritesheetNumberOfRows, int defaultIndex) throws CustomCheckedException.IndexOutOfRange {
+    public void addChoiceBox(String name, int row, int col, Map<String, String> mapImageToUrl, double scale, int spritesheetNumberOfRows, int defaultIndex) throws CustomCheckedException.IndexOutOfRangeException {
         MenuGrid menuGridObject = getMenuGridAndCreateIfNotExist();
         menuGridObject.addChoiceBox(name, row, col, mapImageToUrl, scale, spritesheetNumberOfRows, defaultIndex);
     }

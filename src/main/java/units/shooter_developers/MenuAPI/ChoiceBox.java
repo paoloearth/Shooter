@@ -58,7 +58,7 @@ class ChoiceBox extends VBox {
 
     }
 
-    public ChoiceBox(String name, Map<String, String> mapImageToUrl, int nrows, double scale, int default_index) throws CustomCheckedException.IndexOutOfRange {
+    public ChoiceBox(String name, Map<String, String> mapImageToUrl, int nrows, double scale, int default_index) throws CustomCheckedException.IndexOutOfRangeException {
         this(name, mapImageToUrl, nrows, scale);
         _selector.setDefaultIndex(default_index);
     }

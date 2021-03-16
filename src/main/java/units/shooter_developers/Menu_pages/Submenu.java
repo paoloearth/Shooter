@@ -21,7 +21,7 @@ public class Submenu extends Menu {
         try {
             addChoiceBox("Player_selection_1", 1, 0, nameUrl, 1, 4, 0);
             addChoiceBox("Player_selection_2", 1, 1, nameUrl, 1, 4, 1);
-        }catch(CustomCheckedException.IndexOutOfRange e){
+        }catch(CustomCheckedException.IndexOutOfRangeException e){
             System.out.println(e.toString() + " Using default index. Continuing.");
             addChoiceBox("Player_selection_1", 1, 0, nameUrl, 1, 4);
             addChoiceBox("Player_selection_2", 1, 1, nameUrl, 1, 4);

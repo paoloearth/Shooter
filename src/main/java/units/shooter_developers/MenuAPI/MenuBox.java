@@ -52,7 +52,7 @@ class MenuBox extends VBox {
         getChildren().addAll(newItem, createSeparator());
     }
 
-    protected void addSelectorItem(String name, int defaultIndex, ArrayList<String> tagList) throws CustomCheckedException.IndexOutOfRange {
+    protected void addSelectorItem(String name, int defaultIndex, ArrayList<String> tagList) throws CustomCheckedException.IndexOutOfRangeException {
         SelectorItem newItem = new SelectorItem(name, true);
         newItem.setTranslateX(0.005 * Menu.getMenuWidth());
 

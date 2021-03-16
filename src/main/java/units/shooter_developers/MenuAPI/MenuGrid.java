@@ -25,7 +25,7 @@ class MenuGrid extends GridPane {
         add(choice_box, columnWithinGrid, rowWithinGrid);
     }
 
-    public void addChoiceBox(String name, int rowWithinGrid, int columnWithinGrid, Map<String, String> mapImageToUrl, double imageScale, int numberOfRowsSpritesheet, int defaultIndex) throws CustomCheckedException.IndexOutOfRange {
+    public void addChoiceBox(String name, int rowWithinGrid, int columnWithinGrid, Map<String, String> mapImageToUrl, double imageScale, int numberOfRowsSpritesheet, int defaultIndex) throws CustomCheckedException.IndexOutOfRangeException {
         final ChoiceBox choiceBox = new ChoiceBox(name, mapImageToUrl, numberOfRowsSpritesheet, imageScale, defaultIndex);
         add(choiceBox, columnWithinGrid, rowWithinGrid);
     }
