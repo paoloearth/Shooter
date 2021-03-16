@@ -112,10 +112,9 @@ public abstract class Menu extends Application {
 
     public abstract void createContent() throws CustomCheckedException.MissingMenuComponentException;
 
-    // Move name of config file to custom settings?
     public void readProperties() throws CustomCheckedException.FileManagementException{
         File configFile = new File(URL_CONFIG_FILE);
-        Properties config;
+        Properties config = null;
         ImageView backgroundLight;
         ImageView backgroundDark;
 
@@ -126,7 +125,7 @@ public abstract class Menu extends Application {
             config.load(reader);
             reader.close();
         }catch(Exception e){
-            throw new CustomCheckedException.FileManagementException(configFile.getPath());
+            System.err.println(configFile.getPath() + " not found. Using default settings.");
         }
 
         setResolution(config);
