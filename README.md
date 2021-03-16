@@ -64,7 +64,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project :blue_book:
 
-*Name of the game* is a 2 players 2D-top-down shooter game that:
+*Everscape* is a 2 players 2D-top-down shooter game that:
 * Features multiple elements like **bonuses** and teleporting **black-holes** 1 :milky_way:
 * Has a stylish menu with multiple functionalities :smile:
 * Has multiple maps, from desert to lakes :earth_africa:
