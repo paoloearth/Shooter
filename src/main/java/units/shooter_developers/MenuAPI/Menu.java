@@ -92,7 +92,7 @@ public abstract class Menu extends Application {
 
     /************************** START METHOD ************************************/
 
-    public void start(Stage stage){
+    public void start(Stage stage) throws CustomCheckedException.MissingMenuComponentException {
         setStage(stage);
         getStage().setMaximized(false);
         setStageDimensions(getMenuWidth(), getMenuHeight());
@@ -102,7 +102,15 @@ public abstract class Menu extends Application {
         show();
     }
 
-    public abstract void createContent();
+    protected void tryToStart(Menu new_menu) {
+        try {
+            new_menu.start(getStage());
+        } catch (CustomCheckedException.MissingMenuComponentException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public abstract void createContent() throws CustomCheckedException.MissingMenuComponentException;
 
     // Move name of config file to custom settings?
     public void readProperties() throws CustomCheckedException.FileManagementException{
@@ -202,14 +210,9 @@ public abstract class Menu extends Application {
 
     /************************** CONTENT MANAGEMENT *****************************/
 
-    public void addItem(String newMenuItem){
+    public void addItem(String newMenuItem) throws CustomCheckedException.MissingMenuComponentException {
         generateMenuBoxIfNotExist();
-        try {
-            getItemsBox().addItem(newMenuItem);
-        }catch(CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.toString() + " Main item box object was not found neither created. Fatal error. Closing application");
-            Runtime.getRuntime().exit(1);
-        }
+        getItemsBox().addItem(newMenuItem);
     }
 
     public void addFreeItem(String newMenuItem, double positionRatioX, double positionRatioY){
@@ -221,30 +224,20 @@ public abstract class Menu extends Application {
         addGenericNode(new_item);
     }
 
-    public void addNonAnimatedItem(String name){
+    public void addNonAnimatedItem(String name) throws CustomCheckedException.MissingMenuComponentException {
         generateMenuBoxIfNotExist();
-        try {
-            getItemsBox().addNonAnimatedItem(name);
-        }catch(CustomCheckedException.MissingMenuComponentException e){
-        System.out.println(e.toString() + " Main item box object was not found neither created. Fatal error. Closing application");
-        Runtime.getRuntime().exit(1);
-    }
+        getItemsBox().addNonAnimatedItem(name);
     }
 
-    public void addSelectorItem(String name, String ... selection_tags){
+    public void addSelectorItem(String name, String ... selection_tags) throws CustomCheckedException.MissingMenuComponentException {
         generateMenuBoxIfNotExist();
         ArrayList<String> tagList= new ArrayList<>();
         Collections.addAll(tagList, selection_tags);
 
-        try{
-            getItemsBox().addSelectorItem(name, tagList);
-        }catch(CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.toString() + " Main item box object was not found neither created. Fatal error. Closing application");
-            Runtime.getRuntime().exit(1);
-        }
+        getItemsBox().addSelectorItem(name, tagList);
     }
 
-    public void addSelectorItem(String name, int defaultIndex, String ... selectionTags){
+    public void addSelectorItem(String name, int defaultIndex, String ... selectionTags) throws CustomCheckedException.MissingMenuComponentException {
         generateMenuBoxIfNotExist();
         ArrayList<String> tagList= new ArrayList<>();
         Collections.addAll(tagList, selectionTags);
@@ -253,11 +246,8 @@ public abstract class Menu extends Application {
         try{
             menu_box = getItemsBox();
             menu_box.addSelectorItem(name, defaultIndex, tagList);
-        }catch(CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.toString() + " Selector item box object was not found neither created. Fatal error. Closing application");
-            Runtime.getRuntime().exit(1);
         }catch(CustomCheckedException.IndexOutOfRangeException e){
-            System.out.println(e.toString() + " Index not set. Using default construction indexing. Continuing.");
+            System.err.println(e.toString() + " Index not set. Using default construction indexing. Continuing.");
             menu_box.addSelectorItem(name, tagList);
         }
     }
@@ -429,25 +419,15 @@ public abstract class Menu extends Application {
         return getSelectorItem(name).getText();
     }
 
-    public String getChoiceBoxValue(String name){
+    public String getChoiceBoxValue(String name) throws CustomCheckedException.MissingMenuComponentException {
         String value = "";
-        try{
-            value = getChoiceBox(name).getValue();
-        }catch(CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.toString() + " Fatal error. Closing application.");
-            Runtime.getRuntime().exit(1);
-        }
+        value = getChoiceBox(name).getValue();
         return value;
     }
 
-    public String getTextBoxValue(String name){
+    public String getTextBoxValue(String name) throws CustomCheckedException.MissingMenuComponentException {
         String value = "";
-        try{
-            value = getTextBox(name).getValue();
-        }catch(CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.toString() + " Fatal error. Closing application.");
-            Runtime.getRuntime().exit(1);
-        }
+        value = getTextBox(name).getValue();
         return value;
     }
 
@@ -553,12 +533,12 @@ public abstract class Menu extends Application {
         }
     }
 
-    public void setScaledPosition(double scaledPositionX, double scaledPositionY){
+    public void setScaledPosition(double scaledPositionX, double scaledPositionY) throws CustomCheckedException.MissingMenuComponentException {
         _positionWidthRatio = scaledPositionX;
         _positionHeightRatio = scaledPositionY;
     }
 
-    public void setMenuScale(double widthScale, double heightScale){
+    public void setMenuScale(double widthScale, double heightScale) throws CustomCheckedException.MissingMenuComponentException {
         _widthScale = widthScale;
         _heightScale = heightScale;
     }

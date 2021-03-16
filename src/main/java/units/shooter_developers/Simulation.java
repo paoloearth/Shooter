@@ -124,7 +124,11 @@ public class Simulation extends Application {
                                 if(s instanceof DynamicObject) ((DynamicObject) s).defaultMovement(_gameMap);
                                 all_players().forEach(s::action);
                                 });
-                    cleanDeadObjectsAndCheckForVictory();
+                    try {
+                        cleanDeadObjectsAndCheckForVictory();
+                    } catch (CustomCheckedException.MissingMenuComponentException e) {
+                        throw new RuntimeException(e);
+                    }
                     last_update = now;
                 }
             }
@@ -133,7 +137,7 @@ public class Simulation extends Application {
         startSimulation();
     }
 
-    private void cleanDeadObjectsAndCheckForVictory() {
+    private void cleanDeadObjectsAndCheckForVictory() throws CustomCheckedException.MissingMenuComponentException {
         root.getChildren().removeIf(node -> (node instanceof PicturedObject) && ((PicturedObject) node).hasToBeRemoved());
         if(all_players().size()==1)  launch_winner_window(all_players().iterator().next());
     }
@@ -149,7 +153,7 @@ public class Simulation extends Application {
     }
 
 
-    private void launch_winner_window(Sprite winner) {
+    private void launch_winner_window(Sprite winner) throws CustomCheckedException.MissingMenuComponentException {
         var win_screen = new WinnerWindow(winner);
         stopSimulation();
         win_screen.start(_stage);
@@ -178,7 +182,11 @@ public class Simulation extends Application {
                     case SPACE -> s.shoot(root);
 
                     case ESCAPE -> {
-                        handleEscape();
+                        try {
+                            handleEscape();
+                        } catch (CustomCheckedException.MissingMenuComponentException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
             }
@@ -202,7 +210,7 @@ public class Simulation extends Application {
             }
         });}
 
-    private void handleEscape() {
+    private void handleEscape() throws CustomCheckedException.MissingMenuComponentException {
         var game_menu = new GameMenu(this);
         stopSimulation();
         try {

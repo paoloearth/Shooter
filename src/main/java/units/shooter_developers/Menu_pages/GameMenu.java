@@ -22,7 +22,7 @@ public class GameMenu extends Menu {
     }
 
     @Override
-    public void createContent(){
+    public void createContent() throws CustomCheckedException.MissingMenuComponentException {
 
         if(isSimulationRunning()) {
             this.addItem("CONTINUE");
@@ -38,46 +38,36 @@ public class GameMenu extends Menu {
 
 
         if(isSimulationRunning()) {
-            try {
-                getItem("CONTINUE").setOnMouseReleased(event -> {
-                    getStage().close();
-                    getStage().setScene(getSimulationInstance().getScene());
-                    getStage().show();
-                    getStage().toFront();
-                });
-            } catch (CustomCheckedException.MissingMenuComponentException e){
-                System.out.println(e.toString() + " Fatal error. Closing application");
-                Runtime.getRuntime().exit(1);
-            }
+            getItem("CONTINUE").setOnMouseReleased(event -> {
+                getStage().close();
+                getStage().setScene(getSimulationInstance().getScene());
+                getStage().show();
+                getStage().toFront();
+            });
         }
 
-        try {
-            getItem("NEW GAME").setOnMouseReleased(event -> {
-                Submenu submenuLaunchGame = new Submenu(this);
-                submenuLaunchGame.start(getStage());
-            });
-            getItem("EXIT").setOnMouseReleased(event -> getStage().close());
-            getItem("OPTIONS").setOnMouseReleased(event -> {
-                OptionsMenu optionsMenu = new OptionsMenu(this);
-                optionsMenu.start(getStage());
-            });
-        } catch (CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.toString() + " Fatal error. Closing application");
-            Runtime.getRuntime().exit(1);
-        }
+        getItem("NEW GAME").setOnMouseReleased(event -> {
+            Submenu submenuLaunchGame = new Submenu(this);
+            tryToStart(submenuLaunchGame);
+        });
+        getItem("EXIT").setOnMouseReleased(event -> getStage().close());
+        getItem("OPTIONS").setOnMouseReleased(event -> {
+            OptionsMenu optionsMenu = new OptionsMenu(this);
+            tryToStart(optionsMenu);
+        });
 
 
     }
 
     @Override
-    public void setMenuScale(double widthScale, double heightScale){
+    public void setMenuScale(double widthScale, double heightScale) throws CustomCheckedException.MissingMenuComponentException {
         super.setMenuScale(widthScale, heightScale);
         GameMenu newMenu = new GameMenu(this);
         newMenu.start(getStage());
     }
 
     @Override
-    public void setScaledPosition(double scaledPositionX, double scaledPositionY){
+    public void setScaledPosition(double scaledPositionX, double scaledPositionY) throws CustomCheckedException.MissingMenuComponentException {
         super.setScaledPosition(scaledPositionX, scaledPositionY);
         GameMenu newMenu = new GameMenu(this);
         newMenu.start(getStage());

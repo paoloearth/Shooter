@@ -20,7 +20,7 @@ public class AlertWindow extends Menu {
     }
 
     @Override
-    public void createContent(){
+    public void createContent() throws CustomCheckedException.MissingMenuComponentException {
         ImageView alertImage;
         try {
             alertImage = Menu.retrieveImage(CustomSettings.URL_WARNING_ICON, 1, 1);
@@ -35,26 +35,25 @@ public class AlertWindow extends Menu {
         addFreeItem("CONTINUE", 0.76, 0.2);
         addFlashDisclaimer("Game will be reset. Do you want to confirm?");
 
-        try {
-            getItem("BACK").setOnMouseReleased(event -> {
-                OptionsMenu optionsMenu = new OptionsMenu(this);
-                optionsMenu.start(getStage());
-            });
+        getItem("BACK").setOnMouseReleased(event -> {
+            OptionsMenu optionsMenu = new OptionsMenu(this);
+            tryToStart(optionsMenu);
+        });
 
-            getItem("CONTINUE").setOnMouseReleased(event -> {
-                setStageDimensions(_candidateWidth, _candidateHeight);
-                setColorMode(_candidateColorMode);
-                try {
-                    writeSettings();
-                } catch (CustomCheckedException.FileManagementException e) {
-                    System.out.println(e.toString() + " Writing was wrong. Continuing.");
-                }
-                OptionsMenu optionsMenu = new OptionsMenu();
-                optionsMenu.start(getStage());
-            });
-        }catch (CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.toString() + " Fatal error. Closing application.");
-            Runtime.getRuntime().exit(1);
+        getItem("CONTINUE").setOnMouseReleased(event -> {
+            setStageDimensions(_candidateWidth, _candidateHeight);
+            setColorMode(_candidateColorMode);
+            tryToWrite();
+            OptionsMenu optionsMenu = new OptionsMenu();
+            tryToStart(optionsMenu);
+        });
+    }
+
+    private void tryToWrite() {
+        try {
+            writeSettings();
+        } catch (CustomCheckedException.FileManagementException e) {
+            System.err.println(e.toString() + " Writing was wrong. Continuing.");
         }
     }
 
