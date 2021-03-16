@@ -34,7 +34,7 @@ public class GameMenu extends Menu {
         this.addItem("OPTIONS");
         this.addItem("EXIT");
         getStage().setTitle("VIDEO GAME");
-        setTitle("C A M P A I G N");
+        setTitle("E V E R S C A P E");
 
 
         if(isSimulationRunning()) {
