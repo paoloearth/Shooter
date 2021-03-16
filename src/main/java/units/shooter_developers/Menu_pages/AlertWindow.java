@@ -25,7 +25,7 @@ public class AlertWindow extends Menu {
         try {
             alertImage = Menu.retrieveImage(CustomSettings.URL_WARNING_ICON, 1, 1);
         }catch(CustomCheckedException.FileManagementException e){
-            System.out.println(e.getMessage() + " Alert image not found. Using alternative one. Continuing");
+            System.out.println(e.toString() + " Alert image not found. Using alternative one. Continuing");
             alertImage = new ImageView(new Rectangle(10, 10).snapshot(null, null));
         }
 
@@ -47,13 +47,13 @@ public class AlertWindow extends Menu {
                 try {
                     writeSettings();
                 } catch (CustomCheckedException.FileManagementException e) {
-                    System.out.println(e.getMessage() + " Writing was wrong. Continuing.");
+                    System.out.println(e.toString() + " Writing was wrong. Continuing.");
                 }
                 OptionsMenu optionsMenu = new OptionsMenu();
                 optionsMenu.start(getStage());
             });
         }catch (CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.getMessage() + " Fatal error. Closing application.");
+            System.out.println(e.toString() + " Fatal error. Closing application.");
             Runtime.getRuntime().exit(1);
         }
     }

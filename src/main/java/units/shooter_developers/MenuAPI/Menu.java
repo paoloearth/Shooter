@@ -145,7 +145,7 @@ public abstract class Menu extends Application {
             width = parsedResolution.getKey();
             height = parsedResolution.getValue();
         }catch(CustomCheckedException.WrongParsingException e) {
-            System.out.println(e.getMessage() + " Using native resolution.");
+            System.out.println(e.toString() + " Using native resolution.");
             width = getScreenWidth();
             height = getScreenHeight();
         }
@@ -196,7 +196,7 @@ public abstract class Menu extends Application {
         try {
             getItemsBox().addItem(newMenuItem);
         }catch(CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.getMessage() + "Main item box object was not found neither created. Fatal error. Closing application");
+            System.out.println(e.toString() + "Main item box object was not found neither created. Fatal error. Closing application");
             Runtime.getRuntime().exit(1);
         }
     }
@@ -215,7 +215,7 @@ public abstract class Menu extends Application {
         try {
             getItemsBox().addNonAnimatedItem(name);
         }catch(CustomCheckedException.MissingMenuComponentException e){
-        System.out.println(e.getMessage() + "Main item box object was not found neither created. Fatal error. Closing application");
+        System.out.println(e.toString() + "Main item box object was not found neither created. Fatal error. Closing application");
         Runtime.getRuntime().exit(1);
     }
     }
@@ -228,7 +228,7 @@ public abstract class Menu extends Application {
         try{
             getItemsBox().addSelectorItem(name, tagList);
         }catch(CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.getMessage() + "Main item box object was not found neither created. Fatal error. Closing application");
+            System.out.println(e.toString() + "Main item box object was not found neither created. Fatal error. Closing application");
             Runtime.getRuntime().exit(1);
         }
     }
@@ -243,10 +243,10 @@ public abstract class Menu extends Application {
             menu_box = getItemsBox();
             menu_box.addSelectorItem(name, defaultIndex, tagList);
         }catch(CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.getMessage() + "Selector item box object was not found neither created. Fatal error. Closing application");
+            System.out.println(e.toString() + "Selector item box object was not found neither created. Fatal error. Closing application");
             Runtime.getRuntime().exit(1);
         }catch(CustomCheckedException.IndexOutOfRange e){
-            System.out.println(e.getMessage() + "Index not set. Using default construction indexing. Continuing.");
+            System.out.println(e.toString() + "Index not set. Using default construction indexing. Continuing.");
             menu_box.addSelectorItem(name, tagList);
         }
     }
@@ -270,9 +270,7 @@ public abstract class Menu extends Application {
         try {
             var title_object = getTitleObject();
             _root.getChildren().remove(title_object);
-        }catch(CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.getMessage() + " Title is not set. Ignoring its deletion. Continuing.");
-        }
+        }catch(CustomCheckedException.MissingMenuComponentException ignored){}
     }
 
     public void addFlashDisclaimer(String disclaimer_text){
@@ -425,7 +423,7 @@ public abstract class Menu extends Application {
         try{
             value = getChoiceBox(name).getValue();
         }catch(CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.getMessage() + " Fatal error. Closing application.");
+            System.out.println(e.toString() + " Fatal error. Closing application.");
             Runtime.getRuntime().exit(1);
         }
         return value;
@@ -436,7 +434,7 @@ public abstract class Menu extends Application {
         try{
             value = getTextBox(name).getValue();
         }catch(CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.getMessage() + " Fatal error. Closing application.");
+            System.out.println(e.toString() + " Fatal error. Closing application.");
             Runtime.getRuntime().exit(1);
         }
         return value;

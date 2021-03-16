@@ -25,13 +25,13 @@ public class WinnerWindow extends Menu {
         try {
             winnerImage = Menu.retrieveImage(_player.getPicture().getImage().getUrl(), 4, 1);
         }catch (CustomCheckedException.FileManagementException e){
-            System.out.println(e.getMessage() + " Winner sprite image not found. Using alternative one. Continuing");
+            System.out.println(e.toString() + " Winner sprite image not found. Using alternative one. Continuing");
             winnerImage = new ImageView(new Rectangle(10, 10).snapshot(null, null));
         }
         try {
             fireworks = Menu.retrieveImage(CustomSettings.URL_FIREWORKS, 1, 1);
         }catch (CustomCheckedException.FileManagementException e){
-            System.out.println(e.getMessage() + " Fireworks image image not found. Using alternative one. Continuing");
+            System.out.println(e.toString() + " Fireworks image image not found. Using alternative one. Continuing");
             fireworks = new ImageView(new Rectangle(10, 10).snapshot(null, null));
         }
 

@@ -22,7 +22,7 @@ public class Submenu extends Menu {
             addChoiceBox("Player_selection_1", 1, 0, nameUrl, 1, 4, 0);
             addChoiceBox("Player_selection_2", 1, 1, nameUrl, 1, 4, 1);
         }catch(CustomCheckedException.IndexOutOfRange e){
-            System.out.println(e.getMessage() + " Using default index. Continuing.");
+            System.out.println(e.toString() + " Using default index. Continuing.");
             addChoiceBox("Player_selection_1", 1, 0, nameUrl, 1, 4);
             addChoiceBox("Player_selection_2", 1, 1, nameUrl, 1, 4);
 
@@ -53,7 +53,7 @@ public class Submenu extends Menu {
                 getStage().setAlwaysOnTop(true);
             });
         }catch (CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.getMessage() + " Fatal error. Closing application.");
+            System.out.println(e.toString() + " Fatal error. Closing application.");
             Runtime.getRuntime().exit(1);
         }
     }

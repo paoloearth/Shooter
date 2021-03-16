@@ -46,7 +46,7 @@ public class GameMenu extends Menu {
                     getStage().toFront();
                 });
             } catch (CustomCheckedException.MissingMenuComponentException e){
-                System.out.println(e.getMessage() + " Fatal error. Closing application");
+                System.out.println(e.toString() + " Fatal error. Closing application");
                 Runtime.getRuntime().exit(1);
             }
         }
@@ -62,7 +62,7 @@ public class GameMenu extends Menu {
                 optionsMenu.start(getStage());
             });
         } catch (CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.getMessage() + " Fatal error. Closing application");
+            System.out.println(e.toString() + " Fatal error. Closing application");
             Runtime.getRuntime().exit(1);
         }
 
