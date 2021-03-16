@@ -1,4 +1,4 @@
-package units.shooter_developers.MenuAPI;
+package units.shooter_developers.menu_api;
 
 /*
  *
@@ -13,11 +13,11 @@ package units.shooter_developers.MenuAPI;
  */
 
 import javafx.scene.shape.Rectangle;
-import units.shooter_developers.CustomColors;
-import units.shooter_developers.CustomSettings;
+import units.shooter_developers.customs.CustomColors;
+import units.shooter_developers.customs.CustomSettings;
 import units.shooter_developers.Simulation;
-import units.shooter_developers.CustomCheckedException;
-import static units.shooter_developers.CustomSettings.URL_CONFIG_FILE;
+import units.shooter_developers.customs.CustomCheckedException;
+import static units.shooter_developers.customs.CustomSettings.URL_CONFIG_FILE;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;

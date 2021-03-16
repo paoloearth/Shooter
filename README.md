@@ -73,8 +73,8 @@
 ### Built With :hammer:
 
 Code is written in:
-* [Java](https://java.com) with particular attention to the use of Java Streams and functional programming
-* [JavaFX](https://openjfx.io/) for the UI part
+* [Java 14](https://java.com) with particular attention to the use of Java Streams and functional programming
+* [JavaFX 15](https://openjfx.io/) for the UI part
 
 Code is tested via:
 * [Gradle](https://gradle.org/) with [TestFX](http://testfx.github.io/TestFX/), [Junit5](https://junit.org/junit5/) and [Monocle](https://github.com/TestFX/Monocle) for headless testing.
@@ -126,9 +126,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 [Matilde Castelli](https://github.com/matildecastelli) 
 
-[Paolo Pulcini](https://github.com/paoloearth), paoloearth@gmail.com
+[Paolo Pulcini](https://github.com/paoloearth) paoloearth@gmail.com
 
-[José Antonio Fernández Santisteban](https://github.com/jose-dscience), 
+[José Antonio Fernández Santisteban](https://github.com/jose-dscience) 
 
 
 [product-screenshot]: images/screenshot.png

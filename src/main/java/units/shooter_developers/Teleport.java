@@ -6,6 +6,7 @@ import javafx.animation.RotateTransition;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import units.shooter_developers.customs.CustomSettings;
 
 public class Teleport extends PicturedObject {
     private Coordinates destination;

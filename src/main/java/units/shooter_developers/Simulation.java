@@ -7,8 +7,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import units.shooter_developers.Menu_pages.GameMenu;
-import units.shooter_developers.Menu_pages.WinnerWindow;
+import units.shooter_developers.menu_pages.GameMenu;
+import units.shooter_developers.menu_pages.WinnerWindow;
+import units.shooter_developers.customs.CustomCheckedException;
+import units.shooter_developers.customs.CustomSettings;
 
 import java.util.List;
 import java.util.Set;

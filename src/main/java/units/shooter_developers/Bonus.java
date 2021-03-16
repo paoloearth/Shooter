@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import units.shooter_developers.customs.CustomSettings;
 
 public class Bonus extends PicturedObject {
 
@@ -16,7 +17,7 @@ public class Bonus extends PicturedObject {
     public Bonus(Pane simulationRoot, GameMap map, String url, int nRows, int nCols, int numberOfFrames, Pair<Double, Double> scalingFactor)
     {
         super(scalingFactor,url,nRows,nCols);
-        this._map = map;
+        _map = map;
 
         applyCustomScaleToObject(CustomSettings.HEART_SCALE);
 

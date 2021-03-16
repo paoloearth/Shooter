@@ -1,4 +1,4 @@
-package units.shooter_developers.MenuAPI;
+package units.shooter_developers.menu_api;
 // Visited
 // Remove this when it is not necessary
 import javafx.geometry.Pos;

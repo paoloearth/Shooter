@@ -3,7 +3,7 @@ package units.shooter_developers;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import units.shooter_developers.Menu_pages.GameMenu;
+import units.shooter_developers.menu_pages.GameMenu;
 
 public class Main extends Application {
 

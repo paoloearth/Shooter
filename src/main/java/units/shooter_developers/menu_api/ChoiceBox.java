@@ -1,6 +1,6 @@
-package units.shooter_developers.MenuAPI;
+package units.shooter_developers.menu_api;
 
-import units.shooter_developers.CustomCheckedException;
+import units.shooter_developers.customs.CustomCheckedException;
 
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
