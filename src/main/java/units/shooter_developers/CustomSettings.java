@@ -20,7 +20,6 @@ public class CustomSettings {
     public static final int DEFAULT_Y  = 600;
 
     /*  METADATA IN MAP */
-
     public static final int NUMBER_OF_METADATA_LINES  = 6;
     public static final String  FILE_SEPARATOR= ",";
     public static final int URL_TILESET_INDEX = 0;
@@ -53,7 +52,6 @@ public class CustomSettings {
     /* TELEPORT */
     public static final int TELEPORT_TIME_TO_ROTATE = 3000;
 
-
     /* BONUS */
     public static final int BONUS_COOLDOWN = 5 ;
 
@@ -74,7 +72,6 @@ public class CustomSettings {
     public static final String URL_WARRIOR      = "warrior.png";
     public static final String URL_ASTROLOGER   = "astrologer.png";
 
-
     public static final String URL_MAP_ISLAND_PNG      =  "map_island.png";
     public static final String URL_MAP_DESERT_PNG      =  "map_desert.png";
 
@@ -85,14 +82,11 @@ public class CustomSettings {
     public static final String URL_COMMANDS_P2     = "arrows.png";
 
     /* Alternative pictures */
-   // public static final String URL_BACKGROUND_LIGHT = "menu_light.jpg";
+   //public static final String URL_BACKGROUND_LIGHT = "menu_light.jpg";
    //public static final String URL_BACKGROUND_LIGHT = "smoke_light.jpg";
    //public static final String URL_BACKGROUND_DARK = "smoke_dark.jpg";
    //public static final String URL_BACKGROUND_DARK = "Desheret.jpg";
     public static final String URL_BACKGROUND_DARK = "menu_dark.jpeg";
-
-
-
     public static final String URL_BACKGROUND_LIGHT = "Toscana2.jpg";
 
 
@@ -110,7 +104,7 @@ public class CustomSettings {
     public static final String DESERT     = "Desert";
     public static final String ISLAND     = "Islands";
 
-   public static final String WINDOW_NAME = "Shooter";
+    public static final String WINDOW_NAME = "Shooter";
 
 
 
