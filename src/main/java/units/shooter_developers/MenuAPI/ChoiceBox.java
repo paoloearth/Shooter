@@ -41,7 +41,7 @@ class ChoiceBox extends VBox {
             try {
                 image = Menu.retrieveImage(_dict.get(selected), _spritesheetRow, 1);
             }catch (CustomCheckedException.FileManagementException e){
-                System.out.println(e.getMessage() + " ChoiceBox's image image not found. Using alternative one. Continuing");
+                System.out.println(e.toString() + " ChoiceBox's image image not found. Using alternative one. Continuing");
                 image = new ImageView(new Rectangle(10, 10).snapshot(null, null));
             }
 
@@ -58,7 +58,7 @@ class ChoiceBox extends VBox {
 
     }
 
-    public ChoiceBox(String name, Map<String, String> mapImageToUrl, int nrows, double scale, int default_index) throws CustomCheckedException.IndexOutOfRange {
+    public ChoiceBox(String name, Map<String, String> mapImageToUrl, int nrows, double scale, int default_index) throws CustomCheckedException.IndexOutOfRangeException {
         this(name, mapImageToUrl, nrows, scale);
         _selector.setDefaultIndex(default_index);
     }

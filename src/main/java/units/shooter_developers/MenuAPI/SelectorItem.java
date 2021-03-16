@@ -87,8 +87,8 @@ class SelectorItem extends HBox {
         return _selectionAsProperty;
     }
 
-    protected void setDefaultIndex(int index) throws CustomCheckedException.IndexOutOfRange {
-        if(index >= _selectionList.size()){throw new CustomCheckedException.IndexOutOfRange(
+    protected void setDefaultIndex(int index) throws CustomCheckedException.IndexOutOfRangeException {
+        if(index >= _selectionList.size() || index < 0){throw new CustomCheckedException.IndexOutOfRangeException(
                 "Menu selector item",
                 _selectionList.size()-1,
                 index, SelectorItem.class);}

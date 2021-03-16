@@ -6,7 +6,7 @@ public class CustomCheckedException {
 
     public static class FileManagementException extends Exception {
         public FileManagementException(String file_name){
-            super("ERROR: There was a problem by using the file: " + file_name);
+            super("ERROR: There was a problem by using the file: " + file_name + ".");
         }
     }
 
@@ -35,8 +35,8 @@ public class CustomCheckedException {
 
     }
 
-    public static class IndexOutOfRange extends Exception{
-        public IndexOutOfRange(String object_description, int max_index, int current_index, Type object_type){
+    public static class IndexOutOfRangeException extends Exception{
+        public IndexOutOfRangeException(String object_description, int max_index, int current_index, Type object_type){
             super("ERROR: Maximum index was [" + max_index + "] but [" + current_index + "] was provided in the following object of type "+ object_type +": " + object_description + ".");
         }
 

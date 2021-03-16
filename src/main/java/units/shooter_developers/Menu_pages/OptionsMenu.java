@@ -18,7 +18,7 @@ public class OptionsMenu extends Menu {
     }
 
     @Override
-    public void createContent(){
+    public void createContent() throws CustomCheckedException.MissingMenuComponentException {
 
         setTitle("O P T I O N S");
 
@@ -40,16 +40,22 @@ public class OptionsMenu extends Menu {
 
         getStage().setTitle("VIDEO GAME");
 
-        try {
-            getItem("BACK").setOnMouseReleased(event -> {
-                GameMenu mainMenu = new GameMenu(this);
+        getItem("BACK").setOnMouseReleased(event -> {
+            GameMenu mainMenu = new GameMenu(this);
+            try {
                 mainMenu.start(getStage());
-            });
-            getItem("APPLY").setOnMouseReleased(event -> applyCurrentSettings());
-        } catch (CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.getMessage() + " Fatal error. Closing application.");
-            Runtime.getRuntime().exit(1);
-        }
+            } catch (CustomCheckedException.MissingMenuComponentException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        getItem("APPLY").setOnMouseReleased(event -> {
+            try {
+                applyCurrentSettings();
+            } catch (CustomCheckedException.MissingMenuComponentException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
 
@@ -77,16 +83,16 @@ public class OptionsMenu extends Menu {
 
     }
 
-    private void launchConfirmChangesPage(double widthCandidate, double heightCandidate, String candidateColorMode){
+    private void launchConfirmChangesPage(double widthCandidate, double heightCandidate, String candidateColorMode) throws CustomCheckedException.MissingMenuComponentException {
         AlertWindow alertWindow = new AlertWindow(this, widthCandidate, heightCandidate, candidateColorMode);
         alertWindow.start(getStage());
     }
 
-    private void applyCurrentSettings(){
+    private void applyCurrentSettings() throws CustomCheckedException.MissingMenuComponentException {
         try {
             writeSettings();
         }catch (CustomCheckedException.FileManagementException e){
-            System.out.println(e.getMessage() + " Writing was wrong. Continuing.");
+            System.out.println(e.toString() + " Writing was wrong. Continuing.");
         }
 
         Pair<Double, Double> selectedResolution = getSelectedResolution();
@@ -107,21 +113,21 @@ public class OptionsMenu extends Menu {
 
     }
 
-    private void launchChangedOptionsMenu(double candidateWidth, double candidateHeight, String candidateColorMode) {
+    private void launchChangedOptionsMenu(double candidateWidth, double candidateHeight, String candidateColorMode) throws CustomCheckedException.MissingMenuComponentException {
         setStageDimensions(candidateWidth, candidateHeight);
         setColorMode(candidateColorMode);
 
         try {
             writeSettings();
         }catch (CustomCheckedException.FileManagementException e){
-            System.out.println(e.getMessage() + " Writing was wrong. Continuing.");
+            System.out.println(e.toString() + " Writing was wrong. Continuing.");
         }
 
         OptionsMenu optionsMenu = new OptionsMenu(this);
         try {
             optionsMenu.readProperties();
         } catch(CustomCheckedException.FileManagementException e){
-            System.out.println(e.getMessage() + " Using default settings.");
+            System.out.println(e.toString() + " Using default settings.");
         }
 
         optionsMenu.start(getStage());
@@ -132,7 +138,7 @@ public class OptionsMenu extends Menu {
         try {
             candidateColorMode = getSelectorValue("COLOR MODE");
         }catch (CustomCheckedException.MissingMenuComponentException e){
-            System.out.println(e.getMessage() + " Color mode will not be changed. Continuing.");
+            System.out.println(e.toString() + " Color mode will not be changed. Continuing.");
             candidateColorMode = getColorMode();
         }
         return candidateColorMode;
@@ -143,7 +149,7 @@ public class OptionsMenu extends Menu {
         try {
             selectedResolution = ParseSelectedResolution(getSelectorValue("RESOLUTION"));
         }catch (Exception e) {
-            System.out.println(e.getMessage() + " Resolution will not be changed. Continuing.");
+            System.out.println(e.toString() + " Resolution will not be changed. Continuing.");
         }
         return selectedResolution;
     }

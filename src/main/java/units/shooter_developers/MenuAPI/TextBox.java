@@ -36,7 +36,7 @@ class TextBox extends VBox {
         try {
             image = Menu.retrieveImage(imageUrl, rowWithinSpritesheet, 1);
         }catch (CustomCheckedException.FileManagementException e){
-            System.out.println(e.getMessage() + " TextBox's image image not found. Using alternative one. Continuing");
+            System.out.println(e.toString() + " TextBox's image image not found. Using alternative texture. Continuing");
             image = new ImageView(new Rectangle(10, 10).snapshot(null, null));
         }
 
