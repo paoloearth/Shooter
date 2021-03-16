@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
+import units.shooter_developers.customs.CustomSettings;
 
 @ExtendWith(ApplicationExtension.class)
 class MapTest {

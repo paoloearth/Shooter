@@ -1,8 +1,8 @@
-package units.shooter_developers.Menu_pages;
+package units.shooter_developers.menu_pages;
 
-import units.shooter_developers.CustomCheckedException;
-import units.shooter_developers.CustomSettings;
-import units.shooter_developers.MenuAPI.Menu;
+import units.shooter_developers.customs.CustomCheckedException;
+import units.shooter_developers.customs.CustomSettings;
+import units.shooter_developers.menu_api.Menu;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;

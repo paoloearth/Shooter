@@ -1,13 +1,13 @@
-package units.shooter_developers;
+package units.shooter_developers.customs;
 
 public class CustomUncheckedException{
     public static class FileUrlException extends RuntimeException {
-        FileUrlException(String msg) {
+        public FileUrlException(String msg) {
             super(msg);
         }
     }
     public static class FileIsEmptyException extends RuntimeException{
-        FileIsEmptyException(String msg) {
+        public FileIsEmptyException(String msg) {
             super(msg);
         }
 

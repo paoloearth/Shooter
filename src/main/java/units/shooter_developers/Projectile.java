@@ -3,6 +3,7 @@
 package units.shooter_developers;
 
 import javafx.util.Pair;
+import units.shooter_developers.customs.CustomSettings;
 
 public class Projectile extends DynamicObject {
 

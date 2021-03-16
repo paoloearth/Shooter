@@ -1,6 +1,8 @@
 package units.shooter_developers;
 import javafx.scene.image.Image;
 import javafx.util.Pair;
+import units.shooter_developers.customs.*;
+
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -13,6 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
 
 
 /*     TEMPLATE

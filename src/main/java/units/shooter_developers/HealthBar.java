@@ -3,6 +3,8 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.shape.Rectangle;
+import units.shooter_developers.customs.CustomColors;
+import units.shooter_developers.customs.CustomSettings;
 
 
 public class HealthBar extends MapObject {

@@ -1,6 +1,8 @@
-package units.shooter_developers.Menu_pages;
+package units.shooter_developers.menu_pages;
 import units.shooter_developers.*;
-import units.shooter_developers.MenuAPI.Menu;
+import units.shooter_developers.menu_api.Menu;
+import units.shooter_developers.customs.CustomCheckedException;
+import units.shooter_developers.customs.CustomSettings;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
