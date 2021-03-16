@@ -126,7 +126,42 @@ public abstract class Menu extends Application {
             reader.close();
         }catch(Exception ignored){ }
 
-        setResolution(config);
+        tryToSetResolutionFromConfig(config);
+
+        Pair<ImageView, ImageView> backgrounds = tryToReadBackgrounds();
+
+        var colorMode = config.getProperty("COLOR MODE");
+        colorMode = colorMode == null? "" :  colorMode;
+
+        if(colorMode.equals("light")){
+            setColorMode("light");
+            _background = backgrounds.getValue();
+        } else {
+            setColorMode("dark");
+            _background = backgrounds.getKey();
+        }
+    }
+
+    public void writeSettings() throws CustomCheckedException.FileManagementException {
+        Properties config = new Properties();
+
+        config.setProperty("COLOR MODE", getColorMode());
+        config.setProperty("WIDTH", String.valueOf(getStageWidth()));
+        config.setProperty("HEIGHT", String.valueOf(getStageHeight()));
+
+        File configFile = new File("config.ini");
+        try{
+            FileWriter writer = new FileWriter(configFile);
+            config.store(writer, "Game settings");
+            writer.close();
+        } catch (IOException e) {
+            throw new CustomCheckedException.FileManagementException(configFile.getPath());
+        }
+    }
+
+    private Pair<ImageView, ImageView> tryToReadBackgrounds() {
+        ImageView backgroundDark;
+        ImageView backgroundLight;
         try {
             backgroundDark = retrieveImage(CustomSettings.URL_BACKGROUND_DARK, 1, 1);
             backgroundLight = retrieveImage(CustomSettings.URL_BACKGROUND_LIGHT, 1, 1);
@@ -140,31 +175,27 @@ public abstract class Menu extends Application {
             rectangle.setFill(Color.BLACK);
             backgroundLight = new ImageView(rectangle.snapshot(null, null));
         }
+        Pair<ImageView, ImageView> backgrounds = new Pair<>(backgroundDark, backgroundLight);
+        return backgrounds;
+    }
 
-        var colorMode = config.getProperty("COLOR MODE");
-        colorMode = colorMode == null? "" :  colorMode;
-
-        if(colorMode.equals("light")){
-            setColorMode("light");
-            _background = backgroundLight;
-        } else {
-            setColorMode("dark");
-            _background = backgroundDark;
+    private void tryToSetResolutionFromConfig(Properties config) {
+        try {
+            setResolution(config);
+        } catch (CustomCheckedException.WrongParsingException e) {
+            double width, height;
+            width = getScreenWidth();
+            height = getScreenHeight();
+            setStageDimensions(width, height);
         }
     }
 
-    private void setResolution(Properties config){
+    private void setResolution(Properties config) throws CustomCheckedException.WrongParsingException {
         double width, height;
 
-        try{
-            var parsedResolution = parseResolutionFromStrings(config.getProperty("WIDTH"), config.getProperty("HEIGHT"));
-            width = parsedResolution.getKey();
-            height = parsedResolution.getValue();
-        }catch(CustomCheckedException.WrongParsingException e) {
-            System.out.println(e.toString() + " Using native resolution.");
-            width = getScreenWidth();
-            height = getScreenHeight();
-        }
+        var parsedResolution = parseResolutionFromStrings(config.getProperty("WIDTH"), config.getProperty("HEIGHT"));
+        width = parsedResolution.getKey();
+        height = parsedResolution.getValue();
 
         setStageDimensions(width, height);
     }
@@ -186,24 +217,6 @@ public abstract class Menu extends Application {
 
         return new Pair<>(width, height);
     }
-
-    public void writeSettings() throws CustomCheckedException.FileManagementException {
-        Properties config = new Properties();
-
-        config.setProperty("COLOR MODE", getColorMode());
-        config.setProperty("WIDTH", String.valueOf(getStageWidth()));
-        config.setProperty("HEIGHT", String.valueOf(getStageHeight()));
-
-        File configFile = new File("config.ini");
-        try{
-            FileWriter writer = new FileWriter(configFile);
-            config.store(writer, "Game settings");
-            writer.close();
-        } catch (IOException e) {
-            throw new CustomCheckedException.FileManagementException(configFile.getPath());
-        }
-    }
-
 
     /************************** CONTENT MANAGEMENT *****************************/
 
