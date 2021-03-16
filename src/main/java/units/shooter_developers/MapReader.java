@@ -88,7 +88,7 @@ public class MapReader {
     protected List<String[]> readLinesFromFile(String url) {
         List<String[]> rows = new ArrayList<>();
         Optional<URL> filePath= Optional.ofNullable(ClassLoader.getSystemResource(url));
-        if(filePath.isEmpty()) throw new CustomUncheckedException.FileUrlException("URL :[ "+ url +" ] is not found and filePath return null ");
+        if(filePath.isEmpty()) throw new CustomUncheckedException.FileUrlException("ERROR: URL [ "+ url +" ] of csv file of the map is not found and filePath return null ");
        try(Stream<String> lines =
                    Files.lines(Paths.get(filePath.get().toURI()))){
                    rows = lines.parallel().map(l -> l.split(CustomSettings.FILE_SEPARATOR)).collect(Collectors.toList());

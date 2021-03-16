@@ -10,17 +10,6 @@ public class CustomCheckedException {
         }
     }
 
-    public static class NegativeNumberException extends Exception{
-        NegativeNumberException(String msg){
-            super(msg);
-        }
-
-    }
-
-    public static class MyException extends Exception{
-        MyException(String msg){super(msg);}
-    }
-
     public static class MissingMenuComponentException extends Exception{
         public MissingMenuComponentException(String component_description, Type component_type){
             super("ERROR: The following menu component of type " + component_type + " was not found: " + component_description);
