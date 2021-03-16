@@ -73,7 +73,7 @@
 ### Built With :hammer:
 
 Code is written in:
-* [Java 14](https://java.com) with particular attention to the use of Java Streams and functional programming
+* [Java 15](https://java.com) with particular attention to the use of Java Streams and functional programming
 * [JavaFX 15](https://openjfx.io/) for the UI part
 
 Code is tested via:
