@@ -39,9 +39,9 @@ public class MapReader {
 
     public GameMap makeMapFromFileContent(String URL, double width, double height)
     {
-        Optional<List<String[]>> optionalLines = Optional.ofNullable(readLinesFromFile(URL));
-        if(optionalLines.isEmpty()) throw new CustomUncheckedException.FileIsEmptyException(" The file is empty ");
-        List<String[]> lines = optionalLines.get();
+
+        List<String[]> lines = Optional.ofNullable(readLinesFromFile(URL)).orElseThrow(()->
+                new CustomUncheckedException.FileIsEmptyException(" The file is empty "));
 
        /* 0. Spritesheet URL */
         String tileSetURL = lines.get(CustomSettings.URL_TILESET_INDEX)[0];
@@ -90,11 +90,11 @@ public class MapReader {
 
     protected List<String[]> readLinesFromFile(String url) {
         List<String[]> rows = new ArrayList<>();
-        Optional<URL> filePath= Optional.ofNullable(ClassLoader.getSystemResource(url));
-        if(filePath.isEmpty()) throw new CustomUncheckedException.FileUrlException("ERROR: URL [ "+ url +" ] of csv file of the map is not found and filePath return null ");
-       try(Stream<String> lines =
-                   Files.lines(Paths.get(filePath.get().toURI()))){
-                   rows = lines.parallel().map(l -> l.split(CustomSettings.FILE_SEPARATOR)).collect(Collectors.toList());
+        URL filePath= Optional.ofNullable(ClassLoader.getSystemResource(url)).orElseThrow(()->
+                new CustomUncheckedException.FileUrlException(" The csv file of the map [ "+ url+ " ] doesn't exist "));
+        try(Stream<String> lines =
+                   Files.lines(Paths.get(filePath.toURI()))){
+                  rows = lines.parallel().map(l -> l.split(CustomSettings.FILE_SEPARATOR)).collect(Collectors.toList());
        }
        catch(IOException e){ System.out.println(url + ": problems interacting with the map file \n"); e.printStackTrace();}
        catch(URISyntaxException e){ System.out.println("Wrong url format of map file \n"); e.printStackTrace();}
