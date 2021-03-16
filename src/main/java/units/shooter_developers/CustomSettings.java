@@ -70,7 +70,7 @@ public class CustomSettings {
 
     public static final String URL_ARTIST       = "artist.png";
     public static final String URL_WARRIOR      = "warrior.png";
-    public static final String URL_ASTROLOGER   = "c";
+    public static final String URL_ASTROLOGER   = "astrologer.png";
 
     public static final String URL_MAP_ISLAND_PNG      =  "map_island.png";
     public static final String URL_MAP_DESERT_PNG      =  "map_desert.png";
