@@ -36,7 +36,7 @@ public abstract class PicturedObject extends MapObject {
     }
     catch (NullPointerException | IllegalArgumentException e)
     {
-        System.out.println("Image of the tileset was not found. \n" + e);
+        System.out.println("ERROR: Image of PicturedObject was not found. " + e);
         return new Image(URL); }
     }
 
