@@ -63,6 +63,8 @@
 * Has multiple maps, from desert to lakes :earth_africa:
 * An ever-expanding set of characters for the players to chose from :space_invader:
 
+**Companion slides** [here](https://docs.google.com/presentation/d/1KC3Dw806vitzoZOvvUJavPHA5fXMH29CIgpA3sE6w8A/edit?usp=sharing)
+
 ### Built With :hammer:
 
 Code is written in:
