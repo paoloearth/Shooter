@@ -69,7 +69,7 @@
 
 Code is written in:
 * [Java 15](https://java.com) with particular attention to the use of Java Streams and functional programming
-* [JavaFX 15](https://openjfx.io/) for the UI part
+* [JavaFX 15](https://openjfx.io/) for the GUI part
 
 Code is tested via:
 * [Gradle](https://gradle.org/) with [TestFX](http://testfx.github.io/TestFX/), [Junit5](https://junit.org/junit5/) and [Monocle](https://github.com/TestFX/Monocle) for headless testing.
