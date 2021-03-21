@@ -40,9 +40,8 @@ public class MapReader {
     public GameMap makeMapFromFileContent(String URL, double width, double height)
     {
 
-        List<String[]> lines = Optional.ofNullable(readLinesFromFile(URL)).orElseThrow(()->
-                new CustomUncheckedException.FileIsEmptyException(" The file is empty "));
 
+        List<String[]> lines = readLinesFromFile(URL);
        /* 0. Spritesheet URL */
         String tileSetURL = lines.get(CustomSettings.URL_TILESET_INDEX)[0];
         Image  tileSet = getTilesetFromURL(tileSetURL);
@@ -52,6 +51,10 @@ public class MapReader {
         int columns = mapInfo.get(0);
         int rows = mapInfo.get(1);
         int cellSide = mapInfo.get(2);
+
+        if(lines.size() != rows+CustomSettings.NUMBER_OF_METADATA_LINES){
+            throw new CustomUncheckedException.MapFileFormatException(" Format of map is not compliant to the standard Map format ");
+        }
 
         /* 2. Passable blocks for the sprite
         *  3. Not passable blocks for the projectile */
@@ -88,13 +91,14 @@ public class MapReader {
         return A;
     }
 
-    protected List<String[]> readLinesFromFile(String url) {
+    protected List<String[]> readLinesFromFile(String url){
         List<String[]> rows = new ArrayList<>();
         URL filePath= Optional.ofNullable(ClassLoader.getSystemResource(url)).orElseThrow(()->
                 new CustomUncheckedException.FileUrlException(" The csv file of the map [ "+ url+ " ] doesn't exist "));
         try(Stream<String> lines =
                    Files.lines(Paths.get(filePath.toURI()))){
                   rows = lines.parallel().map(l -> l.split(CustomSettings.FILE_SEPARATOR)).collect(Collectors.toList());
+            if(rows.isEmpty()){ throw new CustomUncheckedException.EmptyFileException("Map file is empty"); }
        }
        catch(IOException e){ System.out.println(url + ": problems interacting with the map file \n"); e.printStackTrace();}
        catch(URISyntaxException e){ System.out.println("Wrong url format of map file \n"); e.printStackTrace();}
